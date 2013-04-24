@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="report-utilizacao">
+
+	<title>Utilização do Report</title>
+	
+	<para>
+		Nesta seção, vamos abordar a utilização do componente de relatórios. Cabe destacar que o componente não está preso a uma tecnologia de visão específica.
+		Ele é independente, podendo ser utilizado em uma aplicação JSF, Swing ou Vaadin. Ele limita-se a tratar da geração do relatório e não presume qual a tecnologia
+		de visão será utilizada. 
+	</para>
+	
+	<section>
+		<title>Iniciando</title>
+		<para>
+			Primeiro, precisamos criar nosso relatório usando o Jasper. Para alcançar este objetivo, você pode usar a ferramenta iReport ou, caso tenha um bom conhecimento sobre o Jasper,
+			criar o arquivo JRXML diretamente, escrevendo código XML. O componente trata tanto arquivos JRXML, compilando-os em <emphasis>runtime</emphasis>, ou arquivos já compilados,
+			no formato <emphasis>.jasper</emphasis>. Seja qual for o formato ou método que você utilize para gerar os arquivos, para o componente do Demoiselle é importante que o arquivo esteja
+			disponível no classpath da sua aplicação. Uma sugestão é colocar os relatórios na pasta <emphasis>/src/main/resources/reports</emphasis>.
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="report/images/projeto-relatorio-1.png" align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="report/images/projeto-relatorio-1.png" align="center" format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Estrutura de diretórios
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<warning>
+			<para>
+				Ao utilizar um arquivo <emphasis>*.jrxml</emphasis> obrigará o componente a realizar
+				a compilação do mesmo em tempo de execução. Para obter uma melhor performance use sempre o arquivo pré-compilado <emphasis>*.jasper</emphasis>
+			</para>
+		</warning>
+	</section>
+	
+	<section>
+		<title>Injetando o Relatório</title>
+		<para>
+			Uma vez que temos o arquivo do relatório em nosso classpath, agora precisamos injetar uma instância de <classname>br.gov.frameworkdemoiselle.report.Report em nosso objeto</classname>. 
+			A interface <classname>Report</classname> prevê poucos métodos, sendo o mais importante, o método <methodname>export()</methodname>. Este método permite que você gere seu relatório
+			com os dados informados, retornando um <classname>Array</classname> de <classname>bytes</classname>.
+		</para>
+		<programlisting role="JAVA"><![CDATA[public class RelatorioExemplo {
+		
+     @Inject
+     @Path("reports/Bookmarks.jrxml")
+     private Report relatorio;
+     
+}]]></programlisting>
+	<para>
+		No exemplo acima, estamos injetando uma instância de <classname>Report</classname> e informando, através da anotação <classname>@Path</classname>, o caminho onde se encontra
+		o nosso arquivo de relatório. Agora que já temos o relatório, podemos solicitar que ele seja gerado, conforme ilustra o exemplo a seguir.
+	</para>
+	<tip>
+		<para>
+			A omissão da anotação <classname>@Path</classname> vai considerar o diretório <emphasis>reports/</emphasis> e o nome do arquivo
+			será o nome da propriedade, neste caso: <emphasis>relatorio</emphasis>.jasper
+		</para>
+	</tip>
+	<programlisting role="JAVA"><![CDATA[public void getReport() {
+	Map<String, Object> param = new HashMap<String, Object>();
+	try {
+		byte[] buffer = this.relatorio.export(getResultList(), param, Type.PDF);
+	} catch (JRException e) {
+		// Trata a exceção
+	}
+}]]></programlisting>
+	<para>
+		Neste exemplo, estamos passando os parâmetros contido no <classname>HashMap</classname> <emphasis>param</emphasis> e como <emphasis>Datasource</emphasis>, o retorno
+		do método <methodname>getResultList()</methodname> que, de fato, retorna uma instância de <classname>java.util.List</classname>. Por último, estamos informando que queremos o
+		relatório no formato PDF, da Adobe. Cabe agora ter uma forma para exibir o conteúdo deste relatório. Entretanto, o componente não entra neste mérito, cabendo a ele apenas gerar. De fato, 
+		a forma como o relatório será exibido é de responsabilidade da camada de visão. Em um sistema desenvolvido em JSF, esta apresentação ocorrerá através de um navegador. Caso seu sistema
+		seja em linha de comando, ou Swing, precisará de outra forma para exibir. 
+	</para>
+	<tip>
+		<para>
+			A extensão JSF já provê mecanismos para a exibição de relatórios. Trataremos deste assunto na próxima seção.
+		</para>
+	</tip>
+	</section>
+	
+	<section>
+		<title>Exibindo Relatórios em JSF</title>
+		<para>
+			A extensão JSF já provê, desde as versões mais recentes, um utilitário que permite a exibição de arquivos, de forma genérica, através de um navegador. Aqui apresentaremos como você pode
+			utilizá-lo para exibir o relatório que geramos na seção anterior. Reescreveremos o método <methodname>getReport()</methodname> para que ele faça este trabalho.
+		</para>
+		<programlisting role="JAVA"><![CDATA[@Inject
+private FileRenderer renderer;
+
+public String showReport() {
+	Map<String, Object> param = new HashMap<String, Object>();
+	try {
+		byte[] buffer = this.relatorio.export(getResultList(), param, Type.PDF);
+		this.renderer.render(buffer, FileRenderer.ContentType.PDF, "relatorio.pdf");
+	} catch (JRException e) {
+		Faces.addMessage(e);
+	}
+	return getNextView();
+}]]></programlisting>
+	</section>
+	<para>
+		Vamos considerar que o método acima está inserido em uma classe de <emphasis>ManagedBean</emphasis>, própria do Java Server Faces, e que este método será chamado assim que for realizado
+		um clique em um botão na tela. Neste caso, teremos uma instância da classe <classname>FileRenderer</classname>, que é responsável pela exibição de arquivos, independente de onde ele veio.
+		Neste exemplo, estamos apenas para que o conjunto de <classname>bytes</classname> que obtivemos do relatório seja impresso como um PDF e que para o navegador, este arquivo apareça com o
+		nome <emphasis>relatorio.pdf</emphasis>.
+	</para>
+	
+	<section>
+		<title>Exibindo Relatórios com o JasperView</title>
+		<para>
+			O <emphasis>JasperReports</emphasis> já disponibiliza um mecanismo para a visualização dos relatórios chamada <classname>JasperView</classname>.
+			Para utiliza-la é preciso passar o objeto do relatório já preenchido, que é o <classname>JasperPrint</classname>.		
+			A inteface <classname>Report</classname> possibilita acesso aos objetos do JasperReports através do método <methodname>getReportObject()</methodname> como 
+			pode ser visualizar no trecho de código abaixo.
+		</para>
+		<programlisting role="JAVA"><![CDATA[public class ExibirRelatorio {
+
+	@Inject 
+	private Report relatorio;
+	
+	@Inject
+	private BookmarkBC bc;
+	
+	public void exibirNoJasperView() {
+		relatorio.prepare(bc.findAll(), null);
+		JasperViewer.viewReport((JasperPrint) relatorio.getReportObject());
+	}
+		
+}]]></programlisting>
+		<para>
+			Perceba que para obter o <classname>JasperPrint</classname> é preciso primeiro invocar o método <methodname>prepare</methodname> 
+			do relatório para que o mesmo seja preenchido com os valores.
+		</para>		
+	</section>
+	
+	<section>
+		<title>Acessando os objetos do JasperReports</title>
+		<para>
+			Em alguns casos talvez seja necessário manipular diretamente os objetos do Jasper como o <classname>JasperReport</classname> e o <classname>JasperPrint</classname>.
+			Neste caso devemos utilizar os métodos de acesso aos objetos internos e realizar o devido cast.		
+		</para>
+		
+		<section>
+			<title>Obtendo o objeto: JasperReport</title>
+			<para>
+				O objeto <classname>JasperReport</classname> pode ser acessado a qualquer momento através do método <methodname>getSource()</methodname> fazendo o 
+				cast diretamente.
+			</para>
+			<programlisting role="JAVA"><![CDATA[JasperReport jasperReport = (JasperReport)relatorio.getSource();]]></programlisting>
+		</section>
+		
+		<section>
+			<title>Obtendo o objeto: JasperPrint</title>
+			<para>
+				O objeto <classname>JasperPrint</classname> pode ser acessado após a preparação do relatório com seus devidos dados.
+				Para isso é preciso utilizar o método <methodname>prepare</methodname> antes de acessar o <classname>JasperPrint</classname> pelo
+				método <methodname>getReportObject</methodname>
+			</para>
+			<programlisting role="JAVA"><![CDATA[relatorio.prepare(bc.findAll(), null);
+JasperPrint jasperPrint = (JasperPrint) relatorio.getReportObject();]]></programlisting>
+		</section>				
+	</section>
+	
+</chapter>

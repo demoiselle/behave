@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<book lang="pt">
+
+	<xi:include href="bookinfo.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+	<!-- prefácio -->
+	<preface>
+		<title>Demoiselle Report</title>
+		<para>
+			A geração de relatórios é uma tarefa bastante comum em boa parte dos sistemas comerciais. Visando sempre facilitar a vida do desenvolvedor, diversas ferramentas
+			foram surgindo, sempre tendo em mente criar mecanismos que desonerassem os responsáveis por este trabalho. Das diversas ferramentas existentes, o Crystal Reports talvez seja a mais 
+			conhecida e usada na plataforma Windows. Com a chegada da linguagem Java, contudo, foi necessário criar alternativas, uma vez que as ferramentas da época não eram 
+			compatíveis com esta linguagem. A primeira opção que surgiu no mercado foi o
+			<emphasis><ulink url="http://jasperforge.org/projects/jasperreports">Jasper Reports</ulink></emphasis>, que forma uma ótima dupla com o 
+			<ulink url="http://jasperforge.org/project/ireport">iReport</ulink>. O primeiro trata da geração do relatório em si, enquanto o segundo é um editor
+			visual que facilita sobremaneira o trabalho de geração do layout.
+		</para>
+		<para>
+			Embora seja o mais conhecido dos programadores Java, o JasperReports não é a única opção disponível no mercado. Entre algumas opções  livres e outras não-livres, temos
+			atualmente o <ulink url="http://www.eclipse.org/birt/phoenix/">BIRT</ulink>, da Eclipse, que tem ganhado cada dia mais adeptos. O BIRT apresenta características diferenciadas
+			do JasperReports, mas o intuito é o mesmo: facilitar a criação de relatórios.
+		</para>
+		<para>
+			Tendo em vista que já existem ótimas ferramentas disponíveis e reconhecendo não haver necessidade de propor mais uma, o objetivo do componente de relatórios do Demoiselle 
+			é propor facilidades e tentar tornar o mais transparente possível, para o usuário do framework, qual a biblioteca que está sendo de fato utilizada.
+			O componente já conta com o suporte para o <emphasis>Jasper Reports</emphasis>
+			e o objetivo é torná-lo compatível com outras bibliotecas de geração de relatórios que venham a tornar-se padrão de mercado.
+		</para>
+		<para>
+			Nesta seção, vamos estudar como funciona e como utilizar este componente em seu projeto, passando por alguns conceitos importantes.
+		</para>
+	</preface>
+
+	<!-- índice -->
+	<toc />
+	
+	<!-- capítulos -->
+	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="utilizacao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	
+</book>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="report-configuracao">
+
+	<title>Configuração do Report</title>
+	<para>
+		Vamos iniciar a apresentação do componente demonstrando os passos que são necessários para configurá-lo e torná-lo disponível para o seu projeto. 
+		Como será visto, são poucos e não tomarão muito tempo ou esforço.
+		Inicialmente, precisamos informar  que há uma dependência para um componente do Demoiselle. A configuração é bem simples, bastando adicionar uma sessão <literal>dependency</literal>
+		igual ao da listagem abaixo.
+	</para>
+	<tip>
+		<para>
+			O componente já traz consigo a dependência para o JasperReports, pois, até o momento, é a única ferramenta com suporte.
+		</para>
+	</tip>
+	<programlisting role="XML"><![CDATA[<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component</groupId>
+	<artifactId>demoiselle-report</artifactId>
+	<version>2.0.0</version>
+	<type>jar</type>
+	<scope>compile</scope>
+</dependency>]]></programlisting>
+	<important>
+		<para>
+			Fique atento apenas para a versão do componente. No momento em que escrevíamos esta
+			documentação, o <emphasis>Demoiselle Report</emphasis> encontrava-se na versão 2.0.0.
+			Verifique constantemente nossos repositórios e fique sempre atento a nossos informes
+			sobre o lançamento de novas versões!
+		</para>
+	</important>
+
+</chapter>

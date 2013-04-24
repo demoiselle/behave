@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="report-jasper">
+
+	<title>JasperReports</title>
+	<para>
+		Nesta seção, vamos abordar a utilização do componente de relatórios. Cabe destacar que o componente não está preso a uma tecnologia de visão específica.
+		Ele é independente, podendo ser utilizado em uma aplicação JSF, Swing ou Vaadin. Ele limita-se a tratar da geração do relatório e não presume qual a tecnologia
+		de visão será utilizada. 
+	</para>
+	<section>
+		<title>Iniciando</title>
+		<para>
+			Primeiro, precisamos criar nosso relatório usando o Jasper. Para alcançar este objetivo, você pode usar a ferramenta iReport ou, caso tenha um bom conhecimento sobre o Jasper,
+			criar o arquivo JRXML diretamente, escrevendo código XML.
+		</para>
+	</section>
+	
+</chapter>

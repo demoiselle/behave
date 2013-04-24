@@ -24,9 +24,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-behave-build</artifactId>
+	<artifactId>demoiselle-behave-core</artifactId>
 	<version>1.0.0-RC-01</version>
-	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -34,32 +33,42 @@
 		<version>8</version>
 	</parent>
 
-	<name>Demoiselle Behave Build Aggregator</name>
+	<name>Demoiselle Behave Component</name>
+
 	<description>
-		A liberação de versões do framework deve ser feita a partir deste build, que fará automaticamente o build
-		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão do framework sem utilizar este build.
+		Demoiselle Report Component
 	</description>
 
-	<modules>
-		<module>impl/core</module>
-		<module>documentation/reference</module>
-	</modules>
+	<url>http://www.frameworkdemoiselle.gov.br</url>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
+	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
+				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
+
+	
+	<scm>
+		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
+		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
+		<url>http://github.com/demoiselle/${project.alias}</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<repositories>
 		<repository>
@@ -89,5 +98,5 @@
 	<properties>
 		<project.alias>behave</project.alias>
 	</properties>
-
+	
 </project>
