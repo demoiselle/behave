@@ -38,23 +38,29 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-report-reference</artifactId>
-	<packaging>jdocbook</packaging>
-	<version>2.1.1-SNAPSHOT</version>
+	<groupId>br.gov.frameworkdemoiselle</groupId>
+	<artifactId>demoiselle-behave-archetype-build</artifactId>
+	<version>1.0.0-RC-01</version>
+	<packaging>pom</packaging>
 
-	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-documentation-parent</artifactId>
-		<version>8</version>
-	</parent>
-
-	<name>Demoiselle Report Component Reference Documentation</name>
+	<name>Archetypes Build Aggregator</name>
 	<description>
-		Demoiselle Report Component Reference Documentation
 	</description>
+
+	<modules>
+		<module>jbehave-selenium</module>
+	</modules>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<configuration>
+					<url>.</url>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -65,32 +71,18 @@
 		</plugins>
 	</build>
 
-	<repositories>
+	<distributionManagement>
 		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
+			<id />
+			<url />
 		</repository>
-		<repository>
-			<id>sonatype-nexus-releases</id>
-			<name>Sonatype Nexus Releases</name>
-			<url>https://oss.sonatype.org/content/repositories/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<properties>
-		<project.context>component/report/reference</project.context>
-	</properties>
+		<snapshotRepository>
+			<id />
+			<url />
+		</snapshotRepository>
+		<site>
+			<id />
+			<url>file://${project.build.directory}/tmp</url>
+		</site>
+	</distributionManagement>
 </project>

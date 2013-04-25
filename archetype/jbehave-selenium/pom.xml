@@ -38,59 +38,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-report-reference</artifactId>
-	<packaging>jdocbook</packaging>
-	<version>2.1.1-SNAPSHOT</version>
+	<groupId>br.gov.frameworkdemoiselle.archetypes</groupId>
+	<artifactId>demoiselle-jbehave-selenium</artifactId>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-documentation-parent</artifactId>
-		<version>8</version>
+		<artifactId>demoiselle-archetype-parent</artifactId>
+		<version>2.3.3</version>
 	</parent>
 
-	<name>Demoiselle Report Component Reference Documentation</name>
-	<description>
-		Demoiselle Report Component Reference Documentation
-	</description>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<name>JSF and JPA Archetype</name>
+	<description>Archetype for web applications (JSF/JPA)</description>
 
 	<repositories>
 		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>sonatype-nexus-releases</id>
-			<name>Sonatype Nexus Releases</name>
-			<url>https://oss.sonatype.org/content/repositories/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Demoiselle Maven Repository</name>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
 		</repository>
 	</repositories>
-
-	<properties>
-		<project.context>component/report/reference</project.context>
-	</properties>
 </project>
