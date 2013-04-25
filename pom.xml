@@ -25,7 +25,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.0.0-RC-01</version>
+	<version>1.0.0-RC-1SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -38,7 +38,7 @@
 	<description>
 		A liberação de versões do framework deve ser feita a partir deste build, que fará automaticamente o build
 		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão do framework sem utilizar este build.
-	</description>
+</description>
 
 	<modules>
 		<module>impl/core</module>
@@ -86,8 +86,14 @@
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<site>
+			<id>demoiselle.sourceforge.net</id>
+			<url>${site.url}</url>
+		</site>
+	</distributionManagement>
+
 	<properties>
 		<project.alias>behave</project.alias>
 	</properties>
-
 </project>
