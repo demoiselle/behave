@@ -38,9 +38,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-report-reference</artifactId>
+	<artifactId>demoiselle-behave-reference</artifactId>
 	<packaging>jdocbook</packaging>
-	<version>2.1.1-SNAPSHOT</version>
+	<version>1.0.0-RC-01</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -48,7 +48,7 @@
 		<version>8</version>
 	</parent>
 
-	<name>Demoiselle Report Component Reference Documentation</name>
+	<name>Demoiselle Behave Component Reference Documentation</name>
 	<description>
 		Demoiselle Report Component Reference Documentation
 	</description>
