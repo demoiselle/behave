@@ -7,7 +7,7 @@
 
 	<!-- prefácio -->
 	<preface>
-		<title>Demoiselle Report</title>
+		<title>Demoiselle Behave</title>
 		<para>
 			A geração de relatórios é uma tarefa bastante comum em boa parte dos sistemas comerciais. Visando sempre facilitar a vida do desenvolvedor, diversas ferramentas
 			foram surgindo, sempre tendo em mente criar mecanismos que desonerassem os responsáveis por este trabalho. Das diversas ferramentas existentes, o Crystal Reports talvez seja a mais 

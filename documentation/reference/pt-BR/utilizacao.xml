@@ -3,7 +3,7 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <chapter id="report-utilizacao">
 
-	<title>Utilização do Report</title>
+	<title>Utilização do Behave</title>
 	
 	<para>
 		Nesta seção, vamos abordar a utilização do componente de relatórios. Cabe destacar que o componente não está preso a uma tecnologia de visão específica.
