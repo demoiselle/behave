@@ -30,6 +30,4 @@ Seu objetivo é diminuir a complexidade para: leitura, geração e exibição de
 * Crie um caso no [mantis][1] com o link para o seu branch, ou apenas o adicione como
 comentário em um caso pré-existent.
 
-
-
 [1]: http://tracker.frameworkdemoiselle.gov.br
