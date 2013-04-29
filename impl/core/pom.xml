@@ -25,7 +25,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>demoiselle-behave-core</artifactId>
-	<version>1.0.0-RC-01</version>
+	<version>1.0.0-RC-01-SNAPSHOT</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -52,7 +52,7 @@
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -62,7 +62,7 @@
 		</plugins>
 	</build>
 
-	
+
 	<scm>
 		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
 		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
@@ -95,8 +95,21 @@
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<repository>
+			<id>demoiselle-behave.internal</id>
+			<name>Repositorio Interno</name>
+			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>demoiselle-behave.snapshots</id>
+			<name>Repositorio Interno</name>
+			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<properties>
 		<project.alias>behave</project.alias>
 	</properties>
-	
+
 </project>
