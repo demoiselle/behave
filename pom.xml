@@ -25,7 +25,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.0.0-RC-1SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -42,6 +42,9 @@
 
 	<modules>
 		<module>impl/core</module>
+		<module>impl/extension/parser</module>
+		<module>impl/extension/integration</module>
+		<module>impl/extension/runner</module>
 		<module>archetype</module>
 		<module>documentation/reference</module>
 	</modules>
