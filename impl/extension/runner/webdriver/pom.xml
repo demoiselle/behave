@@ -1,4 +1,4 @@
-<!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
+	<!-- Demoiselle Framework Copyright (C) 2013 SERPRO ============================================================================ 
 	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
 	you can redistribute it and/or modify it under the terms of the GNU Lesser 
 	General Public License version 3 as published by the Free Software Foundation. 
@@ -22,57 +22,91 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-behave-build</artifactId>
+	<artifactId>demoiselle-behave-runner-webdriver</artifactId>
+	<packaging>jar</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-build-parent</artifactId>
-		<version>8</version>
+		<artifactId>demoiselle-extension-parent</artifactId>
+		<version>2.3.3</version>
+		<relativePath>../../../parent/extension</relativePath>
 	</parent>
 
-	<name>Demoiselle Framework Build Aggregator</name>
-	<description>
-		A liberação de versões do framework deve ser feita a partir deste build, que fará automaticamente o build
-		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão do framework sem utilizar este build.
-	</description>
+	<name>Demoiselle Behave JBevave Extension</name>
+	<description>Demoiselle Behave JBevave Extension</description>
 
-	<modules>
-		<module>impl/core</module>
-		<module>impl/extension/parser/jbehave</module>
-		<module>impl/extension/integration</module>
-		<module>impl/extension/runner/webdriver</module>
-		<module>impl/extension/runner/fest</module>
-		<module>archetype</module>
-		<module>documentation/reference</module>
-	</modules>
+	<url>http://www.frameworkdemoiselle.gov.br</url>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
 
-	<scm>
-		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
-		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
-		<url>http://github.com/demoiselle/${project.alias}</url>
-		<tag>HEAD</tag>
-	</scm>
+	<organization>
+		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-core</artifactId>
+			<version>3.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-core</artifactId>
+			<version>3.7.5</version>
+			<classifier>resources</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jbehave.site</groupId>
+			<artifactId>jbehave-site-resources</artifactId>
+			<version>3.1.1</version>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jbehave.web</groupId>
+			<artifactId>jbehave-web-selenium</artifactId>
+			<version>3.5.5</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.29.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-junit</artifactId>
+			<version>2.3.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>demoiselle-behave.internal</id>
+			<name>Repositorio Interno</name>
+			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>demoiselle-behave.snapshots</id>
+			<name>Repositorio Interno</name>
+			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
@@ -97,15 +131,4 @@
 			</releases>
 		</repository>
 	</repositories>
-
-	<distributionManagement>
-		<site>
-			<id>demoiselle.sourceforge.net</id>
-			<url>${site.url}</url>
-		</site>
-	</distributionManagement>
-
-	<properties>
-		<project.alias>behave</project.alias>
-	</properties>
 </project>
