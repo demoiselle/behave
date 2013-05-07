@@ -25,7 +25,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-behave-integration</artifactId>
+	<artifactId>demoiselle-behave-parser-cucumber</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 
@@ -36,8 +36,8 @@
 		<relativePath>../../../parent/extension</relativePath>
 	</parent>
 
-	<name>Demoiselle Behave JBevave Extension</name>
-	<description>Demoiselle Behave JBevave Extension</description>
+	<name>Demoiselle Behave JBevave Extension - Parser - Cucumber</name>
+	<description>Demoiselle Behave JBevave Extension - Parser - Cucumber</description>
 
 	<url>http://www.frameworkdemoiselle.gov.br</url>
 
@@ -55,45 +55,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-core</artifactId>
-			<version>3.7.5</version>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-behave-core</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-core</artifactId>
-			<version>3.7.5</version>
-			<classifier>resources</classifier>
-			<type>zip</type>
-		</dependency>
-		<dependency>
-			<groupId>org.jbehave.site</groupId>
-			<artifactId>jbehave-site-resources</artifactId>
-			<version>3.1.1</version>
-			<type>zip</type>
-		</dependency>
-		<dependency>
-			<groupId>org.jbehave.web</groupId>
-			<artifactId>jbehave-web-selenium</artifactId>
-			<version>3.5.5</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>2.29.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component</groupId>
-			<artifactId>demoiselle-junit</artifactId>
-			<version>2.3.0</version>
-			<scope>test</scope>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>1.1.3</version>
 		</dependency>
 	</dependencies>
-	
+
 	<distributionManagement>
 		<repository>
 			<id>demoiselle-behave.internal</id>
@@ -106,7 +78,7 @@
 			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
