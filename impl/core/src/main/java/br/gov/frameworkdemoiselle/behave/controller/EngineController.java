@@ -56,8 +56,8 @@ public class EngineController {
 		parser = (Parser) Dependencies.getInstance().getInstanceDependecy(Parser.class);
 		parser.run();
 
-		runner = (Runner) Dependencies.getInstance().getInstanceDependecy(Runner.class);
-		runner.run();
+//		runner = (Runner) Dependencies.getInstance().getInstanceDependecy(Runner.class);
+//		runner.run();
 
 		logger.log(Level.INFO, "Concluiu o processo.");
 

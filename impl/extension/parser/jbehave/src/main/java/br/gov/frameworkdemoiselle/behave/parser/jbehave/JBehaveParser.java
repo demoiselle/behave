@@ -85,6 +85,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public List<String> storyPaths() {
+		/**
+		 * TODO: Configurações de quais histórias irão rodar.
+		 */
+		
 		ArrayList<String> stories = new ArrayList<String>();
 		stories.add("stories/google.story");
 		return stories;
