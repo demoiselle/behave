@@ -103,7 +103,7 @@
 		<snapshotRepository>
 			<id>demoiselle-behave.snapshots</id>
 			<name>Repositorio Interno</name>
-			<url>file://rede/aplic/archiva/repositories/component/snapshots</url>
+			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
