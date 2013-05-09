@@ -56,6 +56,4 @@ public class CucumberParser implements Parser {
 		return null;
 	}
 	
-	//Oi
-
 }

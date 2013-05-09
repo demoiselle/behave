@@ -42,4 +42,5 @@ public interface WebRunner extends Runner {
 	 * TODO: Funções como CLICK
 	 */
 	
+	
 }

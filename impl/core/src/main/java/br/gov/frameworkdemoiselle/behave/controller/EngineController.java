@@ -40,24 +40,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
+import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.util.Dependencies;
 
 public class EngineController {
 
 	private Parser parser;
-	// private Runner runner;
+	private Runner runner;
 	private Logger logger = Logger.getLogger(this.toString());
 
 	public void run() throws Throwable {
 
 		logger.log(Level.INFO, "Iniciou o processo...");
 
-		parser = (Parser) Dependencies.getInstance().getInstanceDependecy(Parser.class);
+		parser = (Parser) Dependencies.getInstance().getInstanceDependecy(
+				Parser.class);
 		parser.run();
 
-		// runner = (Runner)
-		// Dependencies.getInstance().getInstanceDependecy(Runner.class);
-		// runner.run();
+		runner = (Runner) Dependencies.getInstance().getInstanceDependecy(
+				Runner.class);
+		runner.run();
 
 		logger.log(Level.INFO, "Concluiu o processo.");
 

@@ -59,6 +59,7 @@ public class CommonSteps {
 
 	@Given("clico em [$objeto]")
 	public void click(String objeto) {
+		(new DBButton(objeto)).click();
 		logger.log(Level.INFO, "Click em " + objeto);
 	}
 
