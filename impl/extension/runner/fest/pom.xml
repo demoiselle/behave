@@ -58,12 +58,12 @@
 		<repository>
 			<id>demoiselle-behave.internal</id>
 			<name>Repositorio Interno</name>
-			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/internal</url>
+			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
 		</repository>
 		<snapshotRepository>
 			<id>demoiselle-behave.snapshots</id>
 			<name>Repositorio Interno</name>
-			<url>scp://centro3.cta.serpro/rede/aplic/archiva/repositories/component/snapshots</url>
+			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
