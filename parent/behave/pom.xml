@@ -31,13 +31,10 @@
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-parent</artifactId>
+		<artifactId>demoiselle-component-build-parent</artifactId>
 		<version>8</version>
+		<relativePath>../internal/parent/build/component</relativePath>
 	</parent>
-
-	<properties>
-		<behave.release.version>1.0.0-SNAPSHOT</behave.release.version>
-	</properties>
 
 	<name>Demoiselle Behave Parent</name>
 	<description> Contém as informações de build comum a todos os projetos do Demoiselle Behave. Se você é usuário do behave, certamente este POM não servirá para você.</description>
@@ -54,6 +51,10 @@
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
+
+	<properties>
+		<behave.release.version>1.0.0-RC-01</behave.release.version>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -101,19 +102,18 @@
 		</dependency>
 	</dependencies>
 
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- core + extensions -->
 			<dependency>
-				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+				<groupId>br.gov.frameworkdemoiselle.component</groupId>
 				<artifactId>demoiselle-behave-core</artifactId>
-				<version>${behave.release.version}</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 			<dependency>
-				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+				<groupId>br.gov.frameworkdemoiselle</groupId>
 				<artifactId>demoiselle-behave-core</artifactId>
-				<version>${behave.release.version}</version>
+				<version>1.0.0-SNAPSHOT</version>
 			</dependency>
 
 			<!-- parser -->
@@ -149,4 +149,5 @@
 
 		</dependencies>
 	</dependencyManagement>
+
 </project>
