@@ -98,7 +98,7 @@
 		<repository>
 			<id>demoiselle-behave.internal</id>
 			<name>Repositorio Interno</name>
-			<url>file://rede/aplic/archiva/repositories/component/internal</url>
+			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
 		</repository>
 		<snapshotRepository>
 			<id>demoiselle-behave.snapshots</id>
