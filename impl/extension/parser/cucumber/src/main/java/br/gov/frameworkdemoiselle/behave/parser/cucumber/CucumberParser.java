@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
+import br.gov.frameworkdemoiselle.behave.parser.Step;
 
 public class CucumberParser implements Parser {
 
@@ -52,8 +53,15 @@ public class CucumberParser implements Parser {
 	}
 
 	@Override
-	public List<String> storyPaths() {
-		return null;
+	public void setStoryPaths(List<String> storyPaths) {
+		// TODO Auto-generated method stub
+
 	}
-	
+
+	@Override
+	public void setSteps(List<Step> steps) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

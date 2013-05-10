@@ -36,30 +36,53 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.gov.frameworkdemoiselle.behave.internal.parse.StoryConverter;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.util.Dependencies;
+import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
 public class EngineController {
 
 	private Parser parser;
-	private Runner runner;
+	// private Runner runner;
+
 	private Logger logger = Logger.getLogger(this.toString());
 
-	public void run() throws Throwable {
+	private List<Step> steps = new ArrayList<Step>();
+
+	public void addSteps(Step step) {
+		steps.add(step);
+	}
+
+	public void run(List<String> storiesPath) throws Throwable {
 
 		logger.log(Level.INFO, "Iniciou o processo...");
 
-		parser = (Parser) Dependencies.getInstance().getInstanceDependecy(
-				Parser.class);
+		parser = (Parser) DependenciesUtil.getInstance().getInstanceDependecy(Parser.class);
+
+		Map<String, String> processedStories = StoryConverter.createFilesWithReusedScenarios(storiesPath);
+
+		List<String> finalStoriesPath = new ArrayList<String>();
+
+		for (String storyPath : processedStories.keySet()) {
+			finalStoriesPath.add(storyPath);
+		}
+
+		parser.setSteps(steps);
+		parser.setStoryPaths(finalStoriesPath);
+
 		parser.run();
 
-		runner = (Runner) Dependencies.getInstance().getInstanceDependecy(
-				Runner.class);
-		runner.run();
+		// runner = (Runner)
+		// DependenciesUtil.getInstance().getInstanceDependecy(
+		// Runner.class);
+		// runner.run();
 
 		logger.log(Level.INFO, "Concluiu o processo.");
 

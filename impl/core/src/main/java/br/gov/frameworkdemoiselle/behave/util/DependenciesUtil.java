@@ -49,19 +49,19 @@ import java.util.logging.Logger;
  * @author SERPRO
  *
  */
-public class Dependencies {
+public class DependenciesUtil {
 
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
-	private static Dependencies instance;
+	private static DependenciesUtil instance;
 
 	private Logger logger = Logger.getLogger(this.toString());
 
-	private Dependencies() {
+	private DependenciesUtil() {
 	}
 
-	public static Dependencies getInstance() {
+	public static DependenciesUtil getInstance() {
 		if (instance == null)
-			instance = new Dependencies();
+			instance = new DependenciesUtil();
 		return instance;
 	}
 

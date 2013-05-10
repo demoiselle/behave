@@ -23,23 +23,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-
 	<artifactId>demoiselle-behave-core</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>${behave.release.version}</version>
+	
 
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-build-parent</artifactId>
-		<version>8</version>
+		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+		<artifactId>demoiselle-behave-parent</artifactId>
+		<version>1</version>
 	</parent>
 
 	<name>Demoiselle Behave Component</name>
 
-	<description>
-		Demoiselle Report Component
-	</description>
-
-	<url>http://www.frameworkdemoiselle.gov.br</url>
+	<description>Demoiselle Behave Component</description>
 
 	<licenses>
 		<license>
@@ -61,50 +57,10 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<properties>
+		<project.alias>core</project.alias>
+	</properties>
 
-	<scm>
-		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
-		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
-		<url>http://github.com/demoiselle/${project.alias}</url>
-		<tag>HEAD</tag>
-	</scm>
-
-	<repositories>
-		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>sonatype-nexus-releases</id>
-			<name>Sonatype Nexus Releases</name>
-			<url>https://oss.sonatype.org/content/repositories/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
+	
 </project>

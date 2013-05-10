@@ -47,6 +47,26 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
+/**
+ * 
+ * @author SERPRO
+ *
+ */
+/**
+ * 
+ * @author SERPRO
+ *
+ */
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class CommonSteps implements Step {
 
 	private Logger logger = Logger.getLogger(this.toString());
