@@ -34,7 +34,7 @@
 		<version>8</version>
 	</parent>
 
-	<name>Demoiselle Framework Build Aggregator</name>
+	<name>Demoiselle Behave Build Aggregator</name>
 	<description>A liberação de versões do framework deve ser feita a partir deste build, que fará automaticamente o build de todos os artefatos com versionamento sincronizado. Jamais gere uma versão do framework sem utilizar este build.</description>
 
 	<properties>
@@ -43,15 +43,17 @@
 
 	<modules>
 		<module>parent/behave</module>
+		<module>archetype</module>
+		
 		<module>impl/core</module>
-		<module>impl/extension/parser/jbehave</module>
 		<module>impl/extension/parser/imperative</module>
+		<module>impl/extension/parser/jbehave</module>
 		<module>impl/extension/parser/cucumber</module>		
 		<module>impl/extension/runner/webdriver</module>
 		<module>impl/extension/runner/fest</module>
-		<module>impl/extension/integration/alm</module>
-		<module>archetype</module>
-		<module>documentation/reference</module>
+		<module>impl/extension/integration/alm</module>	
+			
+		<module>documentation/reference</module>		 
 	</modules>
 
 	<build>

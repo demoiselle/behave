@@ -30,7 +30,7 @@
 	<version>${behave.release.version}</version>
 	
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>		
 		<artifactId>demoiselle-behave-parent</artifactId>
 		<version>1</version>
 	</parent>
@@ -54,7 +54,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-core</artifactId>			
 		</dependency>
 	</dependencies>
