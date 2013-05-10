@@ -44,6 +44,11 @@ import org.jbehave.core.annotations.Given;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.util.Dependencies;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class CommonSteps {
 
 	private Logger logger = Logger.getLogger(this.toString());

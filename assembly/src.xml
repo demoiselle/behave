@@ -42,12 +42,9 @@
 	</formats>
 	<moduleSets>
 		<moduleSet>
-			<excludes>
-				<exclude>*parent*</exclude>
-				<exclude>*build*</exclude>
-				<exclude>*archetype*</exclude>
-				<exclude>*doc*</exclude>
-			</excludes>
+			<includes>
+				<include>*core*</include>
+			</includes>
 			<sources>
 				<fileSets>
 					<fileSet>

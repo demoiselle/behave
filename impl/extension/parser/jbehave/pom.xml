@@ -28,7 +28,7 @@
 	<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 	<packaging>jar</packaging>
 	<version>${behave.release.version}</version>
-	
+
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
@@ -54,7 +54,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-core</artifactId>
 		</dependency>
 		<dependency>
@@ -62,4 +62,8 @@
 			<artifactId>jbehave-core</artifactId>
 		</dependency>
 	</dependencies>
+
+	<properties>
+		<project.alias>parser-jbehave</project.alias>
+	</properties>
 </project>

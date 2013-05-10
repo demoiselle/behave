@@ -36,4 +36,5 @@
 
 	<name>JSF and JPA Archetype</name>
 	<description>Archetype for web applications (JSF/JPA)</description>
+	
 </project>
