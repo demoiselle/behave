@@ -42,6 +42,7 @@
 	</properties>
 
 	<modules>
+		<module>parent/behave</module>
 		<module>impl/core</module>
 		<module>impl/extension/parser/jbehave</module>
 		<module>impl/extension/parser/imperative</module>

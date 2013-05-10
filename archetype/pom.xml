@@ -38,7 +38,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle</groupId>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-archetype-build</artifactId>
 	<version>1.0.0-RC-01</version>
 	<packaging>pom</packaging>

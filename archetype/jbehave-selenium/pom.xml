@@ -24,38 +24,16 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle.archetypes</groupId>
 	<artifactId>demoiselle-jbehave-selenium</artifactId>
-	<version>1.0.0-RC-01-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
+	<version>${behave.release.version}</version>
+	
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-archetype-parent</artifactId>
-		<version>2.3.3</version>
+		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+		<artifactId>demoiselle-behave-parent</artifactId>
+		<version>1</version>
 	</parent>
 
 	<name>JSF and JPA Archetype</name>
 	<description>Archetype for web applications (JSF/JPA)</description>
-
-	<repositories>
-		<repository>
-			<id>demoiselle.sourceforge.net</id>
-			<name>Demoiselle Maven Repository</name>
-			<url>http://demoiselle.sourceforge.net/repository/release</url>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

@@ -40,7 +40,7 @@
 
 	<artifactId>demoiselle-behave-reference</artifactId>
 	<packaging>jdocbook</packaging>
-	<version>1.0.0-RC-01</version>
+	<version>${behave.release.version}</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
