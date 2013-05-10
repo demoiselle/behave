@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryConverter;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
@@ -39,9 +42,9 @@ public class StoryConverterTest {
 		expectedConvertedFeatures.put(ORDER_FILE_PATH, FileUtil.loadFile(ORDER_FEATURE_FILE_PATH));
 
 		System.out.println(convertedFeatures);
-		
+
 		System.out.println("");
-		
+
 		System.out.println(expectedConvertedFeatures);
 
 		Assert.assertEquals(expectedConvertedFeatures, convertedFeatures);
