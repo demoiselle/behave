@@ -42,6 +42,8 @@ public interface Parser {
 
 	public void run() throws Throwable;
 
-	List<String> storyPaths();
+	void setStoryPaths(List<String> storyPaths);
+
+	void setSteps(List<Step> steps);
 
 }

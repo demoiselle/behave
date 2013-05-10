@@ -60,11 +60,15 @@ import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
+import br.gov.frameworkdemoiselle.behave.parser.Step;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	private Logger logger = Logger.getLogger(this.toString());
 	private Configuration configuration;
+
+	private List<String> storyPaths = new ArrayList<String>();
+	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
 		logger.log(Level.INFO, "Configurando o JBheave");
@@ -105,7 +109,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 		Embedder embedder = configuredEmbedder();
 		try {
-			embedder.runStoriesAsPaths(storyPaths());
+			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();
 		}
@@ -120,19 +124,30 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	@Override
-	public List<String> storyPaths() {
-		/**
-		 * TODO: Configurações de quais histórias irão rodar.
-		 */
-		
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("stories/google.story");
-		return stories;
+	public InjectableStepsFactory stepsFactory() {
+
+		steps.add(new CommonSteps());
+
+		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 
 	@Override
-	public InjectableStepsFactory stepsFactory() {
-		return new InstanceStepsFactory(configuration(), new CommonSteps());
+	public void setStoryPaths(List<String> storyPaths) {
+
+		List<String> aux = new ArrayList<String>();
+		for (String str : storyPaths) {
+			/**
+			 * TODO: REVER ISSO!
+			 */
+			aux.add(str.replace("/home/00968514901/Demoiselle-Behave/workspace/jbehave-selenium/target/classes/", ""));
+		}
+
+		this.storyPaths = aux;
+	}
+
+	@Override
+	public void setSteps(List<Step> steps) {
+		this.steps = steps;
 	}
 
 }

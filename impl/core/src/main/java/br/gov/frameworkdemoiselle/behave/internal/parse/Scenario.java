@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.behave.parser.cucumber;
+package br.gov.frameworkdemoiselle.behave.internal.parse;
 
 import java.util.List;
 
