@@ -40,26 +40,74 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 
+import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.util.Dependencies;
+import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
-public class CommonSteps {
+public class CommonSteps implements Step {
 
 	private Logger logger = Logger.getLogger(this.toString());
 
 	@Given("vou para o endereço [$url]")
 	public void goToUrl(String url) {
-		
-		Runner runner = (Runner) Dependencies.getInstance().getInstanceDependecy(Runner.class);
+
+		Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
 		runner.run();
-		
+
 		logger.log(Level.INFO, "Go to URL: " + url);
 	}
 
 	@Given("clico em [$objeto]")
 	public void click(String objeto) {
 		logger.log(Level.INFO, "Click em " + objeto);
+	}
+
+	@Given("o browser foi aberto")
+	public void open() {
+
+	}
+
+	@When("for preenchido o nome do usuário com \"$teste\"")
+	public void whenForPreenchidoONomeDoUsuárioComusuário() {
+
+	}
+
+	@When("for preencido a senha com \"123\"")
+	public void whenForPreencidoASenhaCom123() {
+		// PENDENTE
+	}
+
+	@When("for acionado o botão \"entrada\"")
+	public void whenForAcionadoOBotãoentrada() {
+		// PENDENTE
+	}
+
+	@When("for acionado o botão \"confirmação de entrada\"")
+	public void whenForAcionadoOBotãoconfirmaçãoDeEntrada() {
+		// PENDENTE
+	}
+
+	@Then("será exibida a mensagem \"login efetuado com sucesso\"")
+	public void thenSeráExibidaAMensagemloginEfetuadoComSucesso() {
+		// PENDENTE
+	}
+
+	@Then("que entrei na opcao fazer pedido")
+	public void thenQueEntreiNaOpcaoFazerPedido() {
+		// PENDENTE
+	}
+
+	@When("for preenchido um pedido do tipo \"venda grande\"")
+	public void whenForPreenchidoUmPedidoDoTipovendaGrande() {
+		// PENDENTE
+	}
+
+	@Then("será exibida a mensagem \"sucesso\"")
+	public void thenSeráExibidaAMensagemsucesso() {
+		// PENDENTE
 	}
 
 }
