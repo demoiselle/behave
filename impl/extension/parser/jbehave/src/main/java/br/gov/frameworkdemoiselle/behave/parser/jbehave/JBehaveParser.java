@@ -61,6 +61,7 @@ import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
@@ -136,10 +137,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 		List<String> aux = new ArrayList<String>();
 		for (String str : storyPaths) {
-			/**
-			 * TODO: REVER ISSO!
-			 */
-			aux.add(str.replace("/home/00968514901/Demoiselle-Behave/workspace/jbehave-selenium/target/classes/", ""));
+			aux.add(str.replace(FileUtil.getAbsolutePath("."), ""));
 		}
 
 		this.storyPaths = aux;
