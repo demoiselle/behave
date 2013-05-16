@@ -7,9 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
 
+    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    
 	public static String loadFile(String pFilePath) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder();
 		FileInputStream fileInputStream = new FileInputStream(new File(pFilePath));
@@ -85,4 +89,34 @@ public class FileUtil {
 			writer.close();
 		}
 	}
+	
+    public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
+	    List<String> fileNames = new ArrayList<String>();
+	    File folder = new File(folderRoot);
+		File[] files = folder.listFiles();
+	    String entryName;
+	    for(File file: files){
+	        entryName = file.getName();
+	        if(includeSubfolder && file.isDirectory()){
+        	 	fileNames.addAll(getFilesInFolder(folderRoot+FILE_SEPARATOR+entryName, includeSubfolder));
+	        }else{
+	        	fileNames.add(folderRoot+FILE_SEPARATOR+entryName);
+	        }
+	    }
+		return fileNames;
+	}
+
+    public static List<String> getFilesInFolderByExtension(String folderRoot, String extension, Boolean includeSubfolder) {
+	    List<String> fileNames = new ArrayList<String>();
+	    fileNames=getFilesInFolder(folderRoot, includeSubfolder);
+	    List<String> filteredFileNames = new ArrayList<String>();
+	    for(String fileName : fileNames){
+	    	if(RegularExpressionUtil.matches("."+extension+"$", fileName)){
+	    		filteredFileNames.add(fileName);
+	    	}
+	    		
+	    }
+	    return filteredFileNames;
+	}
+
 }

@@ -38,11 +38,11 @@ package br.gov.frameworkdemoiselle.behave.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.gov.frameworkdemoiselle.behave.internal.parse.StoryConverter;
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
@@ -66,13 +66,7 @@ public class EngineController {
 
 		parser = (Parser) DependenciesUtil.getInstance().getInstanceDependecy(Parser.class);
 
-		Map<String, String> processedStories = StoryConverter.createFilesWithReusedScenarios(storiesPath);
-
-		List<String> finalStoriesPath = new ArrayList<String>();
-
-		for (String storyPath : processedStories.keySet()) {
-			finalStoriesPath.add(storyPath);
-		}
+		List<String> finalStoriesPath = StoryFileConverter.convertReusedScenarios(storiesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
 
 		parser.setSteps(steps);
 		parser.setStoryPaths(finalStoriesPath);

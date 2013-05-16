@@ -12,6 +12,9 @@ public class BehaveConfig {
 	public static String LANGUAGE = "pt";
 	public static String IDENTIFICATION_SCENARIO_PATTERN = "";
 	public static String PREFIXES_BDD_PATTERN = "";
+	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
+	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
+	
 
 	static {
 		try {

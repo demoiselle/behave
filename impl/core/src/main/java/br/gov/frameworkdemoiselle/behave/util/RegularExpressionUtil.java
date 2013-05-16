@@ -13,7 +13,7 @@ public class RegularExpressionUtil {
 		if (lMatcher.find()){
 			return lMatcher.group(group);
 		}
-		return string;
+		return null;
 	}
 
 	public static Boolean matches(String regularExpression, String string) {

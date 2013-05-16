@@ -1,3 +1,9 @@
+Funcionalidade: pedido
+
+	Como um: usuário
+	Eu quero: alguma coisa
+	De modo que: algo funcione
+	
 	Cenário: registrar pedido
 		Dado que o browser foi aberto
 		Quando for preenchido o nome do usuário com "claudio"

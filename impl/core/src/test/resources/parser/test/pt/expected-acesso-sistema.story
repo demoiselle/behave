@@ -1,3 +1,9 @@
+Funcionalidade: acesso ao sistema
+
+	Como um: usuário
+	Eu quero: alguma coisa
+	De modo que: algo funcione
+	
 	Cenário: que estou logado como "{usuário}" no sistema
 		Dado que o browser foi aberto
 		Quando for preenchido o nome do usuário com "{usuário}"

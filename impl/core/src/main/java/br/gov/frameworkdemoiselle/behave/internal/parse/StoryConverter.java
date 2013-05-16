@@ -1,6 +1,5 @@
 package br.gov.frameworkdemoiselle.behave.internal.parse;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,14 +8,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 import br.gov.frameworkdemoiselle.behave.util.RegularExpressionUtil;
 
 public class StoryConverter {
 
 	private static final String LINE_BREAK_TOKEN = "\n";
 
-	/*
+	/* 
 	 * Definições: story=arquivo com um ou mais cenários ;
 	 * cenário=identificador+sentenças Algoritmo: Converter todas os cenários de
 	 * todos as stories (textos extraídos dos arquivos) para objetos do tipo
@@ -30,29 +28,6 @@ public class StoryConverter {
 	 * volta para um texto correspondente ao arquivo convertido
 	 */
 
-	public static Map<String, String> createFilesWithReusedScenarios(List<String> originalStories) throws IOException {
-
-		// Pega os arquivos originais
-		Map<String, String> originalStoriesMap = new HashMap<String, String>();
-
-		for (String filePath : originalStories) {
-			originalStoriesMap.put(filePath, FileUtil.loadResource(filePath));
-		}
-
-		// Faz o reuso
-		Map<String, String> converted = convertReusedScenarios(originalStoriesMap);
-
-		// Grava os arquivos novos na pasta de processados
-		Map<String, String> convertedNewPaths = new HashMap<String, String>();
-		for (String storyPath : converted.keySet()) {
-			String completePath = FileUtil.getAbsolutePath(".") + File.separator + "processed" + File.separator + storyPath;
-			FileUtil.createFile(completePath, converted.get(storyPath));
-			convertedNewPaths.put(completePath, converted.get(storyPath));
-		}
-
-		return convertedNewPaths;
-	}
-
 	/**
 	 * Gera stories a partir de stories originais, substituindo referências à
 	 * stories pelo conteúdo das mesmas, além de realizar a adequada
@@ -65,9 +40,10 @@ public class StoryConverter {
 	 */
 	public static Map<String, String> convertReusedScenarios(Map<String, String> stories) throws IOException {
 		Map<String, String> convertedStories = new HashMap<String, String>();
+		Map<String, String> storyDefinitions = extractStoryDefinitions(stories);
 		Map<String, List<Scenario>> scenarios = extractScenarios(stories);
 		reuseScenario(scenarios);
-		convertedStories = scenariosToStories(scenarios);
+		convertedStories = scenariosToStories(storyDefinitions, scenarios);
 		return convertedStories;
 	}
 
@@ -77,6 +53,27 @@ public class StoryConverter {
 			scenarios.put(storyPath, extractScenarios(stories.get(storyPath)));
 		}
 		return scenarios;
+	}
+
+	private static Map<String, String> extractStoryDefinitions(Map<String, String> stories) {
+		Map<String, String> storyDefinitions = new HashMap<String, String>();
+		for (String storyPath : stories.keySet()) {
+			storyDefinitions.put(storyPath, extractStoryDefinition(stories.get(storyPath)));
+		}
+		return storyDefinitions;
+	}
+
+	private static String extractStoryDefinition(String storyContent) {
+		String[] scenarioTokens = storyContent.split(LINE_BREAK_TOKEN);
+		String storyDefinition = "";
+		for (int i = 0; i < scenarioTokens.length; i++) {
+			String scenarioToken = scenarioTokens[i];
+			if (RegularExpressionUtil.matches(BehaveConfig.IDENTIFICATION_SCENARIO_PATTERN, scenarioToken.trim())) {
+				return storyDefinition;
+			}
+			storyDefinition += scenarioToken+LINE_BREAK_TOKEN;
+		}
+		return storyDefinition;
 	}
 
 	private static List<Scenario> extractScenarios(String storyContent) {
@@ -107,10 +104,10 @@ public class StoryConverter {
 		return scenario;
 	}
 
-	private static Map<String, String> scenariosToStories(Map<String, List<Scenario>> scenarios) {
+	private static Map<String, String> scenariosToStories(Map<String, String> storyDefinitions, Map<String, List<Scenario>> scenarios) {
 		Map<String, String> stories = new HashMap<String, String>();
 		for (String storyPath : scenarios.keySet()) {
-			stories.put(storyPath, scenariosToText(scenarios.get(storyPath)));
+			stories.put(storyPath, storyDefinitions.get(storyPath)+scenariosToText(scenarios.get(storyPath)));
 		}
 		return stories;
 	}
@@ -155,7 +152,11 @@ public class StoryConverter {
 	private static void reuseScenario(Scenario scenario, Map<String, Scenario> scenariosIdentificationMap) {
 		List<String> sentences = new ArrayList<String>();
 		for (String sentence : scenario.getSentences()) {
-			String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.PREFIXES_BDD_PATTERN, sentence.trim(), 3).trim();
+			String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.PREFIXES_BDD_PATTERN, sentence.trim(), 3);
+			if(sentenceWithoutPrefixAndParametersName==null){
+				sentenceWithoutPrefixAndParametersName = sentence;
+			}
+			sentenceWithoutPrefixAndParametersName = sentenceWithoutPrefixAndParametersName.trim();
 			sentenceWithoutPrefixAndParametersName = ScenarioParameter.removeParameterNames(sentenceWithoutPrefixAndParametersName).toUpperCase();
 			if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {
 				// A sentença é na verdade uma referência a outro cenário
