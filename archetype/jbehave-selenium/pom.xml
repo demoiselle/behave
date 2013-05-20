@@ -24,7 +24,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>demoiselle-jbehave-selenium</artifactId>
+	<groupId>br.gov.frameworkdemoiselle.component.behave.archetype</groupId>
+	<artifactId>jbehave-selenium-archetype</artifactId>
 	<packaging>jar</packaging>
 	<version>${behave.release.version}</version>
 	
