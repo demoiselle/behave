@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-quickstart">
+
+	<title>Roteiro Rápido</title>
+	<para>
+		Esta seção apresenta um roteiro rápido para criação e configuração de projeto do Demoiselle Behave.
+	</para>
+
+	<section>
+		<title>Criação do Projeto</title>		
+		<para>
+			TODO: mostrar a criação por meio de archetype.
+			
+		</para>
+	</section>
+
+</chapter>
