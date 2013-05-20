@@ -55,6 +55,7 @@ import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
  */
 public class CommonSteps implements Step {
 
+	@SuppressWarnings("unused")
 	private Runner runner;
 
 	private Logger logger = Logger.getLogger(this.toString());

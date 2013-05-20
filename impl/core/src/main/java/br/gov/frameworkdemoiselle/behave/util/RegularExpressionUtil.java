@@ -17,7 +17,7 @@ public class RegularExpressionUtil {
 	}
 
 	public static Boolean matches(String regularExpression, String string) {
-		return Pattern.matches(regularExpression, string.toUpperCase());
+		return Pattern.matches(regularExpression, string);
 	}
 
 	public static String replaceAll(String regularExpression, String string, String newValue) {

@@ -43,13 +43,12 @@ public class StoryConverterTest {
 		Map<String,String> expectedConvertedStories = new HashMap<String,String>();
 		expectedConvertedStories.put(ACCESS_FILE_NAME, FileUtil.loadFile(ACCESS_STORY_FILE_PATH));
 		expectedConvertedStories.put(ORDER_FILE_NAME, FileUtil.loadFile(ORDER_STORY_FILE_PATH));
-		
 
-		System.out.println(convertedStories);
-
-		System.out.println("");
-
-		System.out.println(expectedConvertedStories);
+//		System.out.println("---");
+//		System.out.println(expectedConvertedStories);
+//		System.out.println("---");		
+//		System.out.println(convertedStories);
+//		System.out.println("---");
 
 		//Para comparar os maps, lembrar que o nome de arquivo no map (key) deve ser igual, por isso não são utilizadas as extensão (.bdd e .story) no arquivo 
 		Assert.assertEquals(expectedConvertedStories, convertedStories);

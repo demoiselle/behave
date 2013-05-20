@@ -14,7 +14,6 @@ public class BehaveConfig {
 	public static String PREFIXES_BDD_PATTERN = "";
 	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
 	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
-	
 
 	static {
 		try {
@@ -24,7 +23,10 @@ public class BehaveConfig {
 			LANGUAGE = properties.getProperty("behave.parser.language");
 			IDENTIFICATION_SCENARIO_PATTERN = properties.getProperty("behave.parser.identification.scenario.pattern." + LANGUAGE);
 			PREFIXES_BDD_PATTERN = properties.getProperty("behave.parser.prefixes.bdd.pattern." + LANGUAGE);
-			
+
+			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
+			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
+
 		} catch (IOException e) {
 
 			// TODO Auto-generated catch block

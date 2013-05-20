@@ -97,7 +97,6 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		embedderControls.doVerboseFiltering(false);
 		embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
 		embedderControls.useThreads(1);
-
 	}
 
 	public Keywords getKeywordsLocale() {
@@ -105,18 +104,17 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public void run() throws Throwable {
-
 		logger.log(Level.INFO, "Iniciou o PARSER JBehave");
 
 		Embedder embedder = configuredEmbedder();
 		try {
+			logger.log(Level.INFO, "storyPaths: " + storyPaths.toString());
 			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();
 		}
 
 		logger.log(Level.INFO, "Finalizou PARSER JBehave");
-
 	}
 
 	@Override
@@ -134,10 +132,9 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public void setStoryPaths(List<String> storyPaths) {
-
 		List<String> aux = new ArrayList<String>();
 		for (String str : storyPaths) {
-			aux.add(str.replace(FileUtil.getAbsolutePath("."), ""));
+			aux.add(str.replace(FileUtil.getAbsolutePath(".") + "/", ""));
 		}
 
 		this.storyPaths = aux;

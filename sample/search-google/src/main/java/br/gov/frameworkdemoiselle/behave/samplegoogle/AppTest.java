@@ -34,32 +34,33 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.annotation;
+package br.gov.frameworkdemoiselle.behave.samplegoogle;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.ArrayList;
 
-/**
- * Anotação utilizada para mapear os campos com os atributos dentro de uma
- * página (Classe anotada com @Page).
- * 
- * TODO: Como iremos fazer com o locator? Pois normalmente é utilizado o @FindBy
- * do org.openqa.selenium.support.
- * 
- * @author SERPRO
- */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.FIELD })
-public @interface Field {
+import org.junit.Test;
 
-	public String name();
+import br.gov.frameworkdemoiselle.behave.controller.EngineController;
 
-	public String locatorType();
+public class AppTest {
 
-	public String locator();
+	@Test
+	public void start() throws Throwable {
+		ArrayList<String> stories = new ArrayList<String>();
+//		stories.add("stories/acesso-sistema.story");
+//		stories.add("stories/pedido.story");
+		stories.add("/home/00968514901/Demoiselle-Behave/workspace/behave/sample/search-google/target/classes/stories");
+
+		EngineController eng = new EngineController();
+
+		eng.addSteps(new MySteps());
+
+		eng.run(stories);
+	}
+
+	public static void main(String[] args) throws Throwable {
+		AppTest app = new AppTest();
+		app.start();
+	}
 
 }

@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FileUtil {
 
-    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
-    
+	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
 	public static String loadFile(String pFilePath) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder();
 		FileInputStream fileInputStream = new FileInputStream(new File(pFilePath));
@@ -69,17 +69,17 @@ public class FileUtil {
 		File file = new File(filePath);
 
 		if (!file.exists()) {
-			
+
 			String aux = file.getParent();
-			
+
 			File dirs = new File(aux);
 			if (!dirs.exists()) {
 				dirs.mkdirs();
 			}
-			
+
 			file.createNewFile();
 		}
-		  
+
 		FileWriter fileWriter = new FileWriter(file);
 		BufferedWriter writer = new BufferedWriter(fileWriter);
 
@@ -89,34 +89,34 @@ public class FileUtil {
 			writer.close();
 		}
 	}
-	
-    public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
-	    List<String> fileNames = new ArrayList<String>();
-	    File folder = new File(folderRoot);
+
+	public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
+		List<String> fileNames = new ArrayList<String>();
+		File folder = new File(folderRoot);
 		File[] files = folder.listFiles();
-	    String entryName;
-	    for(File file: files){
-	        entryName = file.getName();
-	        if(includeSubfolder && file.isDirectory()){
-        	 	fileNames.addAll(getFilesInFolder(folderRoot+FILE_SEPARATOR+entryName, includeSubfolder));
-	        }else{
-	        	fileNames.add(folderRoot+FILE_SEPARATOR+entryName);
-	        }
-	    }
+		String entryName;
+		for (File file : files) {
+			entryName = file.getName();
+			if (includeSubfolder && file.isDirectory()) {
+				fileNames.addAll(getFilesInFolder(folderRoot + FILE_SEPARATOR + entryName, includeSubfolder));
+			} else {
+				fileNames.add(folderRoot + FILE_SEPARATOR + entryName);
+			}
+		}
 		return fileNames;
 	}
 
-    public static List<String> getFilesInFolderByExtension(String folderRoot, String extension, Boolean includeSubfolder) {
-	    List<String> fileNames = new ArrayList<String>();
-	    fileNames=getFilesInFolder(folderRoot, includeSubfolder);
-	    List<String> filteredFileNames = new ArrayList<String>();
-	    for(String fileName : fileNames){
-	    	if(RegularExpressionUtil.matches("."+extension+"$", fileName)){
-	    		filteredFileNames.add(fileName);
-	    	}
-	    		
-	    }
-	    return filteredFileNames;
+	public static List<String> getFilesInFolderByExtension(String folderRoot, String extension, Boolean includeSubfolder) {
+		List<String> fileNames = new ArrayList<String>();
+		fileNames = getFilesInFolder(folderRoot, includeSubfolder);
+		List<String> filteredFileNames = new ArrayList<String>();
+		for (String fileName : fileNames) {
+			//if (RegularExpressionUtil.matches("." + extension + "$", fileName)) {
+			if (RegularExpressionUtil.matches("([^\\s]+(\\.(?i)(" + extension + "))$)", fileName)) {
+				filteredFileNames.add(fileName);
+			}
+		}
+		return filteredFileNames;
 	}
 
 }
