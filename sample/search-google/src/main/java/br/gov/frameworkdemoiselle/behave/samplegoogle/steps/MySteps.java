@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.behave.samplegoogle;
+package br.gov.frameworkdemoiselle.behave.samplegoogle.steps;
 
 import org.jbehave.core.annotations.Given;
 

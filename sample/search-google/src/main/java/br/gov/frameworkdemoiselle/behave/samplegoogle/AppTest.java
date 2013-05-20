@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import br.gov.frameworkdemoiselle.behave.samplegoogle.steps.MySteps;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class AppTest {
