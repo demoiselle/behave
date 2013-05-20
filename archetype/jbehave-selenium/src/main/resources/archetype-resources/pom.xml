@@ -1,52 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
-	<name></name>
-	<description></description>
-	<url></url>
-
-	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-jsf-parent</artifactId>
-		<version>#{parent.version}</version>
-	</parent>
+	<name>${artifactId}</name>
+	<description>Descrição do ${artifactId}</description>
 
 	<dependencies>
+
 		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
-			<artifactId>demoiselle-jpa</artifactId>
-			<scope>compile</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+		</dependency>
+
+		<!-- demoiselle-behave (jbehave/webdriver) -->
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-		    <groupId>br.gov.frameworkdemoiselle</groupId>
-		    <artifactId>demoiselle-jta</artifactId>
-		    <scope>compile</scope>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-runner-webdriver</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-easymock</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 	</dependencies>
 
 	<repositories>
 		<repository>
-			<id>demoiselle.sourceforge.net-release</id>
-			<url>http://demoiselle.sourceforge.net/repository/release</url>
+			<id>demoiselle-behave-snapshots</id>
+			<name>Demoiselle Behave Snapshots</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
+		</repository>
+		<repository>
+			<id>demoiselle-behave-releases</id>
+			<name>Demoiselle Behave Releases</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
 		</repository>
 	</repositories>
-	
+
 </project>

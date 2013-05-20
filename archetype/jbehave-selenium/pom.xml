@@ -1,4 +1,4 @@
-<!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
+  <!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
 	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
 	you can redistribute it and/or modify it under the terms of the GNU Lesser 
 	General Public License version 3 as published by the Free Software Foundation. 
@@ -27,15 +27,31 @@
 	<groupId>br.gov.frameworkdemoiselle.component.behave.archetype</groupId>
 	<artifactId>jbehave-selenium-archetype</artifactId>
 	<packaging>jar</packaging>
-	<version>${behave.release.version}</version>
-	
-	<parent>
-		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-		<artifactId>demoiselle-behave-parent</artifactId>
-		<version>1</version>
-	</parent>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<organization>
+		<name>SERPRO</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
+
+
+	<distributionManagement>
+		<repository>
+			<id>demoiselle-behave.internal</id>
+			<name>Repositorio Interno</name>
+			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>demoiselle-behave.snapshots</id>
+			<name>Repositorio Interno</name>
+			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+
 
 	<name>JSF and JPA Archetype</name>
 	<description>Archetype for web applications (JSF/JPA)</description>
-	
+
 </project>
