@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -50,18 +51,24 @@ import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class CommonSteps implements Step {
 
+	private Runner runner;
+
 	private Logger logger = Logger.getLogger(this.toString());
 
-	@Given("vou para o endereço [$url]")
-	public void goToUrl(String url) {
+	public CommonSteps() {
+		runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(
+				Runner.class);
+	}
 
-		Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
-		runner.run();
-
+	@Given("vou para a página [$url]")
+	@Alias("vou para o formulário [$url]")
+	public void goTo(String url) {
+		// runner.navegate(url);
+		// runner.run();
 		logger.log(Level.INFO, "Go to URL: " + url);
 	}
 
