@@ -41,15 +41,15 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class AppTest {
 
 	@Test
 	public void start() throws Throwable {
 		ArrayList<String> stories = new ArrayList<String>();
-//		stories.add("stories/acesso-sistema.story");
-//		stories.add("stories/pedido.story");
-		stories.add("/home/00968514901/Demoiselle-Behave/workspace/behave/sample/search-google/target/classes/stories");
+
+		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
 
 		EngineController eng = new EngineController();
 

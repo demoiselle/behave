@@ -111,7 +111,6 @@ public class FileUtil {
 		fileNames = getFilesInFolder(folderRoot, includeSubfolder);
 		List<String> filteredFileNames = new ArrayList<String>();
 		for (String fileName : fileNames) {
-			//if (RegularExpressionUtil.matches("." + extension + "$", fileName)) {
 			if (RegularExpressionUtil.matches("([^\\s]+(\\.(?i)(" + extension + "))$)", fileName)) {
 				filteredFileNames.add(fileName);
 			}
