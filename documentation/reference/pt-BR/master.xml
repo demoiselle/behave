@@ -9,6 +9,15 @@
 	<preface>
 		<title>Demoiselle Behave</title>
 		<para>
+			Behavior Driven Development  é uma técnica desenvolvida por Dan North em 2003 com o objetivo de facilitar a colaboração entre desenvolvedores , setores de qualidade
+			 e cliente em um projeto de software.  A técnica parte do principio de que especificando histórias de usuário em um formato adequado, as histórias especificadas 
+			 poderiam ser utilizadas tanto como requisito como artefato de entrada para testes automatizados. A técnica se utilizada de uma linguagem denominada linguagem ubíqua 
+			 que permite que os testes de aceitação sejam escritos em uma linguagem mais próxima da linguagem de negócio.
+		</para>
+		<para>
+			Os testes descritos são interpretados por ferramentas especializadas que exercitam o código do sistema para demonstrar se o comportamento foi atendido.
+		</para>
+		<para>
 			TODO: Escrever uma introdução sobre o componente.			
 		</para>
 	</preface>
