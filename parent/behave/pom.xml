@@ -100,6 +100,27 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<version>1.5</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>mockit</groupId>
+			<artifactId>jmockit</artifactId>
+			<version>0.999.4</version>
+		</dependency>
+		<dependency>
+			<groupId>mockit</groupId>
+			<artifactId>jmockit-coverage</artifactId>
+			<version>0.999.4</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -117,17 +138,17 @@
 				<artifactId>cucumber-core</artifactId>
 				<version>1.1.3</version>
 			</dependency>
+			<dependency>
+				<groupId>org.jbehave</groupId>
+				<artifactId>jbehave-core</artifactId>
+				<version>3.7.5</version>
+			</dependency>
 
 			<!-- runner -->
 			<dependency>
-				<groupId>org.seleniumhq.webdriver</groupId>
-				<artifactId>webdriver-selenium</artifactId>
-				<version>0.9.7376</version>
-			</dependency>
-			<dependency>
-				<groupId>org.seleniumhq.webdriver</groupId>
-				<artifactId>webdriver-firefox</artifactId>
-				<version>0.9.7376</version>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-java</artifactId>
+				<version>2.32.0</version>
 			</dependency>
 
 			<!-- test -->
@@ -136,12 +157,18 @@
 				<artifactId>junit</artifactId>
 				<version>4.4</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jbehave</groupId>
-				<artifactId>jbehave-core</artifactId>
-				<version>3.7.5</version>
-			</dependency>
 
+			<!-- Utils -->
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>0.9.9-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+				<version>1.4.01</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

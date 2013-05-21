@@ -34,13 +34,33 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner;
+package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-public interface WebRunner extends Runner {
+import java.util.logging.Logger;
 
-	/*
-	 * TODO: Funções como CLICK
-	 */
-	
-	
+import org.jbehave.core.annotations.AfterStories;
+import org.jbehave.core.annotations.BeforeStories;
+
+import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
+
+public class BeforeAfterSteps implements Step {
+
+	private Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
+	private Logger logger = Logger.getLogger(this.toString());
+
+	@BeforeStories
+	public void startStories() {
+		logger.info("Iniciando navegador");
+		runner.getDriver();
+	}
+
+	@AfterStories
+	public void stopStories() {
+		// runner.getDriver().close();
+		// runner.getDriver().quit();
+		logger.info("Navegador fechado");
+	}
+
 }

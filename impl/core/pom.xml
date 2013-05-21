@@ -25,7 +25,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>demoiselle-behave-core</artifactId>
 	<version>${behave.release.version}</version>
-	
+
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
@@ -57,10 +57,19 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<properties>
 		<project.alias>core</project.alias>
 	</properties>
 
-	
+	<dependencies>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+		</dependency>
+	</dependencies>
 </project>

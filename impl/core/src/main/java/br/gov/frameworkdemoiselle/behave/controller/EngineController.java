@@ -62,21 +62,14 @@ public class EngineController {
 
 	public void run(List<String> storiesPath) throws Throwable {
 
+		List<String> finalStoriesPath = StoryFileConverter.convertReusedScenarios(storiesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
+		
 		logger.log(Level.INFO, "Iniciou o processo...");
 
 		parser = (Parser) DependenciesUtil.getInstance().getInstanceDependecy(Parser.class);
-
-		List<String> finalStoriesPath = StoryFileConverter.convertReusedScenarios(storiesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
-
 		parser.setSteps(steps);
 		parser.setStoryPaths(finalStoriesPath);
-
 		parser.run();
-
-		// runner = (Runner)
-		// DependenciesUtil.getInstance().getInstanceDependecy(
-		// Runner.class);
-		// runner.run();
 
 		logger.log(Level.INFO, "Concluiu o processo.");
 

@@ -48,14 +48,15 @@ public class AppTest {
 
 	@Test
 	public void start() throws Throwable {
+		// Cria o array contendo as histórias
 		ArrayList<String> stories = new ArrayList<String>();
-
 		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
 
+		// Inicia o motor de testes
 		EngineController eng = new EngineController();
-
+		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
-
+		// Manda rodar informando as histórias
 		eng.run(stories);
 	}
 

@@ -51,9 +51,7 @@
 		<module>impl/extension/parser/cucumber</module>		
 		<module>impl/extension/runner/webdriver</module>
 		<module>impl/extension/runner/fest</module>
-		<module>impl/extension/integration/alm</module>	
-		<module>sample/search-google</module>
-			
+		<module>impl/extension/integration/alm</module>				
 		<module>documentation/reference</module>		 
 	</modules>
 

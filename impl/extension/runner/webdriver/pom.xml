@@ -28,7 +28,7 @@
 	<artifactId>demoiselle-behave-runner-webdriver</artifactId>
 	<packaging>jar</packaging>
 	<version>${behave.release.version}</version>
-	
+
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
@@ -58,13 +58,8 @@
 			<artifactId>demoiselle-behave-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.seleniumhq.webdriver</groupId>
-			<artifactId>webdriver-selenium</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.webdriver</groupId>
-			<artifactId>webdriver-firefox</artifactId>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>

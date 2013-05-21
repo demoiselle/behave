@@ -124,9 +124,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-
-		steps.add(new CommonSteps());
-
+		steps.add(new BeforeAfterSteps());
+		steps.add(new CommonSteps());		
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 
@@ -136,7 +135,6 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		for (String str : storyPaths) {
 			aux.add(str.replace(FileUtil.getAbsolutePath(".") + "/", ""));
 		}
-
 		this.storyPaths = aux;
 	}
 

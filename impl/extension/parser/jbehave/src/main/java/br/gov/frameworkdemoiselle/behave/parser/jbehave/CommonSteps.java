@@ -46,7 +46,9 @@ import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
+import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 /**
  * 
@@ -55,72 +57,39 @@ import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
  */
 public class CommonSteps implements Step {
 
-	@SuppressWarnings("unused")
-	private Runner runner;
-
+	private Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
 	private Logger logger = Logger.getLogger(this.toString());
+	private String currentPageName;
 
-	public CommonSteps() {
-		runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(
-				Runner.class);
+	@Given("vou para a página \"$local\"")
+	@Alias("vou para o formulário \"$local\"")
+	public void goToWithPageName(String pageName) {
+		logger.log(Level.INFO, "Go to page name: " + pageName);
+
+		currentPageName = pageName;
+
+		String url = ReflectionUtil.getPageUrlByName(pageName);
+		runner.getDriver().navigateTo(url);
 	}
 
-	@Given("vou para a página [$url]")
-	@Alias("vou para o formulário [$url]")
-	public void goTo(String url) {
-		// runner.navegate(url);
-		// runner.run();
-		logger.log(Level.INFO, "Go to URL: " + url);
-	}
+	@When("clico no botão \"$objeto\"")
+	public void clickButton(String objeto) {
 
-	@Given("clico em [$objeto]")
-	public void click(String objeto) {
-		logger.log(Level.INFO, "Click em " + objeto);
-	}
+		/*
+		 * Verifico em que página estou e pego a classe
+		 */
 
-	@Given("o browser foi aberto")
-	public void open() {
+		/**
+		 * Pega o botão a partir da página Clicar
+		 */
+
+		// Button button =
 
 	}
 
-	@When("for preenchido o nome do usuário com \"$teste\"")
-	public void whenForPreenchidoONomeDoUsuárioComusuário() {
-
-	}
-
-	@When("for preencido a senha com \"123\"")
-	public void whenForPreencidoASenhaCom123() {
-		// PENDENTE
-	}
-
-	@When("for acionado o botão \"entrada\"")
-	public void whenForAcionadoOBotãoentrada() {
-		// PENDENTE
-	}
-
-	@When("for acionado o botão \"confirmação de entrada\"")
-	public void whenForAcionadoOBotãoconfirmaçãoDeEntrada() {
-		// PENDENTE
-	}
-
-	@Then("será exibida a mensagem \"login efetuado com sucesso\"")
-	public void thenSeráExibidaAMensagemloginEfetuadoComSucesso() {
-		// PENDENTE
-	}
-
-	@Then("que entrei na opcao fazer pedido")
-	public void thenQueEntreiNaOpcaoFazerPedido() {
-		// PENDENTE
-	}
-
-	@When("for preenchido um pedido do tipo \"venda grande\"")
-	public void whenForPreenchidoUmPedidoDoTipovendaGrande() {
-		// PENDENTE
-	}
-
-	@Then("será exibida a mensagem \"sucesso\"")
-	public void thenSeráExibidaAMensagemsucesso() {
-		// PENDENTE
+	@Then("será exibido \"$objeto\"")
+	public void textVisible(String text) {
+		logger.log(Level.INFO, "Visualização de " + text);
 	}
 
 }
