@@ -9,7 +9,7 @@
 	<preface>
 		<title>Demoiselle Behave</title>
 		<para>
-			Behavior Driven Development é uma técnica desenvolvida por Dan
+			Behavior Driven Development(BDD) é uma técnica desenvolvida por Dan
 			North em 2003 com o objetivo de facilitar a colaboração entre
 			desenvolvedores , setores de qualidade
 			e cliente em um projeto de software. A técnica parte do principio de
@@ -32,13 +32,12 @@
 			<orderedlist numeration="arabic">
 				<listitem>
 					<para>
-						Envolver as partes interessadas no processo através de Outside-in
-						Development (Desenvolvimento de Fora pra Dentro)
+						Envolver os stakeholder do projeto (<citetitle pubwork="webpage">Wikipedia</citetitle>)
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Usar exemplos para descrever o comportamento de uma aplicação ou
+						Usar derivação por exemplos para descrever o comportamento de uma aplicação ou
 						unidades de código
 					</para>
 				</listitem>
@@ -46,17 +45,10 @@
 					<para>
 						Automatizar os exemplos para prover um feedback rápido e testes de regressão
 					</para>
-				</listitem>
+				</listitem>				
 				<listitem>
 					<para>
-						Usar deve (should em inglês) na hora de descrever o comportamento de
-						software para ajudar esclarecer responsabilidades e permitir que
-						funcionalidades do software sejam questionadas
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Usar dublês de teste (mocks, stubs, fakes, dummies, spies) para
+						Usar Mocks para
 						auxiliar na colaboração entre módulos e códigos que ainda não
 						foram escritos
 					</para>
@@ -64,9 +56,12 @@
 			</orderedlist>
 					</para>
 		<para>
-			TODO: Escrever uma introdução sobre o componente.
+			O Demoisele-Behave é um  framework que permite ao usuários automatizar testes utilizando recursos de BDD.
 		</para>
+		
+		
 	</preface>
+	
 
 	<!-- índice -->
 	<toc />
