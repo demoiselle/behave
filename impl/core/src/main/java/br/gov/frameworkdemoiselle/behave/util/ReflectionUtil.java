@@ -4,18 +4,18 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
-import br.gov.frameworkdemoiselle.behave.annotation.Page;
+import br.gov.frameworkdemoiselle.behave.annotation.PageMap;
 
 public class ReflectionUtil {
 
 	public static String getPageUrlByName(String name) {
 		Reflections reflections = new Reflections("");
-		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(Page.class);
+		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(PageMap.class);
 
 		String urlFinal = "";
 
 		for (Class<?> clazz : annotatedClasses) {
-			Page annotation = clazz.getAnnotation(Page.class);
+			PageMap annotation = clazz.getAnnotation(PageMap.class);
 			if (annotation.name().equals(name)) {
 				urlFinal = annotation.url();
 				break;

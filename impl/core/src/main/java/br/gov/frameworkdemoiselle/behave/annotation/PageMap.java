@@ -47,7 +47,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Page {
+public @interface PageMap {
 
 	/**
 	 * Propriedade que determina o texto que irá na história para que a chamada
