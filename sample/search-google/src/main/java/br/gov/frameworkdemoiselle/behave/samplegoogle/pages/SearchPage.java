@@ -1,17 +1,18 @@
 package br.gov.frameworkdemoiselle.behave.samplegoogle.pages;
 
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
-import br.gov.frameworkdemoiselle.behave.annotation.PageMap;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
-@PageMap(name = "Tela de Busca", url = "http://www.google.com.br")
+@ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
 public class SearchPage {
 
-	@ElementMap(name = "Campo de Busca", locatorType = "id", locator = "gbqfq")
-	private Element searchField;
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
+	private TextField searchField;
 
-	// Botão de "Estou com sorte"
-	@ElementMap(name = "Botão Estou com sorte", locatorType = "id", locator = "gbqfbb")
-	private Element buttonSearch;
+	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
+	private Button buttonLuckSearch;
 
 }

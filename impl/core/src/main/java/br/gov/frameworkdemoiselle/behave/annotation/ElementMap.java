@@ -58,7 +58,7 @@ public @interface ElementMap {
 
 	public String name();
 
-	public String locatorType();
+	public ElementLocatorType locatorType() default ElementLocatorType.Id;
 
 	public String locator();
 

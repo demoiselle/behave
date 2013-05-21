@@ -36,30 +36,77 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.gov.frameworkdemoiselle.behave.runner.BehaveDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
+import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 public class WebDriverRunner implements Runner {
 
 	private Logger logger = Logger.getLogger(this.toString());
-	private BehaveDriver driver;
+	private WebDriver driver;
 
-	@Override
-	public void run(Object... params) {
-		logger.log(Level.INFO, "Rodou o RUNNER WebDriver");
+	public Object getDriver() {
+		if (driver == null) {
+			logger.info("Iniciou o driver");
+			driver = new FirefoxDriver();
+		}
+		return driver;
+	}
+
+	public void start() {
+		getDriver();
+	}
+
+	public void navigateTo(String url) {
+		driver.navigate().to(url);
+	}
+
+	public void get(String url) {
+		driver.get(url);
+	}
+
+	public String getCurrentUrl() {
+		return driver.getCurrentUrl();
+	}
+
+	public String getTitle() {
+		return driver.getTitle();
+	}
+
+	public Element getElement(String currentPageName, String elementName) {
+		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
+
+		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
+
+		Element element = (Element) DependenciesUtil.getInstance().getInstanceDependecy(clazz);
+		element.setElementMap(map);
+
+		return element;
+	}
+
+	public String getPageSource() {
+		return driver.getPageSource();
+	}
+
+	public void close() {
+		driver.close();
+	}
+
+	public void quit() {
+		driver.quit();
 	}
 
 	@Override
-	public BehaveDriver getDriver() {
-		if (driver == null) {
-			driver = new BehaveFirefoxDriver();
-			// driver = new BehaveChromeDriver();
-		}
-
-		return driver;
+	public Screen getScreen() {
+		return (Screen) DependenciesUtil.getInstance().getInstanceDependecy(Screen.class);
 	}
 
 }

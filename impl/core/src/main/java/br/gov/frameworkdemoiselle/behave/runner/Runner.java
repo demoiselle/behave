@@ -36,10 +36,31 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner;
 
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+
 public interface Runner {
 
-	public void run(Object... params);
+	void start();
+
+	void get(String url);
+
+	void navigateTo(String url);
+
+	String getCurrentUrl();
+
+	String getTitle();
+
+	Element getElement(String currentPageName, String elementName);
+
+	String getPageSource();
+
+	void close();
+
+	void quit();
+
+	Object getDriver();
 	
-	BehaveDriver getDriver();
-	
+	Screen getScreen();
+
 }

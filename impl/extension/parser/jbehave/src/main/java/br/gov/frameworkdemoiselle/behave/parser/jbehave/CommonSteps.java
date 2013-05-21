@@ -39,13 +39,15 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
@@ -61,34 +63,31 @@ public class CommonSteps implements Step {
 	private String currentPageName;
 
 	@Given("vou para a página \"$local\"")
-	@Alias("vou para o formulário \"$local\"")
-	public void goToWithPageName(String pageName) {
-		logger.log(Level.INFO, "Go to page name: " + pageName);
+	public void goToWithName(String local) {
+		logger.log(Level.INFO, "Go to page name: " + local);
 
-		currentPageName = pageName;
+		currentPageName = local;
 
-		String url = ReflectionUtil.getPageUrlByName(pageName);
-		runner.getDriver().navigateTo(url);
+		String url = ReflectionUtil.getLocation(local);
+		runner.navigateTo(url);
 	}
 
-	@When("clico no botão \"$objeto\"")
-	public void clickButton(String objeto) {
-
-		/*
-		 * Verifico em que página estou e pego a classe
-		 */
-
-		/**
-		 * Pega o botão a partir da página Clicar
-		 */
-
-		// Button button =
-
+	@When("clico em \"$elementName\"")
+	public void clickButton(String elementName) {
+		Button element = (Button) runner.getElement(currentPageName, elementName);
+		element.click();
 	}
 
-	@Then("será exibido \"$objeto\"")
+	@When("informo \"$value\" no campo \"$fieldName\"")
+	public void informe(String value, String fieldName) {
+		TextField element = (TextField) runner.getElement(currentPageName, fieldName);
+		element.sendKeys(value);
+	}
+
+	@Then("será exibido \"$text\"")
 	public void textVisible(String text) {
-		logger.log(Level.INFO, "Visualização de " + text);
+		Screen element = (Screen) runner.getScreen();
+		element.waitText(text);
 	}
 
 }

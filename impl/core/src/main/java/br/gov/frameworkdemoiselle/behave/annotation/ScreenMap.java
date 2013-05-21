@@ -47,7 +47,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PageMap {
+public @interface ScreenMap {
 
 	/**
 	 * Propriedade que determina o texto que irá na história para que a chamada
@@ -56,9 +56,9 @@ public @interface PageMap {
 	public String name();
 
 	/**
-	 * Propriedade que determina a URL que será chamada quando a propriedade
-	 * name() for encontrada para determinada página.
+	 * Propriedade que determina a localização que será chamada quando a
+	 * propriedade name() for encontrada para determinada página.
 	 */
-	public String url();
+	public String location();
 
 }

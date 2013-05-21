@@ -53,7 +53,7 @@ public class BeforeAfterSteps implements Step {
 	@BeforeStories
 	public void startStories() {
 		logger.info("Iniciando navegador");
-		runner.getDriver();
+		runner.start();
 	}
 
 	@AfterStories

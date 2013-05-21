@@ -1,28 +1,18 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import java.util.List;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.MappedElement;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ByConverter;
 
-public class WebButton implements Button {
-
-	@Override
-	public List<Element> find(String fieldName) {
-
-		// TODO: Usar annotataion Page
-
-		return null;
-	}
-
-	public void get(String local) {
-
-	}
+public class WebButton extends MappedElement implements Button {
 
 	@Override
 	public void click() {
-		// TODO Auto-generated method stub
-
+		WebElement element = (WebElement) ((WebDriver)runner.getDriver()).findElement(ByConverter.convert(getElementMap()));
+		element.click();
 	}
 
 }
