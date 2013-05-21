@@ -43,7 +43,6 @@
 	<modules>
 		<module>parent/behave</module>
 		<module>archetype</module>
-		
 		<module>impl/core</module>
 		<module>impl/extension/parser/imperative</module>
 		<module>impl/extension/parser/jbehave</module>
@@ -52,9 +51,7 @@
 		<module>impl/extension/runner/fest</module>
 		<module>impl/extension/integration/alm</module>	
 		<module>sample/search-google</module>
-			
 		<module>documentation/reference</module>
-    <module>meuprojeto</module>
   </modules>
 
 	<build>
