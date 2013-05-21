@@ -9,6 +9,7 @@ import mockit.MockUp;
 import org.jbehave.core.configuration.Keywords;
 import org.junit.Test;
 
+import br.gov.frameworkdemoiselle.behave.runner.BehaveDriver;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
@@ -26,6 +27,12 @@ public class JBehaveParserTest {
 				public void run(Object... params) {
 					// TODO Auto-generated method stub
 
+				}
+
+				@Override
+				public BehaveDriver getDriver() {
+					// TODO Auto-generated method stub
+					return null;
 				}
 			};
 

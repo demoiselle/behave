@@ -46,7 +46,6 @@ import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
