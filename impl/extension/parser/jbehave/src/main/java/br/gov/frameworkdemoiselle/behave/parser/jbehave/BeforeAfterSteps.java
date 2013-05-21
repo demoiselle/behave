@@ -41,13 +41,13 @@ import java.util.logging.Logger;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
 public class BeforeAfterSteps implements Step {
 
-	private Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
+	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	private Logger logger = Logger.getLogger(this.toString());
 
 	@BeforeStories
@@ -58,8 +58,8 @@ public class BeforeAfterSteps implements Step {
 
 	@AfterStories
 	public void stopStories() {
-		// runner.getDriver().close();
-		// runner.getDriver().quit();
+		runner.close();
+		runner.quit();
 		logger.info("Navegador fechado");
 	}
 

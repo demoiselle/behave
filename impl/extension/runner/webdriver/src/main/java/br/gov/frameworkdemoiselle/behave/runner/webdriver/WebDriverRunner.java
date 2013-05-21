@@ -42,10 +42,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
-import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 public class WebDriverRunner implements Runner {
@@ -86,7 +86,7 @@ public class WebDriverRunner implements Runner {
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
 
-		Element element = (Element) DependenciesUtil.getInstance().getInstanceDependecy(clazz);
+		Element element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
 		element.setElementMap(map);
 
 		return element;
@@ -104,9 +104,8 @@ public class WebDriverRunner implements Runner {
 		driver.quit();
 	}
 
-	@Override
 	public Screen getScreen() {
-		return (Screen) DependenciesUtil.getInstance().getInstanceDependecy(Screen.class);
+		return (Screen) InjectionManager.getInstance().getInstanceDependecy(Screen.class);
 	}
 
 }

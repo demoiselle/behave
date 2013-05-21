@@ -52,7 +52,7 @@ public class AppTest {
 		ArrayList<String> stories = new ArrayList<String>();
 		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
 
-		// Inicia o motor de testes
+		// Instância o motor de testes
 		EngineController eng = new EngineController();
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());

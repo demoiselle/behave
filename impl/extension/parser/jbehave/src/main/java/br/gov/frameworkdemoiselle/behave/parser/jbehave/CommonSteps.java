@@ -43,12 +43,12 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
-import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 /**
@@ -58,7 +58,7 @@ import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
  */
 public class CommonSteps implements Step {
 
-	private Runner runner = (Runner) DependenciesUtil.getInstance().getInstanceDependecy(Runner.class);
+	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	private Logger logger = Logger.getLogger(this.toString());
 	private String currentPageName;
 

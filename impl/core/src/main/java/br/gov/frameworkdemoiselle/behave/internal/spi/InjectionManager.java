@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.util;
+package br.gov.frameworkdemoiselle.behave.internal.spi;
 
 import java.util.Hashtable;
 import java.util.ServiceLoader;
@@ -49,19 +49,19 @@ import java.util.logging.Logger;
  * @author SERPRO
  * 
  */
-public class DependenciesUtil {
+public class InjectionManager {
 
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
-	private static DependenciesUtil instance;
+	private static InjectionManager instance;
 
 	private Logger logger = Logger.getLogger(this.toString());
 
-	private DependenciesUtil() {
+	private InjectionManager() {
 	}
 
-	public static DependenciesUtil getInstance() {
+	public static InjectionManager getInstance() {
 		if (instance == null)
-			instance = new DependenciesUtil();
+			instance = new InjectionManager();
 		return instance;
 	}
 

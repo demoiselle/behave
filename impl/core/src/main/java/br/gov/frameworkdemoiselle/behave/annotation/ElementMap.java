@@ -46,9 +46,6 @@ import java.lang.annotation.Target;
  * Anotação utilizada para mapear os campos com os atributos dentro de uma
  * página (Classe anotada com @Page).
  * 
- * TODO: Como iremos fazer com o locator? Pois normalmente é utilizado o @FindBy
- * do org.openqa.selenium.support.
- * 
  * @author SERPRO
  */
 @Documented

@@ -43,9 +43,9 @@ import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
-import br.gov.frameworkdemoiselle.behave.util.DependenciesUtil;
 
 public class EngineController {
 
@@ -66,7 +66,7 @@ public class EngineController {
 		
 		logger.log(Level.INFO, "Iniciou o processo...");
 
-		parser = (Parser) DependenciesUtil.getInstance().getInstanceDependecy(Parser.class);
+		parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
 		parser.setSteps(steps);
 		parser.setStoryPaths(finalStoriesPath);
 		parser.run();
