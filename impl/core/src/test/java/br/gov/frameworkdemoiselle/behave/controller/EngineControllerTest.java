@@ -1,18 +1,13 @@
 package br.gov.frameworkdemoiselle.behave.controller;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import mockit.Mock;
 import mockit.MockClass;
 import mockit.MockUp;
-import mockit.Mockit;
-import mockit.internal.MockingBridge;
 
 import org.junit.Test;
-import org.mockito.internal.util.MockUtil;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
@@ -32,7 +27,7 @@ public class EngineControllerTest {
 	public static class DespendenciesUtilMock extends MockUp<DependenciesUtil>{
 		
 		@Mock
-		public Object getInstanceDependecy(Class clazz) {
+		public Object getInstanceDependecy(@SuppressWarnings("rawtypes") Class clazz) {
 			return new Parser() {
 				
 				@Override
