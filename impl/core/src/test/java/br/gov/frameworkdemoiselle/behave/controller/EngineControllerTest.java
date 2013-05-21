@@ -24,7 +24,7 @@ public class EngineControllerTest {
 	}
 	
 	@MockClass(realClass=DependenciesUtil.class)
-	public static class DespendenciesUtilMock extends MockUp<DependenciesUtil>{
+	public static class DependenciesUtilMock extends MockUp<DependenciesUtil>{
 		
 		@Mock
 		public Object getInstanceDependecy(@SuppressWarnings("rawtypes") Class clazz) {
@@ -60,7 +60,7 @@ public class EngineControllerTest {
 		
 		List<String> lista = new ArrayList<String>();
 		
-		new DespendenciesUtilMock();
+		new DependenciesUtilMock();
 
 		try {
 			controller.run(lista);
