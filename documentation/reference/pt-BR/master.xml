@@ -9,35 +9,71 @@
 	<preface>
 		<title>Demoiselle Behave</title>
 		<para>
-			Behavior Driven Development  é uma técnica desenvolvida por Dan North em 2003 com o objetivo de facilitar a colaboração entre desenvolvedores , setores de qualidade
-			 e cliente em um projeto de software.  A técnica parte do principio de que especificando histórias de usuário em um formato adequado, as histórias especificadas 
-			 poderiam ser utilizadas tanto como requisito como artefato de entrada para testes automatizados. A técnica se utilizada de uma linguagem denominada linguagem ubíqua 
-			 que permite que os testes de aceitação sejam escritos em uma linguagem mais próxima da linguagem de negócio.
+			Behavior Driven Development é uma técnica desenvolvida por Dan
+			North em 2003 com o objetivo de facilitar a colaboração entre
+			desenvolvedores , setores de qualidade
+			e cliente em um projeto de software. A técnica parte do principio de
+			que especificando histórias de usuário em um formato adequado, as
+			histórias especificadas
+			poderiam ser utilizadas tanto como requisito como artefato de entrada para
+			testes automatizados. A técnica se utilizada de uma linguagem
+			denominada linguagem ubíqua
+			que permite que os testes de aceitação sejam escritos em uma linguagem
+			mais próxima da linguagem de negócio.
 		</para>
 		<para>
-			Os testes descritos são interpretados por ferramentas especializadas que exercitam o código do sistema para demonstrar se o comportamento foi atendido. As  práticas 
+			Os testes descritos são interpretados por ferramentas
+			especializadas que exercitam o código do sistema para demonstrar se o
+			comportamento foi atendido. As práticas
 			do BDD incluem :
 		</para>
 		<para>
-		<quote>
-		Envolver as partes interessadas no processo através de Outside-in Development (Desenvolvimento de Fora pra Dentro)
-    Usar exemplos para descrever o comportamento de uma aplicação ou unidades de código
-    Automatizar os exemplos para prover um feedback rápido e testes de regressão
-    Usar deve (should em inglês) na hora de descrever o comportamento de software para ajudar esclarecer responsabilidades e permitir que funcionalidades do software sejam questionadas
-    Usar dublês de teste (mocks, stubs, fakes, dummies, spies) para auxiliar na colaboração entre módulos e códigos que ainda não foram escritos
-		</quote>		
-		</para>
+
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						Envolver as partes interessadas no processo através de Outside-in
+						Development (Desenvolvimento de Fora pra Dentro)
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Usar exemplos para descrever o comportamento de uma aplicação ou
+						unidades de código
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Automatizar os exemplos para prover um feedback rápido e testes de regressão
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Usar deve (should em inglês) na hora de descrever o comportamento de
+						software para ajudar esclarecer responsabilidades e permitir que
+						funcionalidades do software sejam questionadas
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Usar dublês de teste (mocks, stubs, fakes, dummies, spies) para
+						auxiliar na colaboração entre módulos e códigos que ainda não
+						foram escritos
+					</para>
+				</listitem>
+			</orderedlist>
+					</para>
 		<para>
-			TODO: Escrever uma introdução sobre o componente.			
+			TODO: Escrever uma introdução sobre o componente.
 		</para>
 	</preface>
 
 	<!-- índice -->
 	<toc />
-	
+
 	<!-- capítulos -->
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="utilizacao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	
+
 </book>
