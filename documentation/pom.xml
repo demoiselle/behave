@@ -40,7 +40,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component</groupId>
 	<artifactId>demoiselle-behave-documentation-build</artifactId>
-	<version>1.0.0-RC-01</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>Documentation Build Aggregator</name>

@@ -1,0 +1,12 @@
+<archetype>
+	<id>jbehave-selenium-archetype</id>
+	<sources>
+		<source>src/main/java/AppTest.java</source>
+		<source>src/main/java/MySteps.java</source>
+	</sources>
+	<resources>
+		<resource>src/main/resources/stories/acesso-sistema.story</resource>
+		<resource>src/main/resources/stories/pedido.story</resource>
+		<resource>src/main/resources/behave.properties</resource>
+	</resources>
+</archetype>

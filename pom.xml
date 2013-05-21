@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
 	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
 	you can redistribute it and/or modify it under the terms of the GNU Lesser 
@@ -18,9 +19,7 @@
 	detalhes. Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título 
 	"LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses 
 	/> ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, 
-	Fifth Floor, Boston, MA 02111-1301, USA. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	Fifth Floor, Boston, MA 02111-1301, USA. --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -44,16 +43,22 @@
 	<modules>
 		<module>parent/behave</module>
 		<module>archetype</module>
-		
 		<module>impl/core</module>
 		<module>impl/extension/parser/imperative</module>
 		<module>impl/extension/parser/jbehave</module>
 		<module>impl/extension/parser/cucumber</module>		
 		<module>impl/extension/runner/webdriver</module>
 		<module>impl/extension/runner/fest</module>
+<<<<<<< HEAD
 		<module>impl/extension/integration/alm</module>				
 		<module>documentation/reference</module>		 
 	</modules>
+=======
+		<module>impl/extension/integration/alm</module>	
+		<module>sample/search-google</module>
+		<module>documentation/reference</module>
+  </modules>
+>>>>>>> branch 'master' of https://github.com/botelhojp/behave.git
 
 	<build>
 		<plugins>
