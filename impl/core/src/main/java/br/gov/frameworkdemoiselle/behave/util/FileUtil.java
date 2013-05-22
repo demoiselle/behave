@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 public class FileUtil {
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
@@ -91,8 +93,17 @@ public class FileUtil {
 	}
 
 	public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
+		
 		List<String> fileNames = new ArrayList<String>();
 		File folder = new File(folderRoot);
+		if (!folder.exists()){
+			folder = new File(FileUtil.getAbsolutePath(".") + folderRoot);
+			folderRoot = folder.getAbsolutePath();
+			if (!folder.exists()){
+				throw new RuntimeException("Caminho [" + folderRoot + "] não encontrado ");
+			}
+		}
+		 
 		File[] files = folder.listFiles();
 		String entryName;
 		for (File file : files) {
