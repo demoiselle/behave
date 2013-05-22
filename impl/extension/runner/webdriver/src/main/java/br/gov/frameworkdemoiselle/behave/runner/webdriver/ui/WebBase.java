@@ -7,7 +7,7 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.StateUI;
-import br.gov.frameworkdemoiselle.behave.runner.webdriver.ByConverter;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
 public class WebBase extends MappedElement implements BaseUI {

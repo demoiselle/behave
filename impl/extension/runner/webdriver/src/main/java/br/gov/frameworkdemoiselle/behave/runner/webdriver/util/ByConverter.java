@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.behave.runner.webdriver;
+package br.gov.frameworkdemoiselle.behave.runner.webdriver.util;
 
 import org.openqa.selenium.By;
 

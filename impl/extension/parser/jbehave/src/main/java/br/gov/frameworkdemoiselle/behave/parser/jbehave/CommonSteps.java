@@ -36,9 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -59,15 +56,12 @@ import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 public class CommonSteps implements Step {
 
 	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-	private Logger logger = Logger.getLogger(this.toString());
+	// private Logger logger = Logger.getLogger(this.toString());
 	private String currentPageName;
 
 	@Given("vou para a página \"$local\"")
 	public void goToWithName(String local) {
-		logger.log(Level.INFO, "Go to page name: " + local);
-
 		currentPageName = local;
-
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
 	}

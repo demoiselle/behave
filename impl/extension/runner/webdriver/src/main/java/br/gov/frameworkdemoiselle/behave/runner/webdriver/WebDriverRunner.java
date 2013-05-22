@@ -82,6 +82,10 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public Element getElement(String currentPageName, String elementName) {
+
+		if (currentPageName.equals(""))
+			throw new RuntimeException("Não existe página selecionada.");
+
 		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);

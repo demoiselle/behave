@@ -38,8 +38,6 @@ package br.gov.frameworkdemoiselle.behave.internal.spi;
 
 import java.util.Hashtable;
 import java.util.ServiceLoader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS
@@ -54,7 +52,7 @@ public class InjectionManager {
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
 	private static InjectionManager instance;
 
-	private Logger logger = Logger.getLogger(this.toString());
+	// private Logger logger = Logger.getLogger(this.toString());
 
 	private InjectionManager() {
 	}
@@ -69,7 +67,8 @@ public class InjectionManager {
 	public Object getInstanceDependecy(Class clazz) {
 
 		if (singletons.containsKey(clazz.toString())) {
-			logger.log(Level.INFO, "Recuperada do singleton a classe " + clazz.toString());
+			// logger.log(Level.INFO, "Recuperada do singleton a classe " +
+			// clazz.toString());
 
 			return singletons.get(clazz.toString());
 		} else {
@@ -80,8 +79,9 @@ public class InjectionManager {
 				if (count > 0) {
 					throw new RuntimeException("Só pode existir 1 classe " + clazz.toString() + " selecionado no pom.xml como dependência.");
 				}
-				
-				logger.log(Level.INFO, "Nova instânciada a classe " + object.getClass().toString());
+
+				// logger.log(Level.INFO, "Nova instânciada a classe " +
+				// object.getClass().toString());
 
 				singletons.put(clazz.toString(), object);
 

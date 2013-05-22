@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * TODO: Revisar tratamentos de exceção
@@ -24,7 +22,7 @@ public class PropertiesLoaderUtil implements Serializable {
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
 
-	private Logger logger = Logger.getLogger(this.toString());
+	// private Logger logger = Logger.getLogger(this.toString());
 
 	private PropertiesLoaderUtil() throws IOException {
 		this.allProps = loadProperties();
@@ -65,8 +63,9 @@ public class PropertiesLoaderUtil implements Serializable {
 				level = Integer.MAX_VALUE;
 				confs.add(new ConfigLevelPropertie(level, localProp));
 			}
-			
-			logger.log(Level.INFO, "Carregando configuração [" + url + "] com nível " + level);
+
+			// logger.log(Level.INFO, "Carregando configuração [" + url +
+			// "] com nível " + level);
 		}
 
 		// Ordena por level
@@ -77,8 +76,9 @@ public class PropertiesLoaderUtil implements Serializable {
 		for (ConfigLevelPropertie prop : confs) {
 			allProperties.putAll(prop.properties);
 		}
-		
-		logger.log(Level.INFO, "Language " + allProperties.getProperty("behave.parser.language"));		
+
+		// logger.log(Level.INFO, "Language " +
+		// allProperties.getProperty("behave.parser.language"));
 
 		return allProperties;
 	}
