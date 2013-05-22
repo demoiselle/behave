@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.behave.runner.ui;
+package br.gov.frameworkdemoiselle.behave.runner.ui.base;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 

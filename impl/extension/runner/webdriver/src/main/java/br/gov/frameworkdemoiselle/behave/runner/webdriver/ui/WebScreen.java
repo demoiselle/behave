@@ -3,10 +3,9 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.MappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
-public class WebScreen extends MappedElement implements Screen {
+public class WebScreen extends WebBase implements Screen {
 
 	public void waitText(String text) {
 		/**

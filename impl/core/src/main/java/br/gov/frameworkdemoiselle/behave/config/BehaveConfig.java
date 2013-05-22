@@ -15,6 +15,9 @@ public class BehaveConfig {
 	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
 	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
 
+	public static Long BROWSER_MAX_WAIT = 10000L;
+	public static Long BROWSER_MIN_WAIT = 100L;
+
 	static {
 		try {
 			properties = PropertiesLoaderUtil.getInstance().getProperties();
@@ -27,11 +30,10 @@ public class BehaveConfig {
 			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
 
+			BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
+			BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
 		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-
 		}
 	}
 

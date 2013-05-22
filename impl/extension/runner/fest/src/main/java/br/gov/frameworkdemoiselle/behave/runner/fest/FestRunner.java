@@ -39,8 +39,8 @@ package br.gov.frameworkdemoiselle.behave.runner.fest;
 import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 
 public class FestRunner implements Runner {
 

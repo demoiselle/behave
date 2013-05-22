@@ -1,9 +1,11 @@
 package br.gov.frameworkdemoiselle.behave.runner.ui;
 
-public interface TextField extends Element {
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
+
+public interface TextField extends BaseUI {
 
 	void sendKeys(CharSequence... keysToSend);
 
 	void clear();
-	
+
 }

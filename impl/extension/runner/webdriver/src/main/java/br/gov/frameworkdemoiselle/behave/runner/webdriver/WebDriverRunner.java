@@ -44,8 +44,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 public class WebDriverRunner implements Runner {

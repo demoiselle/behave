@@ -36,8 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner;
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 
 public interface Runner {
 
