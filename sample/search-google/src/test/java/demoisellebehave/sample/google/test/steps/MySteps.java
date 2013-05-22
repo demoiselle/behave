@@ -34,35 +34,10 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.samplegoogle;
+package demoisellebehave.sample.google.test.steps;
 
-import java.util.ArrayList;
+import br.gov.frameworkdemoiselle.behave.parser.Step;
 
-import org.junit.Test;
-
-import br.gov.frameworkdemoiselle.behave.controller.EngineController;
-import br.gov.frameworkdemoiselle.behave.samplegoogle.steps.MySteps;
-import br.gov.frameworkdemoiselle.behave.util.FileUtil;
-
-public class AppTest {
-
-	@Test
-	public void start() throws Throwable {
-		// Cria o array contendo as histórias
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
-
-		// Instância o motor de testes
-		EngineController eng = new EngineController();
-		// Adiciona passos (sentenças) específicas
-		eng.addSteps(new MySteps());
-		// Manda rodar informando as histórias
-		eng.run(stories);
-	}
-
-	public static void main(String[] args) throws Throwable {
-		AppTest app = new AppTest();
-		app.start();
-	}
+public class MySteps implements Step {
 
 }

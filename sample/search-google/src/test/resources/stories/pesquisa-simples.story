@@ -7,5 +7,5 @@ De modo que: me mostre os resultados
 Cenário: Utilização da funcionalidade de pesquisa
 
 Acesso ao Google
-Quando informo "Julian Cesar" no campo "Campo de Busca"
-Então será exibido "Google"
+Quando informo "Framework Demoiselle" no campo "Campo de Busca"
+Então será exibido "frameworkdemoiselle.gov.br"
