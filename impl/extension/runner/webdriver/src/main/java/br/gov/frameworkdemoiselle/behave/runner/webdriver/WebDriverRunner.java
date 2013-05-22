@@ -90,6 +90,9 @@ public class WebDriverRunner implements Runner {
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
 
+		if (!clazz.isInterface())
+			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface.");
+
 		Element element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
 		element.setElementMap(map);
 
