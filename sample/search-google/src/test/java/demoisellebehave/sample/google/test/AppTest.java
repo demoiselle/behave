@@ -41,17 +41,15 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.EngineController;
-import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 import demoisellebehave.sample.google.test.steps.MySteps;
 
 public class AppTest {
-
 
 	@Test
 	public void testBDD() throws Throwable {
 		// Cria o array contendo as histórias
 		ArrayList<String> stories = new ArrayList<String>();
-		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
+		stories.add("/stories");
 
 		// Instância o motor de testes
 		EngineController eng = new EngineController();
