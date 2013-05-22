@@ -36,23 +36,78 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.fest;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.gov.frameworkdemoiselle.behave.runner.BehaveDriver;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class FestRunner implements Runner {
 
 	private Logger logger = Logger.getLogger(this.toString());
 
 	@Override
-	public void run(Object... params) {
-		logger.log(Level.INFO, "Rodou o RUNNER Fest");
+	public void start() {
+		// TODO Auto-generated method stub
+		logger.info("Iniciou o FEST...");
 	}
 
 	@Override
-	public BehaveDriver getDriver() {
+	public void get(String url) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void navigateTo(String url) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getCurrentUrl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element getElement(String currentPageName, String elementName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPageSource() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void quit() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Object getDriver() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Screen getScreen() {
 		// TODO Auto-generated method stub
 		return null;
 	}

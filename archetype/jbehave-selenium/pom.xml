@@ -48,10 +48,19 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<name>JBehave and Selenium Archetype</name>
+	<description>Archetype for automated functional tests in web applications</description>
 
-
-
-	<name>JSF and JPA Archetype</name>
-	<description>Archetype for web applications (JSF/JPA)</description>
-
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
