@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 public class FileUtil {
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
