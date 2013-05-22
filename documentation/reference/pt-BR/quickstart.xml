@@ -11,8 +11,57 @@
 	<section>
 		<title>Criação do Projeto</title>		
 		<para>
-			TODO: mostrar a criação por meio de archetype.
+			O primeiro passo na criação de um projeto Demoisele-Behave é criar um projeto Maven com o arquetipo adequado ao projeto de testes.
+			Neste tutorial será utilizado o arquetipo jbehave-selenium-archetype. O primeiro passo é escolher a opção File>New>Other>Maven>Maven Project.
 			
+		</para>	
+		<para>
+				<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/criandoprojeto1.png" align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/criandoprojeto1.png" align="center" format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo Maven Module
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Escolher o catalogo Demoisele-Behave e escolher o arquetipo do selenium.
+		</para>
+		<para>
+				<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/criandoprojeto2.png" align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/criandoprojeto2.png" align="center" format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Preencher o Group Id e Artifact Id e finalizar a criação do projeto
+		</para>
+		<para>
+				<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/criandoprojeto3.png" align="center" format="PNG" scalefit="1" width="75%"    />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/criandoprojeto3.png" align="center" format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para> 
+				</caption>
+			</mediaobject>
 		</para>
 	</section>
 
