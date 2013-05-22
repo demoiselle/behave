@@ -30,8 +30,12 @@ public class BehaveConfig {
 			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
 
-			BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
-			BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
+			if (properties.getProperty("behave.runner.browser.maxWait") != null)
+				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
+
+			if (properties.getProperty("behave.runner.browser.minWait") != null)
+				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
