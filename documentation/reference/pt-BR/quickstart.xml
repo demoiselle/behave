@@ -120,7 +120,27 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Estrutura de pastas do projeto criado a partir do arquétipo.
+					<para>Classe AppTest
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		   O projeto criado ja possui um exemplo que realiza uma consulta no Google. Para executar o teste 
+		   basta clicar com o botão direito na classe AppTeste e escolher Run as>JUnit Test
+		</para>
+			<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/executandoteste.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/executandoteste.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Classe AppTest
 					</para>
 				</caption>
 			</mediaobject>
