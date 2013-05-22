@@ -1,0 +1,7 @@
+package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
+
+public class WebLink extends WebBase implements Link {
+
+}

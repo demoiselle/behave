@@ -63,10 +63,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-
-		<!-- Configuration -->
-		<testOutputDirectory>target/classes</testOutputDirectory>
-		<testSourceDirectory>src/main/java</testSourceDirectory>
 	</build>
 
 	<properties>
@@ -74,18 +70,12 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
 		<!-- Project parser definition -->
 		<dependency>
-			<groupId>
-				br.gov.frameworkdemoiselle.component.behave
-			</groupId>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Project runner definition -->
@@ -95,7 +85,7 @@
 			</groupId>
 			<artifactId>demoiselle-behave-runner-webdriver</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 </project>
