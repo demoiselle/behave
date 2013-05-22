@@ -40,6 +40,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
@@ -50,5 +51,8 @@ public class SearchPage {
 
 	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
 	private Button buttonLuckSearch;
+
+	@ElementMap(name = "Menu Superior", locatorType = ElementLocatorType.Id, locator = { "gbztm", "gbmm" })
+	private Select menuLivros;
 
 }

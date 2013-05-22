@@ -6,6 +6,8 @@ public interface TextField extends BaseUI {
 
 	void sendKeys(CharSequence... keysToSend);
 
+	void sendKeysWithTries(CharSequence... keysToSend);
+	
 	void clear();
 
 }

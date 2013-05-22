@@ -1,5 +1,10 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -12,13 +17,25 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
 public class WebBase extends MappedElement implements BaseUI {
 
-	public WebElement getElement() {
-		WebElement element = (WebElement) ((WebDriver) runner.getDriver()).findElement(ByConverter.convert(getElementMap()));
-		return element;
+	public List<WebElement> getElements() {
+		List<WebElement> elements = new ArrayList<WebElement>();
+
+		for (String locator : getElementMap().locator()) {
+			By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+			try {
+				WebElement element = (WebElement) ((WebDriver) runner.getDriver()).findElement(by);
+				elements.add(element);
+			} catch (NoSuchElementException ex) {
+				throw new RuntimeException("O element [" + getElementMap().name() + "] não foi encontrado na página.");
+			}
+
+		}
+		return elements;
 	}
 
 	public String getText() {
-		return getElement().getText();
+		return getElements().get(0).getText();
 	}
 
 	public static void waitThreadSleep(Long delay) {
@@ -57,19 +74,19 @@ public class WebBase extends MappedElement implements BaseUI {
 				// break;
 
 			case VISIBLE:
-				retorno = getElement().isDisplayed();
+				retorno = getElements().get(0).isDisplayed();
 				break;
 
 			case INVISIBLE:
-				retorno = !getElement().isDisplayed();
+				retorno = !getElements().get(0).isDisplayed();
 				break;
 
 			case ENABLE:
-				retorno = getElement().isEnabled();
+				retorno = getElements().get(0).isEnabled();
 				break;
 
 			case DISABLE:
-				retorno = !getElement().isEnabled();
+				retorno = !getElements().get(0).isEnabled();
 				break;
 
 			default:
