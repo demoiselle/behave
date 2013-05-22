@@ -63,6 +63,51 @@
 				</caption>
 			</mediaobject>
 		</para>
+		<para>
+			O projeto criado a partir do arquétipo possui os diretórios src/test/java e src/test/resources. No diretório src/test/resource
+			estarão contidas as histórias de usuários. No diretório src/test/java estarão contidos os Steps do demoiselle bem como os objetos
+			responsáveis pela indentificação das telas envolvidas nos testes e seus objetos.
+		</para>
+		<para>
+				<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/diretorioprojeto1.png" align="center" format="PNG" scalefit="1" width="75%"    />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/diretorioprojeto1.png" align="center" format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Estrutura de pastas do projeto criado a partir do arquétipo.
+					</para> 
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		A classe AppTest é responsável pela configuração da pasta onde estão localizadas as histórias de usuários bem como os passos (Steps) a serem adicionados
+		no projeto
+		
+		<programlisting role="JAVA"><![CDATA[public class RelatorioExemplo {
+		public class AppTest {
+
+
+	@Test
+	public void testBDD() throws Throwable {
+		// Cria o array contendo as histórias
+		ArrayList<String> stories = new ArrayList<String>();
+		stories.add(FileUtil.getAbsolutePath(".") + "/stories");
+
+		// Instância o motor de testes
+		EngineController eng = new EngineController();
+		// Adiciona passos (sentenças) específicas
+		eng.addSteps(new MySteps());
+		// Manda rodar informando as histórias
+		eng.run(stories);
+	}
+
+}
+}]]></programlisting>
+		
+		</para>
 	</section>
 
 </chapter>
