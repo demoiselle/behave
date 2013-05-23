@@ -30,7 +30,7 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					<para>Menu de Preferência.
 					</para>
 				</caption>
 			</mediaobject>
@@ -49,7 +49,7 @@
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					<para>Clicar no botão Add Remote Catalog.
 					</para>
 				</caption>
 			</mediaobject>
@@ -69,7 +69,7 @@
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					<para>Preenchendo Catálogo Remoto.
 					</para>
 				</caption>
 			</mediaobject>
