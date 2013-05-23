@@ -5,7 +5,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 public class WebCheckBox extends WebBase implements CheckBox {
 
 	public void click() {
-		getElement().click();
+		getElements().get(0).click();
 	}
 
 }

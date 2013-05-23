@@ -45,7 +45,9 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 
 /**
@@ -74,8 +76,15 @@ public class CommonSteps implements Step {
 
 	@When("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
-		TextField element = (TextField) runner.getElement(currentPageName, fieldName);
-		element.sendKeys(value);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+
+		// TODO Fazer o if para os outros elementos
+		if (element instanceof TextField) {
+			((TextField) element).sendKeys(value);
+		} else if (element instanceof Select) {
+			((Select) element).selectValue(value);
+		}
+
 	}
 
 	@Then("será exibido \"$text\"")
