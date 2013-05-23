@@ -3,10 +3,6 @@
 O componente Demoiselle Behave provê facilidades para integração das aplicações ao uso 
 de testes com BDD. 
 
-Seu objetivo é diminuir a complexidade para: leitura, geração e exibição de relatórios.
-
-Teste
-
 ## Links úteis
 
 * [Portal](http://frameworkdemoiselle.gov.br): Central de acesso as informações do Demoiselle
@@ -24,11 +20,4 @@ Teste
 
 ## Contribuindo
 
-* Faça o seu fork.
-* Crie o seu branch(ramo) - (`git checkout -b meu_framework`)
-* Commit seu código (`git commit -am "Explicando o motivo/objetivo"`)
-* Agora execute o Push para o branch (`git push origin meu_framework`)
-* Crie um caso no [mantis][1] com o link para o seu branch, ou apenas o adicione como
-comentário em um caso pré-existent.
-
-[1]: http://tracker.frameworkdemoiselle.gov.br
+* Faça um clone do projeto: ('git clone https://github.com/botelhojp/behave.git')
