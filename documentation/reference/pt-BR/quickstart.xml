@@ -8,7 +8,73 @@
 		Esta seção apresenta um roteiro rápido para criação e
 		configuração de projeto do Demoiselle Behave.
 	</para>
+	<section>
+		<title>Configurando o Arquétipo.</title>
+		<para>
+			O projeto Demoiselle Behave disponibiliza um arquétipo Maven
+			para faciliar a criação de projetos.
+			O primeiro passo na configuração
+			do arquétipo consiste em configurar o repositório. Ir no menu
+			Windows>Preferences
+			do eclipse.
 
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/menupreference.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/menupreference.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			O próximo passo é clicar no botão Add Remote Catalog.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/preferences.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/preferences.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Deve ser preenchido o valor<emphasis> http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml</emphasis> no Catalog File.
+			O nome Demoiselle-Behave pode ser preenchido na descrição.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/remotecatalog.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/remotecatalog.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
 	<section>
 		<title>Criação do Projeto</title>
 		<para>
@@ -30,7 +96,7 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Escolhendo Maven Module
+					<para>Escolhendo Maven Module.
 					</para>
 				</caption>
 			</mediaobject>
@@ -50,14 +116,14 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
 			Preencher o Group Id e Artifact Id e finalizar a criação do
-			projeto
+			projeto.
 		</para>
 		<para>
 			<mediaobject>
@@ -102,13 +168,16 @@
 				</caption>
 			</mediaobject>
 		</para>
+	</section>
+	<section>
+		<title>Executando Teste</title>
 		<para>
 			A classe AppTest é responsável pela configuração da pasta onde
 			estão
 			localizadas as histórias de usuários bem como os passos (Steps)
 			a
 			serem adicionados
-			no projeto
+			no projeto.
 		</para>
 
 		<para>
@@ -122,7 +191,7 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Classe AppTest
+					<para>Classe AppTest.
 					</para>
 				</caption>
 			</mediaobject>
@@ -133,7 +202,7 @@
 			Google. Para executar o teste
 			basta clicar com o botão direito na
 			classe AppTeste e escolher Run
-			as>JUnit Test
+			as>JUnit Test.
 		</para>
 		<para>
 			<mediaobject>
@@ -152,7 +221,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			O framework inicia o Driver e abre o navegador
+			O framework inicia o Driver e abre o navegador.
 		</para>
 		<para>
 			<mediaobject>
@@ -171,7 +240,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			Abaixo segue uma das histórias executadas pelo framework
+			Abaixo segue uma das histórias executadas pelo framework:
 			<programlisting>
 		
 				Funcionalidade: Pesquisa Simples
@@ -188,18 +257,23 @@
 		</programlisting>
 		</para>
 		<para>
-			O framework associa o campo "Campo Busca" com o elemento searchField da classe SearchPage criada 
-			de forma a mapear os objetos da tela com o Id procurado. O Elemento locatorType informa o tipo de
-			reconhecimento de objetos será utilizado no framework. No exemplo, será localizado o elemento cujo Id
-			possui o valor "gbqfq".
-			
+			O framework associa o campo
+			<emphasis>"Campo Busca"</emphasis>
+			com o elemento searchField da classe SearchPage criada
+			de forma a mapear os objetos da tela com o Id procurado. O Elemento
+			locatorType informa o tipo de
+			reconhecimento de objetos será utilizado
+			no framework. No exemplo, será localizado o elemento cujo Id
+			possui o
+			valor "gbqfq".
+
 		</para>
 		<programlisting>
 		
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
 public class SearchPage {
 
-	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
+	@ElementMap(name = "<emphasis>Campo de Busca</emphasis>", locatorType = ElementLocatorType.Id, locator = "gbqfq")
 	private TextField searchField;
 
 	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
