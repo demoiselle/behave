@@ -88,4 +88,19 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>demoiselle-behave-snapshots</id>
+			<name>Demoiselle Behave Snapshots</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
+		</repository>
+		<repository>
+			<id>demoiselle-behave-releases</id>
+			<name>Demoiselle Behave Releases</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
+		</repository>
+	</repositories>
+
+
 </project>
