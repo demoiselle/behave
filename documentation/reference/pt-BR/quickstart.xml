@@ -75,8 +75,8 @@
 				</caption>
 			</mediaobject>
 		</para>
-		</section>
-		<section>
+	</section>
+	<section>
 		<title>Estrutura de diretórios</title>
 		<para>
 			O projeto criado a partir do arquétipo possui os diretórios
@@ -103,13 +103,15 @@
 			</mediaobject>
 		</para>
 		<para>
-			A classe AppTest é responsável pela configuração da pasta onde estão
-			localizadas as histórias de usuários bem como os passos (Steps) a
+			A classe AppTest é responsável pela configuração da pasta onde
+			estão
+			localizadas as histórias de usuários bem como os passos (Steps)
+			a
 			serem adicionados
 			no projeto
 		</para>
 
-			<para>
+		<para>
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/classeapptest.png" align="center"
@@ -126,10 +128,14 @@
 			</mediaobject>
 		</para>
 		<para>
-		   O projeto criado ja possui um exemplo que realiza uma consulta no Google. Para executar o teste 
-		   basta clicar com o botão direito na classe AppTeste e escolher Run as>JUnit Test
+			O projeto criado ja possui um exemplo que realiza uma consulta
+			no
+			Google. Para executar o teste
+			basta clicar com o botão direito na
+			classe AppTeste e escolher Run
+			as>JUnit Test
 		</para>
-			<para>
+		<para>
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/executandoteste.png" align="center"
@@ -145,8 +151,63 @@
 				</caption>
 			</mediaobject>
 		</para>
-
+		<para>
+			O framework inicia o Driver e abre o navegador
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/console1.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/console1.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Classe AppTest
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Abaixo segue uma das histórias executadas pelo framework
+			<programlisting>
 		
+				Funcionalidade: Pesquisa Simples
+
+				Como um: visitante
+				Eu quero: fazer uma busca simples
+				De modo que: me mostre os resultados
+
+				Cenário: Utilização da funcionalidade de pesquisa
+
+				Acesso ao Google
+				Quando informo "Framework Demoiselle" no campo "Campo de Busca"
+				Então será exibido "frameworkdemoiselle.gov.br"
+		</programlisting>
+		</para>
+		<para>
+			O framework associa o campo "Campo Busca" com o elemento searchField da classe SearchPage criada 
+			de forma a mapear os objetos da tela com o Id procurado. O Elemento locatorType informa o tipo de
+			reconhecimento de objetos será utilizado no framework. No exemplo, será localizado o elemento cujo Id
+			possui o valor "gbqfq".
+			
+		</para>
+		<programlisting>
+		
+@ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
+public class SearchPage {
+
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
+	private TextField searchField;
+
+	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
+	private Button buttonLuckSearch;
+
+}
+		
+		</programlisting>
 	</section>
 
 </chapter>
