@@ -2,8 +2,6 @@ package ${packageName};
 
 import java.util.ArrayList;
 
-import meuprojeto.meuprojeto.MySteps;
-
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.EngineController;
