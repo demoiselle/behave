@@ -3,15 +3,18 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <authorgroup>
 	<author>
+		<firstname>Francisco Nauber</firstname>
+		<surname>Gois</surname>
+		<affiliation>SERPRO</affiliation>
+	</author>
+	<author>
 		<firstname>Julian</firstname>
 		<surname>Santos</surname>
-		<email>juliancesar@gmail.com</email>
 		<affiliation>SERPRO</affiliation>
 	</author>
 	<author>
 		<firstname>Vanderson</firstname>
 		<surname>Botelho</surname>
-		<email>botelhojp@gmail.com</email>
 		<affiliation>SERPRO</affiliation>
 	</author>
 </authorgroup>
