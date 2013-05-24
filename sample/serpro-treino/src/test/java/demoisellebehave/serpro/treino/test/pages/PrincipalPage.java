@@ -36,12 +36,13 @@
  */
 package demoisellebehave.serpro.treino.test.pages;
 
+import demoisellebehave.serpro.treino.Constants;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-@ScreenMap(name = "Tela Princial", location = "http://centro3.cta.serpro/treino/private/pages/index.html")
+@ScreenMap(name = "Tela Princial", location = Constants.URL + "private/pages/index.html")
 public class PrincipalPage {
 
 	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
@@ -49,7 +50,5 @@ public class PrincipalPage {
 
 	@ElementMap(name = "Todas as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
 	private Button todasAsObras;
-
-	
 
 }
