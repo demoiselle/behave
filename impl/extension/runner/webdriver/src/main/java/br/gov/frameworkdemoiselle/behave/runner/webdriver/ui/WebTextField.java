@@ -4,10 +4,14 @@ import org.openqa.selenium.Keys;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.StateUI;
 
 public class WebTextField extends WebBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
+		verifyState(StateUI.VISIBLE);
+		verifyState(StateUI.ENABLE);
+
 		getElements().get(0).sendKeys(keysToSend);
 	}
 
