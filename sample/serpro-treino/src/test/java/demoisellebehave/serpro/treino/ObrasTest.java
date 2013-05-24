@@ -34,13 +34,25 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.steps;
+package demoisellebehave.serpro.treino;
 
-import org.jbehave.core.annotations.Given;
+import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import demoisellebehave.serpro.treino.test.steps.MySteps;
 
-public class MySteps implements Step {
-	
+public class ObrasTest {
+
+	private EngineController eng = new EngineController();;
+
+	public ObrasTest() {
+		eng.addSteps(new MySteps());
+	}
+
+	@Test
+	public void testFolder01() throws Throwable {
+		eng.run("/obras/listagem.story");
+	}
+
 	
 }

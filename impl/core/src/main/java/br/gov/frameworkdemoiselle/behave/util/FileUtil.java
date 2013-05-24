@@ -101,6 +101,11 @@ public class FileUtil {
 				throw new RuntimeException("Caminho [" + folderRoot + "] não encontrado ");
 			}
 		}
+		
+		if (folder.isFile()){
+			fileNames.add(folder.getAbsolutePath());
+			return fileNames;
+		}
 		 
 		File[] files = folder.listFiles();
 		String entryName;

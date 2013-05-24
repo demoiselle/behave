@@ -34,13 +34,19 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.steps;
+package demoisellebehave.serpro.treino.test.pages;
 
-import org.jbehave.core.annotations.Given;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-import br.gov.frameworkdemoiselle.behave.parser.Step;
+@ScreenMap(name = "Tela Princial", location = "http://centro3.cta.serpro/treino/private/pages/index.html")
+public class PrincipalPage {
 
-public class MySteps implements Step {
+	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
+	private Button sair;
+
 	
-	
+
 }

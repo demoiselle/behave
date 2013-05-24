@@ -36,27 +36,22 @@
  */
 package demoisellebehave.serpro.treino;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.EngineController;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
-public class AppTest {
+public class AcessoTest {
+
+	private EngineController eng = new EngineController();;
+
+	public AcessoTest() {
+		eng.addSteps(new MySteps());
+	}
 
 	@Test
-	public void testBDD() throws Throwable {
-		// Cria o array contendo as histórias
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("/stories");
-
-		// Instância o motor de testes
-		EngineController eng = new EngineController();
-		// Adiciona passos (sentenças) específicas
-		eng.addSteps(new MySteps());
-		// Manda rodar informando as histórias
-		eng.run(stories);
+	public void testAcesso() throws Throwable {
+		eng.run("/acesso/acesso.story");
 	}
 
 }
