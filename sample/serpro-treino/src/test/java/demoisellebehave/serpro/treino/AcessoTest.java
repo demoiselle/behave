@@ -38,12 +38,12 @@ package demoisellebehave.serpro.treino;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
 public class AcessoTest {
 
-	private EngineController eng = new EngineController();;
+	private BehaveController eng = BehaveController.getInstance();
 
 	public AcessoTest() {
 		eng.addSteps(new MySteps());

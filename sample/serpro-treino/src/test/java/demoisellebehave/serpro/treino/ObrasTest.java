@@ -38,20 +38,25 @@ package demoisellebehave.serpro.treino;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
 public class ObrasTest {
 
-	private EngineController eng = new EngineController();;
+	private BehaveController eng = BehaveController.getInstance();
 
 	public ObrasTest() {
 		eng.addSteps(new MySteps());
 	}
+	
+	@Test
+	public void testAcesso() throws Throwable {
+		eng.run("/stories/acesso/acesso.story");
+	}
 
 	@Test
-	public void testFolder01() throws Throwable {
-		eng.run("/obras/listagem.story");
+	public void testObras() throws Throwable {
+		eng.run("/stories/obras");
 	}
 
 	
