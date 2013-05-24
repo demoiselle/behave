@@ -47,6 +47,9 @@ public class PrincipalPage {
 	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
 	private Button sair;
 
+	@ElementMap(name = "Todas as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
+	private Button todasAsObras;
+
 	
 
 }

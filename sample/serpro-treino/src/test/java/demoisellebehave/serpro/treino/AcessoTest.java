@@ -51,7 +51,7 @@ public class AcessoTest {
 
 	@Test
 	public void testAcesso() throws Throwable {
-		eng.run("/acesso/acesso.story");
+		eng.run("/stories/acesso/acesso.story");
 	}
 
 }

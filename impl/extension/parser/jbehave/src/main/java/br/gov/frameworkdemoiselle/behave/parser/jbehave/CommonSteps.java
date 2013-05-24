@@ -64,6 +64,8 @@ public class CommonSteps implements Step {
 	protected String currentPageName;
 
 	@Given("vou para a página \"$local\"")
+	@Then("vou para a página \"$local\"")
+	@When("vou para a página \"$local\"")
 	public void goToWithName(String local) {
 		logger.info("Go to screen " + local);
 		currentPageName = local;
@@ -71,6 +73,14 @@ public class CommonSteps implements Step {
 		runner.navigateTo(url);
 	}
 
+	@Given("estou na página \"$local\"")
+	@Then("estou na página \"$local\"")
+	@When("estou na página \"$local\"")
+	public void pageWithName(String local) {
+		logger.info("Go to screen " + local);
+		currentPageName = local;		
+	}
+	
 	@When("clico em \"$elementName\"")
 	public void clickButton(String elementName) {
 		Button element = (Button) runner.getElement(currentPageName, elementName);
