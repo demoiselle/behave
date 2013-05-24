@@ -8,8 +8,7 @@ Funcionalidade: pedido
 		Dado que o browser foi aberto
 		Quando for preenchido o nome do usuário com "claudio"
 		E for preencido a senha com "123"
-		Quando for acionado o botão "entrada"
-		E for acionado o botão "confirmação de entrada"
+		E que foi acionada a sequência de entrada
 		Então será exibida a mensagem "login efetuado com sucesso"
 		E que entrei na opcao fazer pedido
 		Quando for preenchido um pedido do tipo "venda grande"

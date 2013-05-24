@@ -3,16 +3,18 @@ package br.gov.frameworkdemoiselle.behave.internal.parse;
 import java.util.List;
 
 public class Scenario {
-	
+
 	private String identification;
 	private String identificationWithoutParametersName;
 	private String declaration;
 	private List<String> sentences;
-	private Boolean converted; //Indica que um cenário teve suas sentenças reutilizadas já injetadas
-	
+	private Boolean converted; // Indica que um cenário teve suas sentenças
+								// reutilizadas já injetadas
+	private Boolean reusable = false;
+
 	public Scenario() {
 	}
-	
+
 	public String getIdentification() {
 		return identification;
 	}
@@ -33,8 +35,7 @@ public class Scenario {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((identification == null) ? 0 : identification.hashCode());
+		result = prime * result + ((identification == null) ? 0 : identification.hashCode());
 		return result;
 	}
 
@@ -75,9 +76,16 @@ public class Scenario {
 		return identificationWithoutParametersName;
 	}
 
-	public void setIdentificationWithoutParametersName(
-			String identificationWithoutParametersName) {
+	public void setIdentificationWithoutParametersName(String identificationWithoutParametersName) {
 		this.identificationWithoutParametersName = identificationWithoutParametersName;
+	}
+
+	public Boolean getReusable() {
+		return reusable;
+	}
+
+	public void setReusable(Boolean reusable) {
+		this.reusable = reusable;
 	}
 
 }

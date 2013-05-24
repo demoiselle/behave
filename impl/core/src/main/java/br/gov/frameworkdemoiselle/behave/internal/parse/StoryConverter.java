@@ -14,7 +14,7 @@ public class StoryConverter {
 
 	private static final String LINE_BREAK_TOKEN = "\n";
 
-	/* 
+	/*
 	 * Definições: story=arquivo com um ou mais cenários ;
 	 * cenário=identificador+sentenças Algoritmo: Converter todas os cenários de
 	 * todos as stories (textos extraídos dos arquivos) para objetos do tipo
@@ -40,10 +40,21 @@ public class StoryConverter {
 	 */
 	public static Map<String, String> convertReusedScenarios(Map<String, String> stories) throws IOException {
 		Map<String, String> convertedStories = new HashMap<String, String>();
+
+		// Pega as definições das histórias (tudo que vem antes do primeiro
+		// cenário)
 		Map<String, String> storyDefinitions = extractStoryDefinitions(stories);
+
+		// Cria uma lista contendo o identificador da história e uma lista com
+		// todos os cenários
 		Map<String, List<Scenario>> scenarios = extractScenarios(stories);
+
+		// Faz a reutilização dos cenários
 		reuseScenario(scenarios);
+
+		// Converte os objetos dos cenários (com reuso) em histórias novamente
 		convertedStories = scenariosToStories(storyDefinitions, scenarios);
+
 		return convertedStories;
 	}
 
@@ -55,6 +66,12 @@ public class StoryConverter {
 		return scenarios;
 	}
 
+	/**
+	 * 
+	 * @param stories
+	 *            Todas as histórias que serão utilizadas
+	 * @return retorna um mapa contendo o arquivo e a
+	 */
 	private static Map<String, String> extractStoryDefinitions(Map<String, String> stories) {
 		Map<String, String> storyDefinitions = new HashMap<String, String>();
 		for (String storyPath : stories.keySet()) {
@@ -63,6 +80,12 @@ public class StoryConverter {
 		return storyDefinitions;
 	}
 
+	/**
+	 * Retira o "Como um: XXX Eu quero: XXX De modo que: XXX" da história
+	 * 
+	 * @param storyContent
+	 * @return retorna somente o conteúdo "Como um..."
+	 */
 	private static String extractStoryDefinition(String storyContent) {
 		String[] scenarioTokens = storyContent.split(LINE_BREAK_TOKEN);
 		String storyDefinition = "";
@@ -71,7 +94,7 @@ public class StoryConverter {
 			if (RegularExpressionUtil.matches(BehaveConfig.IDENTIFICATION_SCENARIO_PATTERN, scenarioToken.trim())) {
 				return storyDefinition;
 			}
-			storyDefinition += scenarioToken+LINE_BREAK_TOKEN;
+			storyDefinition += scenarioToken + LINE_BREAK_TOKEN;
 		}
 		return storyDefinition;
 	}
@@ -101,13 +124,20 @@ public class StoryConverter {
 		scenario.setIdentification(scenarioIdentification);
 		scenario.setIdentificationWithoutParametersName(scenarioIdentificationWithoutParametersName);
 		scenario.setSentences(new ArrayList<String>());
+
+		// Se a identificação do cenário com e sem parâmetros não for igual ele
+		// é um cenário que tem parâmetros, e por tanto é reutilizável
+		if (!scenario.getIdentification().toLowerCase().equals(scenario.getIdentificationWithoutParametersName().toLowerCase())) {
+			scenario.setReusable(true);
+		}
+
 		return scenario;
 	}
 
 	private static Map<String, String> scenariosToStories(Map<String, String> storyDefinitions, Map<String, List<Scenario>> scenarios) {
 		Map<String, String> stories = new HashMap<String, String>();
 		for (String storyPath : scenarios.keySet()) {
-			stories.put(storyPath, storyDefinitions.get(storyPath)+scenariosToText(scenarios.get(storyPath)));
+			stories.put(storyPath, storyDefinitions.get(storyPath) + scenariosToText(scenarios.get(storyPath)));
 		}
 		return stories;
 	}
@@ -121,10 +151,12 @@ public class StoryConverter {
 	private static String scenariosToText(List<Scenario> scenarios) {
 		String text = "";
 		for (Scenario scenario : scenarios) {
-			text += scenario.getDeclaration() + LINE_BREAK_TOKEN;
-			for (String sentence : scenario.getSentences()) {
-				if (sentence.trim().length() > 0)
-					text += sentence + LINE_BREAK_TOKEN;
+			if (!scenario.getReusable()) {
+				text += scenario.getDeclaration() + LINE_BREAK_TOKEN;
+				for (String sentence : scenario.getSentences()) {
+					if (sentence.trim().length() > 0)
+						text += sentence + LINE_BREAK_TOKEN;
+				}
 			}
 		}
 		return text;
@@ -133,7 +165,7 @@ public class StoryConverter {
 	private static void reuseScenario(Map<String, List<Scenario>> scenarios) {
 		Map<String, Scenario> scenariosIdentificationMap = createScenariosIdentificationMap(scenarios);
 		for (Entry<String, Scenario> entrySet : scenariosIdentificationMap.entrySet()) {
-			reuseScenario(entrySet.getValue(), scenariosIdentificationMap);
+			reuseScenarioSentences(entrySet.getValue(), scenariosIdentificationMap);
 		}
 	}
 
@@ -149,25 +181,29 @@ public class StoryConverter {
 		return scenariosIdentificationMap;
 	}
 
-	private static void reuseScenario(Scenario scenario, Map<String, Scenario> scenariosIdentificationMap) {
+	private static void reuseScenarioSentences(Scenario scenario, Map<String, Scenario> scenariosIdentificationMap) {
 		List<String> sentences = new ArrayList<String>();
 		for (String sentence : scenario.getSentences()) {
-			String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.PREFIXES_BDD_PATTERN, sentence.trim(), 3);
-			if(sentenceWithoutPrefixAndParametersName==null){
-				sentenceWithoutPrefixAndParametersName = sentence;
-			}
-			sentenceWithoutPrefixAndParametersName = sentenceWithoutPrefixAndParametersName.trim();
-			sentenceWithoutPrefixAndParametersName = ScenarioParameter.removeParameterNames(sentenceWithoutPrefixAndParametersName).toUpperCase();
-			if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {
-				// A sentença é na verdade uma referência a outro cenário
-				Scenario scenarioReused = scenariosIdentificationMap.get(sentenceWithoutPrefixAndParametersName);
-				if (!scenarioReused.getConverted()) {
-					// Foi utilizada recursão pois é possível que um cenário
-					// chame outro cenário que chame outro cenário
-					reuseScenario(scenarioReused, scenariosIdentificationMap);
+			if (!scenario.getReusable()) {
+				String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.PREFIXES_BDD_PATTERN, sentence.trim(), 3);
+				if (sentenceWithoutPrefixAndParametersName == null) {
+					sentenceWithoutPrefixAndParametersName = sentence;
 				}
-				List<String> sentencesReplacedCallParameters = ScenarioParameter.replaceCallParameters(sentence.trim(), scenarioReused);
-				sentences.addAll(sentencesReplacedCallParameters);
+				sentenceWithoutPrefixAndParametersName = sentenceWithoutPrefixAndParametersName.trim();
+				sentenceWithoutPrefixAndParametersName = ScenarioParameter.removeParameterNames(sentenceWithoutPrefixAndParametersName).toUpperCase();
+				if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {
+					// A sentença é na verdade uma referência a outro cenário
+					Scenario scenarioReused = scenariosIdentificationMap.get(sentenceWithoutPrefixAndParametersName);
+					if (!scenarioReused.getConverted()) {
+						// Foi utilizada recursão pois é possível que um cenário
+						// chame outro cenário que chame outro cenário
+						reuseScenarioSentences(scenarioReused, scenariosIdentificationMap);
+					}
+					List<String> sentencesReplacedCallParameters = ScenarioParameter.replaceCallParameters(sentence.trim(), scenarioReused);
+					sentences.addAll(sentencesReplacedCallParameters);
+				} else {
+					sentences.add(sentence);
+				}
 			} else {
 				sentences.add(sentence);
 			}

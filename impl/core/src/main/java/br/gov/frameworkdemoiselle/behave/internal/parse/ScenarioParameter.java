@@ -45,10 +45,11 @@ public class ScenarioParameter {
 			return scenarioReused.getSentences();
 		}
 		List<String> newSentences = new ArrayList<String>();
-		for (String sentence : scenarioReused.getSentences()) {
+		for (String sentence : scenarioReused.getSentences()) {			
 			for (String parameterCall : parametersCalled.keySet()) {
-				newSentences.add(sentence.replace(parameterCall, parametersCalled.get(parameterCall)));
-			}
+				sentence = sentence.replace(parameterCall, parametersCalled.get(parameterCall));
+			}			
+			newSentences.add(sentence);			
 		}
 		return newSentences;
 	}

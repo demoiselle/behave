@@ -62,6 +62,7 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void start() {
+		driver = null;
 		getDriver();
 	}
 
@@ -108,7 +109,7 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void quit() {
-		driver.quit();
+		driver.quit();		
 	}
 
 	public Screen getScreen() {

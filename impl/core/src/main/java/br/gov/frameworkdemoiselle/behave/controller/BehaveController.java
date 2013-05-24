@@ -42,37 +42,73 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 
-public class EngineController {
-
+public class BehaveController {
+	
+	private static BehaveController eng = new BehaveController();
+			
 	private Parser parser;
-	// private Runner runner;
 
 	private Logger logger = Logger.getLogger(this.toString());
 
+	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
+	
 	private List<Step> steps = new ArrayList<Step>();
+	
+	private BehaveController(){
+		
+	}
+	
+	public static BehaveController getInstance(){
+		return eng;
+	}
 
 	public void addSteps(Step step) {
 		steps.add(step);
 	}
 
-	public void run(List<String> storiesPath) throws Throwable {
+	@SuppressWarnings("unchecked")
+	public void run(List<String> storiesPath) {
+		try {
+			// Armazena o array antigo para retirar as histórias depois
+			List<String> oldsStories = (List<String>) allOriginalStoriesPath.clone();
+			
+			// Adiciono as novas histórias
+			allOriginalStoriesPath.addAll(storiesPath);			
+			
+			// Faz a conversão
+			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
 
-		List<String> finalStoriesPath = StoryFileConverter.convertReusedScenarios(storiesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
-		
-		logger.log(Level.INFO, "Iniciou o processo...");
+			// Cria um novo array contendo somente as histórias atuais, sem as antigas
+			List<String> finalArray = new ArrayList<String>();			
+			for (String s : allStoriesConverted) {
+				if (!oldsStories.contains(s)) {
+					finalArray.add(s);
+				}
+			}
+	
+			// Roda o runner com as histórias convertidas
+			logger.log(Level.INFO, "Iniciou o processo...");
+			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
+			parser.setSteps(steps);
+			parser.setStoryPaths(finalArray);
+			parser.run();
+			logger.log(Level.INFO, "Concluiu o processo.");
+		} catch (Throwable ex) {
+			throw new DemoiselleBehaveException("Erro ao executar histórias", ex);
+		}
 
-		parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
-		parser.setSteps(steps);
-		parser.setStoryPaths(finalStoriesPath);
-		parser.run();
+	}
 
-		logger.log(Level.INFO, "Concluiu o processo.");
-
+	public void run(String storiesPath) {
+		ArrayList<String> stories = new ArrayList<String>();
+		stories.add(storiesPath);
+		run(stories);
 	}
 
 }

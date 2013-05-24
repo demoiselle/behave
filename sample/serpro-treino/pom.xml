@@ -23,34 +23,84 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-
-	<artifactId>demoiselle-behave-reference</artifactId>
-	<packaging>jdocbook</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>serpro-treino</artifactId>
+	<version>1.0.0</version>
 
 	<parent>
-		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-documentation-parent</artifactId>
-		<version>8</version>
+		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+		<artifactId>demoiselle-behave-parent</artifactId>
+		<version>1</version>
 	</parent>
 
-	<name>Demoiselle Behave Component Reference Documentation</name>
-	<description>Demoiselle Report Component Reference Documentation</description>
+	<name>Demoiselle Behave Serpro Treino</name>
 
-	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/documentation/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/documentation/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+	<description>Demoiselle Behave Serpro Treino</description>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
+		<url>http://www.serpro.gov.br</url>
+	</organization>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<properties>
-		<project.context>component/behave/reference</project.context>
+		<project.alias>serpro-treino</project.alias>
 	</properties>
+
+	<dependencies>
+		<!-- Project parser definition -->
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Project runner definition -->
+		<dependency>
+			<groupId>
+				br.gov.frameworkdemoiselle.component.behave
+			</groupId>
+			<artifactId>demoiselle-behave-runner-webdriver</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>demoiselle-behave-snapshots</id>
+			<name>Demoiselle Behave Snapshots</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
+		</repository>
+		<repository>
+			<id>demoiselle-behave-releases</id>
+			<name>Demoiselle Behave Releases</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
+		</repository>
+	</repositories>
+
+
 </project>
