@@ -42,10 +42,13 @@ import org.jbehave.core.annotations.When;
 
 import freemarker.log.Logger;
 
+import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
@@ -96,6 +99,12 @@ public class CommonSteps implements Step {
 			((TextField) element).sendKeys(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectValue(value);
+		} else if (element instanceof Radio){
+			
+		} else if (element instanceof CheckBox){
+			
+		} else {
+			throw new DemoiselleBehaveException("");
 		}
 
 	}

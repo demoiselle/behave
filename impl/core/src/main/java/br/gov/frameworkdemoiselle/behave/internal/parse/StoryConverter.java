@@ -81,7 +81,7 @@ public class StoryConverter {
 	}
 
 	/**
-	 * Retira o "Como um: XXX Eu quero: XXX De modo que: XXX" da história
+	 * Retira o "Como um: / Eu quero: / De modo que: /" da história
 	 * 
 	 * @param storyContent
 	 * @return retorna somente o conteúdo "Como um..."

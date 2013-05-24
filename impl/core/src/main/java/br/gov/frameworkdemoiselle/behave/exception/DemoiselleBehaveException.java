@@ -44,4 +44,8 @@ public class DemoiselleBehaveException extends RuntimeException {
 		super(message, ex);
 	}
 
+	public DemoiselleBehaveException(String message) {
+		super(message);
+	}
+
 }

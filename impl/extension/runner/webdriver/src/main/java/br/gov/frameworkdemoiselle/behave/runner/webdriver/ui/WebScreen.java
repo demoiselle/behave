@@ -3,18 +3,16 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class WebScreen extends WebBase implements Screen {
 
 	public void waitText(String text) {
-		/**
-		 * TODO Paramatrizar o tempo
-		 */
-		waitText(text, 30000);
+		waitText(text, BehaveConfig.BROWSER_MAX_WAIT);
 	}
 
-	public void waitText(String text, Integer timeout) {
+	public void waitText(String text, Long timeout) {
 		int totalMilliseconds = 0;
 		while (!((WebDriver) runner.getDriver()).getPageSource().contains(text)) {
 			try {

@@ -9,9 +9,6 @@ import org.reflections.Reflections;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 
-/*
- * TODO Refactoring da classe
- */
 public class ReflectionUtil {
 
 	public static String getLocation(String name) {

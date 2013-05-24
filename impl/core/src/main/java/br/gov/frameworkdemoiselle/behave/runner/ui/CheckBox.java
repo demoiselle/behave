@@ -4,4 +4,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
 
 public interface CheckBox extends BaseUI {
 
+	void click();
+	
 }
