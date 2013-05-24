@@ -40,6 +40,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import freemarker.log.Logger;
+
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
@@ -57,12 +59,13 @@ import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
  */
 public class CommonSteps implements Step {
 
-	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-	// private Logger logger = Logger.getLogger(this.toString());
-	private String currentPageName;
+	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+	protected Logger logger = Logger.getLogger(this.toString());
+	protected String currentPageName;
 
 	@Given("vou para a página \"$local\"")
 	public void goToWithName(String local) {
+		logger.info("Go to screen " + local);
 		currentPageName = local;
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
