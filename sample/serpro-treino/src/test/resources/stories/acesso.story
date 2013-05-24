@@ -11,7 +11,3 @@ Quando informo "{usuário}" no campo "Campo Usuário"
 E informo "{senha}" no campo "Campo Senha"
 Quando clico em "Botão Enviar"
 Então será exibido "Seja bem vindo"
-
-Cenário: Acesso ao Sistema
-
-Acesso ao Sistema com usuário "19296496063" e senha "205253"
