@@ -21,7 +21,7 @@ public class StoryFileConverterTest {
 
 	private static final String DEFAULT_RESOURCE_PATH = "target/test-classes/parser/test/" + LANGUAGE + "/";
 
-	private static final Boolean INCLUDE_SUBDIRECTORY = true;
+	// private static final Boolean INCLUDE_SUBDIRECTORY = true;
 
 	private static final String ACCESS = "acesso-sistema.";
 	private static final String ORDER = "pedido.";
@@ -48,11 +48,12 @@ public class StoryFileConverterTest {
 		verifyConvertedFiles();
 	}
 
-	@Test
-	public void convertUsedScenariosOriginFolder() throws IOException {
-		StoryFileConverter.convertReusedScenarios(DEFAULT_RESOURCE_PATH, ORIGIN_EXTENSION, DESTINATION_EXTENSION, INCLUDE_SUBDIRECTORY);
-		verifyConvertedFiles();
-	}
+	// @Test
+	// public void convertUsedScenariosOriginFolder() throws IOException {
+	// StoryFileConverter.convertReusedScenarios(DEFAULT_RESOURCE_PATH,
+	// ORIGIN_EXTENSION, DESTINATION_EXTENSION, INCLUDE_SUBDIRECTORY);
+	// verifyConvertedFiles();
+	// }
 
 	private void verifyConvertedFiles() throws IOException {
 

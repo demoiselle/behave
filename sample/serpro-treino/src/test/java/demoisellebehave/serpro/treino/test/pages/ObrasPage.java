@@ -39,20 +39,13 @@ package demoisellebehave.serpro.treino.test.pages;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import demoisellebehave.serpro.treino.Constants;
 
-@ScreenMap(name = "Tela de Login", location = Constants.URL)
-public class LoginPage {
+@ScreenMap(name = "Tela de Obras", location = Constants.URL + "private/pages/obra.html")
+public class ObrasPage {
 
-	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.Id, locator = "formLogin:j_idt22")
-	private TextField campoUsuario;
-
-	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.Id, locator = "formLogin:j_idt24_input")
-	private TextField campoSenha;
-
-	@ElementMap(name = "Botão Enviar", locatorType = ElementLocatorType.Id, locator = { "formLogin:j_idt26" })
-	private Button botaoEnviar;
+	@ElementMap(name = "Botão de Enviar Projeto", locatorType = ElementLocatorType.Id, locator = "formObra:tbObra:0:j_idt61")
+	private TextField botaoEnviarProjeto;
 
 }
