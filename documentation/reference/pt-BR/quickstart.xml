@@ -1,20 +1,20 @@
-<?xml version='1.0' encoding="utf-8"?>
+<?xml version='1.0' encoding="iso-8859-1"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <chapter id="behave-quickstart">
-
-	<title>Roteiro R√°pido</title>
+	<title>Roteiro R·pido</title>
+	
 	<para>
-		Esta se√ß√£o apresenta um roteiro r√°pido para cria√ß√£o e
-		configura√ß√£o de projeto do Demoiselle Behave.
+		Esta seÁ„o apresenta um roteiro r·pido para criaÁ„o e
+		configuraÁ„o de projeto do Demoiselle Behave.
 	</para>
 	<section>
-		<title>Configurando o Arqu√©tipo.</title>
+		<title>Configurando o ArquÈtipo.</title>
 		<para>
-			O projeto Demoiselle Behave disponibiliza um arqu√©tipo Maven
-			para faciliar a cria√ß√£o de projetos.
-			O primeiro passo na configura√ß√£o
-			do arqu√©tipo consiste em configurar o reposit√≥rio. Ir no menu
+			O projeto Demoiselle Behave disponibiliza um arquÈtipo Maven
+			para faciliar a criaÁ„o de projetos.
+			O primeiro passo na configuraÁ„o
+			do arquÈtipo consiste em configurar o repositÛrio. Ir no menu
 			Windows>Preferences
 			do eclipse.
 
@@ -30,13 +30,13 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Menu de Prefer√™ncia.
+					<para>Menu de PreferÍncia.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			O pr√≥ximo passo √© clicar no bot√£o Add Remote Catalog.
+			O prÛximo passo È clicar no bot„o Add Remote Catalog.
 		</para>
 		<para>
 			<mediaobject>
@@ -49,14 +49,14 @@
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Clicar no bot√£o Add Remote Catalog.
+					<para>Clicar no bot„o Add Remote Catalog.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
 			Deve ser preenchido o valor<emphasis> http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml</emphasis> no Catalog File.
-			O nome Demoiselle-Behave pode ser preenchido na descri√ß√£o.
+			O nome Demoiselle-Behave pode ser preenchido na descriÁ„o.
 		</para>
 		<para>
 			<mediaobject>
@@ -69,19 +69,19 @@
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Preenchendo Cat√°logo Remoto.
+					<para>Preenchendo Cat·logo Remoto.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 	</section>
 	<section>
-		<title>Cria√ß√£o do Projeto</title>
+		<title>CriaÁ„o do Projeto</title>
 		<para>
-			O primeiro passo na cria√ß√£o de um projeto Demoisele-Behave √©
+			O primeiro passo na criaÁ„o de um projeto Demoisele-Behave È
 			criar um projeto Maven com o arquetipo adequado ao projeto de testes.
-			Neste tutorial ser√° utilizado o arquetipo jbehave-selenium-archetype.
-			O primeiro passo √© escolher a op√ß√£o File>New>Other>Maven>Maven
+			Neste tutorial ser· utilizado o arquetipo jbehave-selenium-archetype.
+			O primeiro passo È escolher a opÁ„o File>New>Other>Maven>Maven
 			Project.
 
 		</para>
@@ -108,21 +108,21 @@
 		<para>
 			<mediaobject>
 				<imageobject role="fo">
-					<imagedata fileref="images/criandoprojeto2.png" align="center"
+					<imagedata fileref="images/arquetipo.png" align="center"
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
-					<imagedata fileref="images/criandoprojeto2.png" align="center"
+					<imagedata fileref="images/arquetipo.png" align="center"
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arqu√©tipo jbehave-selenium-archetype.
+					<para>Escolhendo o arquÈtipo jbehave-selenium-archetype.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			Preencher o Group Id e Artifact Id e finalizar a cria√ß√£o do
+			Preencher o Group Id e Artifact Id e finalizar a criaÁ„o do
 			projeto.
 		</para>
 		<para>
@@ -136,20 +136,20 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Escolhendo o arqu√©tipo jbehave-selenium-archetype.
+					<para>Escolhendo o arquÈtipo jbehave-selenium-archetype.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 	</section>
 	<section>
-		<title>Estrutura de diret√≥rios</title>
+		<title>Estrutura de diretÛrios</title>
 		<para>
-			O projeto criado a partir do arqu√©tipo possui os diret√≥rios
-			src/test/java e src/test/resources. No diret√≥rio src/test/resource
-			estar√£o contidas as hist√≥rias de usu√°rios. No diret√≥rio src/test/java
-			estar√£o contidos os Steps do demoiselle bem como os objetos
-			respons√°veis pela indentifica√ß√£o das telas envolvidas nos testes e
+			O projeto criado a partir do arquÈtipo possui os diretÛrios
+			src/test/java e src/test/resources. No diretÛrio src/test/resource
+			estar„o contidas as histÛrias de usu·rios. No diretÛrio src/test/java
+			estar„o contidos os Steps do demoiselle bem como os objetos
+			respons·veis pela indentificaÁ„o das telas envolvidas nos testes e
 			seus objetos.
 		</para>
 		<para>
@@ -163,7 +163,7 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Estrutura de pastas do projeto criado a partir do arqu√©tipo.
+					<para>Estrutura de pastas do projeto criado a partir do arquÈtipo.
 					</para>
 				</caption>
 			</mediaobject>
@@ -172,9 +172,9 @@
 	<section>
 		<title>Executando Teste</title>
 		<para>
-			A classe AppTest √© respons√°vel pela configura√ß√£o da pasta onde
-			est√£o
-			localizadas as hist√≥rias de usu√°rios bem como os passos (Steps)
+			A classe AppTest È respons·vel pela configuraÁ„o da pasta onde
+			est„o
+			localizadas as histÛrias de usu·rios bem como os passos (Steps)
 			a
 			serem adicionados
 			no projeto.
@@ -200,7 +200,7 @@
 			O projeto criado ja possui um exemplo que realiza uma consulta
 			no
 			Google. Para executar o teste
-			basta clicar com o bot√£o direito na
+			basta clicar com o bot„o direito na
 			classe AppTeste e escolher Run
 			as>JUnit Test.
 		</para>
@@ -240,7 +240,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			Abaixo segue uma das hist√≥rias executadas pelo framework:
+			Abaixo segue uma das histÛrias executadas pelo framework:
 			<programlisting>
 		
 				Funcionalidade: Pesquisa Simples
@@ -249,11 +249,11 @@
 				Eu quero: fazer uma busca simples
 				De modo que: me mostre os resultados
 
-				Cen√°rio: Utiliza√ß√£o da funcionalidade de pesquisa
+				Cen·rio: UtilizaÁ„o da funcionalidade de pesquisa
 
 				Acesso ao Google
 				Quando informo "Framework Demoiselle" no campo "Campo de Busca"
-				Ent√£o ser√° exibido "frameworkdemoiselle.gov.br"
+				Ent„o ser· exibido "frameworkdemoiselle.gov.br"
 		</programlisting>
 		</para>
 		<para>
@@ -262,8 +262,8 @@
 			com o elemento searchField da classe SearchPage criada
 			de forma a mapear os objetos da tela com o Id procurado. O Elemento
 			locatorType informa o tipo de
-			reconhecimento de objetos ser√° utilizado
-			no framework. No exemplo, ser√° localizado o elemento cujo Id
+			reconhecimento de objetos ser· utilizado
+			no framework. No exemplo, ser· localizado o elemento cujo Id
 			possui o
 			valor "gbqfq".
 
