@@ -8,6 +8,7 @@ import org.reflections.Reflections;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 
 public class ReflectionUtil {
 
@@ -16,11 +17,16 @@ public class ReflectionUtil {
 		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
 
 		String urlFinal = "";
-
 		for (Class<?> clazz : annotatedClasses) {
 			ScreenMap annotation = clazz.getAnnotation(ScreenMap.class);
 			if (annotation.name().equals(name)) {
-				urlFinal = annotation.location();
+				String base = "";
+				if (BehaveConfig.contains(annotation.base())){
+					base = BehaveConfig.getProperty(annotation.base());
+				}else{
+					base = annotation.base();
+				}				
+				urlFinal = (!base.equals("")) ? base + annotation.location() : annotation.location();
 				break;
 			}
 		}

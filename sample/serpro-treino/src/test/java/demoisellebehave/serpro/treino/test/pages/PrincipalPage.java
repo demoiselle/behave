@@ -36,13 +36,13 @@
  */
 package demoisellebehave.serpro.treino.test.pages;
 
-import demoisellebehave.serpro.treino.Constants;
+import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-@ScreenMap(name = "Tela Princial", location = Constants.URL + "private/pages/index.html")
+@ScreenMap(name = "Tela Princial", base = Config.URLBASE, location = "/private/pages/index.html")
 public class PrincipalPage {
 
 	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")

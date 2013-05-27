@@ -42,7 +42,7 @@ import org.jbehave.core.annotations.When;
 
 import freemarker.log.Logger;
 
-import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
@@ -104,7 +104,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof CheckBox){
 			
 		} else {
-			throw new DemoiselleBehaveException("");
+			throw new BehaveException("");
 		}
 
 	}

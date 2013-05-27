@@ -54,6 +54,12 @@ public @interface ScreenMap {
 	 * da página ocorra.
 	 */
 	public String name();
+	
+	/**
+	 * Propriedade que determina a localização base do location
+	 * @return
+	 */
+	public String base() default "";
 
 	/**
 	 * Propriedade que determina a localização que será chamada quando a

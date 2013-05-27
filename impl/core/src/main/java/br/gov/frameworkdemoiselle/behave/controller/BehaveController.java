@@ -42,7 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
@@ -100,7 +100,7 @@ public class BehaveController {
 			parser.run();
 			logger.log(Level.INFO, "Concluiu o processo.");
 		} catch (Throwable ex) {
-			throw new DemoiselleBehaveException("Erro ao executar histórias", ex);
+			throw new BehaveException("Erro ao executar histórias", ex);
 		}
 
 	}

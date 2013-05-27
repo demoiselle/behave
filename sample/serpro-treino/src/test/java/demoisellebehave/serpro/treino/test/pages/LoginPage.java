@@ -36,14 +36,14 @@
  */
 package demoisellebehave.serpro.treino.test.pages;
 
+import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
-import demoisellebehave.serpro.treino.Constants;
 
-@ScreenMap(name = "Tela de Login", location = Constants.URL)
+@ScreenMap(name = "Tela de Login", base=Config.URLBASE, location="/")
 public class LoginPage {
 
 	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.Id, locator = "formLogin:j_idt22")

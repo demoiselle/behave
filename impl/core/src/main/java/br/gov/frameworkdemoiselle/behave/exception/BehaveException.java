@@ -36,15 +36,15 @@
  */
 package br.gov.frameworkdemoiselle.behave.exception;
 
-public class DemoiselleBehaveException extends RuntimeException {
+public class BehaveException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public DemoiselleBehaveException(String message, Throwable ex) {
+	public BehaveException(String message, Throwable ex) {
 		super(message, ex);
 	}
 
-	public DemoiselleBehaveException(String message) {
+	public BehaveException(String message) {
 		super(message);
 	}
 

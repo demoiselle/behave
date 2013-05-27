@@ -3,6 +3,7 @@ package br.gov.frameworkdemoiselle.behave.config;
 import java.io.IOException;
 import java.util.Properties;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 
 public class BehaveConfig {
@@ -14,6 +15,7 @@ public class BehaveConfig {
 	public static String PREFIXES_BDD_PATTERN = "";
 	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
 	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
+	//
 
 	public static Long BROWSER_MAX_WAIT = 10000L;
 	public static Long BROWSER_MIN_WAIT = 100L;
@@ -39,6 +41,32 @@ public class BehaveConfig {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
+	 * uma nova proprieade em seu projeto
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static String getProperty(String key) {
+		if (properties == null || !properties.containsKey(key)) {
+			throw new BehaveException("chave [" + key + "] não encontrondada");
+		} else {
+			return properties.getProperty(key);
+		}
+	}
+
+	/**
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
+	 * uma nova proprieade em seu projeto
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static boolean contains(String key) {
+		return properties.containsKey(key);
 	}
 
 }
