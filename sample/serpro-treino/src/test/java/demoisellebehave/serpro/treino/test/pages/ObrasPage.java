@@ -36,16 +36,38 @@
  */
 package demoisellebehave.serpro.treino.test.pages;
 
-import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import demoisellebehave.serpro.treino.config.Config;
 
 @ScreenMap(name = "Tela de Obras",  base=Config.URLBASE, location="/private/pages/obra.html")
 public class ObrasPage {
 
-	@ElementMap(name = "Botão de Enviar Projeto", locatorType = ElementLocatorType.Id, locator = "formObra:tbObra:0:j_idt61")
-	private TextField botaoEnviarProjeto;
+	@ElementMap(name = "Adicionar Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
+	private Button botaoAdicionarObra;
+	
+	@ElementMap(name = "Nome da Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[1]")
+	private TextField nomeDaObra;
 
+	@ElementMap(name = "Valor", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[2]")
+	private TextField valor;
+	
+	@ElementMap(name = "Prazo", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[3]")
+	private TextField prazo;
+	
+	@ElementMap(name = "Inserir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
+	private Button btInserir;
+	
+	@ElementMap(name = "Última Página", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-paginator-last ui-state-default ui-corner-all')])[1]")
+	private Button ultimaPagina;
+	
+	@ElementMap(name = "Primeiro Botão de Ecluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
+	private Button primeiroBotaoExcluir;
+	
+	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formRemoverObra')][contains(@type, 'submit')])[1]")
+	private Button sim;
+	 
 }

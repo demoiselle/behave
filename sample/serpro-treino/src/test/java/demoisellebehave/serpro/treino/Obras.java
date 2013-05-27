@@ -50,13 +50,9 @@ public class Obras {
 	}
 	
 	@Test
-	public void testAcesso() throws Throwable {
-		eng.run("/stories/acesso/acesso.story");
-	}
-
-	@Test
 	public void testObras() throws Throwable {
 		eng.run("/stories/obras");
 	}
 
 }
+

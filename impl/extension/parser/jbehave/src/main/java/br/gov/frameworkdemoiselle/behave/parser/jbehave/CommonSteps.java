@@ -40,8 +40,6 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import freemarker.log.Logger;
-
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
@@ -54,6 +52,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
+import freemarker.log.Logger;
 
 /**
  * 
@@ -81,38 +80,49 @@ public class CommonSteps implements Step {
 	@When("estou na página \"$local\"")
 	public void pageWithName(String local) {
 		logger.info("Go to screen " + local);
-		currentPageName = local;		
+		currentPageName = local;
 	}
-	
+
 	@When("clico em \"$elementName\"")
+	@Then("clico em \"$elementName\"")
 	public void clickButton(String elementName) {
 		Button element = (Button) runner.getElement(currentPageName, elementName);
 		element.click();
 	}
 
 	@When("informo \"$value\" no campo \"$fieldName\"")
+	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
 		// TODO Fazer o if para os outros elementos
 		if (element instanceof TextField) {
-			((TextField) element).sendKeys(value);
+			TextField textField = (TextField) element;
+			textField.clear();
+			textField.sendKeys(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectValue(value);
-		} else if (element instanceof Radio){
-			
-		} else if (element instanceof CheckBox){
-			
+		} else if (element instanceof Radio) {
+
+		} else if (element instanceof CheckBox) {
+
 		} else {
 			throw new BehaveException("");
 		}
-
 	}
 
 	@Then("será exibido \"$text\"")
 	public void textVisible(String text) {
 		Screen element = (Screen) runner.getScreen();
 		element.waitText(text);
+	}
+
+	@Then("será exibido na \"$elementName\" o valor \"$text\"")
+	public void textVisibleInElement(String elementName, String text) {
+		Element element = (Element) runner.getElement(currentPageName, elementName);
+		if (!element.getText().contains(text)) {
+			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
+		}
 	}
 
 }
