@@ -58,8 +58,92 @@
 		<para>
 			O Demoisele-Behave é um  framework que permite ao usuários automatizar testes utilizando recursos de BDD.
 		</para>
+		<para>
+			A aplicação apresenta quatro módulos principais Core, Parser, Runner e Integration. O Core é responsável pelas principais interfaces
+			do framework.O Controller responsável pela orquestração das informações entre os outros 3 projetos
+			
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/arquitetura.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/arquitetura.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Arquitetura da ferramenta Demoisele-Behave.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		O Parser é responsável pela abstração do componente que irá transformar a história em código Java para enviar ao Runner por
+        meio de sentenças padrões ou específicas de cada projeto.		
+		</para>
+			<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/parsertamanhoreduzido.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/parsertamanhoreduzido.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Arquitetura da ferramenta Demoisele-Behave.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		O Runner é responsável pela abstração do componente que irá fazer as manipulações de tela, como o Selenium ou até mesmo diretamente o
+JUnit. O modulo Integration é responsável pela abstração do componente que irá fazer as
+integrações entre a solução e as ferramentas externas da empresa como ALM (RQM).
+O framework funciona de modo que histórias escritas em TXT são enviadas ao módulo Parser e posteriormente enviada
+para o Runner, responsável por interagir com um navegador web ou uma tela Desktop, utilizando o framework Selenium ou Fest respectivamente.
+
+		</para>
 		
-		
+					<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/funcionamento.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/funcionamento.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Arquitetura da ferramenta Demoisele-Behave.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			A ferramenta deve permitir que projetistas de testes escrevam histórias que serão lidas e acionarão scripts
+			de testes automatizados criados por desenvolvedores de teste.
+		</para>
+				<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/processo.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/processo.png" align="center"
+						format="PNG" scalefit="1" width="75%"/>
+				</imageobject>
+				<caption>
+					<para>Arquitetura da ferramenta Demoisele-Behave.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
 	</preface>
 	
 
