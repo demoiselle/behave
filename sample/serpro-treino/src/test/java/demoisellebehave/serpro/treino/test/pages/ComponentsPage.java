@@ -43,9 +43,9 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
-import demoisellebehave.serpro.treino.Constants;
+import demoisellebehave.serpro.treino.config.Config;
 
-@ScreenMap(name = "Tela de Componentes", location = Constants.URL + "private/pages/teste.html")
+@ScreenMap(name = "Tela de Componentes", base = Config.URLBASE, location = "/private/pages/teste.html")
 public class ComponentsPage {
 
 	@ElementMap(name = "Seleção de Opção 1", locatorType = ElementLocatorType.XPath, locator = { "//div[@id='formObra:j_idt24']/label", "//div[@id='formObra:j_idt24']/div[3]/div/div/div/ul" })

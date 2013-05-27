@@ -40,13 +40,7 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-<<<<<<< HEAD
-import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
-=======
-import freemarker.log.Logger;
-
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
->>>>>>> branch 'master' of https://github.com/botelhojp/behave.git
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
@@ -59,6 +53,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
 import freemarker.log.Logger;
+
+//github.com/botelhojp/behave.git
 
 /**
  * 
@@ -125,7 +121,7 @@ public class CommonSteps implements Step {
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		if (!element.getText().contains(text)) {
-			throw new DemoiselleBehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
+			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
 		}
 	}
 

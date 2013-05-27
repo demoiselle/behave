@@ -43,7 +43,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
-@ScreenMap(name = "Tela de Login", base=Config.URLBASE, location="/")
+@ScreenMap(name = "Tela de Login", base = Config.URLBASE, location = "/")
 public class LoginPage {
 
 	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.Id, locator = "formLogin:j_idt22")

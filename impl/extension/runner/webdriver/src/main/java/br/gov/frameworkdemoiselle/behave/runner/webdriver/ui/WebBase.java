@@ -17,7 +17,7 @@ import org.reflections.Reflections;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
@@ -38,7 +38,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				WebElement element = getDriver().findElement(by);
 				elements.add(element);
 			} catch (Throwable ex) {
-				throw new DemoiselleBehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
+				throw new BehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
 			}
 		}
 
