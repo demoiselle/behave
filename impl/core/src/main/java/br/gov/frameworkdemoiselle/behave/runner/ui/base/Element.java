@@ -7,5 +7,7 @@ public interface Element {
 	ElementMap getElementMap();
 
 	void setElementMap(ElementMap elementMap);
+	
+	String getText();
 
 }
