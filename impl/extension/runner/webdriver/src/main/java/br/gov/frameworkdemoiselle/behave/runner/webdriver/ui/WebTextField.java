@@ -42,8 +42,8 @@ public class WebTextField extends WebBase implements TextField {
 	}
 
 	public void clear() {
-		verifyState(StateUI.VISIBLE);
 		verifyState(StateUI.ENABLE);
+		verifyState(StateUI.VISIBLE);
 		getElements().get(0).clear();
 	}
 

@@ -36,23 +36,34 @@
  */
 package demoisellebehave.serpro.treino.test.pages;
 
-import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
+import demoisellebehave.serpro.treino.config.Config;
 
-@ScreenMap(name = "Tela de Login", base = Config.URLBASE, location = "/")
-public class LoginPage {
+@ScreenMap(name = "Tela de Componentes", base = Config.URLBASE, location = "/private/pages/teste.html")
+public class ComponentsPage {
 
-	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
-	private TextField campoUsuario;
+	@ElementMap(name = "Seleção de Opção 1", locatorType = ElementLocatorType.XPath, locator = { "//div[@id='formObra:j_idt24']/label", "//div[@id='formObra:j_idt24']/div[3]/div/div/div/ul" })
+	private Select selectOpcao1;
 
-	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
-	private TextField campoSenha;
+	@ElementMap(name = "Seleção de Opção 2", locatorType = ElementLocatorType.XPath, locator = { "//div[@id='formObra:j_idt27']/label", "//div[@id='formObra:j_idt27']/div[3]/div/div/div/ul" })
+	private Select selectOpcao2;
 
-	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = { "(//*[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]" })
-	private Button botaoEnviar;
+	@ElementMap(name = "Botão Exibir", locatorType = ElementLocatorType.Id, locator = "formObra:btSubmit")
+	private Button botaoExibir;
+
+	@ElementMap(name = "Opção Selecionada", locatorType = ElementLocatorType.XPath, locator = "//FORM[@id='formObra']/DIV/DIV[@id='formObra:j_idt31']/DIV[@id='formObra:display']/DIV[@id='formObra:display_content']/UL[@id='formObra:display_list']/LI")
+	private Label opcaoSelecionada;
+
+	@ElementMap(name = "Botão Fechar", locatorType = ElementLocatorType.XPath, locator = "//FORM[@id='formObra']/TABLE[2]/TBODY/TR/TD[3]/BUTTON[@id='formObra:btSubmit']")
+	private Button botaoFechar;
+
+	@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
+	private Loading loading;
 
 }
