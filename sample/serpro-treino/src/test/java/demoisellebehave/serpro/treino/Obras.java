@@ -41,17 +41,22 @@ import org.junit.Test;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
-public class AcessoTest {
+public class Obras {
 
 	private BehaveController eng = BehaveController.getInstance();
 
-	public AcessoTest() {
+	public Obras() {
 		eng.addSteps(new MySteps());
 	}
-
+	
 	@Test
 	public void testAcesso() throws Throwable {
 		eng.run("/stories/acesso/acesso.story");
+	}
+
+	@Test
+	public void testObras() throws Throwable {
+		eng.run("/stories/obras");
 	}
 
 }
