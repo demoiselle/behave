@@ -53,6 +53,7 @@
 		<module>impl/extension/runner/fest</module>
 
 		<module>impl/extension/integration/alm</module>
+		<module>plugin/plugin-eclipse</module>
 		<module>documentation/reference</module>
 	</modules>
 
