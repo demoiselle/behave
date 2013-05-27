@@ -9,9 +9,9 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.base.StateUI;
 public class WebTextField extends WebBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
-		verifyState(StateUI.VISIBLE);
 		verifyState(StateUI.ENABLE);
-
+		verifyState(StateUI.VISIBLE);
+		
 		getElements().get(0).sendKeys(keysToSend);
 	}
 
@@ -42,6 +42,9 @@ public class WebTextField extends WebBase implements TextField {
 	}
 
 	public void clear() {
+		verifyState(StateUI.ENABLE);
+		verifyState(StateUI.VISIBLE);
+		
 		getElements().get(0).clear();
 	}
 

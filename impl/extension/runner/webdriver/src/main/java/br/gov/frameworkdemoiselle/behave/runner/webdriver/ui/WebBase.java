@@ -1,15 +1,25 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.reflections.ReflectionUtils;
+import org.reflections.Reflections;
 
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.DemoiselleBehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.StateUI;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
@@ -24,21 +34,24 @@ public class WebBase extends MappedElement implements BaseUI {
 			By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 			try {
-				WebElement element = (WebElement) ((WebDriver) runner.getDriver()).findElement(by);
+				// Utiliza implicity wait
+				WebElement element = getDriver().findElement(by);
 				elements.add(element);
-			} catch (NoSuchElementException ex) {
-				throw new RuntimeException("O element [" + getElementMap().name() + "] não foi encontrado na página.");
+			} catch (Throwable ex) {
+				throw new DemoiselleBehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
 			}
-
 		}
+
 		return elements;
 	}
 
 	public String getText() {
+		waitElement(0);
+
 		return getElements().get(0).getText();
 	}
 
-	public static void waitThreadSleep(Long delay) {
+	private static void waitThreadSleep(Long delay) {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
@@ -61,18 +74,6 @@ public class WebBase extends MappedElement implements BaseUI {
 			waitThreadSleep(BehaveConfig.BROWSER_MIN_WAIT);
 
 			switch (state) {
-			case PRESENT:
-				// TODO como tratar elemento presente
-				// retorno = selenium.isElementPresent(id);
-				throw new RuntimeException("Opcao não implementada.");
-				// break;
-
-			case ABSENT:
-				// TODO como tratar elemento não presente
-				// retorno = !selenium.isElementPresent(id);
-				throw new RuntimeException("Opcao não implementada.");
-				// break;
-
 			case VISIBLE:
 				retorno = getElements().get(0).isDisplayed();
 				break;
@@ -96,6 +97,55 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 
 		return retorno;
+	}
+
+	protected void waitElement(Integer index) {
+		verifyState(StateUI.ENABLE);
+		verifyState(StateUI.VISIBLE);
+		waitClickable(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
+		waitVisibility(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
+		waitLoading();
+	}
+
+	/**
+	 * Método que verifica em todas as classes se existe um componente Loading,
+	 * e se existir, ele sempre espera que este elemento desapareça antes de
+	 * continuar.
+	 */
+	@SuppressWarnings("unchecked")
+	private void waitLoading() {
+		Reflections reflections = new Reflections("");
+		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
+
+		for (Class<?> clazzI : annotatedClasses) {
+			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));
+			if (fields.size() == 1) {
+				for (Field field : fields) {
+					// Aguardo o LOADING!
+					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.BROWSER_MAX_WAIT / 1000));
+					ElementMap map = field.getAnnotation(ElementMap.class);
+					wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
+					break;
+				}
+			}
+
+		}
+	}
+
+	private void waitClickable(By by) {
+		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.BROWSER_MAX_WAIT / 1000));
+		wait.until(ExpectedConditions.elementToBeClickable(by));
+	}
+
+	private void waitVisibility(By by) {
+
+		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.BROWSER_MAX_WAIT / 1000));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+	}
+
+	public WebDriver getDriver() {
+		WebDriver driver = (WebDriver) getRunner().getDriver();
+		return driver;
 	}
 
 }
