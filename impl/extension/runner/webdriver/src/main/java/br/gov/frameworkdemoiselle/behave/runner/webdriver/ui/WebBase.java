@@ -100,11 +100,12 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	protected void waitElement(Integer index) {
+		waitLoading();
+
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
 		waitClickable(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
 		waitVisibility(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
-		waitLoading();
 	}
 
 	/**
