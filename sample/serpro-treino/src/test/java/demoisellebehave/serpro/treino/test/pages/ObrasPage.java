@@ -64,7 +64,7 @@ public class ObrasPage {
 	@ElementMap(name = "Última Página", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-paginator-last ui-state-default ui-corner-all')])[1]")
 	private Button ultimaPagina;
 	
-	@ElementMap(name = "Primeiro Botão de Ecluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
+	@ElementMap(name = "Botão de Excluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
 	private Button primeiroBotaoExcluir;
 	
 	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formRemoverObra')][contains(@type, 'submit')])[1]")

@@ -21,7 +21,7 @@ Então vou para a página "Tela de Obras"
 Quando clico em "Última Página"
 Então será exibido "Nome da Obra"
 
-Logout do Sistema
+Sair do "Sistema"
 
 Cenário: Excluir Obra
 
@@ -30,10 +30,10 @@ Acesso ao Sistema com usuário "19296496063" e senha "205253"
 Dado que estou na página "Tela Principal"
 Então vou para a página "Tela de Obras"
 Quando clico em "Última Página"
-E clico em "Primeiro Botão de Ecluir"
+E clico em "Botão de Excluir"
 Então será exibido "Remover Obra: Nova Obra ?"
 Quando clico em "Sim"
 Então será exibido "Nome da Obra"
 Então será exibido "Nova Obra. Registo removido."
 
-Logout do Sistema
+Sair do "Sistema"

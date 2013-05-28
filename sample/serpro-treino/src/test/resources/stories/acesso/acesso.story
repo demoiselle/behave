@@ -12,9 +12,16 @@ E informo "{senha}" no campo "Campo Senha"
 Quando clico em "Entrar"
 Então será exibido "Seja bem vindo"
 
-Cenário: Logout do Sistema "{reuso}"
+Cenário: Sair do "{sistema}"
 
 Dado que vou para a página "Tela Princial"
 Quando clico em "Sair" 
 Então será exibido "Usuário:"
 E será exibido "Senha:"
+
+Cenário: Teste
+
+Acesso ao Sistema com usuário "19296496063" e senha "205253"
+Sair do "Sistema"
+
+
