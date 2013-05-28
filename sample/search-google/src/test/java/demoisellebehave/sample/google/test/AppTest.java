@@ -36,27 +36,23 @@
  */
 package demoisellebehave.sample.google.test;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.EngineController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
 import demoisellebehave.sample.google.test.steps.MySteps;
 
 public class AppTest {
 
 	@Test
 	public void testBDD() throws Throwable {
-		// Cria o array contendo as histórias
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("/stories");
-
 		// Instância o motor de testes
-		EngineController eng = new EngineController();
+		BehaveController eng = BehaveController.getInstance();
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
-		// Manda rodar informando as histórias
-		eng.run(stories);
+		// Adiciona histórias
+		eng.addStories("/stories");
+		// Roda as histórias incluída
+		eng.run();
 	}
 
 }

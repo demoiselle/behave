@@ -46,13 +46,13 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 @ScreenMap(name = "Tela de Login", base = Config.URLBASE, location = "/")
 public class LoginPage {
 
-	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
+	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formLogin')][contains(@type, 'text')])")
 	private TextField campoUsuario;
 
-	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
+	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "((//*[contains(@id, 'formLogin')][contains(@type, 'password')])")
 	private TextField campoSenha;
 
-	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = { "(//*[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]" })
+	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = { "(//*[contains(@id, 'formLogin')][contains(@type, 'submit')])" })
 	private Button botaoEnviar;
 
 }
