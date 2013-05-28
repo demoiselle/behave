@@ -60,7 +60,7 @@ public class ComponentsPage {
 	@ElementMap(name = "Opção Selecionada", locatorType = ElementLocatorType.XPath, locator = "//FORM[@id='formObra']/DIV/DIV[@id='formObra:j_idt31']/DIV[@id='formObra:display']/DIV[@id='formObra:display_content']/UL[@id='formObra:display_list']/LI")
 	private Label opcaoSelecionada;
 
-	@ElementMap(name = "Botão Fechar", locatorType = ElementLocatorType.XPath, locator = "//FORM[@id='formObra']/TABLE[2]/TBODY/TR/TD[3]/BUTTON[@id='formObra:btSubmit']")
+	@ElementMap(name = "Botão Fechar", locatorType = ElementLocatorType.XPath, locator = "//div[@id='formObra:j_idt31']/button")
 	private Button botaoFechar;
 
 	@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
