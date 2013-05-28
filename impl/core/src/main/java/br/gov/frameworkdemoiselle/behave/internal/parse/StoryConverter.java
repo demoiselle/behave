@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.RegularExpressionUtil;
 
 public class StoryConverter {
@@ -63,7 +64,32 @@ public class StoryConverter {
 		for (String storyPath : stories.keySet()) {
 			scenarios.put(storyPath, extractScenarios(stories.get(storyPath)));
 		}
+
+		// Verifica assinatura
+		verifyDuplicateScenarios(scenarios);
+
 		return scenarios;
+	}
+
+	/**
+	 * Verifica se existe algum cenário com a assinatura identica, se tiver para
+	 * o teste, não pode existir por causa do reuso que
+	 * 
+	 * @param scenariosMap
+	 */
+	private static void verifyDuplicateScenarios(Map<String, List<Scenario>> scenariosMap) {
+		ArrayList<String> scenariosSignature = new ArrayList<String>();
+		for (String story : scenariosMap.keySet()) {
+			List<Scenario> scenarios = scenariosMap.get(story);
+			for (Scenario scenario : scenarios) {
+				if (!scenariosSignature.contains(scenario.getIdentificationWithoutParametersName())) {
+					scenariosSignature.add(scenario.getIdentificationWithoutParametersName());
+				} else {
+					// Já existe um cenário com esta assinatura
+					throw new BehaveException("Existe mais de um cenário com o nome [" + scenario.getIdentification() + "], só pode existir 1.");
+				}
+			}
+		}
 	}
 
 	/**
