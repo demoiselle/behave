@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,6 +44,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
@@ -58,6 +60,10 @@ public class WebDriverRunner implements Runner {
 		if (driver == null) {
 			logger.log(Level.FINE, "Iniciou o driver");
 			driver = new FirefoxDriver();
+
+			// Configurações do driver
+			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.BROWSER_MAX_WAIT, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(BehaveConfig.BROWSER_MAX_WAIT, TimeUnit.MILLISECONDS);
 		}
 		return driver;
 	}
@@ -110,7 +116,7 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void quit() {
-		driver.quit();		
+		driver.quit();
 	}
 
 	public Screen getScreen() {
