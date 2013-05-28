@@ -40,9 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.jbehave.core.ConfigurableEmbedder;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.Keywords;
@@ -65,14 +64,14 @@ import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
-	private Logger logger = Logger.getLogger(this.toString());
+	private Logger logger = Logger.getLogger(JBehaveParser.class);
 	private Configuration configuration;
 
 	private List<String> storyPaths = new ArrayList<String>();
 	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
-		logger.log(Level.INFO, "Configurando o JBheave");
+		logger.info("Configurando o JBheave");
 
 		ParameterConverters parameterConverters = new ParameterConverters();
 		parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
@@ -104,17 +103,15 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public void run() throws Throwable {
-		logger.log(Level.INFO, "Iniciou o PARSER JBehave");
-
+		logger.info("Iniciou o parser JBehave");
 		Embedder embedder = configuredEmbedder();
 		try {
-			logger.log(Level.INFO, "storyPaths: " + storyPaths.toString());
+			logger.info("run story: " + storyPaths.toString());
 			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();
 		}
-
-		logger.log(Level.INFO, "Finalizou PARSER JBehave");
+		logger.info("Finalizou PARSER JBehave");
 	}
 
 	@Override

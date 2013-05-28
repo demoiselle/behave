@@ -36,8 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 
@@ -48,11 +48,12 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
 public class BeforeAfterSteps implements Step {
 
 	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+	
 	private Logger logger = Logger.getLogger(this.toString());
 
 	@BeforeStories
 	public void startStories() {
-		logger.info("Iniciando navegador");
+		logger.info(">>Iniciando Aplicação<<");
 		runner.start();
 	}
 
@@ -60,7 +61,7 @@ public class BeforeAfterSteps implements Step {
 	public void stopStories() {
 		runner.close();
 		runner.quit();
-		logger.info("Navegador fechado");
+		logger.info(">>Finalizando Aplicação<<");
 	}
 
 }

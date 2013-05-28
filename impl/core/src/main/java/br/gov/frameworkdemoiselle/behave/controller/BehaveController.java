@@ -38,11 +38,10 @@ package br.gov.frameworkdemoiselle.behave.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
@@ -54,7 +53,7 @@ public class BehaveController {
 			
 	private Parser parser;
 
-	private Logger logger = Logger.getLogger(this.toString());
+	Logger log = Logger.getLogger(BehaveController.class);
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 	
@@ -77,11 +76,14 @@ public class BehaveController {
 	@SuppressWarnings("unchecked")
 	public void run(List<String> storiesPath) {
 		try {
+			log.info("--------------------------------");
+			log.info(" Iniciando Demoiselle Behave");
+			log.info("--------------------------------");
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = (List<String>) allOriginalStoriesPath.clone();
 			
 			// Adiciono as novas histórias
-			allOriginalStoriesPath.addAll(storiesPath);			
+			allOriginalStoriesPath.addAll(storiesPath);
 			
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
@@ -92,17 +94,19 @@ public class BehaveController {
 				if (!oldsStories.contains(s)) {
 					finalArray.add(s);
 				}
-			}
-	
-			// Roda o runner com as histórias convertidas
-			logger.log(Level.INFO, "Iniciou o processo...");
+			}	
+			// Roda o runner com as histórias convertidas			
 			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
 			parser.run();
-			logger.log(Level.INFO, "Concluiu o processo.");
+
 		} catch (Throwable ex) {
-			throw new BehaveException("Erro ao executar histórias", ex);
+			log.error("Erro ao executar histórias", ex);
+		}finally{
+			log.info("--------------------------------");
+			log.info(" Desligando Demoiselle Behave");
+			log.info("--------------------------------");
 		}
 
 	}
@@ -115,7 +119,6 @@ public class BehaveController {
 
 	public void run() {
 		run(storiesPath);
-		// storiesPath.clear();
 	}
 
 	public BehaveController addStories(String storiesPath) {
