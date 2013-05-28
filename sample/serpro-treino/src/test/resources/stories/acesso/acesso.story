@@ -19,7 +19,7 @@ Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
 
-Cenário: Teste
+Cenário: Acesso ao Sistema
 
 Acesso ao Sistema com usuário "19296496063" e senha "205253"
 Sair do "Sistema"
