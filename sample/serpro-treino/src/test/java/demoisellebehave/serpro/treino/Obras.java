@@ -50,15 +50,13 @@ public class Obras {
 	public Obras() {
 		eng.addSteps(new MySteps());
 	}
-	
+
 	@Test
 	public void testObras() throws Throwable {
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("/stories/acesso/");
-		stories.add("/stories/obras/listagem.story");
-		eng.run(stories);
+		eng.addStories("/stories/acesso/");
+		eng.addStories("/stories/obras/");
+		eng.run();
 	}
 		
 
 }
-
