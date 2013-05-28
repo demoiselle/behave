@@ -8,14 +8,8 @@ Dado que estou na página "Tela Principal"
 Quando vou para a página "Tela de Componentes"
 
 Seleção de Valores de Componentes com "Opção 1" e "Opção 1"
-Seleção de Valores de Componentes com "Opção 1" e "Opção 2"
-Seleção de Valores de Componentes com "Opção 1" e "Opção 3"
 
-Seleção de Valores de Componentes com "Opção 3" e "Opção 1"
-Seleção de Valores de Componentes com "Opção 3" e "Opção 2"
-Seleção de Valores de Componentes com "Opção 3" e "Opção 3"
-
-Logout do Sistema "reuso"
+Sair do "{sistema}"
 
 Cenário: Seleção de Valores de Componentes com "{valor1}" e "{valor2}"
 

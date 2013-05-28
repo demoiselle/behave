@@ -24,4 +24,10 @@ Cenário: Teste
 Acesso ao Sistema com usuário "19296496063" e senha "205253"
 Sair do "Sistema"
 
+Cenário: Usuário inválido
 
+Dado que vou para a página "Tela de Login"
+Quando informo "1234567890" no campo "Campo Usuário"
+E informo "123456" no campo "Campo Senha"
+Quando clico em "Entrar"
+Então será exibido "Usuario ou senha invalida"
