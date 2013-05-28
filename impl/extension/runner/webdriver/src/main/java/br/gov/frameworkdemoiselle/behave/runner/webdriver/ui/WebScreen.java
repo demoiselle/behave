@@ -21,7 +21,7 @@ public class WebScreen extends WebBase implements Screen {
 		int totalMilliseconds = 0;
 		while (!((WebDriver) runner.getDriver()).getPageSource().contains(text)) {
 			try {
-				logger.info("Aguardando o elemento [" + text + "]");
+				logger.log(Level.FINE, "Aguardando o elemento [" + text + "]");
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

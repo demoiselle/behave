@@ -36,6 +36,9 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -52,7 +55,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 import br.gov.frameworkdemoiselle.behave.util.ReflectionUtil;
-import freemarker.log.Logger;
 
 /**
  * 
@@ -69,7 +71,7 @@ public class CommonSteps implements Step {
 	@Then("vou para a página \"$local\"")
 	@When("vou para a página \"$local\"")
 	public void goToWithName(String local) {
-		logger.info("Go to screen " + local);
+		logger.log(Level.FINE, "Go to screen " + local);
 		currentPageName = local;
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
@@ -79,7 +81,7 @@ public class CommonSteps implements Step {
 	@Then("estou na página \"$local\"")
 	@When("estou na página \"$local\"")
 	public void pageWithName(String local) {
-		logger.info("Go to screen " + local);
+		logger.log(Level.FINE, "Go to screen " + local);
 		currentPageName = local;
 	}
 
