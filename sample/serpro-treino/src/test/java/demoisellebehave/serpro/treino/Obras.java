@@ -48,7 +48,7 @@ public class Obras {
 	public Obras() {
 		eng.addSteps(new MySteps());
 	}
-	
+
 	@Test
 	public void testObras() throws Throwable {
 		eng.addStories("/stories/acesso/");
@@ -57,4 +57,3 @@ public class Obras {
 	}
 
 }
-
