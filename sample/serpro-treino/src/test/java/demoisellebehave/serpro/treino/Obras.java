@@ -36,8 +36,6 @@
  */
 package demoisellebehave.serpro.treino;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
