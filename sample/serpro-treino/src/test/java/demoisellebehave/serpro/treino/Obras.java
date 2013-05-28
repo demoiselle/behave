@@ -52,7 +52,7 @@ public class Obras {
 	@Test
 	public void testObras() throws Throwable {
 		eng.addStories("/stories/acesso/");
-		eng.addStories("/stories/obras/adicionar-alterar-remover.story");
+		eng.addStories("/stories/obras/");
 		eng.run();
 	}
 

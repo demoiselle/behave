@@ -33,7 +33,6 @@ Quando clico em "Última Página"
 E clico em "Botão de Excluir"
 Então será exibido "Remover Obra: Nova Obra ?"
 Quando clico em "Sim"
-Então será exibido "Nome da Obra"
 Então será exibido "Nova Obra. Registo removido."
 
 Sair do "Sistema"
