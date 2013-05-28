@@ -52,7 +52,7 @@ public class LoginPage {
 	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
 	private TextField campoSenha;
 
-	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = { "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]" })
+	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
 	private Button botaoEnviar;
 
 }
