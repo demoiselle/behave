@@ -1,5 +1,6 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.Assert;
