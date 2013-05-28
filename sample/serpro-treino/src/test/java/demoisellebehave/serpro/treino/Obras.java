@@ -36,8 +36,6 @@
  */
 package demoisellebehave.serpro.treino;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
@@ -53,11 +51,9 @@ public class Obras {
 	
 	@Test
 	public void testObras() throws Throwable {
-		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("/stories/acesso/");
-		stories.add("/stories/obras/listagem.story");
-		
-		eng.run(stories);
+		eng.addStories("/stories/acesso/");
+		eng.addStories("/stories/obras/adicionar-alterar-remover.story");
+		eng.run();
 	}
 
 }

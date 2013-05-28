@@ -60,6 +60,8 @@ public class BehaveController {
 	
 	private List<Step> steps = new ArrayList<Step>();
 	
+	private List<String> storiesPath = new ArrayList<String>();
+	
 	private BehaveController(){
 		
 	}
@@ -111,4 +113,13 @@ public class BehaveController {
 		run(stories);
 	}
 
+	public void run() {
+		run(storiesPath);
+		storiesPath.clear();
+	}
+
+	public BehaveController addStories(String storiesPath) {
+		this.storiesPath.add(storiesPath);
+		return this;
+	}
 }
