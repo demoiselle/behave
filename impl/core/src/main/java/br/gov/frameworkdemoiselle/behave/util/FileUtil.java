@@ -7,8 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 
 public class FileUtil {
 
@@ -60,9 +64,13 @@ public class FileUtil {
 	}
 
 	public static String getAbsolutePath() {
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		File file = new File(loader.getResource("").getFile());
-		return file.getAbsolutePath();
+		try {
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			File file = new File(loader.getResource("").getFile());
+			return URLDecoder.decode(file.getAbsolutePath(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new BehaveException("Problema de encoding", e);
+		}
 	}
 
 	public static void createFile(String filePath, String content) throws IOException {
@@ -91,22 +99,22 @@ public class FileUtil {
 	}
 
 	public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
-		
+
 		List<String> fileNames = new ArrayList<String>();
 		File folder = new File(folderRoot);
-		if (!folder.exists()){
+		if (!folder.exists()) {
 			folder = new File(FileUtil.getAbsolutePath() + folderRoot);
 			folderRoot = folder.getAbsolutePath();
-			if (!folder.exists()){
+			if (!folder.exists()) {
 				throw new RuntimeException("Caminho [" + folderRoot + "] não encontrado ");
 			}
 		}
-		
-		if (folder.isFile()){
+
+		if (folder.isFile()) {
 			fileNames.add(folder.getAbsolutePath());
 			return fileNames;
 		}
-		 
+
 		File[] files = folder.listFiles();
 		String entryName;
 		for (File file : files) {
@@ -125,7 +133,7 @@ public class FileUtil {
 		fileNames = getFilesInFolder(folderRoot, includeSubfolder);
 		List<String> filteredFileNames = new ArrayList<String>();
 		for (String fileName : fileNames) {
-			if (RegularExpressionUtil.matches("([^\\s]+(\\.(?i)(" + extension + "))$)", fileName)) {
+			if (fileName.endsWith(extension)) {
 				filteredFileNames.add(fileName);
 			}
 		}
