@@ -107,7 +107,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		logger.info("Iniciou o parser JBehave");
 		Embedder embedder = configuredEmbedder();
 		try {
-			logger.info("run story: " + storyPaths.toString());
+			logger.info("Executar historia: " + storyPaths.toString());
 			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();

@@ -49,7 +49,7 @@ public class BeforeAfterSteps implements Step {
 
 	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	
-	private Logger logger = Logger.getLogger(this.toString());
+	private Logger logger = Logger.getLogger(BeforeAfterSteps.class);
 
 	@BeforeStories
 	public void startStories() {
