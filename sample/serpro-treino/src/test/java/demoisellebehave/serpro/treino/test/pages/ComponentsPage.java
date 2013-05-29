@@ -40,8 +40,10 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import demoisellebehave.serpro.treino.config.Config;
 
@@ -65,5 +67,23 @@ public class ComponentsPage {
 
 	@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
 	private Loading loading;
+
+	@ElementMap(name = "Opção 1", locatorType = ElementLocatorType.XPath, locator = "/html/body/table/tbody/tr[4]/td/form/table[3]/tbody/tr/td/table/tbody/tr/td[1]/div/div[2]")
+	private Radio opcao1;
+
+	@ElementMap(name = "Opção 2", locatorType = ElementLocatorType.XPath, locator = "/html/body/table/tbody/tr[4]/td/form/table[3]/tbody/tr/td/table/tbody/tr/td[3]/div/div[2]")
+	private Radio opcao2;
+
+	@ElementMap(name = "Opção 3", locatorType = ElementLocatorType.XPath, locator = "/html/body/table/tbody/tr[4]/td/form/table[3]/tbody/tr/td/table/tbody/tr/td[5]/div/div[2]")
+	private Radio opcao3;
+
+	@ElementMap(name = "Opção Selecionada no Radio", locatorType = ElementLocatorType.XPath, locator = "//*[@id='formObra:label']")
+	private Label opcaoSelecionadaRadio;
+
+	@ElementMap(name = "Valor 1", locatorType = ElementLocatorType.XPath, locator = "//div[@id='formObra:j_idt41']/div[2]")
+	private CheckBox check1;
+
+	@ElementMap(name = "Valor 2", locatorType = ElementLocatorType.XPath, locator = "//div[@id='formObra:j_idt43']/div[2]")
+	private CheckBox check2;
 
 }

@@ -92,22 +92,31 @@ public class CommonSteps implements Step {
 		element.click();
 	}
 
+	@When("seleciono a opção \"$value\"")
+	@Then("seleciono a opção \"$value\"")
+	public void informe(String fieldName) {
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+
+		if (element instanceof Radio) {
+			((Radio) element).click();
+		} else if (element instanceof CheckBox) {
+			((CheckBox) element).click();
+		} else {
+			throw new BehaveException("");
+		}
+	}
+
 	@When("informo \"$value\" no campo \"$fieldName\"")
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
-		// TODO Fazer o if para os outros elementos
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			textField.clear();
 			textField.sendKeys(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectValue(value);
-		} else if (element instanceof Radio) {
-
-		} else if (element instanceof CheckBox) {
-
 		} else {
 			throw new BehaveException("");
 		}
@@ -128,4 +137,3 @@ public class CommonSteps implements Step {
 	}
 
 }
-
