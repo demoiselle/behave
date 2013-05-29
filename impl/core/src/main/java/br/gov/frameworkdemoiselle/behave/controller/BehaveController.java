@@ -42,6 +42,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
@@ -79,6 +80,10 @@ public class BehaveController {
 			log.info("--------------------------------");
 			log.info(" Iniciando Demoiselle Behave");
 			log.info("--------------------------------");
+			
+			if (storiesPath == null || storiesPath.isEmpty()){
+				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
+			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = (List<String>) allOriginalStoriesPath.clone();
 			
@@ -100,9 +105,8 @@ public class BehaveController {
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
 			parser.run();
-
-		} catch (Throwable ex) {
-			log.error("Erro ao executar histórias", ex);
+		} catch (Exception ex) {
+			log.error("Erro ao executar o Demoiselle Behave", ex);
 		}finally{
 			log.info("--------------------------------");
 			log.info(" Desligando Demoiselle Behave");
@@ -122,6 +126,7 @@ public class BehaveController {
 	}
 
 	public BehaveController addStories(String storiesPath) {
+		log.debug("addStories:" + storiesPath);
 		this.storiesPath.add(storiesPath);
 		return this;
 	}

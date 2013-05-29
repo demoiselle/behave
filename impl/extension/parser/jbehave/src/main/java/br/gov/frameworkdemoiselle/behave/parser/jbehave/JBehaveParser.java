@@ -103,7 +103,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		return new LocalizedKeywords(new Locale("pt"));
 	}
 
-	public void run() throws Throwable {
+	public void run() {
 		logger.info("Iniciou o parser JBehave");
 		Embedder embedder = configuredEmbedder();
 		try {

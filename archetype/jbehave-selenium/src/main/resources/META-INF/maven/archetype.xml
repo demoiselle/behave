@@ -7,6 +7,7 @@
 	</testSources>
 	<testResources>
 		<resource>src/test/resources/behave.properties</resource>
+		<resource>src/test/resources/log4j.xml</resource>
 		<resource>src/test/resources/stories/search.story</resource>
 	</testResources>
 </archetype>

@@ -26,7 +26,12 @@
 	<artifactId>demoiselle-behave-core</artifactId>
 	<version>${behave.release.version}</version>
 
-
+	<properties>
+		<project.alias>core</project.alias>
+		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
+		<buildNumber>${maven.build.timestamp}</buildNumber>
+	</properties>
+	
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
@@ -57,10 +62,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<properties>
-		<project.alias>core</project.alias>
-	</properties>
 
 	<dependencies>
 		<dependency>

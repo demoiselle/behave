@@ -40,7 +40,7 @@ import java.util.List;
 
 public interface Parser {
 
-	public void run() throws Throwable;
+	public void run();
 
 	void setStoryPaths(List<String> storyPaths);
 

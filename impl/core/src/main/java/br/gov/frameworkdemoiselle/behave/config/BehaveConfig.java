@@ -1,7 +1,10 @@
 package br.gov.frameworkdemoiselle.behave.config;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
+
+import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
@@ -19,6 +22,8 @@ public class BehaveConfig {
 
 	public static Long BROWSER_MAX_WAIT = 10000L;
 	public static Long BROWSER_MIN_WAIT = 100L;
+	
+	public static Logger log = Logger.getLogger(BehaveConfig.class);
 
 	static {
 		try {
@@ -37,7 +42,15 @@ public class BehaveConfig {
 
 			if (properties.getProperty("behave.runner.browser.minWait") != null)
 				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
-
+			if (log.isDebugEnabled()){				
+				log.debug("Configurações do Demoiselle Behave:");
+				Enumeration<Object> keys = properties.keys();
+				while (keys.hasMoreElements()) {
+					String key = (String) keys.nextElement();
+					log.debug(key + "=" + properties.getProperty(key));
+				}
+				log.debug("--------------------------------");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
