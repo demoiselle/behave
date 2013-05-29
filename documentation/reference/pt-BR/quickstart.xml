@@ -10,20 +10,31 @@
 	</para>
 	<section>
 		<title>Pré Requisitos de Uso.</title>
-		<para>
-			<orderedlist numeration="arabic">
-				<listitem>
-					<para>
-						Eclipse Juno 4.2.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Linux
-					</para>
-				</listitem>
-			</orderedlist>
-		</para>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					Eclipse 4.2 (Juno) -
+					<ulink
+						url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR2/eclipse-jee-juno-SR2-linux-gtk.tar.gz">Link para download
+					</ulink>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Plugin para Maven no Eclipse ou Maven na linha de comando (mvn)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Linux
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JDK 1.6
+				</para>
+			</listitem>
+		</orderedlist>
 	</section>
 	<section>
 		<title>Configurando o Arquétipo.</title>
