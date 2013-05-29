@@ -178,10 +178,10 @@ public class StoryConverter {
 		String text = "";
 		for (Scenario scenario : scenarios) {
 			if (!scenario.getReusable()) {
-				text += scenario.getDeclaration() + LINE_BREAK_TOKEN;
+				text += scenario.getDeclaration().replaceAll("\t", "") + LINE_BREAK_TOKEN;
 				for (String sentence : scenario.getSentences()) {
 					if (sentence.trim().length() > 0)
-						text += sentence + LINE_BREAK_TOKEN;
+						text += sentence.replaceAll("\t", "") + LINE_BREAK_TOKEN;
 				}
 			}
 		}
