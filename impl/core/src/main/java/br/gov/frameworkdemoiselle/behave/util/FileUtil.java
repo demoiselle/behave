@@ -34,7 +34,7 @@ public class FileUtil {
 
 		StringBuilder stringBuilder = new StringBuilder();
 
-		File file = new File(getAbsolutePath(resourcePath));
+		File file = new File(getAbsolutePath());
 		FileInputStream fileInputStream = new FileInputStream(file);
 
 		try {
@@ -52,16 +52,16 @@ public class FileUtil {
 
 	public static String createTempDir(String dir) {
 		String tempDirName = dir;
-		File file = new File(getAbsolutePath("."), tempDirName);
+		File file = new File(getAbsolutePath(), tempDirName);
 		if (!file.exists()) {
 			file.mkdir();
 		}
 		return file.getAbsolutePath();
 	}
 
-	public static String getAbsolutePath(String fileRelativePath) {
+	public static String getAbsolutePath() {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		File file = new File(loader.getResource(fileRelativePath).getFile());
+		File file = new File(loader.getResource("").getFile());
 		return file.getAbsolutePath();
 	}
 
@@ -95,7 +95,7 @@ public class FileUtil {
 		List<String> fileNames = new ArrayList<String>();
 		File folder = new File(folderRoot);
 		if (!folder.exists()){
-			folder = new File(FileUtil.getAbsolutePath(".") + folderRoot);
+			folder = new File(FileUtil.getAbsolutePath() + folderRoot);
 			folderRoot = folder.getAbsolutePath();
 			if (!folder.exists()){
 				throw new RuntimeException("Caminho [" + folderRoot + "] não encontrado ");

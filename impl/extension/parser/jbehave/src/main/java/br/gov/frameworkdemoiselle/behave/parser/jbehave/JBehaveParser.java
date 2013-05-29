@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,10 +131,11 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void setStoryPaths(List<String> storyPaths) {
 		List<String> aux = new ArrayList<String>();
 		for (String str : storyPaths) {
-			aux.add(str.replace(FileUtil.getAbsolutePath(".") + "/", ""));
+			aux.add(str.replace(FileUtil.getAbsolutePath() + File.separatorChar, ""));
 		}
 		this.storyPaths = aux;
 	}
+	
 
 	@Override
 	public void setSteps(List<Step> steps) {

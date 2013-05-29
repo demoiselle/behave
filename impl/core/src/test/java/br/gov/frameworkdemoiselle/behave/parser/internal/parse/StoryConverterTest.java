@@ -1,5 +1,6 @@
 package br.gov.frameworkdemoiselle.behave.parser.internal.parse;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class StoryConverterTest {
 
 	private static final String LANGUAGE = BehaveConfig.LANGUAGE;
 
-	private static final String DEFAULT_RESOURCE_PATH = "target/test-classes/parser/test/" + LANGUAGE + "/";
+	private static final String DEFAULT_RESOURCE_PATH = "target/test-classes/parser/test/" + LANGUAGE + File.separatorChar;
 
 	private static final String ACCESS_FILE_NAME = "acesso-sistema";
 	private static final String ORDER_FILE_NAME = "pedido";
