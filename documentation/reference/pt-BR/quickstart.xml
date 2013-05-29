@@ -292,7 +292,7 @@
 		<para>
 			O framework associa o campo
 			<emphasis>"Campo Busca"</emphasis>
-			com o elemento searchField da classe SearchPage criada
+			com o elemento searchField da classe MyPage criada
 			de forma a
 			mapear os objetos da tela com o Id procurado. O Elemento
 			locatorType
@@ -307,15 +307,16 @@
 		<programlisting>
 		
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
-public class SearchPage {
+public class MyPage {
 
-	@ElementMap(name = "<emphasis>Campo de Busca</emphasis>", locatorType = ElementLocatorType.Id, locator = "gbqfq")
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
 	private TextField searchField;
 
 	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
 	private Button buttonLuckSearch;
 
 }
+
 		
 		</programlisting>
 	</section>
