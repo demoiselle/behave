@@ -94,7 +94,7 @@
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Arquitetura da ferramenta Demoisele-Behave.
+					<para>Modelo de Funcionamento do Parser.
 					</para>
 				</caption>
 			</mediaobject>
@@ -119,7 +119,7 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Arquitetura da ferramenta Demoisele-Behave.
+					<para>Funcionamento do Demoisele-Behave.
 					</para>
 				</caption>
 			</mediaobject>
@@ -139,7 +139,7 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 						format="PNG" scalefit="1" width="75%"/>
 				</imageobject>
 				<caption>
-					<para>Arquitetura da ferramenta Demoisele-Behave.
+					<para>Modelo de Uso do Demoisele-Behave.
 					</para>
 				</caption>
 			</mediaobject>
@@ -152,7 +152,5 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 
 	<!-- capítulos -->
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="utilizacao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-
+	
 </book>

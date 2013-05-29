@@ -3,11 +3,28 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <chapter id="behave-quickstart">
 	<title>Roteiro Rápido</title>
-	
+
 	<para>
 		Esta seção apresenta um roteiro rápido para criação e
 		configuração de projeto do Demoiselle Behave.
 	</para>
+	<section>
+		<title>Pré Requisitos de Uso.</title>
+		<para>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						Eclipse Juno 4.2.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Linux
+					</para>
+				</listitem>
+			</orderedlist>
+		</para>
+	</section>
 	<section>
 		<title>Configurando o Arquétipo.</title>
 		<para>
@@ -42,11 +59,11 @@
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/preferences.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
 					<imagedata fileref="images/preferences.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Clicar no botão Add Remote Catalog.
@@ -55,18 +72,23 @@
 			</mediaobject>
 		</para>
 		<para>
-			Deve ser preenchido o valor<emphasis> http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml</emphasis> no Catalog File.
-			O nome Demoiselle-Behave pode ser preenchido na descrição.
+			Deve ser preenchido o valor
+			<emphasis>
+				http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml
+			</emphasis>
+			no Catalog File.
+			O nome Demoiselle-Behave pode ser preenchido na
+			descrição.
 		</para>
 		<para>
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/remotecatalog.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
 					<imagedata fileref="images/remotecatalog.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Preenchendo Catálogo Remoto.
@@ -260,10 +282,13 @@
 			O framework associa o campo
 			<emphasis>"Campo Busca"</emphasis>
 			com o elemento searchField da classe SearchPage criada
-			de forma a mapear os objetos da tela com o Id procurado. O Elemento
-			locatorType informa o tipo de
+			de forma a
+			mapear os objetos da tela com o Id procurado. O Elemento
+			locatorType
+			informa o tipo de
 			reconhecimento de objetos será utilizado
-			no framework. No exemplo, será localizado o elemento cujo Id
+			no
+			framework. No exemplo, será localizado o elemento cujo Id
 			possui o
 			valor "gbqfq".
 
