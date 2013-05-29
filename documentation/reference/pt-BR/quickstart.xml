@@ -12,13 +12,22 @@
 		<title>Pré Requisitos de Uso.</title>
 		<orderedlist numeration="arabic">
 			<listitem>
-				Eclipse 4.2 (Juno) -
-				<ulink
-					url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR2/eclipse-jee-juno-SR2-linux-gtk.tar.gz">Link para download
-				</ulink>
+				<para>
+					Eclipse 4.2 (Juno) -
+					<ulink
+						url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR2/eclipse-jee-juno-SR2-linux-gtk.tar.gz">Link para download
+					</ulink>
+				</para>
 			</listitem>
 			<listitem>
-				Linux
+				<para>
+					Linux
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JDK 1.6
+				</para>
 			</listitem>
 		</orderedlist>
 	</section>
@@ -31,6 +40,7 @@
 			do arquétipo consiste em configurar o repositório. Ir no menu
 			Windows>Preferences
 			do eclipse.
+
 		</para>
 		<para>
 			<mediaobject>
@@ -101,6 +111,7 @@
 			Neste tutorial será utilizado o arquetipo jbehave-selenium-archetype.
 			O primeiro passo é escolher a opção File>New>Other>Maven>Maven
 			Project.
+
 		</para>
 		<para>
 			<mediaobject>
