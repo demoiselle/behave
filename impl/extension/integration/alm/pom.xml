@@ -29,6 +29,10 @@
 	<packaging>jar</packaging>
 	<version>${behave.release.version}</version>
 
+	<properties>
+		<project.alias>alm</project.alias>
+	</properties>
+
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
@@ -58,5 +62,31 @@
 			<artifactId>demoiselle-behave-core</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+					<descriptors>
+						<descriptor>src/assembly/server.xml</descriptor>
+					</descriptors>
+					
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-my-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
