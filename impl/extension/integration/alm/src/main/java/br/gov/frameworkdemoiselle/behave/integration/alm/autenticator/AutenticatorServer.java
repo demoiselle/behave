@@ -121,7 +121,7 @@ public class AutenticatorServer {
 	        String password = new String(passwordChars);
 			
 	        log("=============================================");
-	        log("               Serviço Iniciado              ");
+	        log("               Servico Iniciado              ");
 	        log("=============================================");
 			while (true) {				
 				Socket socket = serverSocket.accept();
