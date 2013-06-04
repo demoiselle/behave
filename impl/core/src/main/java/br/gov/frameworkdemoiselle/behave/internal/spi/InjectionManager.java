@@ -54,6 +54,10 @@ public class InjectionManager {
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
 	private static InjectionManager instance;
 	
+	void setSingletons(Hashtable<String, Object> singletons){
+		this.singletons=singletons;
+	}
+	
 	Logger log = Logger.getLogger(InjectionManager.class);
 
 	private InjectionManager() {
