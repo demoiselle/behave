@@ -104,7 +104,7 @@ public class BehaveController {
 			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
-			parser.run();
+			parser.run();			
 		} catch (Exception ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
 		}finally{
