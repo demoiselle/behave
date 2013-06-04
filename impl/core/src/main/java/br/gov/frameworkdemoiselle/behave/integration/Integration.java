@@ -36,8 +36,10 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration;
 
+import java.util.Hashtable;
+
 public interface Integration {
 
-	public void run(Object... params);
+	void sendScenario(Hashtable<String, Object> result);
 
 }

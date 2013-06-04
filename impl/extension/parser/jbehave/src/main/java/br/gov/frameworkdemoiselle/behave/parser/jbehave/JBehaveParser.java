@@ -61,6 +61,7 @@ import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
@@ -85,16 +86,15 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		configuration.useStepFinder(new StepFinder());
 		configuration.useStoryControls(new StoryControls());
 		configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-		configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+		configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
+		// configuration.useViewGenerator(new ALMViewGenerator());
 
 		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
-		embedderControls.doBatch(false);
 		embedderControls.doGenerateViewAfterStories(true);
 		embedderControls.doIgnoreFailureInStories(false);
-		embedderControls.doIgnoreFailureInView(false);
+		embedderControls.doIgnoreFailureInView(true);
 		embedderControls.doSkip(false);
-		embedderControls.doVerboseFailures(false);
-		embedderControls.doVerboseFiltering(false);
+		embedderControls.doVerboseFailures(true);
 		embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
 		embedderControls.useThreads(1);
 	}
@@ -123,7 +123,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		steps.add(new BeforeAfterSteps());
-		steps.add(new CommonSteps());		
+		steps.add(new CommonSteps());
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 
@@ -135,7 +135,6 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		}
 		this.storyPaths = aux;
 	}
-	
 
 	@Override
 	public void setSteps(List<Step> steps) {

@@ -45,7 +45,7 @@ import demoisellebehave.serpro.treino.test.steps.MySteps;
 public class Acesso {
 
 	private BehaveController eng = BehaveController.getInstance();
-	
+
 	Logger log = Logger.getLogger(Acesso.class);
 
 	public Acesso() {
@@ -54,8 +54,6 @@ public class Acesso {
 
 	@Test
 	public void testAcesso() throws Throwable {
-//		log.debug("MEU DEBUG");
-//		log.error("ERROR");
 		eng.run("/stories/acesso/acesso.story");
 	}
 
