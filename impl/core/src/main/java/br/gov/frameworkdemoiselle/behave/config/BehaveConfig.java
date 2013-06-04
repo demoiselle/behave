@@ -12,6 +12,10 @@ import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 public class BehaveConfig {
 
 	public static Properties properties;
+	
+	static void setProperties(Properties properties){
+		BehaveConfig.properties=properties;
+	}
 
 	public static String LANGUAGE = "pt";
 	public static String IDENTIFICATION_SCENARIO_PATTERN = "";
