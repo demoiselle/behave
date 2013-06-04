@@ -44,7 +44,7 @@ public class AutenticatorClient {
 
 	private int port;
 	private String client;
-	private String token;
+	private String token = null;
 
 	public AutenticatorClient(int port, String client) {
 		this.port = port;
@@ -64,7 +64,7 @@ public class AutenticatorClient {
 	 * @return
 	 */
 	public String getUser() {
-		return sendMessage(client, port, "GET_USER@" + token);
+		return sendMessage(client, port, Cipher.cript("GET_USER", token));
 	}
 
 	/**
@@ -73,14 +73,14 @@ public class AutenticatorClient {
 	 * @return
 	 */
 	public String getPassword() {
-		return sendMessage(client, port, "GET_PASSWORD@" + token);
+		return sendMessage(client, port, Cipher.cript("GET_PASSWORD", token));
 	}
 
 	/**
 	 * Conclui conexao com o autenticador
 	 */
 	public void close() {
-		sendMessage(client, port, "CLOSE@" + token);
+		sendMessage(client, port, Cipher.cript("CLOSE", token));
 	}
 
 	/**
@@ -91,13 +91,16 @@ public class AutenticatorClient {
 	 * @param _message
 	 * @return
 	 */
-	private static String sendMessage(String host, int port, String _message) {
+	private String sendMessage(String host, int port, String _message) {
 		try {
 			Socket socket = new Socket(host, port);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(_message);
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			String message = (String) ois.readObject();
+			if (token != null){
+				message = Cipher.decript(message, token);
+			}
 			ois.close();
 			oos.close();
 			return message;

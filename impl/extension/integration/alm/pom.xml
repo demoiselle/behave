@@ -79,7 +79,10 @@
 					<descriptors>
 						<descriptor>src/assembly/server.xml</descriptor>
 					</descriptors>
-					
+					<descriptors>
+						<descriptor>src/assembly/server.xml</descriptor>
+					</descriptors>
+					<finalName>behave-autenticador</finalName>
 				</configuration>
 				<executions>
 					<execution>

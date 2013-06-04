@@ -50,8 +50,8 @@ public class Cipher {
 	 * @param key chave
 	 * @return mensagem descriptografada
 	 */
-	public static String Decript(String content, String key) {
-		return Cript(content, key, 'D');
+	public static String decript(String content, String key) {
+		return cript(content, key, 'D');
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class Cipher {
 	 * @param key chave
 	 * @return mensagem criptografada
 	 */
-	public static String Cript(String content, String key) {
-		return Cript(content, key, 'C');
+	public static String cript(String content, String key) {
+		return cript(content, key, 'C');
 	}
 
 	private static int[] RamdomKey() { // retorna um vetor randomico...
@@ -87,7 +87,7 @@ public class Cipher {
 		return ret;
 	}
 
-	private static String Cript(String content, String key, char mode) {
+	private static String cript(String content, String key, char mode) {
 		String rt = null;
 		try {
 			if (key == null){

@@ -36,14 +36,22 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration.alm.autenticator;
 
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.CLOSE;
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.DEFAULTHOSTALL;
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.GETPASS;
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.GETUSER;
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.OPEN;
+import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import static br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorServer.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AutenticatorHandler implements Runnable {
 
@@ -55,54 +63,61 @@ public class AutenticatorHandler implements Runnable {
 
 	private String password;
 
-	public AutenticatorHandler(Socket socket, String user, String password) {
+	private String host;
+
+	public AutenticatorHandler(Socket socket, String user, String password, String host) {
 		this.user = user;
 		this.password = password;
 		this.socket = socket;
+		this.host = host;
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	public void run() {
 		try {
+			String responseMessage = "";
+			if (!this.host.equalsIgnoreCase(DEFAULTHOSTALL) && !valid(socket)) {
+				log("acesso indevido:" + socket.getRemoteSocketAddress().toString());
+				socket.close();
+				return;
+			}
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			String message = (String) ois.readObject();
-			String response = "";
+
 			if (message.equals(OPEN)) {
 				log("=============================================");
-				log("cliente: " + socket.getLocalAddress().getHostName());
+				log("cliente: " + getIP(socket.getRemoteSocketAddress()));
 				String token = GregorianCalendar.getInstance().getTimeInMillis() + "";
-				connections.put(token, socket.getLocalAddress().toString());
-				sendMessage(token, socket);
-				response = "obteve conexao";
+				connections.put(getIP(socket.getRemoteSocketAddress()), token);
+				sendMessage(token, null, socket);
+				responseMessage = "obteve conexao";
 			} else {
-				String[] split = message.split("@");
-				if (split.length != 2) {
-					sendMessage("Opcao invalida: " + split[0], socket);
-				}
-				String token = split[1];
-				if (connections.containsKey(token)) {
-					if (split[0].equals(GETUSER)) {
-						response = "obteve usuario: " + user;
-						sendMessage(user, socket);						
-					} else if (split[0].equals(GETPASS)) {
-						response = "obteve senha";
-						sendMessage(password, socket);
-					} else if (split[0].equals(CLOSE)) {
-						connections.remove(token);
-						response = "fechou conexao";
-						sendMessage(response, socket);
+
+				String token = connections.get(getIP(socket.getRemoteSocketAddress()));
+				message = Cipher.decript(message, token);
+				if (token != null) {
+					if (message.equals(GETUSER)) {
+						responseMessage = "obteve usuario: " + user;
+						sendMessage(user, token, socket);
+					} else if (message.equals(GETPASS)) {
+						responseMessage = "obteve senha";
+						sendMessage(password, token, socket);
+					} else if (message.equals(CLOSE)) {
+						connections.remove(socket.getRemoteSocketAddress().toString());
+						responseMessage = "fechou conexao";
+						sendMessage(responseMessage, token, socket);
 					} else {
-						response = "opcao invalida: " + split[0];
-						sendMessage(response, socket);
+						responseMessage = "opcao invalida: " + message;
+						sendMessage(responseMessage, token, socket);
 					}
 				} else {
-					sendMessage("conexao [" + token + "] nao encontrada", socket);
+					sendMessage("conexao perdida", null, socket);
 				}
 			}
 			ois.close();
 			socket.close();
-			log(response);	
+			log(responseMessage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -110,7 +125,23 @@ public class AutenticatorHandler implements Runnable {
 		}
 	}
 
-	private void sendMessage(String message, Socket socket2) throws IOException {
+	private String getIP(SocketAddress adress) {
+		Pattern MY_PATTERN = Pattern.compile("\\/(.*?)\\:");
+		Matcher m = MY_PATTERN.matcher(adress.toString());
+		while (m.find()) {
+			return m.group(1);
+		}
+		throw new RuntimeException("Endereco fora do padrao [" + adress.toString() + "]");
+	}
+
+	private boolean valid(Socket socket) {
+		return socket.getRemoteSocketAddress().toString().contains(host);
+	}
+
+	private void sendMessage(String message, String token, Socket socket2) throws IOException {
+		if (token != null) {
+			message = Cipher.cript(message, token);
+		}
 		ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 		oos.writeObject(message);
 		oos.close();

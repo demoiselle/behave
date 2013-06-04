@@ -46,8 +46,8 @@ public class CipherTest {
 	public void test1() {
 		String key = "123456";
 		String message = "hi&%#LÇ<><Oò";
-		String cript = Cipher.Cript(message, key);
-		assertEquals(message, Cipher.Decript(cript, key));
+		String cript = Cipher.cript(message, key);
+		assertEquals(message, Cipher.decript(cript, key));
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class CipherTest {
 		try {
 			String key = null;
 			String message = "hi&%#LÇ<><Oò";
-			String cript = Cipher.Cript(message, key);
-			assertEquals(message, Cipher.Decript(cript, key));
+			String cript = Cipher.cript(message, key);
+			assertEquals(message, Cipher.decript(cript, key));
 			fail("");
 		} catch (RuntimeException ex) {
 			assertEquals("chave vazia", ex.getCause().getMessage());
@@ -68,8 +68,8 @@ public class CipherTest {
 		try {
 			String key = "123";
 			String message = null;
-			String cript = Cipher.Cript(message, key);
-			assertEquals(message, Cipher.Decript(cript, key));
+			String cript = Cipher.cript(message, key);
+			assertEquals(message, Cipher.decript(cript, key));
 			fail("");
 		} catch (RuntimeException ex) {
 			assertEquals("conteudo vazio", ex.getCause().getMessage());
