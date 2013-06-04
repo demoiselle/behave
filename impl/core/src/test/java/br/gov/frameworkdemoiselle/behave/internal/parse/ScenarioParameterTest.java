@@ -1,6 +1,7 @@
 package br.gov.frameworkdemoiselle.behave.internal.parse;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class ScenarioParameterTest {
 
@@ -13,7 +14,9 @@ public class ScenarioParameterTest {
 
 	@Test
 	public void testReplaceCallParameters() {
-	//	ScenarioParameter.replaceCallParameters("cenario1", new Scenario());
+		Scenario scenario=Mockito.mock(Scenario.class);
+		Mockito.when(scenario.getIdentification()).thenReturn("identification");
+		ScenarioParameter.replaceCallParameters("cenario1", scenario);
 	}
 
 }
