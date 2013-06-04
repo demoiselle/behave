@@ -16,7 +16,7 @@ public class BehaveConfigTest {
 	
 		
 	
-
+/*
 
 	
 	@Test
@@ -67,5 +67,5 @@ public class BehaveConfigTest {
 	public void testContains() {
 		
 	}
-
+*/
 }
