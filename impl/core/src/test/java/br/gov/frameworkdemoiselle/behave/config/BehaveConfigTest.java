@@ -1,14 +1,10 @@
 package br.gov.frameworkdemoiselle.behave.config;
 
-import java.io.Serializable;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Properties;
 
 import mockit.Mock;
-import mockit.MockClass;
 import mockit.MockUp;
-import mockit.Mockit;
 
 import org.junit.Test;
 import org.mockito.Mockito;
