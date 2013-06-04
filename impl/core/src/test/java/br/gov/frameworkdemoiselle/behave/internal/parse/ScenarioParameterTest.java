@@ -1,7 +1,5 @@
 package br.gov.frameworkdemoiselle.behave.internal.parse;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class ScenarioParameterTest {
@@ -9,13 +7,13 @@ public class ScenarioParameterTest {
 	@Test
 	public void testRemoveParameterNames() {
 		
-		ScenarioParameter.removeParameterNames("cenario3");
+		ScenarioParameter.removeParameterNames("cenario1");
 		
 	}
 
 	@Test
 	public void testReplaceCallParameters() {
-		fail("Not yet implemented");
+	//	ScenarioParameter.replaceCallParameters("cenario1", new Scenario());
 	}
 
 }
