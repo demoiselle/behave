@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+  <title>JMockit Coverage Report</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../../coverage.js'></script>
+  <link rel='stylesheet' type='text/css' href='../../../../../../prettify.css'/>
+  <script type='text/javascript' src='../../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption><code>../core/src/main/java/br/gov/frameworkdemoiselle/behave/internal/parse/ScenarioParameter.java</code></caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package br.gov.frameworkdemoiselle.behave.internal.parse;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>2</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>3</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.ArrayList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>4</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.HashMap;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>5</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.List;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>6</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.Map;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>7</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.regex.Matcher;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>8</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.regex.Pattern;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>9</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>10</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.util.RegularExpressionUtil;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>11</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>12</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l12s0'>public class ScenarioParameter {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>13</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>14</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static final String PARAMETER_PATTERN = "(\"([^\"]*)\")";</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>15</td><td colspan='2'></td>
+    </tr>
+    <tr class='click' onclick='showHideLines(this)'>
+      <td class='line'></td><td>&nbsp;</td><td class='comment'>	/**
+	 * Substitui os nome de parâmetro por parâmetros vazios, viabilizando a
+	 * comparação entre a chamada e a definição de um cenário Ex: Cenário: logar
+	 * como "{nome do usuario}" ... Cenário: fazer pedido ... logar como
+	 * "claudio" ... A função irá substituir tanto 'logar como
+	 * "{nome do usuário}"' quando 'logar como "claudio"' em 'logar como
+	 * ("([^"]*)")'
+	 * 
+	 * @param scenarioIdentification
+	 * @return
+	 */
+</td></tr>
+    <tr>
+      <td class='line'>27</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static String removeParameterNames(String scenarioIdentification) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>28</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l28s0'>		return RegularExpressionUtil.replaceAll(PARAMETER_PATTERN, scenarioIdentification, PARAMETER_PATTERN);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>29</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td colspan='2'></td>
+    </tr>
+    <tr class='click' onclick='showHideLines(this)'>
+      <td class='line'></td><td>&nbsp;</td><td class='comment'>	/**
+	 * Substitui os parâmetros formais pelos parâmetros reais Ex: Cenário: fazer
+	 * pedido ... logar como "claudio" ... Cenário: logar como
+	 * "{nome do usuario}" ... Dado que foi preenchido o nome com
+	 * "{nome do usuario}" ... A função irá substituir tanto 'Dado que foi
+	 * preenchido o nome com "{nome do usuario}"' quando 'Dado que foi
+	 * preenchido o nome com "claudio"'
+	 * 
+	 * @param scenarioIdentification
+	 * @return
+	 */
+</td></tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static List&lt;String> replaceCallParameters(String scenarioCall, Scenario scenarioReused) {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/4</span>
+        <span class='uncovered' onclick="showPath(this,'l43s0 l44s0 l45s0')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l43s0 l44s0 l47s0 l48s0 l54s0')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l43s0 l44s0 l47s0 l48s0 l48s1 l49s0 l52s0 l54s0')">C: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l43s0 l44s0 l47s0 l48s0 l48s1 l49s0 l49s1 l52s0 l54s0')">D: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l43s0'>		Map&lt;String, String> parametersCalled = getReusedParameters(scenarioReused.getIdentification(), scenarioCall);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l44s0' title='Executions: 0' class='uncovered'>if (parametersCalled.isEmpty()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l45s0'>			return scenarioReused.getSentences();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l47s0'>		List&lt;String> newSentences = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l48s0' title='Executions: 0' class='uncovered'>for (String sentence</span> : <span id='l48s1' title='Executions: 0' class='uncovered'>scenarioReused.getSentences()) {</span>			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>49</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>			<span id='l49s0' title='Executions: 0' class='uncovered'>for (String parameterCall</span> : <span id='l49s1' title='Executions: 0' class='uncovered'>parametersCalled.keySet()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>50</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l50s0'>				sentence = sentence.replace(parameterCall, parametersCalled.get(parameterCall));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l52s0'>			newSentences.add(sentence);			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l54s0'>		return newSentences;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>55</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static Map&lt;String, String> getReusedParameters(String scenarioIdentification, String scenarioCall) {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/8</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l65s0 l68s0 l72s0 l75s0')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l65s0 l68s0 l72s0 l73s0 l75s0')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l65s0 l68s0 l69s0 l72s0 l75s0')">C: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l65s0 l68s0 l69s0 l72s0 l73s0 l75s0')">D: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l63s0 l65s0 l68s0 l72s0 l75s0')">E: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l63s0 l65s0 l68s0 l72s0 l73s0 l75s0')">F: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l63s0 l65s0 l68s0 l69s0 l72s0 l75s0')">G: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l58s0 l62s0 l63s0 l65s0 l68s0 l69s0 l72s0 l73s0 l75s0')">H: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l58s0'>		Map&lt;String, String> parametersMap = new HashMap&lt;String, String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l59s0'>		List&lt;String> formalParameters = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l60s0'>		Pattern pattern = Pattern.compile(PARAMETER_PATTERN);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l61s0'>		Matcher matcher = pattern.matcher(scenarioIdentification);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l62s0' title='Executions: 0' class='uncovered'>while (matcher.find()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l63s0'>			formalParameters.add(matcher.group(1));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l65s0'>		List&lt;String> realParameters = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l66s0'>		pattern = Pattern.compile(PARAMETER_PATTERN);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l67s0'>		matcher = pattern.matcher(scenarioCall);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l68s0' title='Executions: 0' class='uncovered'>while (matcher.find()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l69s0'>			String lParametro = matcher.group(1);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l70s0'>			realParameters.add(lParametro);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l71s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l72s0' title='Executions: 0' class='uncovered'>for (int i = 0; i &lt; formalParameters.size(); i++) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l73s0'>			parametersMap.put(formalParameters.get(i), realParameters.get(i));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l75s0'>		return parametersMap;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+  <title>JMockit Coverage Report</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../../coverage.js'></script>
+  <link rel='stylesheet' type='text/css' href='../../../../../../prettify.css'/>
+  <script type='text/javascript' src='../../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption><code>../core/src/main/java/br/gov/frameworkdemoiselle/behave/internal/parse/StoryFileConverter.java</code></caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package br.gov.frameworkdemoiselle.behave.internal.parse;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>2</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>3</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.io.IOException;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>4</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.ArrayList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>5</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.HashMap;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>6</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.List;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>7</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.Map;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>8</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>9</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.util.FileUtil;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>10</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>11</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l11s0'>public class StoryFileConverter {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>12</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>13</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static List&lt;String> convertReusedScenarios(List&lt;String> originalFolderes, String originalExtension, String convertedExtension, Boolean includeSubFolder) throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/2</span>
+        <span class='uncovered' onclick="showPath(this,'l14s0 l15s0 l18s0')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l14s0 l15s0 l15s1 l18s0')">B: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>14</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l14s0'>		List&lt;String> originalBaseFilesName = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>15</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l15s0' title='Executions: 0' class='uncovered'>for (String originalFolder</span> : <span id='l15s1' title='Executions: 0' class='uncovered'>originalFolderes)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>16</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l16s0'>			originalBaseFilesName.addAll(FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>17</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>18</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l18s0'>		return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>19</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>20</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>21</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static List&lt;String> convertReusedScenarios(String originalFolder, String originalExtension, String convertedExtension, Boolean includeSubFolder) throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>22</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l22s0'>		List&lt;String> originalBaseFilesName = FileUtil.getFilesInFolderByExtension(originalFolder, convertedExtension, includeSubFolder);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>23</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l23s0'>		return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>24</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>25</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td>&nbsp;</td>
+      <td><pre class='comment'>	// originBaseFilesName = lista de nomes de arquivo sem a extensão</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>27</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static List&lt;String> convertReusedScenarios(List&lt;String> originalBaseFilesName, String originalExtension, String convertedExtension) throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/4</span>
+        <span class='uncovered' onclick="showPath(this,'l28s0 l32s0 l38s0 l40s0 l43s0')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l28s0 l32s0 l38s0 l40s0 l40s1 l43s0')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l28s0 l32s0 l32s1 l38s0 l40s0 l43s0')">C: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l28s0 l32s0 l32s1 l38s0 l40s0 l40s1 l43s0')">D: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>28</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l28s0'>		Map&lt;String, String> originStories = new HashMap&lt;String, String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>29</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Coloca o conteúdo dos arquivos de origem no map, já utilizando como</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// chave o nome de destino do arquivo</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>32</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l32s0' title='Executions: 0' class='uncovered'>for (String originalFile</span> : <span id='l32s1' title='Executions: 0' class='uncovered'>originalBaseFilesName)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l33s0'>			String fileNameWithoutExt = originalFile.substring(0, (originalFile.lastIndexOf('.') + 1));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l34s0'>			originStories.put(fileNameWithoutExt + convertedExtension, FileUtil.loadFile(originalFile));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>35</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l35s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Converte os arquivos</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l38s0'>		Map&lt;String, String> convertedStories = StoryConverter.convertReusedScenarios(originStories);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Grava os arquivos convertidos</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>		<span id='l40s0' title='Executions: 0' class='uncovered'>for (String convertedFile</span> : <span id='l40s1' title='Executions: 0' class='uncovered'>convertedStories.keySet()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l41s0'>			FileUtil.createFile(convertedFile, convertedStories.get(convertedFile));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l43s0'>		return new ArrayList&lt;String>(convertedStories.keySet());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

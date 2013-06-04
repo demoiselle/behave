@@ -1,0 +1,394 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+  <title>JMockit Coverage Report</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <link rel='stylesheet' type='text/css' href='../../../../../prettify.css'/>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption><code>../core/src/main/java/br/gov/frameworkdemoiselle/behave/util/PropertiesLoaderUtil.java</code></caption>
+    <tr>
+      <td class='line'>1</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package br.gov.frameworkdemoiselle.behave.util;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>2</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>3</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.io.IOException;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>4</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.io.Serializable;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>5</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.net.URL;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>6</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.ArrayList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>7</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.Collections;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>8</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.Enumeration;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>9</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.Properties;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>10</td><td colspan='2'></td>
+    </tr>
+    <tr class='click' onclick='showHideLines(this)'>
+      <td class='line'></td><td>&nbsp;</td><td class='comment'>/**
+ * TODO: Revisar tratamentos de exceção
+ * 
+ * @author SERPRO
+ * 
+ */
+</td></tr>
+    <tr>
+      <td class='line'>17</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>18</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public class PropertiesLoaderUtil implements Serializable {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>19</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>20</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static final long serialVersionUID = 1L;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>21</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>22</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private static PropertiesLoaderUtil config;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>23</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private Properties allProps;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>24</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>25</td><td>&nbsp;</td>
+      <td><pre class='comment'>	// private Logger logger = Logger.getLogger(this.toString());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>26</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>27</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l27s0'>	private PropertiesLoaderUtil() throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>28</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l28s0'>		this.allProps = loadProperties();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>29</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l29s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>30</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>31</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static synchronized PropertiesLoaderUtil getInstance() throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>32</td><td class='count'>1</td>
+      <td><pre class='prettyprint jmp'>		<span id='l32s0' title='Executions: 1' class='covered'>if (config == null)</span> <span id='l32s1' title='Executions: 1' class='covered'>{</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>33</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l33s0'>			config = new PropertiesLoaderUtil();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>34</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>35</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l35s0'>		return config;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>36</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>37</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public Properties getProperties() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l39s0'>		return allProps;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private Properties loadProperties() throws IOException {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l44s0'>		ArrayList&lt;ConfigLevelPropertie> confs = new ArrayList&lt;ConfigLevelPropertie>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l46s0'>		ClassLoader loader = Thread.currentThread().getContextClassLoader();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l47s0'>		Enumeration&lt;URL> urls = loader.getResources("behave.properties");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>49</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Adiciona todos os properties (behave.properties) em um array list</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>50</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// desordenado</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td class='count'>2</td>
+      <td><pre class='prettyprint jmp'>		<span id='l51s0' title='Executions: 2' class='covered'>while (urls.hasMoreElements()) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l53s0'>			URL url = (URL) urls.nextElement();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>55</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l55s0'>			Properties localProp = new Properties();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l56s0'>			localProp.load(url.openStream());</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l58s0'>			Integer level = null;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>1</td>
+      <td><pre class='prettyprint jmp'>			<span id='l59s0' title='Executions: 1' class='covered'>if (localProp.containsKey("load.level")) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l60s0'>				level = Integer.parseInt(localProp.getProperty("load.level"));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l61s0'>				confs.add(new ConfigLevelPropertie(level, localProp));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			} else {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l63s0'>				level = Integer.MAX_VALUE;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l64s0'>				confs.add(new ConfigLevelPropertie(level, localProp));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// logger.log(Level.INFO, "Carregando configuração [" + url +</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// "] com nível " + level);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l69s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Ordena por level</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l72s0'>		Collections.sort(confs);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// Faz o merge de todos levando em consideração o level</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l75s0'>		Properties allProperties = new Properties();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td class='count'>1</td>
+      <td><pre class='prettyprint jmp'>		<span id='l76s0' title='Executions: 1' class='covered'>for (ConfigLevelPropertie prop</span> : <span id='l76s1' title='Executions: 1' class='covered'>confs)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l77s0'>			allProperties.putAll(prop.properties);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// logger.log(Level.INFO, "Language " +</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td>&nbsp;</td>
+      <td><pre class='comment'>		// allProperties.getProperty("behave.parser.language"));</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>83</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l83s0'>		return allProperties;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>84</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>85</td><td colspan='2'></td>
+    </tr>
+    <tr class='click' onclick='showHideLines(this)'>
+      <td class='line'></td><td>&nbsp;</td><td class='comment'>	/**
+	 * Classe auxiliar para ordenação das propriedades de cada jar
+	 * 
+	 * @author SERPRO
+	 * 
+	 */
+</td></tr>
+    <tr>
+      <td class='line'>92</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private class ConfigLevelPropertie implements Comparable&lt;ConfigLevelPropertie> {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>93</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>94</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public Integer <span class='instance uncovered' title='Reads: 0 Writes: 0'>level</span>;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public Properties <span class='instance uncovered' title='Reads: 0 Writes: 0'>properties</span>;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l97s0'>		public ConfigLevelPropertie(Integer level, Properties prop) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>98</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l98s0'>			this.level = level;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l99s0'>			this.properties = prop;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td class='count'>1</td>
+      <td><pre class='prettyprint covered' id='l100s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>101</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		@Override</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>103</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		public int compareTo(ConfigLevelPropertie o2) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>104</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l104s0'>			return level.compareTo(o2.level);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>105</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>109</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

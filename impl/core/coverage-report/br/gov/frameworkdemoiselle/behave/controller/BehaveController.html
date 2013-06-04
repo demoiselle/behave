@@ -1,0 +1,431 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+  <title>JMockit Coverage Report</title>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+  <link rel='stylesheet' type='text/css' href='../../../../../coverage.css'/>
+  <script type='text/javascript' src='../../../../../coverage.js'></script>
+  <link rel='stylesheet' type='text/css' href='../../../../../prettify.css'/>
+  <script type='text/javascript' src='../../../../../prettify.js'></script>
+</head>
+<body onload='prettyPrint()'>
+  <table cellpadding='0' cellspacing='1'>
+    <caption><code>../core/src/main/java/br/gov/frameworkdemoiselle/behave/controller/BehaveController.java</code></caption>
+    <tr class='click' onclick='showHideLines(this)'>
+      <td class='line'></td><td>&nbsp;</td><td class='comment'>/*
+ * Demoiselle Framework
+ * Copyright (C) 2013 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see &lt;http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse &lt;http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
+</td></tr>
+    <tr>
+      <td class='line'>37</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>package br.gov.frameworkdemoiselle.behave.controller;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>38</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>39</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.ArrayList;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>40</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import java.util.List;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>41</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>42</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import org.apache.log4j.Logger;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>43</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>44</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>45</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.exception.BehaveException;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>46</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.internal.parse.StoryFileConverter;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>47</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>48</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.parser.Parser;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>49</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>import br.gov.frameworkdemoiselle.behave.parser.Step;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>50</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>51</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>public class BehaveController {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>52</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>53</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l53s0'>	private static BehaveController <span class='static uncovered' title='Reads: 0 Writes: 0'>eng</span> = new BehaveController();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>54</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>55</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	private Parser <span class='instance uncovered' title='Reads: 0 Writes: 0'>parser</span>;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>56</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>57</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l57s0'>	Logger <span class='instance uncovered' title='Reads: 0 Writes: 0'>log</span> = Logger.getLogger(BehaveController.class);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>58</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>59</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l59s0'>	private ArrayList&lt;String> <span class='instance uncovered' title='Reads: 0 Writes: 0'>allOriginalStoriesPath</span> = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>60</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>61</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l61s0'>	private List&lt;Step> <span class='instance uncovered' title='Reads: 0 Writes: 0'>steps</span> = new ArrayList&lt;Step>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>62</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>63</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l63s0'>	private List&lt;String> <span class='instance uncovered' title='Reads: 0 Writes: 0'>storiesPath</span> = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>64</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>65</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l65s0'>	private BehaveController(){</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>66</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>67</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l67s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>68</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>69</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public static BehaveController getInstance(){</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>70</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l70s0'>		return eng;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>71</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>72</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>73</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void addSteps(Step step) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>74</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l74s0'>		steps.add(step);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>75</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l75s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>76</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>77</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	@SuppressWarnings("unchecked")</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>78</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void run(List&lt;String> storiesPath) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>79</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		try {</pre></td>
+    </tr>
+    <tr>
+      <td></td><td class='count'>0</td>
+      <td class='paths'>
+        <span style='cursor:default; background-color:#ff0000' onclick='hidePath()'>Path coverage: 0/5</span>
+        <span class='uncovered' onclick="showPath(this,'l80s0 l84s0 l85s0')">A: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l80s0 l84s0 l84s1 l85s0')">B: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l80s0 l84s0 l84s1 l88s0 l98s0 l104s0 l116s0')">C: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l80s0 l84s0 l84s1 l88s0 l98s0 l98s1 l99s0 l100s1 l104s0 l116s0')">D: 0</span>
+        <span class='uncovered' onclick="showPath(this,'l80s0 l84s0 l84s1 l88s0 l98s0 l98s1 l99s0 l100s0 l100s1 l104s0 l116s0')">E: 0</span>
+      </td>
+    </tr>
+    <tr>
+      <td class='line'>80</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l80s0'>			log.info("--------------------------------");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>81</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l81s0'>			log.info(" Iniciando Demoiselle Behave");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>82</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l82s0'>			log.info("--------------------------------");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>83</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>84</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>			<span id='l84s0' title='Executions: 0' class='uncovered'>if (storiesPath == null</span> || <span id='l84s1' title='Executions: 0' class='uncovered'>storiesPath.isEmpty()){</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>85</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l85s0'>				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>86</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>87</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// Armazena o array antigo para retirar as histórias depois</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>88</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l88s0'>			List&lt;String> oldsStories = (List&lt;String>) allOriginalStoriesPath.clone();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>89</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>90</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// Adiciono as novas histórias</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>91</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l91s0'>			allOriginalStoriesPath.addAll(storiesPath);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>92</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>93</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// Faz a conversão</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>94</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l94s0'>			List&lt;String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>95</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>96</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// Cria um novo array contendo somente as histórias atuais, sem as antigas</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>97</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l97s0'>			List&lt;String> finalArray = new ArrayList&lt;String>();			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>98</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>			<span id='l98s0' title='Executions: 0' class='uncovered'>for (String s</span> : <span id='l98s1' title='Executions: 0' class='uncovered'>allStoriesConverted)</span> </pre></td>
+    </tr>
+    <tr>
+      <td class='line'>99</td><td class='count'>0</td>
+      <td><pre class='prettyprint jmp'>				<span id='l99s0' title='Executions: 0' class='uncovered'>if (!oldsStories.contains(s)) {</span></pre></td>
+    </tr>
+    <tr>
+      <td class='line'>100</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l100s0'>					finalArray.add(s);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>101</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>				}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>102</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>			}	</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>103</td><td>&nbsp;</td>
+      <td><pre class='comment'>			// Roda o runner com as histórias convertidas			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>104</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l104s0'>			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>105</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l105s0'>			parser.setSteps(steps);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>106</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l106s0'>			parser.setStoryPaths(finalArray);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>107</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l107s0'>			parser.run();			</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>108</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l108s0'>		} catch (Exception ex) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>109</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l109s0'>			log.error("Erro ao executar o Demoiselle Behave", ex);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>110</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>		}finally{</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>111</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l111s0'>			log.info("--------------------------------");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>112</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l112s0'>			log.info(" Desligando Demoiselle Behave");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>113</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l113s0'>			log.info("--------------------------------");</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>114</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l114s0'>		}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>115</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>116</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l116s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>117</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>118</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void run(String storiesPath) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>119</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l119s0'>		ArrayList&lt;String> stories = new ArrayList&lt;String>();</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>120</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l120s0'>		stories.add(storiesPath);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>121</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l121s0'>		run(stories);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>122</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l122s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>123</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>124</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public void run() {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>125</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l125s0'>		run(storiesPath);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>126</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l126s0'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>127</td><td colspan='2'></td>
+    </tr>
+    <tr>
+      <td class='line'>128</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	public BehaveController addStories(String storiesPath) {</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>129</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l129s0'>		log.debug("addStories:" + storiesPath);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>130</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l130s0'>		this.storiesPath.add(storiesPath);</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>131</td><td class='count'>0</td>
+      <td><pre class='prettyprint uncovered' id='l131s0'>		return this;</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>132</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>	}</pre></td>
+    </tr>
+    <tr>
+      <td class='line'>133</td><td>&nbsp;</td>
+      <td><pre class='prettyprint'>}</pre></td>
+    </tr>
+  </table>
+</body>
+</html>

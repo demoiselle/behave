@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.RegularExpressionUtil;
 
 public class ScenarioParameter {
@@ -40,6 +41,9 @@ public class ScenarioParameter {
 	 * @return
 	 */
 	public static List<String> replaceCallParameters(String scenarioCall, Scenario scenarioReused) {
+		if(scenarioReused.getIdentification()==null){
+			throw new BehaveException("Identificação do cenário nula");
+		}
 		Map<String, String> parametersCalled = getReusedParameters(scenarioReused.getIdentification(), scenarioCall);
 		if (parametersCalled.isEmpty()) {
 			return scenarioReused.getSentences();
