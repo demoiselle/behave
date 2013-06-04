@@ -18,37 +18,32 @@ public class BehaveConfigTest {
 	
 
 
-	
+	/***
+	 * Teste retorno propriedade
+	 */
 	@Test
 	public void testGetProperty() {
-		  new MockUp<PropertiesLoaderUtil>() {
-			
-				@Mock(invocations=1)
-				public Properties getProperties() {
-					Properties properties=Mockito.mock(Properties.class);
-					Mockito.when(properties.containsKey(Mockito.anyObject())).thenReturn(true);
-					Mockito.when(properties.keys()).thenReturn(new Enumeration<Object>() {
-						
-						@Override
-						public Object nextElement() {
-							// TODO Auto-generated method stub
-							return null;
-						}
-						
-						@Override
-						public boolean hasMoreElements() {
-							// TODO Auto-generated method stub
-							return false;
-						}
-					});
-					
-					return properties;
+		
+		  
+		
+		  Properties properties=Mockito.mock(Properties.class);
+			Mockito.when(properties.containsKey(Mockito.anyObject())).thenReturn(true);
+			Mockito.when(properties.keys()).thenReturn(new Enumeration<Object>() {
+				
+				@Override
+				public Object nextElement() {
+					// TODO Auto-generated method stub
+					return null;
 				}
+				
+				@Override
+				public boolean hasMoreElements() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+			});
 			
-			  
-		  };
-		
-		
+		BehaveConfig.properties=properties;	
 		BehaveConfig.getProperty("property1");
 		
 	}
