@@ -6,8 +6,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.jbehave.core.reporters.PostStoryStatisticsCollector;
 import org.jbehave.core.reporters.TemplateProcessor;
-import org.jbehave.core.reporters.TemplateableViewGenerator.Report;
-import org.jbehave.core.reporters.TemplateableViewGenerator.ReportsTable;
 
 public class ALMTemplateProcessor implements TemplateProcessor {
 

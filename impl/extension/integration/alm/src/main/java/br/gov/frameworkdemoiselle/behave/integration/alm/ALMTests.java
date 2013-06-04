@@ -29,16 +29,16 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
+@SuppressWarnings("deprecation")
 public class ALMTests {
 
 	public static void main(String[] args) {
 
-		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<testcase xmlns=\"http://jazz.net/xmlns/alm/qm/v0.1/\"" + "xmlns:ns1=\"http://purl.org/dc/elements/1.1/\"" + "xmlns:ns2=\"http://jazz.net/xmlns/alm/v0.1/\"" + "externalid=\"IDEXTERNOPARAIDENTIFICACAO\">" + "<ns1:title>NOME DO CASO</ns1:title>" + "<ns1:description>DESCRICAO DO CASO</ns1:description>" + "<ns2:state>com.ibm.rqm.planning.common.new</ns2:state>" + "</testcase>";
+//		String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<testcase xmlns=\"http://jazz.net/xmlns/alm/qm/v0.1/\"" + "xmlns:ns1=\"http://purl.org/dc/elements/1.1/\"" + "xmlns:ns2=\"http://jazz.net/xmlns/alm/v0.1/\"" + "externalid=\"IDEXTERNOPARAIDENTIFICACAO\">" + "<ns1:title>NOME DO CASO</ns1:title>" + "<ns1:description>DESCRICAO DO CASO</ns1:description>" + "<ns2:state>com.ibm.rqm.planning.common.new</ns2:state>" + "</testcase>";
 
 	}
 
-	@SuppressWarnings("deprecation")
-	private static HttpClient getNewHttpClient() {
+	public static HttpClient getNewHttpClient() {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			trustStore.load(null, null);

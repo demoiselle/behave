@@ -3,14 +3,10 @@ package br.gov.frameworkdemoiselle.behave.config;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import mockit.Mock;
-import mockit.MockUp;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 
 public class BehaveConfigTest {
 	

@@ -1,7 +1,5 @@
 package br.gov.frameworkdemoiselle.behave.controller;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
