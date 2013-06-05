@@ -59,6 +59,7 @@ import org.jbehave.core.steps.ParameterConverters;
 import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.StepFinder;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
@@ -86,7 +87,11 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		configuration.useStepFinder(new StepFinder());
 		configuration.useStoryControls(new StoryControls());
 		configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-		configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
+		if (BehaveConfig.INTEGRATION_ALM_ENABLED){
+			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
+		}else{
+			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+		}
 		// configuration.useViewGenerator(new ALMViewGenerator());
 
 		EmbedderControls embedderControls = configuredEmbedder().embedderControls();

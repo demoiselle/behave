@@ -123,6 +123,7 @@ public class BehaveController {
 
 	public void run() {
 		run(storiesPath);
+		storiesPath.clear();
 	}
 
 	public BehaveController addStories(String storiesPath) {

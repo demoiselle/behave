@@ -3,7 +3,7 @@ package br.gov.frameworkdemoiselle.behave.integration.alm.autenticator;
 public class AutenticatorClientTests {
 
 	public static void main(String[] args) {
-		AutenticatorClient autenticator = new AutenticatorClient(9990, "stct3.cta.serpro");
+		AutenticatorClient autenticator = new AutenticatorClient(9990, "stct3-win.cta.serpro");
 		autenticator.open();
 		String user = autenticator.getUser();
 		String password = autenticator.getPassword();
