@@ -48,7 +48,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<name>JBehave and Selenium Archetype</name>
+	<name>Demoiselle Behave Selenium Archetype</name>
 	<description>Archetype for automated functional tests in web applications</description>
 
 	<build>

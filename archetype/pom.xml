@@ -33,7 +33,7 @@
 		<version>1</version>
 	</parent>
 
-	<name>Archetypes Build Aggregator</name>
+	<name>Demoiselle Behave Archetypes Build Aggregator</name>
 	<description></description>
 
 	<modules>
