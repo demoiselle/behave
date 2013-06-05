@@ -22,6 +22,7 @@ public class BehaveConfig {
 	public static String PREFIXES_BDD_PATTERN = "";
 	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
 	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
+	public static boolean INTEGRATION_ALM_ENABLED = false;;
 	//
 
 	public static Long BROWSER_MAX_WAIT = 10000L;
@@ -40,6 +41,9 @@ public class BehaveConfig {
 
 			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
+			
+			// Integration Properties
+			INTEGRATION_ALM_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.integration.alm.enabled"));
 
 			if (properties.getProperty("behave.runner.browser.maxWait") != null)
 				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));

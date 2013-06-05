@@ -51,7 +51,6 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -82,13 +81,13 @@ import org.apache.http.protocol.HTTP;
 
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 
+@SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
 
-	private Logger logger = Logger.getLogger(this.toString());
 
 	public void sendScenario(Hashtable<String, Object> result) {
-		String username = "03397040477";
-		String password = "serpro123";
+		String username = "XXXXXX";
+		String password = "XXXXXX";
 
 		try {
 
@@ -191,7 +190,6 @@ public class ALMIntegration implements Integration {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	private static HttpClient getNewHttpClient() {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());

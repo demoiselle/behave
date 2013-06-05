@@ -40,9 +40,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class Cipher {
+	
+	public static final String ENCONDING = "ISO-8859-1";
 
 	/**
 	 * Descriptografa uma mensagem a partir de uma chave
@@ -50,8 +51,8 @@ public class Cipher {
 	 * @param key chave
 	 * @return mensagem descriptografada
 	 */
-	public static String Decript(String content, String key) {
-		return Cript(content, key, 'D');
+	public static String decript(String content, String key) {
+		return cript(content, key, 'D');
 	}
 
 	/**
@@ -60,11 +61,11 @@ public class Cipher {
 	 * @param key chave
 	 * @return mensagem criptografada
 	 */
-	public static String Cript(String content, String key) {
-		return Cript(content, key, 'C');
+	public static String cript(String content, String key) {
+		return cript(content, key, 'C');
 	}
 
-	private static int[] RamdomKey() { // retorna um vetor randomico...
+	private static int[] RamdomKey() {
 		int[] ret = new int[32];
 		int valor;
 
@@ -87,7 +88,7 @@ public class Cipher {
 		return ret;
 	}
 
-	private static String Cript(String content, String key, char mode) {
+	private static String cript(String content, String key, char mode) {
 		String rt = null;
 		try {
 			if (key == null){
@@ -96,9 +97,9 @@ public class Cipher {
 			if (content == null){
 				throw new RuntimeException("conteudo vazio");
 			}
-			InputStream in = new ByteArrayInputStream(content.getBytes("Cp1047"));
+			InputStream in = new ByteArrayInputStream(content.getBytes(ENCONDING));
 
-			ByteArrayOutputStream out2 = new ByteArrayOutputStream();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 			int[] ch = new int[32];
 			ch = Transform(stringHexa(makeHash(key, "SHA-256")));
@@ -129,7 +130,7 @@ public class Cipher {
 						x = x + 256;
 					}
 
-					out2.write(x);
+					out.write(x);
 				}
 			} else { // DECIFRAGEM
 				for (int pag = 0; pag < 32; pag++) {
@@ -165,7 +166,7 @@ public class Cipher {
 					x = (x + ch[cont] + valores[cont]) % 256;
 					++cont;
 
-					out2.write(x);
+					out.write(x);
 
 					// Calcular nova sequencia da Chave!!!
 					if (cont > 31) {
@@ -187,7 +188,7 @@ public class Cipher {
 					if (x < 0) {
 						x = x + 256;
 					}
-					out2.write(x);
+					out.write(x);
 
 					if (cont > 31) {
 						cont = 0;
@@ -202,8 +203,8 @@ public class Cipher {
 				}
 			}
 			in.close();
-			rt = out2.toString("Cp1047");
-			out2.close();
+			rt = out.toString(ENCONDING);
+			out.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -211,13 +212,13 @@ public class Cipher {
 		return rt;
 	}
 
-	private static byte[] makeHash(String frase, String algorit) {
+	private static byte[] makeHash(String content, String algor) {
 		try {
-			MessageDigest md = MessageDigest.getInstance(algorit);
-			md.update(frase.getBytes());
+			MessageDigest md = MessageDigest.getInstance(algor);
+			md.update(content.getBytes(ENCONDING));
 			return md.digest();
-		} catch (NoSuchAlgorithmException e) {
-			return null;
+		} catch (Exception e) {
+			throw new RuntimeException("erro makeHash");
 		}
 	}
 

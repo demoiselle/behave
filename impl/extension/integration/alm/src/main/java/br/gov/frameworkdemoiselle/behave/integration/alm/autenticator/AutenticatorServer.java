@@ -42,6 +42,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 public class AutenticatorServer {
 
@@ -49,6 +50,10 @@ public class AutenticatorServer {
 	public static final String GETUSER = "GET_USER";
 	public static final String GETPASS = "GET_PASSWORD";
 	public static final String CLOSE = "CLOSE";
+	public static final String DEFAULTHOST = "127.0.0.1";
+	public static final String DEFAULTPORT = "9990";
+	public static final String DEFAULTHOSTALL = "all";
+	
 
 	private static AutenticatorServer server = new AutenticatorServer();
 	private ServerSocket serverSocket;
@@ -67,9 +72,30 @@ public class AutenticatorServer {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws InterruptedException, IOException {
+		Hashtable<String, String> params = new Hashtable<String, String>();
 		if (args == null || args.length == 0) {
-			server.start("localhost", 9990);
+			params.put("-p", DEFAULTPORT);
+			params.put("-o", DEFAULTHOST);
 		}
+		if (args.length % 2 != 0){
+			showHelp();
+		}
+		for(int i = 0 ; i < args.length; i = i + 2){
+			params.put(args[i], args[i+1]);
+		}		
+		int port = params.containsKey("-p") ? Integer.parseInt(params.get("-p").trim()) : Integer.parseInt(DEFAULTPORT);
+		String host = params.containsKey("-o") ? params.get("-o").trim() : DEFAULTHOST;		
+		server.start(host, port);
+	}
+
+	private static void showHelp() {
+		log("===================================================");
+		log("Chamada inválida! Use:");
+		log("java -jar behave-autenticador-<version>.jar -p <porta> -o <ip-de-origem>");
+		log("Valor padrão: -p: 9990 -o: localhost");
+		log("Obs.: Use -o 'all' para qualquer ip de origem)");
+		log("===================================================");
+		System.exit(-1);		
 	}
 
 	/**
@@ -80,26 +106,26 @@ public class AutenticatorServer {
 	public void start(String host, int port) {
 		try {
 			log("=============================================");
-			log("ALM AutenticatorServer");
-			log("PORTA: [" + port + "]");
-			log("ACESSO: [" + host + "]");
+			log(" Demoiselle Behave - Serviço de Autenticação");
+			log(" Porta: [" + port + "]");
+			log(" Acesso: [" + host + "]");
 			log("=============================================");
 			serverSocket = new ServerSocket(port);
 			
 			Console console = System.console();
-			console.printf("Informe seu usuario: ");
+			console.printf("Informe seu usuario...: ");
 			String user = console.readLine();
 			
-			console.printf("Informe sua senha: ");
+			console.printf("Informe sua senha.....: ");
 	        char[] passwordChars = console.readPassword();
 	        String password = new String(passwordChars);
 			
 	        log("=============================================");
-	        log("                SERVICO INICIADO");
+	        log("               Servico Iniciado              ");
 	        log("=============================================");
 			while (true) {				
-				Socket client = serverSocket.accept();
-				new AutenticatorHandler(client, user, password);
+				Socket socket = serverSocket.accept();
+				new AutenticatorHandler(socket, user, password, host);
 			}
 		} catch (Throwable ex) {
 			throw new RuntimeException(ex);
