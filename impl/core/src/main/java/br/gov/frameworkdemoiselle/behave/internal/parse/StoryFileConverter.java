@@ -6,16 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class StoryFileConverter {
 
-	public static List<String> convertReusedScenarios(List<String> originalFolderes, String originalExtension, String convertedExtension, Boolean includeSubFolder) throws IOException {
-		List<String> originalBaseFilesName = new ArrayList<String>();
-		for (String originalFolder : originalFolderes) {
-			originalBaseFilesName.addAll(FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder));
+	public static List<String> convertReusedScenarios(List<String> originalFolderes, String originalExtension, String convertedExtension, Boolean includeSubFolder) {
+		try {
+			List<String> originalBaseFilesName = new ArrayList<String>();
+			for (String originalFolder : originalFolderes) {
+				originalBaseFilesName.addAll(FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder));
+			}
+			return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);
+		} catch (IOException ex) {
+			throw new BehaveException("erro ao converter historias", ex);
 		}
-		return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);
 	}
 
 	public static List<String> convertReusedScenarios(String originalFolder, String originalExtension, String convertedExtension, Boolean includeSubFolder) throws IOException {

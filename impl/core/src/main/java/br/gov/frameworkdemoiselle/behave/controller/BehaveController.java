@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -105,7 +106,7 @@ public class BehaveController {
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
 			parser.run();			
-		} catch (Exception ex) {
+		} catch (BehaveException ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
 		}finally{
 			log.info("--------------------------------");
