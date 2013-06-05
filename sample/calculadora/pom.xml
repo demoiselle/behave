@@ -23,7 +23,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>serpro-treino</artifactId>
+	<groupId>br.gov.serpro</groupId>
+	<artifactId>calculadora</artifactId>
 	<version>1.0.0</version>
 
 	<parent>
@@ -32,24 +33,17 @@
 		<version>1</version>
 	</parent>
 
-	<name>Demoiselle Behave Serpro Treino</name>
+	<name>Demoiselle Behave Calculadora</name>
 
-	<description>Demoiselle Behave Serpro Treino</description>
-
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public License, Version 3</name>
-			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-		</license>
-	</licenses>
-
+	<description>Demoiselle Behave Calculadora</description>
+	
 	<organization>
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
 	<properties>
-		<project.alias>serpro-treino</project.alias>
+		<project.alias>calculadora</project.alias>
 	</properties>
 
 	<dependencies>
@@ -57,14 +51,6 @@
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Project runner definition -->
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-			<artifactId>demoiselle-behave-runner-webdriver</artifactId>
 			<version>1.1.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
