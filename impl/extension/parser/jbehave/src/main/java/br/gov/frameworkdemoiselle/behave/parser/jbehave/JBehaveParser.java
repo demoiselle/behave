@@ -87,13 +87,11 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		configuration.useStepFinder(new StepFinder());
 		configuration.useStoryControls(new StoryControls());
 		configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-		if (BehaveConfig.INTEGRATION_ALM_ENABLED){
+		if (BehaveConfig.INTEGRATION_ENABLED) {
 			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
-		}else{
+		} else {
 			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
 		}
-		// configuration.useViewGenerator(new ALMViewGenerator());
-
 		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
 		embedderControls.doGenerateViewAfterStories(true);
 		embedderControls.doIgnoreFailureInStories(false);
@@ -127,8 +125,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		steps.add(new BeforeAfterSteps());
-		steps.add(new CommonSteps());
+		if (BehaveConfig.PARSER_COMMONS_STEPS_ENABLED) {
+			steps.add(new BeforeAfterSteps());
+			steps.add(new CommonSteps());
+		}
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 
