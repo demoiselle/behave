@@ -38,6 +38,7 @@
 
 	<modules>
 		<module>jbehave-selenium</module>
+		<module>jbehave-junit</module>
 	</modules>
 
 </project>

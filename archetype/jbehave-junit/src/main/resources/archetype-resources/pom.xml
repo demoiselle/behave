@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<packaging>jar</packaging>
+
+	<name>${artifactId}</name>
+	<description>Descrição do ${artifactId}</description>
+
+	<dependencies>
+		<!-- demoiselle-behave (jbehave) -->
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>demoiselle-behave-snapshots</id>
+			<name>Demoiselle Behave Snapshots</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
+		</repository>
+		<repository>
+			<id>demoiselle-behave-releases</id>
+			<name>Demoiselle Behave Releases</name>
+			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
+		</repository>
+	</repositories>
+
+</project>

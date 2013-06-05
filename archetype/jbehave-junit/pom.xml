@@ -1,4 +1,4 @@
-<!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
+  <!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
 	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
 	you can redistribute it and/or modify it under the terms of the GNU Lesser 
 	General Public License version 3 as published by the Free Software Foundation. 
@@ -23,48 +23,44 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.gov.serpro</groupId>
-	<artifactId>calculadora</artifactId>
-	<version>1.0.0</version>
 
-	<parent>
-		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-		<artifactId>demoiselle-behave-parent</artifactId>
-		<version>1</version>
-	</parent>
+	<groupId>br.gov.frameworkdemoiselle.component.behave.archetype</groupId>
+	<artifactId>jbehave-junit-archetype</artifactId>
+	<packaging>jar</packaging>
+	<version>1.1.0-SNAPSHOT</version>
 
-	<name>Demoiselle Behave Calculadora</name>
-
-	<description>Demoiselle Behave Calculadora</description>
-	
 	<organization>
-		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
+		<name>SERPRO</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
-	<properties>
-		<project.alias>calculadora</project.alias>
-	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>demoiselle-behave.internal</id>
+			<name>Repositorio Interno</name>
+			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>demoiselle-behave.snapshots</id>
+			<name>Repositorio Interno</name>
+			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>demoiselle-behave-snapshots</id>
-			<name>Demoiselle Behave Snapshots</name>
-			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
-		</repository>
-		<repository>
-			<id>demoiselle-behave-releases</id>
-			<name>Demoiselle Behave Releases</name>
-			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
-		</repository>
-	</repositories>
+	<name>JBehave and Selenium Archetype</name>
+	<description>Archetype for automated functional tests in web applications</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -1,0 +1,15 @@
+<archetype>
+	<id>jbehave-junit-archetype</id>
+	<sources>
+		<source>src/main/java/Calc.java</source>
+	</sources>	
+	<testSources>
+		<source>src/test/java/CalcTest.java</source>
+		<source>src/test/java/MySteps.java</source>		
+	</testSources>
+	<testResources>
+		<resource>src/test/resources/behave.properties</resource>
+		<resource>src/test/resources/log4j.xml</resource>
+		<resource>src/test/resources/stories/calc.story</resource>
+	</testResources>
+</archetype>
