@@ -34,25 +34,6 @@ public class FileUtil {
 		return stringBuilder.toString();
 	}
 
-	public static String loadResource(String resourcePath) throws IOException {
-
-		StringBuilder stringBuilder = new StringBuilder();
-
-		File file = new File(getAbsolutePath());
-		FileInputStream fileInputStream = new FileInputStream(file);
-
-		try {
-			String line = "";
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
-			while ((line = bufferedReader.readLine()) != null) {
-				stringBuilder.append(line).append("\n");
-			}
-			bufferedReader.close();
-		} finally {
-			fileInputStream.close();
-		}
-		return stringBuilder.toString();
-	}
 
 	public static String createTempDir(String dir) {
 		String tempDirName = dir;
