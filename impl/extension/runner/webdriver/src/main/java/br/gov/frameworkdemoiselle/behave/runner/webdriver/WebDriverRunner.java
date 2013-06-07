@@ -55,6 +55,10 @@ public class WebDriverRunner implements Runner {
 
 	private Logger logger = Logger.getLogger(this.toString());
 	private WebDriver driver;
+	
+	void setWebDriver(WebDriver driver){
+		this.driver=driver;
+	}
 
 	public Object getDriver() {
 		if (driver == null) {
@@ -90,8 +94,10 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public Element getElement(String currentPageName, String elementName) {
+		
+		
 
-		if (currentPageName.equals(""))
+		if ((currentPageName==null)||(currentPageName.equals("")))
 			throw new RuntimeException("Não existe página selecionada.");
 
 		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
