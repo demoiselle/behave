@@ -11,7 +11,7 @@ public class WebTextField extends WebBase implements TextField {
 	public void sendKeys(CharSequence... keysToSend) {
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
-		
+
 		getElements().get(0).sendKeys(keysToSend);
 	}
 
@@ -36,7 +36,7 @@ public class WebTextField extends WebBase implements TextField {
 
 			totalMilliseconds += 1000;
 
-			if (totalMilliseconds > BehaveConfig.BROWSER_MAX_WAIT)
+			if (totalMilliseconds > BehaveConfig.getBrowserMaxWait())
 				throw new RuntimeException("Limpeza de campo não concluída com sucesso.");
 		}
 	}

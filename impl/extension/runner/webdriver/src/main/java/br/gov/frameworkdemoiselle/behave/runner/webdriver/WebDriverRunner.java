@@ -62,8 +62,8 @@ public class WebDriverRunner implements Runner {
 			driver = new FirefoxDriver();
 
 			// Configurações do driver
-			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.BROWSER_MAX_WAIT, TimeUnit.MILLISECONDS);
-			driver.manage().timeouts().implicitlyWait(BehaveConfig.BROWSER_MAX_WAIT, TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
 		}
 		return driver;
 	}

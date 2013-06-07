@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -92,7 +91,7 @@ public class BehaveController {
 			allOriginalStoriesPath.addAll(storiesPath);
 			
 			// Faz a conversão
-			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.ORIGINAL_STORY_FILE_EXTENSION, BehaveConfig.CONVERTED_STORY_FILE_EXTENSION, true);
+			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getOriginalStoryFileExtension(), BehaveConfig.getConvertedStoryFileExtension(), true);
 
 			// Cria um novo array contendo somente as histórias atuais, sem as antigas
 			List<String> finalArray = new ArrayList<String>();			

@@ -17,7 +17,7 @@ public class StoryConverterTest {
 
 	// TODO Testar no windows para ver se o link break funciona com sucesso
 
-	private static final String LANGUAGE = BehaveConfig.LANGUAGE;
+	private static final String LANGUAGE = BehaveConfig.getLanguage();
 
 	private static final String DEFAULT_RESOURCE_PATH = "target/test-classes/parser/test/" + LANGUAGE + File.separatorChar;
 

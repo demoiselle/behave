@@ -12,24 +12,23 @@ import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 public class BehaveConfig {
 
 	public static Properties properties;
-	
-	static void setProperties(Properties properties){
-		BehaveConfig.properties=properties;
+
+	static void setProperties(Properties properties) {
+		BehaveConfig.properties = properties;
 	}
 
-	public static String LANGUAGE = "pt";
-	public static String IDENTIFICATION_SCENARIO_PATTERN = "";
-	public static String PREFIXES_BDD_PATTERN = "";
-	public static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
-	public static String CONVERTED_STORY_FILE_EXTENSION = "story";
-	public static boolean PARSER_COMMONS_STEPS_ENABLED = true;
-	public static boolean INTEGRATION_ENABLED = false;
-	//
+	private static String LANGUAGE = "pt";
+	private static String IDENTIFICATION_SCENARIO_PATTERN = "";
+	private static String PREFIXES_BDD_PATTERN = "";
+	private static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
+	private static String CONVERTED_STORY_FILE_EXTENSION = "story";
+	private static boolean PARSER_COMMONS_STEPS_ENABLED = true;
+	private static boolean INTEGRATION_ENABLED = false;
 
-	public static Long BROWSER_MAX_WAIT = 10000L;
-	public static Long BROWSER_MIN_WAIT = 100L;
-	
-	public static Logger log = Logger.getLogger(BehaveConfig.class);
+	private static Long BROWSER_MAX_WAIT = 10000L;
+	private static Long BROWSER_MIN_WAIT = 100L;
+
+	private static Logger log = Logger.getLogger(BehaveConfig.class);
 
 	static {
 		try {
@@ -43,7 +42,7 @@ public class BehaveConfig {
 			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
 			PARSER_COMMONS_STEPS_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.parser.commonssteps.enabled"));
-			
+
 			// Integration Properties
 			INTEGRATION_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.integration.alm.enabled"));
 
@@ -52,7 +51,7 @@ public class BehaveConfig {
 
 			if (properties.getProperty("behave.runner.browser.minWait") != null)
 				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
-			if (log.isDebugEnabled()){				
+			if (log.isDebugEnabled()) {
 				log.debug("Configurações do Demoiselle Behave:");
 				Enumeration<Object> keys = properties.keys();
 				while (keys.hasMoreElements()) {
@@ -90,6 +89,44 @@ public class BehaveConfig {
 	 */
 	public static boolean contains(String key) {
 		return properties.containsKey(key);
+	}
+
+	/****** Get Properties ***********/
+
+	public static String getLanguage() {
+		return LANGUAGE;
+	}
+
+	public static String getIdentificationScenarioPattern() {
+		return IDENTIFICATION_SCENARIO_PATTERN;
+	}
+
+	public static String getPrefixesBddPattern() {
+		return PREFIXES_BDD_PATTERN;
+	}
+
+	public static String getOriginalStoryFileExtension() {
+		return ORIGINAL_STORY_FILE_EXTENSION;
+	}
+
+	public static String getConvertedStoryFileExtension() {
+		return CONVERTED_STORY_FILE_EXTENSION;
+	}
+
+	public static boolean isParserCommonsSteosEnabled() {
+		return PARSER_COMMONS_STEPS_ENABLED;
+	}
+
+	public static boolean isIntegrationEnabled() {
+		return INTEGRATION_ENABLED;
+	}
+
+	public static Long getBrowserMaxWait() {
+		return BROWSER_MAX_WAIT;
+	}
+
+	public static Long getBrowserMinWait() {
+		return BROWSER_MIN_WAIT;
 	}
 
 }

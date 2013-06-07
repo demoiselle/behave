@@ -117,7 +117,7 @@ public class StoryConverter {
 		String storyDefinition = "";
 		for (int i = 0; i < scenarioTokens.length; i++) {
 			String scenarioToken = scenarioTokens[i];
-			if (RegularExpressionUtil.matches(BehaveConfig.IDENTIFICATION_SCENARIO_PATTERN, scenarioToken.trim())) {
+			if (RegularExpressionUtil.matches(BehaveConfig.getIdentificationScenarioPattern(), scenarioToken.trim())) {
 				return storyDefinition;
 			}
 			storyDefinition += scenarioToken + LINE_BREAK_TOKEN;
@@ -131,7 +131,7 @@ public class StoryConverter {
 		Scenario scenario = null;
 		for (int i = 0; i < scenarioTokens.length; i++) {
 			String scenarioToken = scenarioTokens[i];
-			if (RegularExpressionUtil.matches(BehaveConfig.IDENTIFICATION_SCENARIO_PATTERN, scenarioToken.trim())) {
+			if (RegularExpressionUtil.matches(BehaveConfig.getIdentificationScenarioPattern(), scenarioToken.trim())) {
 				scenario = createScenario(scenarioToken);
 				scenarios.add(scenario);
 			} else if (scenario != null) {
@@ -142,7 +142,7 @@ public class StoryConverter {
 	}
 
 	private static Scenario createScenario(String scenarioToken) {
-		String scenarioIdentification = RegularExpressionUtil.getGroup(BehaveConfig.IDENTIFICATION_SCENARIO_PATTERN, scenarioToken, 3).trim();
+		String scenarioIdentification = RegularExpressionUtil.getGroup(BehaveConfig.getIdentificationScenarioPattern(), scenarioToken, 3).trim();
 		String scenarioIdentificationWithoutParametersName = ScenarioParameter.removeParameterNames(scenarioIdentification.toUpperCase());
 		Scenario scenario = new Scenario();
 		scenario.setConverted(false);
@@ -211,7 +211,7 @@ public class StoryConverter {
 		List<String> sentences = new ArrayList<String>();
 		for (String sentence : scenario.getSentences()) {
 			if (!scenario.getReusable()) {
-				String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.PREFIXES_BDD_PATTERN, sentence.trim(), 3);
+				String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.getPrefixesBddPattern(), sentence.trim(), 3);
 				if (sentenceWithoutPrefixAndParametersName == null) {
 					sentenceWithoutPrefixAndParametersName = sentence;
 				}

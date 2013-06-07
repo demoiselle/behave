@@ -14,7 +14,7 @@ public class WebScreen extends WebBase implements Screen {
 	private Logger logger = Logger.getLogger(this.toString());
 	
 	public void waitText(String text) {
-		waitText(text, BehaveConfig.BROWSER_MAX_WAIT);
+		waitText(text, BehaveConfig.getBrowserMaxWait());
 	}
 
 	public void waitText(String text, Long timeout) {

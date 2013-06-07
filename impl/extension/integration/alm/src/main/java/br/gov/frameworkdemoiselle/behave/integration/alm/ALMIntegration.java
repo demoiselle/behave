@@ -84,14 +84,12 @@ import br.gov.frameworkdemoiselle.behave.integration.Integration;
 @SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
 
-
 	public void sendScenario(Hashtable<String, Object> result) {
 		String username = "XXXXXX";
 		String password = "XXXXXX";
 
 		try {
-
-			URL url = new URL("https://homalm.serpro/qm/j_security_check");
+			URL url = new URL("XXXX");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			String userpass = username + ":" + password;
@@ -105,25 +103,23 @@ public class ALMIntegration implements Integration {
 			conn.setRequestProperty("Content-Type", "application/xml");
 
 			conn.disconnect();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String[] args) {
 		// ALMIntegration i = new ALMIntegration();
 		// i.sendScenario(new Hashtable<String, Object>());
 		try {
-			String username = "03397040477";
-			String password = "serpro123";
+			String username = "XXXX";
+			String password = "";
 
 			// Conexão HTTP
 			HttpClient client = getNewHttpClient();
 
 			// Inicia o login
-			HttpPost requestAuth = new HttpPost("https://homalm.serpro/qm/j_security_check");
+			HttpPost requestAuth = new HttpPost("XXXX");
 
 			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 			formparams.add(new BasicNameValuePair("j_username", username));
@@ -143,7 +139,7 @@ public class ALMIntegration implements Integration {
 
 			// ------------ CREATE TEST CASE ------------
 
-			HttpPut request = new HttpPut("https://homalm.serpro/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/RE-RQM-Básico-042013%20(Gerenciamento%20de%20Qualidade)/testcase/CasoDeTesteNovo1");
+			HttpPut request = new HttpPut("XXXX");
 			request.addHeader("Content-Type", "application/xml");
 			request.addHeader("Authorization", basicAuth);
 
@@ -161,23 +157,29 @@ public class ALMIntegration implements Integration {
 
 			// ------------ CREATE RESULT ------------
 
-//			HttpPost requestResult = new HttpPost("https://homalm.serpro/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/RE-RQM-Básico-042013%20(Gerenciamento%20de%20Qualidade)/executionresult");
-//
-//			requestResult.addHeader("Content-Type", "application/xml");
-//			requestResult.addHeader("Authorization", basicAuth);
-//
-//			String xmlResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<testcase xmlns=\"http://jazz.net/xmlns/alm/qm/v0.1/\" " + "xmlns:ns1=\"http://purl.org/dc/elements/1.1/\"" + " xmlns:ns2=\"http://jazz.net/xmlns/alm/v0.1/\"" + ">" + "<ns1:title>NOME DO CASO1111</ns1:title>" + "<ns1:description>DESCRICAO DO CASO1111</ns1:description>" + "<ns2:state>com.ibm.rqm.planning.common.new</ns2:state>" + "</testcase>";
-//
-//			StringEntity seResult = new StringEntity(xmlResult);
-//			seResult.setContentType("text/xml");
-//			requestResult.setEntity(se);
-//
-//			response = client.execute(requestResult);
-//
-//			if (response.getStatusLine().getStatusCode() != 201) {
-//				throw new Exception("Erro ao criar resultado");
-//			}
-
+			// HttpPost requestResult = new HttpPost("XXXX");
+			//
+			// requestResult.addHeader("Content-Type", "application/xml");
+			// requestResult.addHeader("Authorization", basicAuth);
+			//
+			// String xmlResult = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+			// "<testcase xmlns=\"http://jazz.net/xmlns/alm/qm/v0.1/\" " +
+			// "xmlns:ns1=\"http://purl.org/dc/elements/1.1/\"" +
+			// " xmlns:ns2=\"http://jazz.net/xmlns/alm/v0.1/\"" + ">" +
+			// "<ns1:title>NOME DO CASO1111</ns1:title>" +
+			// "<ns1:description>DESCRICAO DO CASO1111</ns1:description>" +
+			// "<ns2:state>com.ibm.rqm.planning.common.new</ns2:state>" +
+			// "</testcase>";
+			//
+			// StringEntity seResult = new StringEntity(xmlResult);
+			// seResult.setContentType("text/xml");
+			// requestResult.setEntity(se);
+			//
+			// response = client.execute(requestResult);
+			//
+			// if (response.getStatusLine().getStatusCode() != 201) {
+			// throw new Exception("Erro ao criar resultado");
+			// }
 
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
