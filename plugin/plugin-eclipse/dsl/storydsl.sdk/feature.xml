@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="demoiselle-behave--storydsl.sdk"
+      label="StoryDsl SDK Feature "
+      version="1.0.1.snapshot">
+
+   <plugin
+         id="storydsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="storydsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

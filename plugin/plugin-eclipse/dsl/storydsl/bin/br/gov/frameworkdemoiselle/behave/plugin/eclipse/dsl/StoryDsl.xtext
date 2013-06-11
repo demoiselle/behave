@@ -1,0 +1,105 @@
+grammar br.gov.frameworkdemoiselle.behave.plugin.eclipse.dsl.StoryDsl with org.eclipse.xtext.common.Terminals
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate storyDsl "http://www.gov.br/frameworkdemoiselle/behave/plugin/eclipse/dsl/StoryDsl"
+
+Model:
+	NL* funcionalidade=Funcionalidade NL*
+	(usuarioMetaRazao += UsuarioMetaRazao)?
+	(cenarios += Cenario)+
+; 
+
+UsuarioMetaRazao:
+	
+	'Como um: ' nome_do_ator=NOME_DO_ATOR NL*
+	
+	'Eu quero: ' meta_a_ser_alcancada=META_A_SER_ALCANCADA NL*
+	
+	'De modo que: ' razao_para_alcancar_meta=RAZAO_PARA_ALCANCAR_A_META NL*
+
+;
+
+Funcionalidade:
+	'Funcionalidade: ' nome_funcionadade=IDENTIFICADOR_GERAL NL*
+;
+
+Cenario: 
+	'Cenário: ' IdentificadorCenario xer+=(NL)*
+	(sentencas_qualite+=SentencaQualite)*
+;
+
+IdentificadorCenario:
+	name=IDENTIFICADOR_CENARIO 
+;
+
+SentencaQualite:
+	ExecutarCenario | ListaItens | Meta
+;
+
+Meta:
+	x='Meta:' (NL)* (lista_metas+=ListaMetas)+
+;
+
+ListaMetas:
+	('@'|'@ ') IDENTIFICADOR_GERAL (NL)*
+;
+
+
+ExecutarCenario:
+	('Dado '|'Quando '|'Então '|'E '|'Mas ') (cenario_executar_ref=[Cenario|IDENTIFICADOR_CENARIO]) (NL)*
+; 
+
+ListaItens:
+	((('|'|'| ') item+=IDENTIFICADOR_GERAL )+ ('|'| ' |') NL)+ (NL)*
+;
+IDENTIFICADOR_CENARIO: 
+	IDENTIFICADOR_GERAL 
+;
+
+terminal STRING	: 
+			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* ('"'|'",'|'".'|"';") |
+			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* ("'"|"',"|"'."|"';")
+		;
+		 
+IDENTIFICADOR_GERAL: 
+	(STRING | EXID) (' ' (STRING | EXID))*
+;
+
+//TODO Verificar o problema com os inteiros conflitando com o terminal ID 
+terminal INT returns ecore::EInt: 
+	'³'('0'..'9') 
+; 	
+
+terminal EXID:
+	(
+		'a'..'z'|'A'..'Z'|'0'..'9'
+		|'.'|','|'('|')'|'-'|'/'|'_'|':'|'²'|'³'
+		|'à'|'á'|'â'|'ã'|'é'|'ê'|'í'|'ó'|'ô'|'õ'|'ú'|'ü'|'ç'
+		|'À'|'Á'|'Â'|'Ã'|'É'|'Ê'|'Í'|'Ó'|'Ô'|'Õ'|'Ú'|'Ü'|'Ç'
+	)+
+;
+ 
+terminal NL: 
+	('\n' | '\r')+ 
+;
+
+terminal WS: 
+	('\t' | ' ')+
+;
+
+NOME_DO_ATOR:
+	nome_do_ator=IDENTIFICADOR_GERAL	
+;
+	
+META_A_SER_ALCANCADA:
+	meta_a_ser_alcancada=IDENTIFICADOR_GERAL
+; 
+	
+RAZAO_PARA_ALCANCAR_A_META:
+	razao_para_alcancar_a_meta=IDENTIFICADOR_GERAL
+;
+
+terminal ML_COMMENT	: 
+	'/**/'
+;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="storyDsl" nsURI="http://www.gov.br/frameworkdemoiselle/behave/plugin/eclipse/dsl/StoryDsl"
+    nsPrefix="storyDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="funcionalidade" eType="#//Funcionalidade"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="usuarioMetaRazao" upperBound="-1"
+        eType="#//UsuarioMetaRazao" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cenarios" upperBound="-1"
+        eType="#//Cenario" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UsuarioMetaRazao">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nome_do_ator" eType="#//NOME_DO_ATOR"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meta_a_ser_alcancada" eType="#//META_A_SER_ALCANCADA"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="razao_para_alcancar_meta"
+        eType="#//RAZAO_PARA_ALCANCAR_A_META" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Funcionalidade">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome_funcionadade" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cenario"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IdentificadorCenario" eSuperTypes="#//Cenario">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xer" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sentencas_qualite" upperBound="-1"
+        eType="#//SentencaQualite" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SentencaQualite"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Meta" eSuperTypes="#//SentencaQualite">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lista_metas" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecutarCenario" eSuperTypes="#//SentencaQualite">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cenario_executar_ref" eType="#//Cenario"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListaItens" eSuperTypes="#//SentencaQualite">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="item" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NOME_DO_ATOR">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nome_do_ator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="META_A_SER_ALCANCADA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="meta_a_ser_alcancada" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RAZAO_PARA_ALCANCAR_A_META">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="razao_para_alcancar_a_meta"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>
