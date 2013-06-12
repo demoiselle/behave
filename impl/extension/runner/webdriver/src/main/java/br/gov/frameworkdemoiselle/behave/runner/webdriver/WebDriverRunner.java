@@ -66,17 +66,17 @@ public class WebDriverRunner implements Runner {
 	public Object getDriver() {
 		if (driver == null) {
 			logger.log(Level.FINE, "Iniciou o driver");
-			driver = new FirefoxDriver();
-			
 			//Uso opicionao do proxy
-			if (BehaveConfig.isRunnerProxy()){
+			if (!BehaveConfig.isRunnerProxy()){
+				driver = new FirefoxDriver();
+			}else{
 	            Proxy proxy = new Proxy();
 	            proxy.setProxyType(Proxy.ProxyType.PAC);
 	            proxy.setProxyAutoconfigUrl(BehaveConfig.getRunnerProxyURL());
 	            DesiredCapabilities capabilities = new DesiredCapabilities();
 	            capabilities.setCapability(CapabilityType.PROXY, proxy);
+	            driver = new FirefoxDriver(capabilities);
 			}
-			
 			// Configurações do driver
 			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
 			driver.manage().timeouts().implicitlyWait(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
