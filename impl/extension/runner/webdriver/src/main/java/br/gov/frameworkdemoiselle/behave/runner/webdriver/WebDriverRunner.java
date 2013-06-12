@@ -40,8 +40,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -64,7 +67,16 @@ public class WebDriverRunner implements Runner {
 		if (driver == null) {
 			logger.log(Level.FINE, "Iniciou o driver");
 			driver = new FirefoxDriver();
-
+			
+			//Uso opicionao do proxy
+			if (BehaveConfig.isRunnerProxy()){
+	            Proxy proxy = new Proxy();
+	            proxy.setProxyType(Proxy.ProxyType.PAC);
+	            proxy.setProxyAutoconfigUrl(BehaveConfig.getRunnerProxyURL());
+	            DesiredCapabilities capabilities = new DesiredCapabilities();
+	            capabilities.setCapability(CapabilityType.PROXY, proxy);
+			}
+			
 			// Configurações do driver
 			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
 			driver.manage().timeouts().implicitlyWait(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
