@@ -1,6 +1,5 @@
 /target
-/.project
-/.classpath
-/.settings
 /bin
 /.externalToolBuilders
+/.project
+/.settings

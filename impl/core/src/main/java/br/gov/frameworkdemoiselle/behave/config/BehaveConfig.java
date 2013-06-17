@@ -24,6 +24,8 @@ public class BehaveConfig {
 	private static String CONVERTED_STORY_FILE_EXTENSION = "story";
 	private static boolean PARSER_COMMONS_STEPS_ENABLED = true;
 	private static boolean INTEGRATION_ENABLED = false;
+	private static boolean RUNNER_PROXY_ENABLED=false;
+	private static String RUNNER_PROXY_URL="";
 
 	private static Long BROWSER_MAX_WAIT = 10000L;
 	private static Long BROWSER_MIN_WAIT = 100L;
@@ -42,6 +44,10 @@ public class BehaveConfig {
 			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
 			PARSER_COMMONS_STEPS_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.parser.commonssteps.enabled"));
+
+			//Runner Propertis
+			RUNNER_PROXY_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.runner.proxy.enabled"));
+			RUNNER_PROXY_URL = properties.getProperty("behave.runner.proxy.url");
 
 			// Integration Properties
 			INTEGRATION_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.integration.alm.enabled"));
@@ -127,6 +133,14 @@ public class BehaveConfig {
 
 	public static Long getBrowserMinWait() {
 		return BROWSER_MIN_WAIT;
+	}
+
+	public static boolean isRunnerProxy() {
+		return RUNNER_PROXY_ENABLED;
+	}
+
+	public static String getRunnerProxyURL() {
+		return RUNNER_PROXY_URL;
 	}
 
 }

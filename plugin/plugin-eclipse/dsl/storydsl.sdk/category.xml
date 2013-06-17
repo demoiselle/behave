@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/demoiselle-behave--storydsl.sdk_1.0.1.snapshot.jar" id="demoiselle-behave--storydsl.sdk" version="1.0.1.snapshot">
+      <category name="Demoiselle-Behave-StoryDsl"/>
+   </feature>
+   <category-def name="Demoiselle-Behave-StoryDsl" label="Demoiselle-Behave-StoryDsl">
+      <description>
+         Demoiselle-Behave-StoryDsl
+      </description>
+   </category-def>
+</site>
