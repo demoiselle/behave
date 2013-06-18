@@ -60,7 +60,6 @@ public class BeforeAfterSteps implements Step {
 		runner.close();
 		runner.quit();
 		logger.info(">>Finalizando Aplicação<<");
-
 	}
 
 }
