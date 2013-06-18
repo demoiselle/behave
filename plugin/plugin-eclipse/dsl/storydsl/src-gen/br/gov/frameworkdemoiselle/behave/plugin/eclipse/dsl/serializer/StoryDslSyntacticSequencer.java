@@ -107,7 +107,7 @@ public class StoryDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Syntax:
-	 *     'Então ' | 'E ' | 'Quando ' | 'Mas ' | 'Dado '
+	 *     'Quando ' | 'Dado ' | 'Então ' | 'E ' | 'Mas '
 	 */
 	protected void emit_ExecutarCenario_DadoKeyword_0_0_or_EKeyword_0_3_or_EntOKeyword_0_2_or_MasKeyword_0_4_or_QuandoKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -147,7 +147,7 @@ public class StoryDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Syntax:
-	 *     '|' | '| '
+	 *     '| ' | '|'
 	 */
 	protected void emit_ListaItens_VerticalLineKeyword_0_0_0_0_or_VerticalLineSpaceKeyword_0_0_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
