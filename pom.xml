@@ -52,8 +52,7 @@
 		<module>impl/extension/runner/webdriver</module>
 		<module>impl/extension/runner/fest</module>
 
-		<module>impl/extension/integration/alm</module>
-		<!-- <module>plugin/plugin-eclipse</module> -->
+		<module>impl/extension/integration/alm</module>		
 		<module>documentation/reference</module>
 	</modules>
 
