@@ -23,12 +23,18 @@ public class BehaveConfig {
 	private static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
 	private static String CONVERTED_STORY_FILE_EXTENSION = "story";
 	private static boolean PARSER_COMMONS_STEPS_ENABLED = true;
-	private static boolean INTEGRATION_ENABLED = false;
-	private static boolean RUNNER_PROXY_ENABLED=false;
-	private static String RUNNER_PROXY_URL="";
+	private static boolean RUNNER_PROXY_ENABLED = false;
+	private static String RUNNER_PROXY_URL = "";
 
 	private static Long BROWSER_MAX_WAIT = 10000L;
 	private static Long BROWSER_MIN_WAIT = 100L;
+
+	// Integration
+	private static boolean INTEGRATION_ENABLED = false;
+	private static String INTEGRATION_URL_SECURITY = "";
+	private static String INTEGRATION_URL_SERVICES = "";
+	private static String INTEGRATION_PROJECT_AREA = "";
+	private static String INTEGRATION_TEST_PLAN_ID = "";
 
 	private static Logger log = Logger.getLogger(BehaveConfig.class);
 
@@ -45,12 +51,19 @@ public class BehaveConfig {
 			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
 			PARSER_COMMONS_STEPS_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.parser.commonssteps.enabled"));
 
-			//Runner Propertis
+			// Runner Propertis
 			RUNNER_PROXY_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.runner.proxy.enabled"));
 			RUNNER_PROXY_URL = properties.getProperty("behave.runner.proxy.url");
 
 			// Integration Properties
 			INTEGRATION_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.integration.alm.enabled"));
+
+			if (INTEGRATION_ENABLED) {
+				INTEGRATION_URL_SECURITY = properties.getProperty("behave.integration.alm.url.security");
+				INTEGRATION_URL_SERVICES = properties.getProperty("behave.integration.alm.url.services");
+				INTEGRATION_PROJECT_AREA = properties.getProperty("behave.integration.alm.projectArea");
+				INTEGRATION_TEST_PLAN_ID = properties.getProperty("behave.integration.alm.testPlanId");
+			}
 
 			if (properties.getProperty("behave.runner.browser.maxWait") != null)
 				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
@@ -141,6 +154,22 @@ public class BehaveConfig {
 
 	public static String getRunnerProxyURL() {
 		return RUNNER_PROXY_URL;
+	}
+
+	public static String getIntegrationUrlSecurity() {
+		return INTEGRATION_URL_SECURITY;
+	}
+
+	public static String getIntegrationUrlServices() {
+		return INTEGRATION_URL_SERVICES;
+	}
+
+	public static String getIntegrationProjectArea() {
+		return INTEGRATION_PROJECT_AREA;
+	}
+
+	public static String getIntegrationTestPlanId() {
+		return INTEGRATION_TEST_PLAN_ID;
 	}
 
 }

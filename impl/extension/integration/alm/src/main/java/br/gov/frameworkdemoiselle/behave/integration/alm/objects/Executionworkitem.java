@@ -29,6 +29,9 @@ public class Executionworkitem {
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private ExecutionworkitemTestcase testcase;
 
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private ExecutionworkitemTestplan testplan;
+
 	public String getTitle() {
 		return title;
 	}
@@ -75,6 +78,14 @@ public class Executionworkitem {
 
 	public void setTestcase(ExecutionworkitemTestcase testcase) {
 		this.testcase = testcase;
+	}
+
+	public ExecutionworkitemTestplan getTestplan() {
+		return testplan;
+	}
+
+	public void setTestplan(ExecutionworkitemTestplan testplan) {
+		this.testplan = testplan;
 	}
 
 }

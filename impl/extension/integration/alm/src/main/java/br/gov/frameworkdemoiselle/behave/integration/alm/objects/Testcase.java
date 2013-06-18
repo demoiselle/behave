@@ -26,6 +26,9 @@ public class Testcase {
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private Boolean suspect;
 
+	@XmlElement(name = "com.ibm.rqm.planning.editor.section.testCaseDesign")
+	private Testcasedesign testCaseDesign;
+
 	public String getTitle() {
 		return title;
 	}
@@ -64,6 +67,14 @@ public class Testcase {
 
 	public void setSuspect(Boolean suspect) {
 		this.suspect = suspect;
+	}
+
+	public Testcasedesign getTestCaseDesign() {
+		return testCaseDesign;
+	}
+
+	public void setTestCaseDesign(Testcasedesign testCaseDesign) {
+		this.testCaseDesign = testCaseDesign;
 	}
 
 }

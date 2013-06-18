@@ -13,17 +13,18 @@ Funcionalidade: Acesso ao Sistema
 		Então será exibido "Seja bem vindo"
 	
 	Cenário: Sair do "{sistema}"
-	
-		
+			
 		Dado que vou para a página "Tela Princial"
 		Quando clico em "Sair" 
 		Então será exibido "Usuário:"
 		E será exibido "Senha:"
 		
-	Cenário: Test
-	
-		Meta:
-		@casodeteste NOME_CASO DE TESTE ALM
+	Cenário: Cenário de Teste para Envio para a ALM
 	
 		Acesso ao Sistema com usuário "06762344887" e senha "188542"
+		Sair do "sistema"
+		
+	Cenário: Cenário de Teste para Envio para a ALM com Erro!
+	
+		Acesso ao Sistema com usuário "06762344887" e senha "000000"
 		Sair do "sistema"

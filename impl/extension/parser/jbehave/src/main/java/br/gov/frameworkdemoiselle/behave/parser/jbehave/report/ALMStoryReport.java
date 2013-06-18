@@ -1,8 +1,11 @@
 package br.gov.frameworkdemoiselle.behave.parser.jbehave.report;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.jbehave.core.model.ExamplesTable;
@@ -22,149 +25,112 @@ public class ALMStoryReport implements StoryReporter {
 
 	Logger log = Logger.getLogger(ALMStoryReport.class);
 	Story story;
-	Boolean failed;
+	String currentScenarioTitle;
+
+	// Datas para o calculo do tempo
+	Hashtable<String, Date> startDateScenario = new Hashtable<String, Date>();
+	Hashtable<String, Date> endDateScenario = new Hashtable<String, Date>();
+	Hashtable<String, Boolean> failedScenario = new Hashtable<String, Boolean>();
+	Hashtable<String, String> stepsScenario = new Hashtable<String, String>();
 
 	protected Integration integration = (Integration) InjectionManager.getInstance().getInstanceDependecy(Integration.class);
 
 	public void storyNotAllowed(Story story, String filter) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void storyCancelled(Story story, StoryDuration storyDuration) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void beforeStory(Story story, boolean givenStory) {
 		this.story = story;
-		this.failed = false;
 	}
 
 	public void afterStory(boolean givenStory) {
-		log.info("--------------------------------------> START AFTER");
-
 		for (Scenario scenario : story.getScenarios()) {
 
-			Meta meta = scenario.getMeta();
+			// A principio a meta informação do cenário não será utilizada, mas
+			// futuramente é possível que seja necessária a utilização
+			// Meta meta = scenario.getMeta();
 
-			if (this.failed) {
+			Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
+			scenarioData.put("name", scenario.getTitle());
+			scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
+			scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
+			scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
+			scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
 
-			} else {
-
-			}
-
-			//
-
-			integration.sendScenario(new Hashtable<String, Object>());
-
-			log.info("----------- " + scenario.getTitle() + " ---------------");
-			log.info(meta.toString());
+			integration.sendScenario(scenarioData);
 		}
-
-		log.info("---------------------------------------> END AFTER");
 	}
 
 	public void narrative(Narrative narrative) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void scenarioNotAllowed(Scenario scenario, String filter) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void beforeScenario(String scenarioTitle) {
-		// TODO Auto-generated method stub
+		currentScenarioTitle = scenarioTitle;
 
+		// Reinicia as variáveis
+		startDateScenario.put(scenarioTitle, GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT-03:00")).getTime());
+		failedScenario.put(scenarioTitle, false);
+		stepsScenario.put(currentScenarioTitle, "");
 	}
 
 	public void scenarioMeta(Meta meta) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void afterScenario() {
-		// TODO Auto-generated method stub
-
+		endDateScenario.put(currentScenarioTitle, GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT-03:00")).getTime());
 	}
 
 	public void givenStories(GivenStories givenStories) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void givenStories(List<String> storyPaths) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void beforeExamples(List<String> steps, ExamplesTable table) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void example(Map<String, String> tableRow) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void afterExamples() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void beforeStep(String step) {
-		// TODO Auto-generated method stub
-
+		String newString = step + "<br/>" + stepsScenario.get(currentScenarioTitle);
+		stepsScenario.put(currentScenarioTitle, newString);
 	}
 
 	public void successful(String step) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void ignorable(String step) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void pending(String step) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void notPerformed(String step) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void failed(String step, Throwable cause) {
-		// TODO Auto-generated method stub
-
-		this.failed = true;
-
+		failedScenario.put(currentScenarioTitle, true);
 	}
 
 	public void failedOutcomes(String step, OutcomesTable table) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void restarted(String step, Throwable cause) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void dryRun() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void pendingMethods(List<String> methods) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

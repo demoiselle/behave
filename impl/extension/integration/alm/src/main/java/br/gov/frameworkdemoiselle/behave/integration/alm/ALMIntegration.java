@@ -49,7 +49,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -80,8 +83,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.apache.http.protocol.HTTP;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
@@ -89,9 +92,11 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionresultExecutionworkitem;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemTestcase;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemTestplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.State;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 
 @SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
@@ -100,23 +105,41 @@ public class ALMIntegration implements Integration {
 	 * ERRO 400 - Posssivelmente o nome da área não esta correto
 	 */
 
-	public String urlServer = "https://homalm.serpro/qm/service/com.ibm.rqm.integration.service.IIntegrationService/";
-	public String urlServerAuth = "https://homalm.serpro/qm/j_security_check";
-	public String projectAreaAlias = "Demoiselle Behave";
+	public String urlServer = BehaveConfig.getIntegrationUrlServices();
+	public String urlServerAuth = BehaveConfig.getIntegrationUrlSecurity();
+	public String projectAreaAlias = BehaveConfig.getIntegrationProjectArea();
+	public String testPlanId = BehaveConfig.getIntegrationTestPlanId();
+	private Boolean started = false;
 
+	private String username;
+	private String password;
+
+	public final String ENCONDING = "UTF-8";
+
+	/**
+	 * A integração presupõe que cada Cenário de cada história é um Caso de
+	 * Teste na ALM
+	 */
 	public void sendScenario(Hashtable<String, Object> result) {
 
 		try {
+			// TODO Fazer verificação dos dados da hastable (name...)
+			// TODO Verificar se as datas são do tipo Date
+			// TODO Problema com encoding
 
-			// Pega os dados de autenticação
-			AutenticatorClient autenticator = new AutenticatorClient(9990, "localhost");
-			autenticator.open();
-			String username = autenticator.getUser();
-			String password = autenticator.getPassword();
-			autenticator.close();
+			if (!started) {
+				// Pega os dados de autenticação
+				AutenticatorClient autenticator = new AutenticatorClient(9990, "localhost");
+				autenticator.open();
+				username = autenticator.getUser();
+				password = autenticator.getPassword();
+				autenticator.close();
 
-			// Encode do Alias do Projeto
-			projectAreaAlias = URLEncoder.encode(projectAreaAlias, "UTF-8");
+				// Encode do Alias do Projeto
+				projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCONDING);
+
+				started = true;
+			}
 
 			System.out.println("------------- INICIOU O PROCESSO -------------");
 
@@ -126,31 +149,26 @@ public class ALMIntegration implements Integration {
 			HttpClient client = getNewHttpClient();
 
 			// Login
-			HttpResponse responseLogin = login(client, username, password);
-			if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
-				throw new Exception("Erro ao logar na aplicação");
-			}
+			login(client);
 
 			// TestCase
-			String testCaseName = "testcase" + System.nanoTime();
-			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, getTestcaseString());
+			String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
+			String testCaseName = "testcase" + testCaseIdentification;
+			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, getTestcaseString(result.get("name").toString(), result.get("steps").toString()));
 			if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
 				throw new Exception("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
 			}
 
 			// --------------------------- Work Item
+
 			// Conexão HTTPS
 			client = getNewHttpClient();
 
 			// Login
-			responseLogin = login(client, username, password);
-			if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
-				throw new Exception("Erro ao logar na aplicação");
-			}
+			login(client);
 
 			// WorkItem
-			// String workItemName = "workitem" + System.nanoTime();
-			String workItemName = "workitemExecucaoAutomatizada";
+			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, getExecutionworkitemString(testCaseName));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
 				throw new Exception("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
@@ -161,14 +179,11 @@ public class ALMIntegration implements Integration {
 			client = getNewHttpClient();
 
 			// Login
-			responseLogin = login(client, username, password);
-			if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
-				throw new Exception("Erro ao logar na aplicação");
-			}
+			login(client);
 
 			// WorkItem
 			String resultName = "result" + System.nanoTime();
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, getExecutionresultString(workItemName));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, getExecutionresultString(workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
 				throw new Exception("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
@@ -187,7 +202,20 @@ public class ALMIntegration implements Integration {
 
 	}
 
-	public String getTestcaseString() throws JAXBException {
+	public void login(HttpClient client) throws Exception {
+		// Login
+		HttpResponse responseLogin = login(client, username, password);
+		if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
+			throw new Exception("Erro ao logar na aplicação");
+		}
+	}
+
+	public String convertToIdentificationString(String str) {
+		String ret = Normalizer.normalize(str, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+		return ret;
+	}
+
+	public String getTestcaseString(String name, String steps) throws JAXBException {
 		Priority priority = new Priority();
 		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
@@ -196,16 +224,22 @@ public class ALMIntegration implements Integration {
 		state.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.underreview");
 		state.setValue("com.ibm.rqm.planning.common.underreview");
 
+		Testcasedesign design = new Testcasedesign();
+		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
+		design.setValue(steps);
+
 		Testcase testcase = new Testcase();
-		testcase.setTitle("CRIADO VIA JAXB");
+		testcase.setTitle(name);
 		testcase.setPriority(priority);
 		testcase.setState(state);
 		testcase.setSuspect(false);
 		testcase.setWeight(100);
+		testcase.setTestCaseDesign(design);
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testcase.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
 		StringWriter testCaseString = new StringWriter();
 		marshaller.marshal(testcase, testCaseString);
 
@@ -215,7 +249,6 @@ public class ALMIntegration implements Integration {
 	}
 
 	public String getExecutionworkitemString(String testCaseId) throws JAXBException {
-
 		Priority priority = new Priority();
 		priority.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
@@ -223,27 +256,31 @@ public class ALMIntegration implements Integration {
 		ExecutionworkitemTestcase workTest = new ExecutionworkitemTestcase();
 		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId);
 
+		ExecutionworkitemTestplan testPlan = new ExecutionworkitemTestplan();
+		testPlan.setHref(urlServer + "resources/" + projectAreaAlias + "/testplan/urn:com.ibm.rqm:testplan:" + testPlanId);
+
 		Executionworkitem work = new Executionworkitem();
 		work.setFrequency("Once");
 		work.setPriority(priority);
 		work.setRegression(false);
-		work.setTitle("TESTE WORK");
+		work.setTitle("Registro de Execução Automatizado");
 		work.setWeight(100);
 		work.setTestcase(workTest);
+		work.setTestplan(testPlan);
 
 		JAXBContext jaxb = JAXBContext.newInstance(Executionworkitem.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(work, resourceString);
 
 		System.out.println(resourceString.toString());
 
 		return resourceString.toString();
-
 	}
 
-	public String getExecutionresultString(String executionWorkItemId) throws JAXBException {
+	public String getExecutionresultString(String executionWorkItemId, Boolean failed, Date startDate, Date endDate) throws JAXBException {
 		ApprovalState state = new ApprovalState();
 		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
 		state.setValue("com.ibm.rqm.planning.common.new");
@@ -252,15 +289,25 @@ public class ALMIntegration implements Integration {
 		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" + executionWorkItemId);
 
 		Executionresult result = new Executionresult();
-		result.setState("com.ibm.rqm.execution.common.state.passed");
+		if (failed) {
+			result.setState("com.ibm.rqm.execution.common.state.error");
+		} else {
+			result.setState("com.ibm.rqm.execution.common.state.passed");
+		}
 		result.setApprovalstate(state);
 		result.setExecutionworkitem(workTest);
-		result.setPointspassed(1);
-		result.setPointsattempted(1);
+		// result.setPointspassed(1);
+		// result.setPointsattempted(1);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+		result.setStarttime(format.format(startDate));
+		result.setEndtime(format.format(endDate));
 
 		JAXBContext jaxb = JAXBContext.newInstance(Executionresult.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(result, resourceString);
 
@@ -276,7 +323,7 @@ public class ALMIntegration implements Integration {
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair("j_username", username));
 		formparams.add(new BasicNameValuePair("j_password", password));
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, ENCONDING);
 		requestAuth.setEntity(entity);
 
 		// Faz o post e pega os cookies
@@ -291,10 +338,12 @@ public class ALMIntegration implements Integration {
 		System.out.println(url);
 
 		HttpPut request = new HttpPut(url);
-		request.addHeader("Content-Type", "application/xml");
+		request.addHeader("Content-Type", "application/xml; charset=" + ENCONDING);
+		request.addHeader("Encoding", ENCONDING);
 
 		StringEntity se = new StringEntity(xmlRequest);
 		se.setContentType("text/xml");
+		se.setContentEncoding(ENCONDING);
 		request.setEntity(se);
 
 		return client.execute(request);
@@ -309,7 +358,7 @@ public class ALMIntegration implements Integration {
 
 			HttpParams params = new BasicHttpParams();
 			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-			HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+			HttpProtocolParams.setContentCharset(params, ENCONDING);
 
 			SchemeRegistry registry = new SchemeRegistry();
 			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));

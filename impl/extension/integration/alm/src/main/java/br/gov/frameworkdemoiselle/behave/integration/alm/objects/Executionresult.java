@@ -47,6 +47,12 @@ public class Executionresult {
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private ExecutionresultExecutionworkitem executionworkitem;
 
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
+	private String starttime;
+
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
+	private String endtime;
+
 	public String getState() {
 		return state;
 	}
@@ -141,6 +147,22 @@ public class Executionresult {
 
 	public void setExecutionworkitem(ExecutionresultExecutionworkitem executionworkitem) {
 		this.executionworkitem = executionworkitem;
+	}
+
+	public String getStarttime() {
+		return starttime;
+	}
+
+	public void setStarttime(String starttime) {
+		this.starttime = starttime;
+	}
+
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
 	}
 
 }
