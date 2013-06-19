@@ -74,7 +74,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
-		logger.info("Configurando o JBheave");
+		logger.info("Configurando o JBehave");
 
 		ParameterConverters parameterConverters = new ParameterConverters();
 		parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));

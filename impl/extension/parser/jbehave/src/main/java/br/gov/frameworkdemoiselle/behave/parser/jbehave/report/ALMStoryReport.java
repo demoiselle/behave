@@ -18,6 +18,7 @@ import org.jbehave.core.model.Story;
 import org.jbehave.core.model.StoryDuration;
 import org.jbehave.core.reporters.StoryReporter;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 
@@ -58,6 +59,7 @@ public class ALMStoryReport implements StoryReporter {
 			scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
 			scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
 			scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
+			scenarioData.put("testPlanId", BehaveConfig.getIntegrationTestPlanId());
 
 			integration.sendScenario(scenarioData);
 		}

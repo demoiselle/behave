@@ -108,7 +108,6 @@ public class ALMIntegration implements Integration {
 	public String urlServer = BehaveConfig.getIntegrationUrlServices();
 	public String urlServerAuth = BehaveConfig.getIntegrationUrlSecurity();
 	public String projectAreaAlias = BehaveConfig.getIntegrationProjectArea();
-	public String testPlanId = BehaveConfig.getIntegrationTestPlanId();
 	private Boolean started = false;
 
 	private String username;
@@ -169,7 +168,7 @@ public class ALMIntegration implements Integration {
 
 			// WorkItem
 			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
-			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, getExecutionworkitemString(testCaseName));
+			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, getExecutionworkitemString(testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
 				throw new Exception("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
 			}
@@ -248,7 +247,7 @@ public class ALMIntegration implements Integration {
 		return testCaseString.toString();
 	}
 
-	public String getExecutionworkitemString(String testCaseId) throws JAXBException {
+	public String getExecutionworkitemString(String testCaseId, String testPlanId) throws JAXBException {
 		Priority priority = new Priority();
 		priority.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
