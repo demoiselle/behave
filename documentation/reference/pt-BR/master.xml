@@ -152,5 +152,6 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 
 	<!-- capítulos -->
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="screenmapping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	
 </book>
