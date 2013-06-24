@@ -1,3 +1,39 @@
+/*
+ * Demoiselle Framework
+ * Copyright (C) 2013 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
 package br.gov.frameworkdemoiselle.behave.util;
 
 import java.io.IOException;
@@ -8,13 +44,15 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+
 /**
- * TODO: Revisar tratamentos de exceção
  * 
  * @author SERPRO
  * 
  */
-
 public class PropertiesLoaderUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +60,7 @@ public class PropertiesLoaderUtil implements Serializable {
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
 
-	// private Logger logger = Logger.getLogger(this.toString());
+	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
 
 	private PropertiesLoaderUtil() throws IOException {
 		this.allProps = loadProperties();
@@ -39,48 +77,54 @@ public class PropertiesLoaderUtil implements Serializable {
 		return allProps;
 	}
 
-	private Properties loadProperties() throws IOException {
+	private Properties loadProperties() {
 
-		ArrayList<ConfigLevelPropertie> confs = new ArrayList<ConfigLevelPropertie>();
+		try {
+			ArrayList<ConfigLevelPropertie> confs = new ArrayList<ConfigLevelPropertie>();
 
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		Enumeration<URL> urls = loader.getResources("behave.properties");
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+			Enumeration<URL> urls = loader.getResources("behave.properties");
 
-		// Adiciona todos os properties (behave.properties) em um array list
-		// desordenado
-		while (urls.hasMoreElements()) {
+			// Adiciona todos os properties (behave.properties) em um array list
+			// desordenado
+			while (urls.hasMoreElements()) {
 
-			URL url = (URL) urls.nextElement();
+				URL url = (URL) urls.nextElement();
 
-			Properties localProp = new Properties();
-			localProp.load(url.openStream());
+				Properties localProp = new Properties();
+				localProp.load(url.openStream());
 
-			Integer level = null;
-			if (localProp.containsKey("load.level")) {
-				level = Integer.parseInt(localProp.getProperty("load.level"));
-				confs.add(new ConfigLevelPropertie(level, localProp));
-			} else {
-				level = Integer.MAX_VALUE;
-				confs.add(new ConfigLevelPropertie(level, localProp));
+				log.debug("open: " + url.getFile().toString());
+
+				Integer level = null;
+				if (localProp.containsKey("load.level")) {
+					level = Integer.parseInt(localProp.getProperty("load.level"));
+					confs.add(new ConfigLevelPropertie(level, localProp));
+				} else {
+					level = Integer.MAX_VALUE;
+					confs.add(new ConfigLevelPropertie(level, localProp));
+				}
+
+				// logger.log(Level.INFO, "Carregando configuração [" + url +
+				// "] com nível " + level);
 			}
 
-			// logger.log(Level.INFO, "Carregando configuração [" + url +
-			// "] com nível " + level);
+			// Ordena por level
+			Collections.sort(confs);
+
+			// Faz o merge de todos levando em consideração o level
+			Properties allProperties = new Properties();
+			for (ConfigLevelPropertie prop : confs) {
+				allProperties.putAll(prop.properties);
+			}
+
+			// logger.log(Level.INFO, "Language " +
+			// allProperties.getProperty("behave.parser.language"));
+
+			return allProperties;
+		} catch (Exception ex) {
+			throw new BehaveException("Não foi possível carregar o behave.properties", ex);
 		}
-
-		// Ordena por level
-		Collections.sort(confs);
-
-		// Faz o merge de todos levando em consideração o level
-		Properties allProperties = new Properties();
-		for (ConfigLevelPropertie prop : confs) {
-			allProperties.putAll(prop.properties);
-		}
-
-		// logger.log(Level.INFO, "Language " +
-		// allProperties.getProperty("behave.parser.language"));
-
-		return allProperties;
 	}
 
 	/**

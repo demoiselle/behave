@@ -48,13 +48,18 @@ import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class BehaveController {
 	
 	private static BehaveController eng = new BehaveController();
 			
 	private Parser parser;
 
-	Logger log = Logger.getLogger(BehaveController.class);
+	private static Logger log = Logger.getLogger(BehaveController.class);
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 	
