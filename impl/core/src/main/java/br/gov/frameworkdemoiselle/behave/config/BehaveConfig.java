@@ -26,6 +26,8 @@ public class BehaveConfig {
 	private static boolean RUNNER_PROXY_ENABLED = false;
 	private static String RUNNER_PROXY_URL = "";
 
+	private static String BROWSER = "";
+	private static String BROWSER_DRIVER_PATH = "";
 	private static Long BROWSER_MAX_WAIT = 10000L;
 	private static Long BROWSER_MIN_WAIT = 100L;
 
@@ -65,11 +67,20 @@ public class BehaveConfig {
 				INTEGRATION_TEST_PLAN_ID = properties.getProperty("behave.integration.alm.testPlanId");
 			}
 
+			// Browser
+			if (properties.getProperty("behave.runner.browser") != null)
+				BROWSER = properties.getProperty("behave.runner.browser");
+
+			if (properties.getProperty("behave.runner.browser.driverPath") != null)
+				BROWSER_DRIVER_PATH = properties.getProperty("behave.runner.browser.driverPath");
+
 			if (properties.getProperty("behave.runner.browser.maxWait") != null)
 				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
 
 			if (properties.getProperty("behave.runner.browser.minWait") != null)
 				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
+
+			// Mostra as configurações
 			if (log.isDebugEnabled()) {
 				log.debug("Configurações do Demoiselle Behave:");
 				Enumeration<Object> keys = properties.keys();
@@ -170,6 +181,14 @@ public class BehaveConfig {
 
 	public static String getIntegrationTestPlanId() {
 		return INTEGRATION_TEST_PLAN_ID;
+	}
+
+	public static String getBrowser() {
+		return BROWSER;
+	}
+
+	public static String getBrowserDriverPath() {
+		return BROWSER_DRIVER_PATH;
 	}
 
 }
