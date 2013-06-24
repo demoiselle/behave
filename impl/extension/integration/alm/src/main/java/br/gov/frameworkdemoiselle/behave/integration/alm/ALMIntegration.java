@@ -38,7 +38,7 @@ package br.gov.frameworkdemoiselle.behave.integration.alm;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
@@ -83,8 +83,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
@@ -100,6 +102,8 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 
 @SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
+	
+	private static Logger log = Logger.getLogger(ALMIntegration.class);
 
 	/**
 	 * ERRO 400 - Posssivelmente o nome da área não esta correto
@@ -128,6 +132,7 @@ public class ALMIntegration implements Integration {
 
 			if (!started) {
 				// Pega os dados de autenticação
+				log.debug("Abrindo conexão com o autenticador");
 				AutenticatorClient autenticator = new AutenticatorClient(9990, "localhost");
 				autenticator.open();
 				username = autenticator.getUser();
@@ -139,8 +144,7 @@ public class ALMIntegration implements Integration {
 
 				started = true;
 			}
-
-			System.out.println("------------- INICIOU O PROCESSO -------------");
+			log.debug("------------- INICIOU O PROCESSO -------------");
 
 			// --------------------------- TestCase
 
@@ -155,7 +159,7 @@ public class ALMIntegration implements Integration {
 			String testCaseName = "testcase" + testCaseIdentification;
 			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, getTestcaseString(result.get("name").toString(), result.get("steps").toString()));
 			if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
-				throw new Exception("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
+				throw new BehaveException("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
 			}
 
 			// --------------------------- Work Item
@@ -170,7 +174,7 @@ public class ALMIntegration implements Integration {
 			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, getExecutionworkitemString(testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
-				throw new Exception("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
+				throw new BehaveException("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
 			}
 
 			// --------------------------- Result
@@ -184,19 +188,19 @@ public class ALMIntegration implements Integration {
 			String resultName = "result" + System.nanoTime();
 			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, getExecutionresultString(workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
-				throw new Exception("Erro ao result: " + responseResult.getStatusLine().toString());
+				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
 
-			System.out.println("------------- FINALIZOU O PROCESSO -------------");
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			log.debug("------------- FINALIZOU O PROCESSO -------------");
+			
+		} catch (RuntimeException e) {
+			if (e.getCause() instanceof  ConnectException){
+				throw new BehaveException("Autenticador inacessível. Verifique se o processo foi iniciado", e);
+			}else{
+				throw new BehaveException(e);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new BehaveException(e);
 		}
 
 	}
@@ -205,7 +209,7 @@ public class ALMIntegration implements Integration {
 		// Login
 		HttpResponse responseLogin = login(client, username, password);
 		if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
-			throw new Exception("Erro ao logar na aplicação");
+			throw new BehaveException("Erro na autenticação do usuário");
 		}
 	}
 
@@ -242,7 +246,7 @@ public class ALMIntegration implements Integration {
 		StringWriter testCaseString = new StringWriter();
 		marshaller.marshal(testcase, testCaseString);
 
-		System.out.println(testCaseString.toString());
+		log.debug(testCaseString.toString());
 
 		return testCaseString.toString();
 	}
@@ -274,7 +278,7 @@ public class ALMIntegration implements Integration {
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(work, resourceString);
 
-		System.out.println(resourceString.toString());
+		log.debug(resourceString.toString());
 
 		return resourceString.toString();
 	}
@@ -310,7 +314,7 @@ public class ALMIntegration implements Integration {
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(result, resourceString);
 
-		System.out.println(resourceString.toString());
+		log.debug(resourceString.toString());
 
 		return resourceString.toString();
 	}
@@ -334,7 +338,7 @@ public class ALMIntegration implements Integration {
 	public HttpResponse sendRequest(HttpClient client, String resource, String id, String xmlRequest) throws ClientProtocolException, IOException {
 		String url = urlServer + "resources/" + projectAreaAlias + "/" + resource + "/" + id;
 
-		System.out.println(url);
+		log.debug(url);
 
 		HttpPut request = new HttpPut(url);
 		request.addHeader("Content-Type", "application/xml; charset=" + ENCONDING);

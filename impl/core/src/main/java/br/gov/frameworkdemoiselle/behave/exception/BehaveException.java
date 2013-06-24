@@ -48,4 +48,8 @@ public class BehaveException extends RuntimeException {
 		super(message);
 	}
 
+	public BehaveException(Throwable e) {
+		super(e);
+	}
+
 }
