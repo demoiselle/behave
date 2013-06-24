@@ -21,6 +21,9 @@ public enum WebBrowser {
 		}
 	},
 	InternetExplorer {
+		
+		// https://code.google.com/p/selenium/wiki/InternetExplorerDriver
+		
 		@Override
 		public String toString() {
 			return "Internet Explorer";
