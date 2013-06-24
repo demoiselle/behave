@@ -38,12 +38,17 @@ package br.gov.frameworkdemoiselle.behave.parser;
 
 import java.util.List;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public interface Parser {
 
 	public void run();
 
-	void setStoryPaths(List<String> storyPaths);
+	public void setStoryPaths(List<String> storyPaths);
 
-	void setSteps(List<Step> steps);
+	public void setSteps(List<Step> steps);
 
 }

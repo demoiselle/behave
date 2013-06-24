@@ -39,28 +39,33 @@ package br.gov.frameworkdemoiselle.behave.runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.Element;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public interface Runner {
 
-	void start();
+	public void start();
 
-	void get(String url);
+	public void get(String url);
 
-	void navigateTo(String url);
+	public void navigateTo(String url);
 
-	String getCurrentUrl();
+	public String getCurrentUrl();
 
-	String getTitle();
+	public String getTitle();
 
-	Element getElement(String currentPageName, String elementName);
+	public Element getElement(String currentPageName, String elementName);
 
-	String getPageSource();
+	public String getPageSource();
 
-	void close();
+	public void close();
 
-	void quit();
+	public void quit();
 
-	Object getDriver();
+	public Object getDriver();
 	
-	Screen getScreen();
+	public Screen getScreen();
 
 }

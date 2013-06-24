@@ -36,6 +36,11 @@
  */
 package br.gov.frameworkdemoiselle.behave.exception;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class BehaveException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
