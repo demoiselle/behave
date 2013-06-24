@@ -29,6 +29,9 @@ public class Testcase {
 	@XmlElement(name = "com.ibm.rqm.planning.editor.section.testCaseDesign")
 	private Testcasedesign testCaseDesign;
 
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private ExecutionworkitemTestplan testplan;
+
 	public String getTitle() {
 		return title;
 	}
@@ -75,6 +78,14 @@ public class Testcase {
 
 	public void setTestCaseDesign(Testcasedesign testCaseDesign) {
 		this.testCaseDesign = testCaseDesign;
+	}
+
+	public ExecutionworkitemTestplan getTestplan() {
+		return testplan;
+	}
+
+	public void setTestplan(ExecutionworkitemTestplan testplan) {
+		this.testplan = testplan;
 	}
 
 }
