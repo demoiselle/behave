@@ -23,8 +23,3 @@ Funcionalidade: Acesso ao Sistema
 	
 		Acesso ao Sistema com usuário "06762344887" e senha "188542"
 		Sair do "sistema"
-		
-	Cenário: Cenario de envio para a ALM - Erro!
-	
-		Acesso ao Sistema com usuário "06762344887" e senha "000000"
-		Sair do "sistema"

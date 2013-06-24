@@ -37,72 +37,34 @@
 package br.gov.frameworkdemoiselle.behave.integration.alm;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.net.ConnectException;
-import java.net.Socket;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParams;
 import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionresultExecutionworkitem;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemTestcase;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemTestplan;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.State;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
+import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
 
-@SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
-	
+
 	private static Logger log = Logger.getLogger(ALMIntegration.class);
 
 	/**
@@ -117,7 +79,7 @@ public class ALMIntegration implements Integration {
 	private String username;
 	private String password;
 
-	public final String ENCONDING = "UTF-8";
+	public final String ENCODING = "UTF-8";
 
 	/**
 	 * A integração presupõe que cada Cenário de cada história é um Caso de
@@ -140,16 +102,17 @@ public class ALMIntegration implements Integration {
 				autenticator.close();
 
 				// Encode do Alias do Projeto
-				projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCONDING);
+				projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCODING);
 
 				started = true;
 			}
+
 			log.debug("------------- INICIOU O PROCESSO -------------");
 
 			// --------------------------- TestCase
 
 			// Conexão HTTPS
-			HttpClient client = getNewHttpClient();
+			HttpClient client = HttpsClient.getNewHttpClient(ENCODING);
 
 			// Login
 			login(client);
@@ -157,46 +120,59 @@ public class ALMIntegration implements Integration {
 			// TestCase
 			String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
 			String testCaseName = "testcase" + testCaseIdentification;
-			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, getTestcaseString(result.get("name").toString(), result.get("steps").toString()));
+			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
 			if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
 				throw new BehaveException("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
 			}
 
 			// --------------------------- Work Item
-
 			// Conexão HTTPS
-			client = getNewHttpClient();
+			client = HttpsClient.getNewHttpClient(ENCODING);
 
 			// Login
 			login(client);
 
 			// WorkItem
 			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
-			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, getExecutionworkitemString(testCaseName, result.get("testPlanId").toString()));
+			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, GenerateXMLString.getExecutionworkitemString(urlServer, projectAreaAlias, ENCODING, testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
 				throw new BehaveException("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
 			}
 
+			// --------------------------- Test Plan
+			// Conexão HTTPS
+			client = HttpsClient.getNewHttpClient(ENCODING);
+
+			// Login
+			login(client);
+
+			// TestPlan
+			String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
+			HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName));
+			if (responseTestPlan.getStatusLine().getStatusCode() != 200) {
+				throw new BehaveException("Erro ao result: " + responseTestPlan.getStatusLine().toString());
+			}
+
 			// --------------------------- Result
 			// Conexão HTTPS
-			client = getNewHttpClient();
+			client = HttpsClient.getNewHttpClient(ENCODING);
 
 			// Login
 			login(client);
 
 			// WorkItem
 			String resultName = "result" + System.nanoTime();
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, getExecutionresultString(workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
 				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
 
 			log.debug("------------- FINALIZOU O PROCESSO -------------");
-			
+
 		} catch (RuntimeException e) {
-			if (e.getCause() instanceof  ConnectException){
+			if (e.getCause() instanceof ConnectException) {
 				throw new BehaveException("Autenticador inacessível. Verifique se o processo foi iniciado", e);
-			}else{
+			} else {
 				throw new BehaveException(e);
 			}
 		} catch (Exception e) {
@@ -218,107 +194,6 @@ public class ALMIntegration implements Integration {
 		return ret;
 	}
 
-	public String getTestcaseString(String name, String steps) throws JAXBException {
-		Priority priority = new Priority();
-		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
-		priority.setValue("literal.priority.101");
-
-		State state = new State();
-		state.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.underreview");
-		state.setValue("com.ibm.rqm.planning.common.underreview");
-
-		Testcasedesign design = new Testcasedesign();
-		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
-		design.setValue(steps);
-
-		Testcase testcase = new Testcase();
-		testcase.setTitle(name);
-		testcase.setPriority(priority);
-		testcase.setState(state);
-		testcase.setSuspect(false);
-		testcase.setWeight(100);
-		testcase.setTestCaseDesign(design);
-
-		JAXBContext jaxb = JAXBContext.newInstance(Testcase.class);
-		Marshaller marshaller = jaxb.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
-		StringWriter testCaseString = new StringWriter();
-		marshaller.marshal(testcase, testCaseString);
-
-		log.debug(testCaseString.toString());
-
-		return testCaseString.toString();
-	}
-
-	public String getExecutionworkitemString(String testCaseId, String testPlanId) throws JAXBException {
-		Priority priority = new Priority();
-		priority.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
-		priority.setValue("literal.priority.101");
-
-		ExecutionworkitemTestcase workTest = new ExecutionworkitemTestcase();
-		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId);
-
-		ExecutionworkitemTestplan testPlan = new ExecutionworkitemTestplan();
-		testPlan.setHref(urlServer + "resources/" + projectAreaAlias + "/testplan/urn:com.ibm.rqm:testplan:" + testPlanId);
-
-		Executionworkitem work = new Executionworkitem();
-		work.setFrequency("Once");
-		work.setPriority(priority);
-		work.setRegression(false);
-		work.setTitle("Registro de Execução Automatizado");
-		work.setWeight(100);
-		work.setTestcase(workTest);
-		work.setTestplan(testPlan);
-
-		JAXBContext jaxb = JAXBContext.newInstance(Executionworkitem.class);
-		Marshaller marshaller = jaxb.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
-		StringWriter resourceString = new StringWriter();
-		marshaller.marshal(work, resourceString);
-
-		log.debug(resourceString.toString());
-
-		return resourceString.toString();
-	}
-
-	public String getExecutionresultString(String executionWorkItemId, Boolean failed, Date startDate, Date endDate) throws JAXBException {
-		ApprovalState state = new ApprovalState();
-		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
-		state.setValue("com.ibm.rqm.planning.common.new");
-
-		ExecutionresultExecutionworkitem workTest = new ExecutionresultExecutionworkitem();
-		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" + executionWorkItemId);
-
-		Executionresult result = new Executionresult();
-		if (failed) {
-			result.setState("com.ibm.rqm.execution.common.state.error");
-		} else {
-			result.setState("com.ibm.rqm.execution.common.state.passed");
-		}
-		result.setApprovalstate(state);
-		result.setExecutionworkitem(workTest);
-		// result.setPointspassed(1);
-		// result.setPointsattempted(1);
-
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-		result.setStarttime(format.format(startDate));
-		result.setEndtime(format.format(endDate));
-
-		JAXBContext jaxb = JAXBContext.newInstance(Executionresult.class);
-		Marshaller marshaller = jaxb.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.setProperty(Marshaller.JAXB_ENCODING, ENCONDING);
-		StringWriter resourceString = new StringWriter();
-		marshaller.marshal(result, resourceString);
-
-		log.debug(resourceString.toString());
-
-		return resourceString.toString();
-	}
-
 	public HttpResponse login(HttpClient client, String username, String password) throws ClientProtocolException, IOException {
 		// Inicia o login
 		HttpPost requestAuth = new HttpPost(urlServerAuth);
@@ -326,7 +201,7 @@ public class ALMIntegration implements Integration {
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		formparams.add(new BasicNameValuePair("j_username", username));
 		formparams.add(new BasicNameValuePair("j_password", password));
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, ENCONDING);
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, ENCODING);
 		requestAuth.setEntity(entity);
 
 		// Faz o post e pega os cookies
@@ -341,68 +216,17 @@ public class ALMIntegration implements Integration {
 		log.debug(url);
 
 		HttpPut request = new HttpPut(url);
-		request.addHeader("Content-Type", "application/xml; charset=" + ENCONDING);
-		request.addHeader("Encoding", ENCONDING);
+		request.addHeader("Content-Type", "application/xml; charset=" + ENCODING);
+		request.addHeader("Encoding", ENCODING);
 
 		StringEntity se = new StringEntity(xmlRequest);
 		se.setContentType("text/xml");
-		se.setContentEncoding(ENCONDING);
+		se.setContentEncoding(ENCODING);
 		request.setEntity(se);
 
+		log.debug(xmlRequest);
+
 		return client.execute(request);
-	}
-
-	private HttpClient getNewHttpClient() {
-		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-			trustStore.load(null, null);
-			MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
-			sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-
-			HttpParams params = new BasicHttpParams();
-			HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-			HttpProtocolParams.setContentCharset(params, ENCONDING);
-
-			SchemeRegistry registry = new SchemeRegistry();
-			registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
-			registry.register(new Scheme("https", sf, 443));
-
-			ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
-			return new DefaultHttpClient(ccm, params);
-		} catch (Exception e) {
-			return new DefaultHttpClient();
-		}
-	}
-
-	public class MySSLSocketFactory extends SSLSocketFactory {
-		SSLContext sslContext = SSLContext.getInstance("TLS");
-
-		public MySSLSocketFactory(KeyStore truststore) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {
-			super(truststore);
-
-			TrustManager tm = new X509TrustManager() {
-				public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-
-				public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				}
-
-				public X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
-			};
-			sslContext.init(null, new TrustManager[] { tm }, null);
-		}
-
-		@Override
-		public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException, UnknownHostException {
-			return sslContext.getSocketFactory().createSocket(socket, host, port, autoClose);
-		}
-
-		@Override
-		public Socket createSocket() throws IOException {
-			return sslContext.getSocketFactory().createSocket();
-		}
 	}
 
 }
