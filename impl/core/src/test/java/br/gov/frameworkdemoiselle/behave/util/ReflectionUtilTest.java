@@ -56,13 +56,6 @@ public class ReflectionUtilTest {
 	private TextField searchField;
 
 	@Test
-	public void testGetLocation() {
-		String location = ReflectionUtil.getLocation("Tela de Busca");
-		Assert.assertEquals("http://www.google.com.br", location);
-
-	}
-
-	@Test
 	public void testGetElementType() {
 		@SuppressWarnings("rawtypes")
 		Class type = ReflectionUtil.getElementType("Tela de Busca", "Campo de Busca");
