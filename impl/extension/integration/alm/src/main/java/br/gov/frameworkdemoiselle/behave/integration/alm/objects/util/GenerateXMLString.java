@@ -36,14 +36,24 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration.alm.objects.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.integration.alm.ALMIntegration;
@@ -53,22 +63,42 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkit
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.State;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
 
 public class GenerateXMLString {
 
 	private static Logger log = Logger.getLogger(ALMIntegration.class);
 
-	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId) throws JAXBException {
-		TestcaseLink testcase = new TestcaseLink();
-		testcase.setHref(urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId);
+	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, List<TestcaseLink> testCaseLinks) throws JAXBException {
+
+		// Adiciona o novo test case se não existir
+		boolean exists = false;
+		String newTestCaseId = urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId;
+
+		if (testCaseLinks != null) {
+			for (TestcaseLink link : testCaseLinks) {
+				if (link.getHref().equals(newTestCaseId)) {
+					exists = true;
+					break;
+				}
+			}
+		} else {
+			testCaseLinks = new ArrayList<TestcaseLink>();
+		}
+
+		if (!exists) {
+			TestcaseLink testcase = new TestcaseLink();
+			testcase.setHref(newTestCaseId);
+
+			testCaseLinks.add(testcase);
+		}
 
 		Testplan plan = new Testplan();
-		plan.setTestcase(testcase);
+		plan.setTestcase(testCaseLinks);
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testplan.class);
 		Marshaller marshaller = jaxb.createMarshaller();
@@ -164,7 +194,11 @@ public class GenerateXMLString {
 		// result.setPointspassed(1);
 		// result.setPointsattempted(1);
 
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		// Adiciona 3 horas (3 * 60 * 60 * 1000)
+		startDate.setTime(startDate.getTime() + 10800000L);
+		endDate.setTime(endDate.getTime() + 10800000L);
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 		result.setStarttime(format.format(startDate));
 		result.setEndtime(format.format(endDate));
@@ -179,6 +213,32 @@ public class GenerateXMLString {
 		log.debug(resourceString.toString());
 
 		return resourceString.toString();
+	}
+
+	public static Testplan getTestPlanObject(HttpResponse response) throws IOException, JAXBException {
+
+		Testplan plan = null;
+		String xmlString = "";
+		HttpEntity entity = response.getEntity();
+		if (entity != null) {
+			InputStream instream = entity.getContent();
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+				xmlString = reader.readLine();
+			} finally {
+				instream.close();
+			}
+		}
+
+		if (!xmlString.equals("")) {
+			JAXBContext jaxbContext = JAXBContext.newInstance(Testplan.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			StringReader reader = new StringReader(xmlString);
+			plan = (Testplan) unmarshaller.unmarshal(reader);
+		}
+
+		return plan;
+
 	}
 
 }
