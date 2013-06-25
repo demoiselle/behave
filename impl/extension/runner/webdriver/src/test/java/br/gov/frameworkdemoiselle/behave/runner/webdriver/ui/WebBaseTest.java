@@ -1,7 +1,6 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -23,75 +22,75 @@ public class WebBaseTest {
 
 	@Test
 	public void testGetElements() {
-		WebDriver driver=Mockito.mock(WebDriver.class);
-		
-		Runner runner=Mockito.mock(Runner.class);
+		WebDriver driver = Mockito.mock(WebDriver.class);
+
+		Runner runner = Mockito.mock(Runner.class);
 		Mockito.when(runner.getDriver()).thenReturn(driver);
-		
-		WebBase webBase=new WebBase();
-		ElementMap mapa=Mockito.mock(ElementMap.class);
-		Mockito.when(mapa.locator()).thenReturn(new String[]{"ID"});
+
+		WebBase webBase = new WebBase();
+		ElementMap mapa = Mockito.mock(ElementMap.class);
+		Mockito.when(mapa.locator()).thenReturn(new String[] { "ID" });
 		Mockito.when(mapa.locatorType()).thenReturn(ElementLocatorType.XPath);
-		
+
 		webBase.setElementMap(mapa);
 		webBase.setRunner(runner);
-		
-		List<WebElement> lista=webBase.getElements();
-		assertTrue(lista.size()>0);
+
+		List<WebElement> lista = webBase.getElements();
+		assertTrue(lista.size() > 0);
 	}
 
 	@Test
 	@Ignore
 	public void testGetText() {
-		WebElement element=Mockito.mock(WebElement.class);
-		WebDriver driver=Mockito.mock(WebDriver.class);
+		WebElement element = Mockito.mock(WebElement.class);
+		WebDriver driver = Mockito.mock(WebDriver.class);
 		Mockito.when(driver.findElement((By) Mockito.anyObject())).thenReturn(element);
-		Runner runner=Mockito.mock(Runner.class);
+		Runner runner = Mockito.mock(Runner.class);
 		Mockito.when(runner.getDriver()).thenReturn(driver);
-		WebBase webBase=new WebBase();
-		ElementMap mapa=Mockito.mock(ElementMap.class);
-		Mockito.when(mapa.locator()).thenReturn(new String[]{"ID"});
+		WebBase webBase = new WebBase();
+		ElementMap mapa = Mockito.mock(ElementMap.class);
+		Mockito.when(mapa.locator()).thenReturn(new String[] { "ID" });
 		Mockito.when(mapa.locatorType()).thenReturn(ElementLocatorType.XPath);
-	
+
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
-		String text=webBase.getText();
-		
+		// String text = webBase.getText();
+
 	}
 
 	@Test
 	public void testVerifyState() {
-		WebElement element=Mockito.mock(WebElement.class);
+		WebElement element = Mockito.mock(WebElement.class);
 		Mockito.when(element.isDisplayed()).thenReturn(true);
-		WebDriver driver=Mockito.mock(WebDriver.class);
+		WebDriver driver = Mockito.mock(WebDriver.class);
 		Mockito.when(driver.findElement((By) Mockito.anyObject())).thenReturn(element);
-		Runner runner=Mockito.mock(Runner.class);
+		Runner runner = Mockito.mock(Runner.class);
 		Mockito.when(runner.getDriver()).thenReturn(driver);
-		WebBase webBase=new WebBase();
-		ElementMap mapa=Mockito.mock(ElementMap.class);
-		Mockito.when(mapa.locator()).thenReturn(new String[]{"ID"});
+		WebBase webBase = new WebBase();
+		ElementMap mapa = Mockito.mock(ElementMap.class);
+		Mockito.when(mapa.locator()).thenReturn(new String[] { "ID" });
 		Mockito.when(mapa.locatorType()).thenReturn(ElementLocatorType.XPath);
-	
+
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
 		webBase.verifyState(StateUI.VISIBLE);
-		
+
 	}
 
 	@Test
 	@Ignore
 	public void testWaitElement() {
-		WebElement element=Mockito.mock(WebElement.class);
+		WebElement element = Mockito.mock(WebElement.class);
 		Mockito.when(element.isDisplayed()).thenReturn(true);
-		WebDriver driver=Mockito.mock(WebDriver.class);
+		WebDriver driver = Mockito.mock(WebDriver.class);
 		Mockito.when(driver.findElement((By) Mockito.anyObject())).thenReturn(element);
-		Runner runner=Mockito.mock(Runner.class);
+		Runner runner = Mockito.mock(Runner.class);
 		Mockito.when(runner.getDriver()).thenReturn(driver);
-		WebBase webBase=new WebBase();
-		ElementMap mapa=Mockito.mock(ElementMap.class);
-		Mockito.when(mapa.locator()).thenReturn(new String[]{"ID"});
+		WebBase webBase = new WebBase();
+		ElementMap mapa = Mockito.mock(ElementMap.class);
+		Mockito.when(mapa.locator()).thenReturn(new String[] { "ID" });
 		Mockito.when(mapa.locatorType()).thenReturn(ElementLocatorType.XPath);
-	
+
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
 		webBase.waitElement(1);
@@ -99,20 +98,20 @@ public class WebBaseTest {
 
 	@Test
 	public void testGetDriver() {
-		WebElement element=Mockito.mock(WebElement.class);
+		WebElement element = Mockito.mock(WebElement.class);
 		Mockito.when(element.isDisplayed()).thenReturn(true);
-		WebDriver driver=Mockito.mock(WebDriver.class);
+		WebDriver driver = Mockito.mock(WebDriver.class);
 		Mockito.when(driver.findElement((By) Mockito.anyObject())).thenReturn(element);
-		Runner runner=Mockito.mock(Runner.class);
+		Runner runner = Mockito.mock(Runner.class);
 		Mockito.when(runner.getDriver()).thenReturn(driver);
-		WebBase webBase=new WebBase();
-		ElementMap mapa=Mockito.mock(ElementMap.class);
-		Mockito.when(mapa.locator()).thenReturn(new String[]{"ID"});
+		WebBase webBase = new WebBase();
+		ElementMap mapa = Mockito.mock(ElementMap.class);
+		Mockito.when(mapa.locator()).thenReturn(new String[] { "ID" });
 		Mockito.when(mapa.locatorType()).thenReturn(ElementLocatorType.XPath);
-	
+
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
-		WebDriver driverActual=webBase.getDriver();
+		WebDriver driverActual = webBase.getDriver();
 		Assert.assertEquals(driver, driverActual);
 	}
 

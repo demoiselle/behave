@@ -34,15 +34,28 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.annotation;
+package br.gov.frameworkdemoiselle.behave.integration.alm.objects;
 
-/**
- * 
- * @author SERPRO
- *
- */
-public enum ElementLocatorType {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-	ClassName, CssSelector, Id, LinkText, Name, TagName, XPath;
+@XmlRootElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "testplan")
+public class Testplan {
+
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private TestcaseLink testcase;
+
+	public TestcaseLink getTestcase() {
+		return testcase;
+	}
+
+	public void setTestcase(TestcaseLink testcase) {
+		this.testcase = testcase;
+	}
 
 }

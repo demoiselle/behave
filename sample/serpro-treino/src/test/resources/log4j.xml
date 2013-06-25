@@ -21,7 +21,7 @@
 	</appender>
 
 	<category name="br.gov.frameworkdemoiselle.behave">
-		<priority value="info" />
+		<priority value="debug" />
 		<appender-ref ref="LOG-FILE" />
 		<appender-ref ref="LOG-CONSOLE" />
 	</category>

@@ -19,12 +19,7 @@ Funcionalidade: Acesso ao Sistema
 		Então será exibido "Usuário:"
 		E será exibido "Senha:"
 		
-	Cenário: Cenário de Teste para Envio para a ALM
+	Cenário: Cenario de envio para a ALM
 	
 		Acesso ao Sistema com usuário "06762344887" e senha "188542"
-		Sair do "sistema"
-		
-	Cenário: Cenário de Teste para Envio para a ALM com Erro!
-	
-		Acesso ao Sistema com usuário "06762344887" e senha "000000"
 		Sair do "sistema"

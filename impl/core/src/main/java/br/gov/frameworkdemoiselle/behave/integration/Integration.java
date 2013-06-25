@@ -38,8 +38,13 @@ package br.gov.frameworkdemoiselle.behave.integration;
 
 import java.util.Hashtable;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public interface Integration {
 
-	void sendScenario(Hashtable<String, Object> result);
+	public void sendScenario(Hashtable<String, Object> result);
 
 }

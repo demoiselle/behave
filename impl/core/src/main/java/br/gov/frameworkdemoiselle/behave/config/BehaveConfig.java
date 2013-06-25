@@ -1,3 +1,39 @@
+/*
+ * Demoiselle Framework
+ * Copyright (C) 2013 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
+ */
 package br.gov.frameworkdemoiselle.behave.config;
 
 import java.io.IOException;
@@ -9,6 +45,11 @@ import org.apache.log4j.Logger;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class BehaveConfig {
 
 	public static Properties properties;
@@ -26,6 +67,8 @@ public class BehaveConfig {
 	private static boolean RUNNER_PROXY_ENABLED = false;
 	private static String RUNNER_PROXY_URL = "";
 
+	private static String BROWSER = "";
+	private static String BROWSER_DRIVER_PATH = "";
 	private static Long BROWSER_MAX_WAIT = 10000L;
 	private static Long BROWSER_MIN_WAIT = 100L;
 
@@ -65,11 +108,20 @@ public class BehaveConfig {
 				INTEGRATION_TEST_PLAN_ID = properties.getProperty("behave.integration.alm.testPlanId");
 			}
 
+			// Browser
+			if (properties.getProperty("behave.runner.browser") != null)
+				BROWSER = properties.getProperty("behave.runner.browser");
+
+			if (properties.getProperty("behave.runner.browser.driverPath") != null)
+				BROWSER_DRIVER_PATH = properties.getProperty("behave.runner.browser.driverPath");
+
 			if (properties.getProperty("behave.runner.browser.maxWait") != null)
 				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
 
 			if (properties.getProperty("behave.runner.browser.minWait") != null)
 				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
+
+			// Mostra as configurações
 			if (log.isDebugEnabled()) {
 				log.debug("Configurações do Demoiselle Behave:");
 				Enumeration<Object> keys = properties.keys();
@@ -170,6 +222,14 @@ public class BehaveConfig {
 
 	public static String getIntegrationTestPlanId() {
 		return INTEGRATION_TEST_PLAN_ID;
+	}
+
+	public static String getBrowser() {
+		return BROWSER;
+	}
+
+	public static String getBrowserDriverPath() {
+		return BROWSER_DRIVER_PATH;
 	}
 
 }

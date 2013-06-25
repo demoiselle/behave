@@ -31,7 +31,7 @@
 		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 		<buildNumber>${maven.build.timestamp}</buildNumber>
 	</properties>
-	
+
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
@@ -53,15 +53,6 @@
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencies>
 		<dependency>

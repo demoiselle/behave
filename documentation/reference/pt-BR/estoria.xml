@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-story">
+
+	<title>Como criar uma estória</title>
+	<para>
+		Neste capítulo serão descritos os termos, frases e regras para criação 
+		e reuso de cenários de teste através do framework Behave. 
+	</para>
+
+	<section>
+		<title>Conceitos</title>
+		<para>
+			No BDD, há três palavras-chave:
+			<itemizedlist>
+				<listitem>Dado</listitem>
+				<listitem>Quando</listitem>
+				<listitem>Então</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			O framework Behave estende o vocabulário padrão do BDD, 
+			adicionando novos termos:
+			<itemizedlist>
+				<listitem>E</listitem>
+				<listitem>Mas</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Um cenário é um conjunto de frases que utilizam as palavras-chave 
+			descritas acima para descrever um comportamento esperado pelo 
+			sistema.
+		</para>
+		<programlisting>
+			Dado que estou na tela de login do sistema
+			Quando informo usuário "demoiselle" e senha "behave"
+			E clico no botão "Entrar"
+			Então será exibida a página de boas vindas
+		</programlisting>
+		<para>
+			Uma estória é um conjunto de cenários que descrevem uma 
+			funcionalidade do sistema, ou uma parte dela.
+		</para>
+	</section>
+
+	<section>
+		<title>Frases pré-definidas pelo framework</title>
+		<para>
+			O framework Behave foi construído para diminuir o esforço gasto 
+			para definir os vários cenários de teste de um sistema. Algumas 
+			frases estão embutidas no framework para facilitar o mapeamento 
+			das classes de teste. São elas:
+			<itemizedlist>
+				<listitem>
+					<para>Dado que vou para a página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então vou para a página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Quando vou para a página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Dado que estou na página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então estou na página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Quando estou na página "&lt;título da página&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Quando clico em "&lt;texto do botão/link&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então clico em "&lt;texto do botão/link&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Quando seleciono a opção "&lt;texto da opção&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então seleciono a opção "&lt;texto da opção&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Quando informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então será exibido "&lt;texto&gt;"</para>
+				</listitem>
+				<listitem>
+					<para>Então será exibido na "&lt;nome do elemento&gt;" o valor "&lt;valor&gt;"</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<programlisting>
+			Dado que estou na página "Login"
+			Quando informo "demoiselle" no campo "Usuário:"
+			E informo "behave" no campo "Senha:" 
+			Quando clico em "Entrar"
+			Então será exibido "Seja bem vindo"
+		</programlisting>
+	</section>
+
+	<section>
+		<title>Escrevendo um cenário</title>
+		<para>
+			As estórias escritas para o Behave devem estar em arquivos com a extensão ".story".
+			Cada arquivo ".story" pode conter vários cenários de teste.
+			Esta extensão pode ser alterada modificando o valor da chave "behave.parser.story.extension.converted" no arquivo behave.properties.
+			Os termos aceitos pelo framework devem sempre estar no início das frases, mesmo que precedidas por espaços.
+			As frases descritas nos cenários devem estar cada uma em uma linha diferente.
+			O cenário é, por padrão, iniciado com o termo "Cenário:", no caso da estória estar no idioma português.
+			Este termo pode ser alterado modificando o valor da chave "behave.parser.identification.scenario.pattern.&lt;idioma&gt;" no arquivo behave.properties.
+		</para>
+		<programlisting>
+			Cenário: Acessar o sistema com usuário "demoiselle" e senha "behave"
+			Dado que estou na página "Login"
+			Quando informo "demoiselle" no campo "Usuário:"
+			E informo "behave" no campo "Senha:" 
+			Quando clico em "Entrar"
+			Então será exibido "Seja bem vindo"
+		</programlisting>
+	</section>
+
+	<section>
+		<title>Parametrizando os cenários</title>
+		<para>
+			Parâmetros devem ser utilizados nos cenários quando os dados 
+			utilizados nos testes não forem constantes. A sintaxe de um 
+			parâmetro é "{nome_do_parametro}". 
+			O <emphasis>nome_do_parametro</emphasis> deve ser o mesmo 
+			definido no atributo "name" da anotação @ElementMap, na 
+			classe de mapeamento da tela.
+		</para>
+		<programlisting>
+			Cenário: Acessar o sistema com usuário "demoiselle" e senha "behave"
+			Dado que estou na página "Login"
+			Quando informo "{usuario}" no campo "Usuário:"
+			E informo "{senha}" no campo "Senha:" 
+			Quando clico em "Entrar"
+			Então será exibido "Seja bem vindo"
+		</programlisting>
+	</section>
+
+	<section>
+		<title>Reusando os cenários</title>
+		<para>
+			Para que o reuso ocorra é necessário, primeiramente, utilizar 
+			parâmetros no nome do cenário. Isto irá previnir que o cenário 
+			seja "executado" pelo framework, mas, deste forma, ele poderá 
+			ser referenciado por outros cenários, diminuindo a quantidade 
+			de linhas escritas em todo o projeto de teste.
+		</para>
+		<programlisting>
+			Cenário: Acessar o sistema com usuário "{usuario}" e senha "{senha}"
+			Dado que estou na página "Login"
+			Quando informo "{usuario}" no campo "Usuário:"
+			E informo "{senha}" no campo "Senha:" 
+			Quando clico em "Entrar"
+			Então será exibido "Seja bem vindo"
+
+			Cenário: Sair do {sistema}
+			Dado que vou para a página "Tela Principal"
+			Quando clico em "Sair"
+			Então será exibido "Usuário:"
+			E será exibido "Senha:"
+
+			Cenário: Teste
+			Acessar o sistema com usuário "demoiselle" e senha "behave"
+			Sair do "sistema"
+		</programlisting>
+	</section>
+
+</chapter>

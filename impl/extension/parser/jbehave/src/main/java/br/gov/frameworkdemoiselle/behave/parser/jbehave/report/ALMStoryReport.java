@@ -19,6 +19,7 @@ import org.jbehave.core.model.StoryDuration;
 import org.jbehave.core.reporters.StoryReporter;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 
@@ -47,21 +48,25 @@ public class ALMStoryReport implements StoryReporter {
 	}
 
 	public void afterStory(boolean givenStory) {
-		for (Scenario scenario : story.getScenarios()) {
-
-			// A principio a meta informação do cenário não será utilizada, mas
-			// futuramente é possível que seja necessária a utilização
-			// Meta meta = scenario.getMeta();
-
-			Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
-			scenarioData.put("name", scenario.getTitle());
-			scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
-			scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
-			scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
-			scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
-			scenarioData.put("testPlanId", BehaveConfig.getIntegrationTestPlanId());
-
-			integration.sendScenario(scenarioData);
+		try{
+			for (Scenario scenario : story.getScenarios()) {
+	
+				// A principio a meta informação do cenário não será utilizada, mas
+				// futuramente é possível que seja necessária a utilização
+				// Meta meta = scenario.getMeta();
+	
+				Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
+				scenarioData.put("name", scenario.getTitle());
+				scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
+				scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
+				scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
+				scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
+				scenarioData.put("testPlanId", BehaveConfig.getIntegrationTestPlanId());
+	
+				integration.sendScenario(scenarioData);
+			}
+		}catch(BehaveException e){
+			log.error("Erro no envio de dados para integração.", e);			
 		}
 	}
 
