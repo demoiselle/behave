@@ -62,7 +62,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	public boolean verifyState(StateUI state) {
 		boolean retorno = false;
 
-		waitThreadSleep(BehaveConfig.getRunner_ScreebMinWait());
+		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 		final Timer operationTimer = new Timer();
 		operationTimer.start();
@@ -71,7 +71,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		while (!retorno && (maxWait > operationTimer.getTimeElapsed())) {
 
-			waitThreadSleep(BehaveConfig.getRunner_ScreebMinWait());
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 			switch (state) {
 			case VISIBLE:

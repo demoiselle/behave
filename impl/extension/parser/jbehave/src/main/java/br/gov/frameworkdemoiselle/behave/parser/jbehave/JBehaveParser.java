@@ -125,7 +125,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		if (BehaveConfig.getParser_CommonsSteosEnabled()) {
+		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
 			steps.add(new CommonSteps());
 		}

@@ -52,6 +52,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -219,7 +220,10 @@ public class ALMIntegration implements Integration {
 		request.addHeader("Content-Type", "application/xml; charset=" + ENCODING);
 		request.addHeader("Encoding", ENCODING);
 
-		StringEntity se = new StringEntity(xmlRequest);
+		// Seta o encoding da mensagem XML
+		ContentType ct = ContentType.create("text/xml", ENCODING);
+
+		StringEntity se = new StringEntity(xmlRequest, ct);
 		se.setContentType("text/xml");
 		se.setContentEncoding(ENCODING);
 		request.setEntity(se);

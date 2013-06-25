@@ -1,6 +1,5 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
-import static org.junit.Assert.fail;
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -50,7 +49,7 @@ public class WebDriverRunnerTest {
 		Mockito.when(driverExpected.getCurrentUrl()).thenReturn("url");
 		WebDriverRunner runner = new WebDriverRunner();
 		runner.setWebDriver(driverExpected);
-		
+
 		runner.get("url");
 	}
 

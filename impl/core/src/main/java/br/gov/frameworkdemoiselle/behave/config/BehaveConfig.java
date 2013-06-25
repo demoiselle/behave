@@ -68,6 +68,7 @@ public class BehaveConfig {
 		properties = PropertiesLoaderUtil.getInstance().getProperties();
 	}	
 	
+
 	/**
 	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
 	 * uma nova proprieade em seu projeto
@@ -136,7 +137,7 @@ public class BehaveConfig {
 		return getProperty("behave.parser.story.extension.converted", "story");
 	}
 
-	public static boolean getParser_CommonsSteosEnabled() {
+	public static boolean getParser_CommonsStepsEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.parser.commonssteps.enabled", "true"));
 	}
 
@@ -171,21 +172,30 @@ public class BehaveConfig {
 
 	//Temo máximo para timeout de espera da tela
 	public static Long getRunner_ScreenMaxWait() {
-		return Long.parseLong(getProperty("behave.runner.browser.maxWait", "10000"));
+		return Long.parseLong(getProperty("behave.runner.screen.maxWait", "10000"));
 	}
 
 	//Tempo mínimo de espera da tela
-	public static Long getRunner_ScreebMinWait() {
-		return Long.parseLong(getProperty("behave.runner.browser.minWait", "100"));
+	public static Long getRunner_ScreenMinWait() {
+		return Long.parseLong(getProperty("behave.runner.screen.minWait", "100"));
 	}
 	
 	//Modo proxy do navegador
-	public static boolean getRunner_RunnerProxyEnabled() {
+	public static boolean getRunner_ProxyEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.proxy.enabled", "false"));
 	}
 	//URL do proxy
-	public static String getRunner_RunnerProxyURL() {
+	public static String getRunner_ProxyURL() {
 		return getProperty("behave.runner.proxy.url");
+	}
+	
+	//URL do proxy
+	public static String getRunner_ScreenDriverPath() {
+		return getProperty("behave.runner.screen.driverPath");
+	}	
+	
+	public static String getRunner_ScreenType() {
+		return getProperty("behave.runner.screen.type");
 	}
 
 	/**
@@ -207,4 +217,6 @@ public class BehaveConfig {
 			log.debug("--------------------------------");
 		}
 	}
+
+
 }
