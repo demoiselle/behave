@@ -36,12 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import org.junit.Test;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 /**
  * 
  * @author SERPRO
@@ -55,7 +57,7 @@ public class PropertiesLoaderUtilTest {
 			
 			PropertiesLoaderUtil properties=PropertiesLoaderUtil.getInstance();
 			assertNotNull(properties);
-		} catch (IOException e) {
+		} catch (BehaveException e) {
 			fail(e.getMessage());
 		}
 		
@@ -68,7 +70,7 @@ public class PropertiesLoaderUtilTest {
 			propertiesUtil = PropertiesLoaderUtil.getInstance();
 			Properties properties=propertiesUtil.getProperties();
 			assertNotNull(properties);
-		} catch (IOException e) {
+		} catch (BehaveException e) {
 			fail(e.getMessage());
 		}
 		

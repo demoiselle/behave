@@ -31,7 +31,7 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.ie.driver", BehaveConfig.getBrowserDriverPath());
+			System.setProperty("webdriver.ie.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new InternetExplorerDriver();
 		}
 	},
@@ -52,7 +52,7 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.chrome.driver", BehaveConfig.getBrowserDriverPath());
+			System.setProperty("webdriver.chrome.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new ChromeDriver();
 		}
 	},

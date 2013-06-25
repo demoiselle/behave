@@ -66,11 +66,15 @@ public class PropertiesLoaderUtil implements Serializable {
 		this.allProps = loadProperties();
 	}
 
-	public static synchronized PropertiesLoaderUtil getInstance() throws IOException {
-		if (config == null) {
-			config = new PropertiesLoaderUtil();
+	public static synchronized PropertiesLoaderUtil getInstance() {
+		try {
+			if (config == null) {
+				config = new PropertiesLoaderUtil();
+			}
+			return config;
+		} catch (IOException e) {
+			throw new BehaveException("Não foi possível carregar o arquivo de propriedades.", e);
 		}
-		return config;
 	}
 
 	public Properties getProperties() {

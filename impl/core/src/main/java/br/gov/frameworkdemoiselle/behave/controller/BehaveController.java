@@ -86,6 +86,8 @@ public class BehaveController {
 			log.info(" Iniciando Demoiselle Behave");
 			log.info("--------------------------------");
 			
+			BehaveConfig.logValueProperties();
+			
 			if (storiesPath == null || storiesPath.isEmpty()){
 				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
 			}
@@ -96,7 +98,7 @@ public class BehaveController {
 			allOriginalStoriesPath.addAll(storiesPath);
 			
 			// Faz a conversão
-			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getOriginalStoryFileExtension(), BehaveConfig.getConvertedStoryFileExtension(), true);
+			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
 			// Cria um novo array contendo somente as histórias atuais, sem as antigas
 			List<String> finalArray = new ArrayList<String>();			

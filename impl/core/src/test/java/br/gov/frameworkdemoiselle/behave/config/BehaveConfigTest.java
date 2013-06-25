@@ -41,8 +41,6 @@ import java.util.Properties;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 /**
  * 
  * @author SERPRO
@@ -79,17 +77,7 @@ public class BehaveConfigTest {
 		BehaveConfig.getProperty("property1");
 		
 	}
-
-	@Test(expected=BehaveException.class)
-	public void testGetPropertyNotExist() {
-		Properties properties=Mockito.mock(Properties.class);
-		Mockito.when(properties.containsKey(Mockito.anyObject())).thenReturn(false);
-		BehaveConfig.properties=properties;
-
-		BehaveConfig.getProperty("property1");
-		
-	}
-
+	
 	@Test
 	public void testContains() {
 		

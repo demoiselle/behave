@@ -39,9 +39,11 @@ package br.gov.frameworkdemoiselle.behave.integration.alm;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -50,8 +52,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -61,6 +65,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
 
 public class ALMIntegration implements Integration {
@@ -71,13 +76,14 @@ public class ALMIntegration implements Integration {
 	 * ERRO 400 - Posssivelmente o nome da área não esta correto
 	 */
 
-	public String urlServer = BehaveConfig.getIntegrationUrlServices();
-	public String urlServerAuth = BehaveConfig.getIntegrationUrlSecurity();
-	public String projectAreaAlias = BehaveConfig.getIntegrationProjectArea();
+	public String urlServer = BehaveConfig.getIntegration_UrlServices();
+	public String urlServerAuth = BehaveConfig.getIntegration_UrlSecurity();
+	public String projectAreaAlias = BehaveConfig.getIntegration_ProjectArea();
 	private Boolean started = false;
 
 	private String username;
 	private String password;
+	 
 
 	public final String ENCODING = "UTF-8";
 
@@ -88,14 +94,13 @@ public class ALMIntegration implements Integration {
 	public void sendScenario(Hashtable<String, Object> result) {
 
 		try {
-			// TODO Fazer verificação dos dados da hastable (name...)
+			// TODO Fazer verificação dos dados minimos da hastable (name...)
 			// TODO Verificar se as datas são do tipo Date
-			// TODO Problema com encoding
 
 			if (!started) {
 				// Pega os dados de autenticação
-				log.debug("Abrindo conexão com o autenticador");
-				AutenticatorClient autenticator = new AutenticatorClient(9990, "localhost");
+				log.debug("Iniciar autenticador");
+				AutenticatorClient autenticator = new AutenticatorClient(BehaveConfig.getIntegration_AuthenticatorPort(), BehaveConfig.getIntegration_AuthenticatorHost());
 				autenticator.open();
 				username = autenticator.getUser();
 				password = autenticator.getPassword();
@@ -107,17 +112,30 @@ public class ALMIntegration implements Integration {
 				started = true;
 			}
 
-			log.debug("------------- INICIOU O PROCESSO -------------");
+			log.debug("------------- Integração ALM Iniciada -------------\n");
+			long t0 = GregorianCalendar.getInstance().getTimeInMillis();
 
-			// --------------------------- TestCase
-
+			// --------------------------- Test Plan
 			// Conexão HTTPS
 			HttpClient client = HttpsClient.getNewHttpClient(ENCODING);
 
 			// Login
 			login(client);
 
+			String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
+			HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
+			Testplan plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+
+			// --------------------------- TestCase
+
+			// Conexão HTTPS
+			client = HttpsClient.getNewHttpClient(ENCODING);
+
+			// Login
+			login(client);
+
 			// TestCase
+			log.debug("Enviar Caso de Teste:\n");
 			String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
 			String testCaseName = "testcase" + testCaseIdentification;
 			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
@@ -133,6 +151,7 @@ public class ALMIntegration implements Integration {
 			login(client);
 
 			// WorkItem
+			log.debug("Enviar Registro de Execução:\n");
 			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, GenerateXMLString.getExecutionworkitemString(urlServer, projectAreaAlias, ENCODING, testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
@@ -147,8 +166,8 @@ public class ALMIntegration implements Integration {
 			login(client);
 
 			// TestPlan
-			String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
-			HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName));
+			log.debug("Enviar Plano de Teste:\n");
+			HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
 			if (responseTestPlan.getStatusLine().getStatusCode() != 200) {
 				throw new BehaveException("Erro ao result: " + responseTestPlan.getStatusLine().toString());
 			}
@@ -161,13 +180,17 @@ public class ALMIntegration implements Integration {
 			login(client);
 
 			// WorkItem
+			log.debug("Enviar Resultado de Execução:\n");
 			String resultName = "result" + System.nanoTime();
 			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
 				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
 
-			log.debug("------------- FINALIZOU O PROCESSO -------------");
+			long t1 = GregorianCalendar.getInstance().getTimeInMillis();
+			
+			DecimalFormat df = new DecimalFormat("0.0");
+			log.debug("------------- Integração finalizada em [" + df.format((t1 - t0)/1000.00) + "s] -------------");
 
 		} catch (RuntimeException e) {
 			if (e.getCause() instanceof ConnectException) {
@@ -182,7 +205,7 @@ public class ALMIntegration implements Integration {
 	}
 
 	public void login(HttpClient client) throws Exception {
-		// Login
+		log.debug("Autenticar usuario: " + username);
 		HttpResponse responseLogin = login(client, username, password);
 		if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
 			throw new BehaveException("Erro na autenticação do usuário");
@@ -219,12 +242,27 @@ public class ALMIntegration implements Integration {
 		request.addHeader("Content-Type", "application/xml; charset=" + ENCODING);
 		request.addHeader("Encoding", ENCODING);
 
-		StringEntity se = new StringEntity(xmlRequest);
+		// Seta o encoding da mensagem XML
+		ContentType ct = ContentType.create("text/xml", ENCODING);
+
+		StringEntity se = new StringEntity(xmlRequest, ct);
 		se.setContentType("text/xml");
 		se.setContentEncoding(ENCODING);
 		request.setEntity(se);
 
 		log.debug(xmlRequest);
+
+		return client.execute(request);
+	}
+
+	public HttpResponse getRequest(HttpClient client, String resource, String id) throws ClientProtocolException, IOException {
+		String url = urlServer + "resources/" + projectAreaAlias + "/" + resource + "/" + id;
+
+		log.debug(url);
+
+		HttpGet request = new HttpGet(url);
+		request.addHeader("Content-Type", "application/xml; charset=" + ENCODING);
+		request.addHeader("Encoding", ENCODING);
 
 		return client.execute(request);
 	}

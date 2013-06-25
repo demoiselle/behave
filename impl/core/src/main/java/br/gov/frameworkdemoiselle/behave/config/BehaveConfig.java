@@ -36,16 +36,20 @@
  */
 package br.gov.frameworkdemoiselle.behave.config;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 
 /**
+ * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo behave.properties com a recurso
+ * de sobrescrita no qual o arquivo do usuário sobrescreve qualquer outra propriedade.
+ * 
+ * Caso a propriedade seja informada na JVM está sobrescreverá as demais.
  * 
  * @author SERPRO
  *
@@ -54,101 +58,46 @@ public class BehaveConfig {
 
 	public static Properties properties;
 
-	static void setProperties(Properties properties) {
-		BehaveConfig.properties = properties;
-	}
-
-	private static String LANGUAGE = "pt";
-	private static String IDENTIFICATION_SCENARIO_PATTERN = "";
-	private static String PREFIXES_BDD_PATTERN = "";
-	private static String ORIGINAL_STORY_FILE_EXTENSION = "bdd";
-	private static String CONVERTED_STORY_FILE_EXTENSION = "story";
-	private static boolean PARSER_COMMONS_STEPS_ENABLED = true;
-	private static boolean RUNNER_PROXY_ENABLED = false;
-	private static String RUNNER_PROXY_URL = "";
-
-	private static String BROWSER = "";
-	private static String BROWSER_DRIVER_PATH = "";
-	private static Long BROWSER_MAX_WAIT = 10000L;
-	private static Long BROWSER_MIN_WAIT = 100L;
-
-	// Integration
-	private static boolean INTEGRATION_ENABLED = false;
-	private static String INTEGRATION_URL_SECURITY = "";
-	private static String INTEGRATION_URL_SERVICES = "";
-	private static String INTEGRATION_PROJECT_AREA = "";
-	private static String INTEGRATION_TEST_PLAN_ID = "";
-
 	private static Logger log = Logger.getLogger(BehaveConfig.class);
 
+	/**
+	 * Carrega o behave.properties quando a classe é inicializada
+	 */
 	static {
-		try {
-			properties = PropertiesLoaderUtil.getInstance().getProperties();
-
-			// Parser Properties
-			LANGUAGE = properties.getProperty("behave.parser.language");
-			IDENTIFICATION_SCENARIO_PATTERN = properties.getProperty("behave.parser.identification.scenario.pattern." + LANGUAGE);
-			PREFIXES_BDD_PATTERN = properties.getProperty("behave.parser.prefixes.bdd.pattern." + LANGUAGE);
-
-			ORIGINAL_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.original");
-			CONVERTED_STORY_FILE_EXTENSION = properties.getProperty("behave.parser.story.extension.converted");
-			PARSER_COMMONS_STEPS_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.parser.commonssteps.enabled"));
-
-			// Runner Propertis
-			RUNNER_PROXY_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.runner.proxy.enabled"));
-			RUNNER_PROXY_URL = properties.getProperty("behave.runner.proxy.url");
-
-			// Integration Properties
-			INTEGRATION_ENABLED = Boolean.parseBoolean(properties.getProperty("behave.integration.alm.enabled"));
-
-			if (INTEGRATION_ENABLED) {
-				INTEGRATION_URL_SECURITY = properties.getProperty("behave.integration.alm.url.security");
-				INTEGRATION_URL_SERVICES = properties.getProperty("behave.integration.alm.url.services");
-				INTEGRATION_PROJECT_AREA = properties.getProperty("behave.integration.alm.projectArea");
-				INTEGRATION_TEST_PLAN_ID = properties.getProperty("behave.integration.alm.testPlanId");
-			}
-
-			// Browser
-			if (properties.getProperty("behave.runner.browser") != null)
-				BROWSER = properties.getProperty("behave.runner.browser");
-
-			if (properties.getProperty("behave.runner.browser.driverPath") != null)
-				BROWSER_DRIVER_PATH = properties.getProperty("behave.runner.browser.driverPath");
-
-			if (properties.getProperty("behave.runner.browser.maxWait") != null)
-				BROWSER_MAX_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.maxWait"));
-
-			if (properties.getProperty("behave.runner.browser.minWait") != null)
-				BROWSER_MIN_WAIT = Long.parseLong(properties.getProperty("behave.runner.browser.minWait"));
-
-			// Mostra as configurações
-			if (log.isDebugEnabled()) {
-				log.debug("Configurações do Demoiselle Behave:");
-				Enumeration<Object> keys = properties.keys();
-				while (keys.hasMoreElements()) {
-					String key = (String) keys.nextElement();
-					log.debug(key + "=" + properties.getProperty(key));
-				}
-				log.debug("--------------------------------");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+		properties = PropertiesLoaderUtil.getInstance().getProperties();
+	}	
+	
 
 	/**
 	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
 	 * uma nova proprieade em seu projeto
 	 * 
+	 * Verifica se a propriedade foi setada antes no System.properties.
+	 * Nesta caso o System sobrescreve todas as outras
+	 * 
+	 * @param key Chave
+	 * @param defaultValue Valor padrão
+	 * @return
+	 */
+	public static String getProperty(String key, String defaultValue) {
+		if (!properties.containsKey(key)) {
+			return defaultValue;
+		} else {
+			String value = System.getProperty(key);
+			if (value != null){
+				properties.setProperty(key, value);
+			}		
+			return properties.getProperty(key, defaultValue);
+		}
+	}
+	
+	/**
+	 * Obter propriedade sem passagem do valor padrao
 	 * @param key
 	 * @return
 	 */
 	public static String getProperty(String key) {
-		if (properties == null || !properties.containsKey(key)) {
-			throw new BehaveException("chave [" + key + "] não encontrondada");
-		} else {
-			return properties.getProperty(key);
-		}
+		return getProperty(key, "");
 	}
 
 	/**
@@ -162,74 +111,121 @@ public class BehaveConfig {
 		return properties.containsKey(key);
 	}
 
-	/****** Get Properties ***********/
+	/****** PARSER PROPERTIES ***********/
 
-	public static String getLanguage() {
-		return LANGUAGE;
+	//linguagem das estorias
+	public static String getParser_Language() {
+		return getProperty("behave.parser.language", "pt");
 	}
 
-	public static String getIdentificationScenarioPattern() {
-		return IDENTIFICATION_SCENARIO_PATTERN;
+	public static String getParser_IdentificationScenarioPattern() {
+		return getProperty("behave.parser.identification.scenario.pattern." + getParser_Language());
 	}
 
-	public static String getPrefixesBddPattern() {
-		return PREFIXES_BDD_PATTERN;
+	public static String getParser_PrefixesBddPattern() {
+		return getProperty("behave.parser.prefixes.bdd.pattern." + getParser_Language());
 	}
 
-	public static String getOriginalStoryFileExtension() {
-		return ORIGINAL_STORY_FILE_EXTENSION;
+	//prefixo do arquivo bdd
+	public static String getParser_OriginalStoryFileExtension() {
+		return getProperty("behave.parser.story.extension.original", "bdd");
+	}
+	
+	//prefixo do arquivo de estorias
+	public static String getParser_ConvertedStoryFileExtension() {
+		return getProperty("behave.parser.story.extension.converted", "story");
 	}
 
-	public static String getConvertedStoryFileExtension() {
-		return CONVERTED_STORY_FILE_EXTENSION;
+	public static boolean getParser_CommonsStepsEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.parser.commonssteps.enabled", "true"));
 	}
 
-	public static boolean isParserCommonsSteosEnabled() {
-		return PARSER_COMMONS_STEPS_ENABLED;
+	/** INTEGRATION PROPERTIES **/
+	
+	//habilita a integracao
+	public static boolean getIntegration_Enabled() {
+		return Boolean.parseBoolean(getProperty("behave.integration.alm.enabled", "false"));
+	}
+	
+	//url de autenticacao
+	public static String getIntegration_UrlSecurity() {
+		return getProperty("behave.integration.alm.url.security");
+	}
+	
+	//url de servicos
+	public static String getIntegration_UrlServices() {
+		return getProperty("behave.integration.alm.url.services");
+	}
+	
+	//area de projeto
+	public static String getIntegration_ProjectArea() {
+		return getProperty("behave.integration.alm.projectArea");
+	}
+	
+	//identifcicado do plano de testes
+	public static String getIntegration_TestPlanId() {
+		return getProperty("behave.integration.alm.testPlanId");
+	}
+	
+	//porta do autenticador
+	public static Integer getIntegration_AuthenticatorPort() {
+		return Integer.parseInt(getProperty("behave.integration.authenticator.port", "9990"));
+	}	
+
+	//host de origem
+	public static String getIntegration_AuthenticatorHost() {
+		return getProperty("behave.integration.authenticator.host", "locahost");
 	}
 
-	public static boolean isIntegrationEnabled() {
-		return INTEGRATION_ENABLED;
+	/** RUNNER Properties **/
+
+	//Temo máximo para timeout de espera da tela
+	public static Long getRunner_ScreenMaxWait() {
+		return Long.parseLong(getProperty("behave.runner.screen.maxWait", "10000"));
 	}
 
-	public static Long getBrowserMaxWait() {
-		return BROWSER_MAX_WAIT;
+	//Tempo mínimo de espera da tela
+	public static Long getRunner_ScreenMinWait() {
+		return Long.parseLong(getProperty("behave.runner.screen.minWait", "100"));
+	}
+	
+	//Modo proxy do navegador
+	public static boolean getRunner_ProxyEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.runner.proxy.enabled", "false"));
+	}
+	//URL do proxy
+	public static String getRunner_ProxyURL() {
+		return getProperty("behave.runner.proxy.url");
+	}
+	
+	//URL do proxy
+	public static String getRunner_ScreenDriverPath() {
+		return getProperty("behave.runner.screen.driverPath");
+	}	
+	
+	public static String getRunner_ScreenType() {
+		return getProperty("behave.runner.screen.type");
 	}
 
-	public static Long getBrowserMinWait() {
-		return BROWSER_MIN_WAIT;
+	/**
+	 * Exibe o valor das propriedades do DBehave caso o log esteja no modo debug
+	 */
+	public static void logValueProperties(){
+		if (log.isDebugEnabled()) {
+			ArrayList<String> propertieList = new ArrayList<String>();			
+			log.debug("------- Propriedades ----------");
+			Enumeration<Object> keys = properties.keys();
+			while (keys.hasMoreElements()) {
+				String key = (String) keys.nextElement();
+				propertieList.add(key + "=" + properties.getProperty(key));
+			}
+			Collections.sort(propertieList);
+			for(String properties: propertieList){
+				log.debug(properties);
+			}
+			log.debug("-------------------------------");
+		}
 	}
 
-	public static boolean isRunnerProxy() {
-		return RUNNER_PROXY_ENABLED;
-	}
-
-	public static String getRunnerProxyURL() {
-		return RUNNER_PROXY_URL;
-	}
-
-	public static String getIntegrationUrlSecurity() {
-		return INTEGRATION_URL_SECURITY;
-	}
-
-	public static String getIntegrationUrlServices() {
-		return INTEGRATION_URL_SERVICES;
-	}
-
-	public static String getIntegrationProjectArea() {
-		return INTEGRATION_PROJECT_AREA;
-	}
-
-	public static String getIntegrationTestPlanId() {
-		return INTEGRATION_TEST_PLAN_ID;
-	}
-
-	public static String getBrowser() {
-		return BROWSER;
-	}
-
-	public static String getBrowserDriverPath() {
-		return BROWSER_DRIVER_PATH;
-	}
 
 }

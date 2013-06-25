@@ -67,16 +67,16 @@ public class WebDriverRunner implements Runner {
 	public Object getDriver() {
 		if (driver == null) {
 
-			String browserProperty = BehaveConfig.getBrowser();
+			String browserProperty = BehaveConfig.getRunner_ScreenType();
 			WebBrowser browser = Enum.valueOf(WebBrowser.class, browserProperty);
 
 			// Uso opicionao do proxy
-			if (!BehaveConfig.isRunnerProxy()) {
+			if (!BehaveConfig.getRunner_ProxyEnabled()) {
 				driver = browser.getWebDriver();
 			} else {
 				Proxy proxy = new Proxy();
 				proxy.setProxyType(Proxy.ProxyType.PAC);
-				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunnerProxyURL());
+				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunner_ProxyURL());
 				DesiredCapabilities capabilities = new DesiredCapabilities();
 				capabilities.setCapability(CapabilityType.PROXY, proxy);
 				driver = new FirefoxDriver(capabilities);
@@ -85,8 +85,8 @@ public class WebDriverRunner implements Runner {
 			logger.log(Level.FINE, "Iniciou o driver - " + browser.toString());
 
 			// Configurações do driver
-			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
-			driver.manage().timeouts().implicitlyWait(BehaveConfig.getBrowserMaxWait(), TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 		}
 		return driver;
 	}

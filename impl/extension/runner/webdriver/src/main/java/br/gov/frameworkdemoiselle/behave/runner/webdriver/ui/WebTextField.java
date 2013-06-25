@@ -36,7 +36,7 @@ public class WebTextField extends WebBase implements TextField {
 
 			totalMilliseconds += 1000;
 
-			if (totalMilliseconds > BehaveConfig.getBrowserMaxWait())
+			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait())
 				throw new RuntimeException("Limpeza de campo não concluída com sucesso.");
 		}
 	}
