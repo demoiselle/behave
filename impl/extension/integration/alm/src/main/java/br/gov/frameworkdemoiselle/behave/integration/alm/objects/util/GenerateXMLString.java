@@ -54,9 +54,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.log4j.Logger;
 
-import br.gov.frameworkdemoiselle.behave.integration.alm.ALMIntegration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
@@ -70,8 +68,6 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
 
 public class GenerateXMLString {
-
-	private static Logger log = Logger.getLogger(ALMIntegration.class);
 
 	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, List<TestcaseLink> testCaseLinks) throws JAXBException {
 
@@ -138,8 +134,6 @@ public class GenerateXMLString {
 		StringWriter testCaseString = new StringWriter();
 		marshaller.marshal(testcase, testCaseString);
 
-		log.debug(testCaseString.toString());
-
 		return testCaseString.toString();
 	}
 
@@ -169,8 +163,6 @@ public class GenerateXMLString {
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(work, resourceString);
-
-		log.debug(resourceString.toString());
 
 		return resourceString.toString();
 	}
@@ -209,8 +201,6 @@ public class GenerateXMLString {
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
 		StringWriter resourceString = new StringWriter();
 		marshaller.marshal(result, resourceString);
-
-		log.debug(resourceString.toString());
 
 		return resourceString.toString();
 	}
