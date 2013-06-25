@@ -36,6 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration.alm.objects;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -48,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
 public class Testplan {
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private TestcaseLink testcase;
+	private List<TestcaseLink> testcase;
 
-	public TestcaseLink getTestcase() {
+	public List<TestcaseLink> getTestcase() {
 		return testcase;
 	}
 
-	public void setTestcase(TestcaseLink testcase) {
+	public void setTestcase(List<TestcaseLink> testcase) {
 		this.testcase = testcase;
 	}
 
