@@ -60,6 +60,7 @@ import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
@@ -74,32 +75,36 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
-		logger.info("Configurando o JBehave");
-
-		ParameterConverters parameterConverters = new ParameterConverters();
-		parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
-
-		configuration = new Configuration() {
-		};
-
-		configuration.useParameterConverters(parameterConverters);
-		configuration.useKeywords(getKeywordsLocale());
-		configuration.useStepFinder(new StepFinder());
-		configuration.useStoryControls(new StoryControls());
-		configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-		if (BehaveConfig.getIntegration_Enabled()) {
-			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
-		} else {
-			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+		try{
+			logger.info("Configurando o JBehave");
+	
+			ParameterConverters parameterConverters = new ParameterConverters();
+			parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
+	
+			configuration = new Configuration() {
+			};
+	
+			configuration.useParameterConverters(parameterConverters);
+			configuration.useKeywords(getKeywordsLocale());
+			configuration.useStepFinder(new StepFinder());
+			configuration.useStoryControls(new StoryControls());
+			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
+			if (BehaveConfig.getIntegration_Enabled()) {
+				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
+			} else {
+				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+			}
+			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+			embedderControls.doGenerateViewAfterStories(true);
+			embedderControls.doIgnoreFailureInStories(false);
+			embedderControls.doIgnoreFailureInView(true);
+			embedderControls.doSkip(false);
+			embedderControls.doVerboseFailures(true);
+			embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
+			embedderControls.useThreads(1);
+		}catch(BehaveException e){
+			logger.debug("Não foi possível inicializar o parser", e);
 		}
-		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
-		embedderControls.doGenerateViewAfterStories(true);
-		embedderControls.doIgnoreFailureInStories(false);
-		embedderControls.doIgnoreFailureInView(true);
-		embedderControls.doSkip(false);
-		embedderControls.doVerboseFailures(true);
-		embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
-		embedderControls.useThreads(1);
 	}
 
 	public Keywords getKeywordsLocale() {

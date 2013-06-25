@@ -43,7 +43,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
 
 /**
@@ -82,7 +81,7 @@ public class BehaveConfig {
 	 */
 	public static String getProperty(String key, String defaultValue) {
 		if (!properties.containsKey(key)) {
-			throw new BehaveException("chave [" + key + "] não informada no behave.properties");
+			return defaultValue;
 		} else {
 			String value = System.getProperty(key);
 			if (value != null){
@@ -203,8 +202,8 @@ public class BehaveConfig {
 	 */
 	public static void logValueProperties(){
 		if (log.isDebugEnabled()) {
-			ArrayList<String> propertieList = new ArrayList<String>();
-			log.debug("Configurações do Demoiselle Behave:");
+			ArrayList<String> propertieList = new ArrayList<String>();			
+			log.debug("------- Propriedades ----------");
 			Enumeration<Object> keys = properties.keys();
 			while (keys.hasMoreElements()) {
 				String key = (String) keys.nextElement();
@@ -214,7 +213,7 @@ public class BehaveConfig {
 			for(String properties: propertieList){
 				log.debug(properties);
 			}
-			log.debug("--------------------------------");
+			log.debug("-------------------------------");
 		}
 	}
 

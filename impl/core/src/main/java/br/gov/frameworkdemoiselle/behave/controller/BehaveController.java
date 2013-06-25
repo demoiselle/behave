@@ -86,6 +86,8 @@ public class BehaveController {
 			log.info(" Iniciando Demoiselle Behave");
 			log.info("--------------------------------");
 			
+			BehaveConfig.logValueProperties();
+			
 			if (storiesPath == null || storiesPath.isEmpty()){
 				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
 			}
