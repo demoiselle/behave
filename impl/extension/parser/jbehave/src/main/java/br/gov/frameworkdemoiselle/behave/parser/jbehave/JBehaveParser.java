@@ -103,7 +103,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
 			embedderControls.useThreads(1);
 		}catch(BehaveException e){
-			logger.debug("Não foi possível inicializar o parser", e);
+			logger.debug("Não foi possível iniciar o JBehaveParser", e);
 		}
 	}
 

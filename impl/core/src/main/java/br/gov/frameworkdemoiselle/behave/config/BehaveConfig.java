@@ -166,6 +166,16 @@ public class BehaveConfig {
 	public static String getIntegration_TestPlanId() {
 		return getProperty("behave.integration.alm.testPlanId");
 	}
+	
+	//porta do autenticador
+	public static Integer getIntegration_AuthenticatorPort() {
+		return Integer.parseInt(getProperty("behave.integration.authenticator.port", "9990"));
+	}	
+
+	//host de origem
+	public static String getIntegration_AuthenticatorHost() {
+		return getProperty("behave.integration.authenticator.host", "locahost");
+	}
 
 	/** RUNNER Properties **/
 
