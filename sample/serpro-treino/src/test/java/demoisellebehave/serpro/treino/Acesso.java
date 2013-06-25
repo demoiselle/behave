@@ -53,7 +53,15 @@ public class Acesso {
 	}
 
 	@Test
-	public void testAcesso() throws Throwable {
+	public void testTreino() throws Throwable {
+		System.setProperty("seprotreino.url", "http://centro3.cta.serpro/treino"); 
+		eng.run("/stories/acesso/acesso.story");
+	}
+	
+	
+	@Test
+	public void testLocal() throws Throwable {
+		System.setProperty("seprotreino.url", "http://localhost/treino"); 
 		eng.run("/stories/acesso/acesso.story");
 	}
 

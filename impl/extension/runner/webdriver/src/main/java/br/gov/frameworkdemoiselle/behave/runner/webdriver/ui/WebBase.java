@@ -62,16 +62,16 @@ public class WebBase extends MappedElement implements BaseUI {
 	public boolean verifyState(StateUI state) {
 		boolean retorno = false;
 
-		waitThreadSleep(BehaveConfig.getBrowserMinWait());
+		waitThreadSleep(BehaveConfig.getRunner_ScreebMinWait());
 
 		final Timer operationTimer = new Timer();
 		operationTimer.start();
 
-		Long maxWait = BehaveConfig.getBrowserMaxWait();
+		Long maxWait = BehaveConfig.getRunner_ScreenMaxWait();
 
 		while (!retorno && (maxWait > operationTimer.getTimeElapsed())) {
 
-			waitThreadSleep(BehaveConfig.getBrowserMinWait());
+			waitThreadSleep(BehaveConfig.getRunner_ScreebMinWait());
 
 			switch (state) {
 			case VISIBLE:
@@ -123,7 +123,7 @@ public class WebBase extends MappedElement implements BaseUI {
 			if (fields.size() == 1) {
 				for (Field field : fields) {
 					// Aguardo o LOADING!
-					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getBrowserMaxWait() / 1000));
+					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 					ElementMap map = field.getAnnotation(ElementMap.class);
 					wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
 					break;
@@ -134,13 +134,13 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	private void waitClickable(By by) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getBrowserMaxWait() / 1000));
+		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	private void waitVisibility(By by) {
 
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getBrowserMaxWait() / 1000));
+		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 

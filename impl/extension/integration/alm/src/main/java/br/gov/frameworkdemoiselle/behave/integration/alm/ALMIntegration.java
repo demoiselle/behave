@@ -71,9 +71,9 @@ public class ALMIntegration implements Integration {
 	 * ERRO 400 - Posssivelmente o nome da área não esta correto
 	 */
 
-	public String urlServer = BehaveConfig.getIntegrationUrlServices();
-	public String urlServerAuth = BehaveConfig.getIntegrationUrlSecurity();
-	public String projectAreaAlias = BehaveConfig.getIntegrationProjectArea();
+	public String urlServer = BehaveConfig.getIntegration_UrlServices();
+	public String urlServerAuth = BehaveConfig.getIntegration_UrlSecurity();
+	public String projectAreaAlias = BehaveConfig.getIntegration_ProjectArea();
 	private Boolean started = false;
 
 	private String username;

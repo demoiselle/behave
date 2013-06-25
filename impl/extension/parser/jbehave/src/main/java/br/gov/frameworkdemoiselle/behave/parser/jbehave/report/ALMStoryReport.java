@@ -61,7 +61,7 @@ public class ALMStoryReport implements StoryReporter {
 				scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
 				scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
 				scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
-				scenarioData.put("testPlanId", BehaveConfig.getIntegrationTestPlanId());
+				scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
 	
 				integration.sendScenario(scenarioData);
 			}
