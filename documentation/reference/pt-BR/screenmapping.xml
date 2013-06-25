@@ -2,7 +2,7 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <chapter id="behave-screenmapping">
-	<title>Roteiro Rápido</title>
+	<title>Criação de Scripts</title>
 
 	<para>
 		Esta seção apresenta um roteiro para criação de scripts visuais.
@@ -12,7 +12,8 @@
 		<para>
 			O primeiro passo na criação de um script no Demoiselle-Behave e a escolha dos objetos visuais que
 			serão utilizados.
-			Os objetos poderão ser identificados de diversas formas como Id,XPath ou CSS.
+			Os objetos poderão ser identificados de diversas formas como Id,XPath ou CSS. Estas diferentes formas de encontrar
+			um objeto na tela são denominadas localizadores. 
 			Neste tutorial serão utilizadas algumas ferramentas de apoio para escolha dos objetos. De forma exemplificativa
 			o tutorial apresentará um exemplo onde o usuário irá buscar uma informação na página do SERPRO(www.serpro.gov.br).
 			
@@ -21,62 +22,80 @@
 		<para>
 			<mediaobject>
 				<imageobject role="fo">
-					<imagedata fileref="images/menupreference.png" align="center"
+					<imagedata fileref="images/localizadores.png" align="center"
 						format="PNG" />
 				</imageobject>
 				<imageobject role="html">
-					<imagedata fileref="images/menupreference.png" align="center"
+					<imagedata fileref="images/localizadores.png" align="center"
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Menu de Preferência.
+					<para>Localizadores.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			O próximo passo é clicar no botão Add Remote Catalog.
+			O próximo passo é utilizar uma ferramenta de apoio para escolher os objetos. O XPath Checker e o FirePath são  ferramentas que permitem 
+			obter o Xpath de objetos na tela (https://addons.mozilla.org/pt-br/firefox/addon/xpath-checker/)(https://addons.mozilla.org/en-US/firefox/addon/firepath/).
 		</para>
 		<para>
 			<mediaobject>
 				<imageobject role="fo">
-					<imagedata fileref="images/preferences.png" align="center"
+					<imagedata fileref="images/xpathchecker.png" align="center"
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
-					<imagedata fileref="images/preferences.png" align="center"
+					<imagedata fileref="images/xpathchecker.png" align="center"
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Clicar no botão Add Remote Catalog.
+					<para>Ferramenta XPather
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
+				<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Ferramenta XPather
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		
 		<para>
-			Deve ser preenchido o valor
-			<emphasis>
-				http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml
-			</emphasis>
-			no Catalog File.
-			O nome Demoiselle-Behave pode ser preenchido na
-			descrição.
+			Após instalação das ferramentas de apoio devem ser escolhido os objetos que devem interagir com a tela. De forma a exemplificar
+			o processo será realizada uma pesquisa na página do SERPRO (www.serpro.gov.br). Sera selecionado o campo de busca e o botão de pesquisa.
+			Utilizando o firepath é identificado o id do campo de pesquisa.			
 		</para>
 		<para>
 			<mediaobject>
 				<imageobject role="fo">
-					<imagedata fileref="images/remotecatalog.png" align="center"
+					<imagedata fileref="images/paginaserproreduzida.png" align="center"
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
-					<imagedata fileref="images/remotecatalog.png" align="center"
+					<imagedata fileref="images/paginaserproreduzida.png" align="center"
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Preenchendo Catálogo Remoto.
+					<para>Utilizando firepath para descobrir xpath de objeto
 					</para>
 				</caption>
 			</mediaobject>
+		</para>
+		<para>
+		Uma vez utilizado o firepath descobre-se que o xpath do campo de busca possui o valor <emphasis>.//*[@id='searchGadget']</emphasis> e o xpath
+		do botão de busca possui o valor <emphasis>.//*[@id='livesearch0']/div/input[1]</emphasis>.
 		</para>
 	</section>
 	<section>
