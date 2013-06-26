@@ -88,6 +88,9 @@ public class Executionresult {
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
 	private String endtime;
+	
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
+	private String details;
 
 	public String getState() {
 		return state;
@@ -199,6 +202,14 @@ public class Executionresult {
 
 	public void setEndtime(String endtime) {
 		this.endtime = endtime;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
 }

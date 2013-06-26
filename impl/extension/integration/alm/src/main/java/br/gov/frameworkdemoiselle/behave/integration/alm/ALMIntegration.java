@@ -182,7 +182,7 @@ public class ALMIntegration implements Integration {
 			// WorkItem
 			log.debug("Enviar Resultado de Execução:\n");
 			String resultName = "result" + System.nanoTime();
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
 				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
