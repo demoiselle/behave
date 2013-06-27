@@ -80,10 +80,10 @@ public class ALMIntegration implements Integration {
 	public String urlServerAuth = BehaveConfig.getIntegration_UrlSecurity();
 	public String projectAreaAlias = BehaveConfig.getIntegration_ProjectArea();
 	private Boolean started = false;
+	private Integer testCaseId;
 
 	private String username;
 	private String password;
-	 
 
 	public final String ENCODING = "UTF-8";
 
@@ -94,9 +94,6 @@ public class ALMIntegration implements Integration {
 	public void sendScenario(Hashtable<String, Object> result) {
 
 		try {
-			// TODO Fazer verificação dos dados minimos da hastable (name...)
-			// TODO Verificar se as datas são do tipo Date
-
 			if (!started) {
 				// Pega os dados de autenticação
 				log.debug("Iniciar autenticador");
@@ -112,85 +109,94 @@ public class ALMIntegration implements Integration {
 				started = true;
 			}
 
+			// ID fixo de caso de teste
+			if (result.containsKey("testCaseId")) {
+				testCaseId = Integer.parseInt((String) result.get("testCaseId"));
+			} else {
+				testCaseId = null;
+			}
+
 			log.debug("------------- Integração ALM Iniciada -------------\n");
 			long t0 = GregorianCalendar.getInstance().getTimeInMillis();
 
-			// --------------------------- Test Plan
-			// Conexão HTTPS
-			HttpClient client = HttpsClient.getNewHttpClient(ENCODING);
+			HttpClient client;
+			String testCaseName;
 
-			// Login
-			login(client);
+			// Somente cria e associa o caso de teste quando ele não é informado
+			if (testCaseId == null) {
+				// --------------------------- Test Plan (GET)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
 
-			String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
-			HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
-			Testplan plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
+				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
+				Testplan plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
 
-			// --------------------------- TestCase
+				// --------------------------- TestCase (PUT)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
 
+				// TestCase
+				log.debug("Enviar Caso de Teste:\n");
+				String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
+				testCaseName = "testcase" + testCaseIdentification;
+				HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
+				if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
+					throw new BehaveException("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
+				}
+
+				// --------------------------- Test Plan (PUT)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
+
+				// TestPlan
+				log.debug("Enviar Plano de Teste:\n");
+				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
+				if (responseTestPlan.getStatusLine().getStatusCode() != 200) {
+					throw new BehaveException("Erro ao result: " + responseTestPlan.getStatusLine().toString());
+				}
+			} else {
+				testCaseName = "urn:com.ibm.rqm:testcase:" + testCaseId;
+			}		
+			
+			// --------------------------- Work Item (PUT)
 			// Conexão HTTPS
 			client = HttpsClient.getNewHttpClient(ENCODING);
-
-			// Login
-			login(client);
-
-			// TestCase
-			log.debug("Enviar Caso de Teste:\n");
-			String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
-			String testCaseName = "testcase" + testCaseIdentification;
-			HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
-			if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
-				throw new BehaveException("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
-			}
-
-			// --------------------------- Work Item
-			// Conexão HTTPS
-			client = HttpsClient.getNewHttpClient(ENCODING);
-
 			// Login
 			login(client);
 
 			// WorkItem
 			log.debug("Enviar Registro de Execução:\n");
-			String workItemName = "workitemExecucaoAutomatizada-" + testCaseName;
+			String workItemName = "workitemExecucaoAutomatizada-" + convertToIdentificationString(testCaseName);
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, GenerateXMLString.getExecutionworkitemString(urlServer, projectAreaAlias, ENCODING, testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
 				throw new BehaveException("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
 			}
 
-			// --------------------------- Test Plan
+			// --------------------------- Result (PUT)
 			// Conexão HTTPS
 			client = HttpsClient.getNewHttpClient(ENCODING);
-
-			// Login
-			login(client);
-
-			// TestPlan
-			log.debug("Enviar Plano de Teste:\n");
-			HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
-			if (responseTestPlan.getStatusLine().getStatusCode() != 200) {
-				throw new BehaveException("Erro ao result: " + responseTestPlan.getStatusLine().toString());
-			}
-
-			// --------------------------- Result
-			// Conexão HTTPS
-			client = HttpsClient.getNewHttpClient(ENCODING);
-
 			// Login
 			login(client);
 
 			// WorkItem
 			log.debug("Enviar Resultado de Execução:\n");
 			String resultName = "result" + System.nanoTime();
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
 				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
 			}
 
 			long t1 = GregorianCalendar.getInstance().getTimeInMillis();
-			
+
 			DecimalFormat df = new DecimalFormat("0.0");
-			log.debug("------------- Integração finalizada em [" + df.format((t1 - t0)/1000.00) + "s] -------------");
+			log.debug("------------- Integração finalizada em [" + df.format((t1 - t0) / 1000.00) + "s] -------------");
 
 		} catch (RuntimeException e) {
 			if (e.getCause() instanceof ConnectException) {
@@ -214,6 +220,7 @@ public class ALMIntegration implements Integration {
 
 	public String convertToIdentificationString(String str) {
 		String ret = Normalizer.normalize(str, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+		ret = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "");
 		return ret;
 	}
 

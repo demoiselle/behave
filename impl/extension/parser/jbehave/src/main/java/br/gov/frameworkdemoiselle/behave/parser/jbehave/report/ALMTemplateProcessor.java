@@ -16,31 +16,17 @@ public class ALMTemplateProcessor implements TemplateProcessor {
 	}
 
 	public void process(String resource, Map<String, Object> dataModel, Writer writer) {
-		// Configuration configuration = configuration();
-
-		// Manda para a ALM
-
 		log.info("-------------------- INICIO");
 
 		for (String key : dataModel.keySet()) {
 			if (dataModel.get(key) instanceof PostStoryStatisticsCollector) {
 				PostStoryStatisticsCollector reportTable = (PostStoryStatisticsCollector) dataModel.get(key);
-
 				log.info(">> " + reportTable.toString());
 			}
-
-			 log.info(">> " + key + " - " + dataModel.get(key));
-
+			log.info(">> " + key + " - " + dataModel.get(key));
 		}
 
 		log.info("-------------------- FIM");
-
-		// try {
-		// configuration.getTemplate(resource).process(dataModel, writer);
-		// } catch (Exception e) {
-		// throw new FreemarkerProcessingFailed(configuration, resource,
-		// dataModel, e);
-		// }
 	}
 
 }
