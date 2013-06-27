@@ -48,13 +48,10 @@ public class ALMStoryReport implements StoryReporter {
 	}
 
 	public void afterStory(boolean givenStory) {
-		try{
+		try {
 			for (Scenario scenario : story.getScenarios()) {
-	
-				// A principio a meta informação do cenário não será utilizada, mas
-				// futuramente é possível que seja necessária a utilização
-				// Meta meta = scenario.getMeta();
-	
+				Meta meta = scenario.getMeta();
+
 				Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
 				scenarioData.put("name", scenario.getTitle());
 				scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
@@ -63,11 +60,15 @@ public class ALMStoryReport implements StoryReporter {
 				scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
 				scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
 				scenarioData.put("details", "Resultado enviado pelo Demoiselle Behave");
-	
+
+				if (meta.hasProperty("casodeteste")) {
+					scenarioData.put("testCaseId", meta.getProperty("casodeteste"));
+				}
+				
 				integration.sendScenario(scenarioData);
 			}
-		}catch(BehaveException e){
-			log.error("Erro no envio de dados para integração.", e);			
+		} catch (BehaveException e) {
+			log.error("Erro no envio de dados para integração.", e);
 		}
 	}
 
