@@ -152,7 +152,7 @@ public class GenerateXMLString {
 		work.setFrequency("Once");
 		work.setPriority(priority);
 		work.setRegression(false);
-		work.setTitle("Registro de Execução Automatizado");
+		work.setTitle("Registro de Execução Automatizado - Plano de Teste " + testPlanId);
 		work.setWeight(100);
 		work.setTestcase(workTest);
 		work.setTestplan(testPlan);

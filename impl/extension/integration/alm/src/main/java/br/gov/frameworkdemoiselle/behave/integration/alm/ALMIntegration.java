@@ -173,7 +173,7 @@ public class ALMIntegration implements Integration {
 
 			// WorkItem
 			log.debug("Enviar Registro de Execução:\n");
-			String workItemName = "workitemExecucaoAutomatizada-" + convertToIdentificationString(testCaseName);
+			String workItemName = "workitemExecucaoAutomatizada-" + convertToIdentificationString(testCaseName) + "-" + result.get("testPlanId").toString();
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, GenerateXMLString.getExecutionworkitemString(urlServer, projectAreaAlias, ENCODING, testCaseName, result.get("testPlanId").toString()));
 			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
 				throw new BehaveException("Erro ao criar work item: " + responseWorkItem.getStatusLine().toString());
