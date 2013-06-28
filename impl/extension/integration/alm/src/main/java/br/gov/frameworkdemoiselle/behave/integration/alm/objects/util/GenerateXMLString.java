@@ -60,7 +60,6 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.State;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
@@ -111,9 +110,10 @@ public class GenerateXMLString {
 		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
 
-		State state = new State();
-		state.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.draft");
-		state.setValue("com.ibm.rqm.planning.common.draft");
+		// State state = new State();
+		// state.setResource(urlServer +
+		// "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.draft");
+		// state.setValue("com.ibm.rqm.planning.common.draft");
 
 		Testcasedesign design = new Testcasedesign();
 		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
@@ -122,7 +122,7 @@ public class GenerateXMLString {
 		Testcase testcase = new Testcase();
 		testcase.setTitle(name);
 		testcase.setPriority(priority);
-		testcase.setState(state);
+		// testcase.setState(state);
 		testcase.setSuspect(false);
 		testcase.setWeight(100);
 		testcase.setTestCaseDesign(design);
