@@ -55,7 +55,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
-			ex.printStackTrace();
+			throw new BehaveException("Thread sleep interrompido", ex);
 		}
 	}
 

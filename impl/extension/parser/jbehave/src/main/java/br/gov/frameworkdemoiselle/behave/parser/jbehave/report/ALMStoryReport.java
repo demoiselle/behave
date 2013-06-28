@@ -50,22 +50,25 @@ public class ALMStoryReport implements StoryReporter {
 	public void afterStory(boolean givenStory) {
 		try {
 			for (Scenario scenario : story.getScenarios()) {
-				Meta meta = scenario.getMeta();
+				// Somente envia para a ALM se o cenário tem Título (Title)
+				if (!scenario.getTitle().equals("")) {
+					Meta meta = scenario.getMeta();
 
-				Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
-				scenarioData.put("name", scenario.getTitle());
-				scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
-				scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
-				scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
-				scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
-				scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
-				scenarioData.put("details", "Resultado enviado pelo Demoiselle Behave");
+					Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
+					scenarioData.put("name", scenario.getTitle());
+					scenarioData.put("startDate", startDateScenario.get(scenario.getTitle()));
+					scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
+					scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
+					scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
+					scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
+					scenarioData.put("details", "Resultado enviado pelo Demoiselle Behave");
 
-				if (meta.hasProperty("casodeteste")) {
-					scenarioData.put("testCaseId", meta.getProperty("casodeteste"));
+					if (meta.hasProperty("casodeteste")) {
+						scenarioData.put("testCaseId", meta.getProperty("casodeteste"));
+					}
+
+					integration.sendScenario(scenarioData);
 				}
-
-				integration.sendScenario(scenarioData);
 			}
 		} catch (BehaveException e) {
 			log.error("Erro no envio de dados para integração.", e);
@@ -128,6 +131,10 @@ public class ALMStoryReport implements StoryReporter {
 
 	public void failed(String step, Throwable cause) {
 		failedScenario.put(currentScenarioTitle, true);
+
+		// Adiciona o erro nos steps para aparecer na ALM
+		String newString = stepsScenario.get(currentScenarioTitle) + "<br/><br/><b>Erro:</b> <em>" + cause.getCause() + "</em>";
+		stepsScenario.put(currentScenarioTitle, newString);
 	}
 
 	public void failedOutcomes(String step, OutcomesTable table) {

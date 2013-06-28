@@ -10,7 +10,7 @@ Funcionalidade: Acesso ao Sistema
 		Quando informo "{usuário}" no campo "Campo Usuário"
 		E informo "{senha}" no campo "Campo Senha"
 		Quando clico em "Entrar"
-		Então será exibido "Seja bem vindo"
+		Então será exibido "Todas as Obras"
 	
 	Cenário: Sair do "{sistema}"
 			
@@ -19,12 +19,13 @@ Funcionalidade: Acesso ao Sistema
 		Então será exibido "Usuário:"
 		E será exibido "Senha:"
 		
-	Cenário: Cenário de envio para a ALM
 	
-		Acesso ao Sistema com usuário "06762344887" e senha "188542"
-		Sair do "sistema"
-		
 	Cenário: Cenário de envio para a ALM (Erro)
 	
 		Acesso ao Sistema com usuário "06762344887" e senha "00000"
+		Sair do "sistema"
+		
+	Cenário: Cenário de envio para a ALM
+	
+		Acesso ao Sistema com usuário "06762344887" e senha "188542"
 		Sair do "sistema"
