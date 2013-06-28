@@ -146,209 +146,68 @@ public class MyPage {
 		
 		</programlisting>
 		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/criandoprojeto1.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/criandoprojeto1.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Escolhendo Maven Project.
-					</para>
-				</caption>
-			</mediaobject>
+			O motor do framework escolhe automaticamente que ação será realizada dependendo do tipo de objeto aplicado ao elemento
+			da interface gráfica. No exemplo acima o tipo Button indica que a ação de clique deve ser realizada.
 		</para>
 		<para>
-			Escolher o catalogo Demoisele-Behave e escolher o arquetipo do
-			selenium.
-		</para>
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/arquetipo.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/arquetipo.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-		<para>
-			Preencher o Group Id e Artifact Id e finalizar a criação do
-			projeto.
-		</para>
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/criandoprojeto3.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/criandoprojeto3.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-	</section>
-	<section>
-		<title>Estrutura de diretórios</title>
-		<para>
-			O projeto criado a partir do arquétipo possui os diretórios
-			src/test/java e src/test/resources. No diretório src/test/resource
-			estarão contidas as histórias de usuários. No diretório src/test/java
-			estarão contidos os Steps do demoiselle bem como os objetos
-			responsáveis pela indentificação das telas envolvidas nos testes e
-			seus objetos.
-		</para>
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/diretorioprojeto1.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/diretorioprojeto1.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Estrutura de pastas do projeto criado a partir do arquétipo.
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-	</section>
-	<section>
-		<title>Executando Teste</title>
-		<para>
-			A classe AppTest é responsável pela configuração da pasta onde
-			estão
-			localizadas as histórias de usuários bem como os passos (Steps)
-			a
-			serem adicionados
-			no projeto.
-		</para>
-
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/classeapptest.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/classeapptest.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Classe AppTest.
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-		<para>
-			O projeto criado ja possui um exemplo que realiza uma consulta
-			no
-			Google. Para executar o teste
-			basta clicar com o botão direito na
-			classe AppTeste e escolher Run
-			as>JUnit Test.
-		</para>
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/executandoteste.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/executandoteste.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Classe AppTest
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-		<para>
-			O framework inicia o Driver e abre o navegador.
-		</para>
-		<para>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata fileref="images/console1.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata fileref="images/console1.png" align="center"
-						format="PNG" />
-				</imageobject>
-				<caption>
-					<para>Classe AppTest
-					</para>
-				</caption>
-			</mediaobject>
-		</para>
-		<para>
-			Abaixo segue uma das histórias executadas pelo framework:
-			<programlisting>
-		
-				Funcionalidade: Pesquisa Simples
-
-				Como um: visitante
-				Eu quero: fazer uma busca simples
-				De modo que: me mostre os resultados
-
-				Cenário: Utilização da funcionalidade de pesquisa
-
-				Acesso ao Google
-				Quando informo "Framework Demoiselle" no campo "Campo de Busca"
-				Então será exibido "frameworkdemoiselle.gov.br"
-		</programlisting>
-		</para>
-		<para>
-			O framework associa o campo
-			<emphasis>"Campo Busca"</emphasis>
-			com o elemento searchField da classe MyPage criada
-			de forma a
-			mapear os
-			objetos da tela com o Id procurado. O Elemento
-			locatorType
-			informa o
-			tipo de
-			reconhecimento de objetos será utilizado
-			no
-			framework. No
-			exemplo, será localizado o elemento cujo Id
-			possui o
-			valor "gbqfq".
-
+			Outros tipos de elementos são CheckBox,  Link,   Radio, Screen, Select e TextField.
+			Para cada elemento visual foi criada uma interface que é implementada por uma classe que define como a ação deve ser realizada.
 		</para>
 		<programlisting>
-		
-@ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
-public class MyPage {
+package br.gov.frameworkdemoiselle.behave.runner.ui;
 
-	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
-	private TextField searchField;
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
+/**
+ * 
+ * @author SERPRO
+ *
+ */
+public interface Radio extends BaseUI {
 
-	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
-	private Button buttonLuckSearch;
-
+	public void click();
+	
 }
-
 		
 		</programlisting>
-	</section>
+		<para>
+		A seguir segue implementação da classe Radio para Web utilizando Selenium.
+		</para>
+		<programlisting>
+		package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
+
+public class WebRadio extends WebBase implements Radio {
+
+	public void click() {
+		waitElement(0);
+
+		getElements().get(0).click();
+	}
+
+}
+		
+		</programlisting>
+		<para>
+		 	A implementação da classe para a interface visual é configurada utilizando o conceito de SPI no framework.
+		 	Para cada interface existe um arquivo que indica que implementação sera escolhida para cada interface.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Escolhendo o arquétipo jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+			</section>
 
 </chapter>
