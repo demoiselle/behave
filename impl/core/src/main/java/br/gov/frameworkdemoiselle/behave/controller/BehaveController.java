@@ -51,27 +51,27 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class BehaveController {
-	
+
 	private static BehaveController eng = new BehaveController();
-			
+
 	private Parser parser;
 
 	private static Logger log = Logger.getLogger(BehaveController.class);
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
-	
+
 	private List<Step> steps = new ArrayList<Step>();
-	
+
 	private List<String> storiesPath = new ArrayList<String>();
-	
-	private BehaveController(){
-		
+
+	private BehaveController() {
+
 	}
-	
-	public static BehaveController getInstance(){
+
+	public static BehaveController getInstance() {
 		return eng;
 	}
 
@@ -85,36 +85,37 @@ public class BehaveController {
 			log.info("--------------------------------");
 			log.info(" Iniciando Demoiselle Behave");
 			log.info("--------------------------------");
-			
+
 			BehaveConfig.logValueProperties();
-			
-			if (storiesPath == null || storiesPath.isEmpty()){
+
+			if (storiesPath == null || storiesPath.isEmpty()) {
 				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
 			}
 			// Armazena o array antigo para retirar as histórias depois
-			List<String> oldsStories = (List<String>) allOriginalStoriesPath.clone();
-			
+			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
+
 			// Adiciono as novas histórias
 			allOriginalStoriesPath.addAll(storiesPath);
-			
+
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
-			// Cria um novo array contendo somente as histórias atuais, sem as antigas
-			List<String> finalArray = new ArrayList<String>();			
+			// Cria um novo array contendo somente as histórias atuais, sem as
+			// antigas
+			List<String> finalArray = new ArrayList<String>();
 			for (String s : allStoriesConverted) {
 				if (!oldsStories.contains(s)) {
 					finalArray.add(s);
 				}
-			}	
-			// Roda o runner com as histórias convertidas			
+			}
+			// Roda o runner com as histórias convertidas
 			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
-			parser.run();			
+			parser.run();
 		} catch (BehaveException ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
-		}finally{
+		} finally {
 			log.info("--------------------------------");
 			log.info(" Desligando Demoiselle Behave");
 			log.info("--------------------------------");
