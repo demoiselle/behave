@@ -75,15 +75,15 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
-		try{
+		try {
 			logger.info("Configurando o JBehave");
-	
+
 			ParameterConverters parameterConverters = new ParameterConverters();
 			parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
-	
+
 			configuration = new Configuration() {
 			};
-	
+
 			configuration.useParameterConverters(parameterConverters);
 			configuration.useKeywords(getKeywordsLocale());
 			configuration.useStepFinder(new StepFinder());
@@ -96,13 +96,13 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			}
 			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
 			embedderControls.doGenerateViewAfterStories(true);
-			embedderControls.doIgnoreFailureInStories(false);
+			embedderControls.doIgnoreFailureInStories(true);
 			embedderControls.doIgnoreFailureInView(true);
 			embedderControls.doSkip(false);
 			embedderControls.doVerboseFailures(true);
-			embedderControls.useStoryTimeoutInSecs(60 * 60 * 24);
+			embedderControls.useStoryTimeoutInSecs(60 * 60);
 			embedderControls.useThreads(1);
-		}catch(BehaveException e){
+		} catch (BehaveException e) {
 			logger.debug("Não foi possível iniciar o JBehaveParser", e);
 		}
 	}

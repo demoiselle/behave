@@ -118,7 +118,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Select) {
 			((Select) element).selectValue(value);
 		} else {
-			throw new BehaveException("");
+			throw new BehaveException("Elemento não encontrado na tela");
 		}
 	}
 
