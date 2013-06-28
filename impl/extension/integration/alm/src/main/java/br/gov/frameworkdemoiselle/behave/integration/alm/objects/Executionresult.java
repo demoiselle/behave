@@ -88,7 +88,7 @@ public class Executionresult {
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
 	private String endtime;
-	
+
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1")
 	private String details;
 

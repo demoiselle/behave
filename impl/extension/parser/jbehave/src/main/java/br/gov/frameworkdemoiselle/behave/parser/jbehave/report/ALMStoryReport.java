@@ -64,7 +64,7 @@ public class ALMStoryReport implements StoryReporter {
 				if (meta.hasProperty("casodeteste")) {
 					scenarioData.put("testCaseId", meta.getProperty("casodeteste"));
 				}
-				
+
 				integration.sendScenario(scenarioData);
 			}
 		} catch (BehaveException e) {
@@ -110,7 +110,7 @@ public class ALMStoryReport implements StoryReporter {
 	}
 
 	public void beforeStep(String step) {
-		String newString = step + "<br/>" + stepsScenario.get(currentScenarioTitle);
+		String newString = stepsScenario.get(currentScenarioTitle) + "<br/>" + step;
 		stepsScenario.put(currentScenarioTitle, newString);
 	}
 

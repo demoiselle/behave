@@ -19,8 +19,12 @@ Funcionalidade: Acesso ao Sistema
 		Então será exibido "Usuário:"
 		E será exibido "Senha:"
 		
-	Cenário: Cenário de envio para a ALM	
-	Meta: @casodeteste 23332
+	Cenário: Cenário de envio para a ALM
 	
 		Acesso ao Sistema com usuário "06762344887" e senha "188542"
+		Sair do "sistema"
+		
+	Cenário: Cenário de envio para a ALM (Erro)
+	
+		Acesso ao Sistema com usuário "06762344887" e senha "00000"
 		Sair do "sistema"

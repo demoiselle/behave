@@ -112,8 +112,8 @@ public class GenerateXMLString {
 		priority.setValue("literal.priority.101");
 
 		State state = new State();
-		state.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.underreview");
-		state.setValue("com.ibm.rqm.planning.common.underreview");
+		state.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.draft");
+		state.setValue("com.ibm.rqm.planning.common.draft");
 
 		Testcasedesign design = new Testcasedesign();
 		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
@@ -177,7 +177,7 @@ public class GenerateXMLString {
 
 		Executionresult result = new Executionresult();
 		if (failed) {
-			result.setState("com.ibm.rqm.execution.common.state.error");
+			result.setState("com.ibm.rqm.execution.common.state.failed");
 		} else {
 			result.setState("com.ibm.rqm.execution.common.state.passed");
 		}
