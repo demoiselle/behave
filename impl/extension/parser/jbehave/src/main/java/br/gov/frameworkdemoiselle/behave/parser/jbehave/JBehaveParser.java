@@ -161,6 +161,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		Format console = Format.CONSOLE;
 		
 		// Verifica se existe uma variável de ambiente chamada COLORED_CONSOLE e ela possui valor diferente de zero.
+		// No console é necessário fazer: export COLORED_CONSOLE=1
 		String ambiente = System.getenv("COLORED_CONSOLE");		
 		if(!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {	
 			console = new ColoredConsoleFormat();
