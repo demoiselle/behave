@@ -167,7 +167,9 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemId, Boolean failed, Date startDate, Date endDate, String details) throws JAXBException {
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemId, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
+		Date startDate = (Date)_startDate.clone();
+		Date endDate = (Date)_endDate.clone();
 		ApprovalState state = new ApprovalState();
 		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
 		state.setValue("com.ibm.rqm.planning.common.new");
