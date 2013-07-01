@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jbehave.core.ConfigurableEmbedder;
 import org.jbehave.core.configuration.Configuration;
@@ -64,6 +65,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.console.ColoredConsoleFormat;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
@@ -90,9 +92,12 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			configuration.useStoryControls(new StoryControls());
 			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
 			if (BehaveConfig.getIntegration_Enabled()) {
-				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(new ALMStoryReport()).withFormats(Format.CONSOLE, Format.HTML, Format.STATS, Format.TXT));
+				configuration.useStoryReporterBuilder(
+						new StoryReporterBuilder()
+						.withReporters(new ALMStoryReport())
+						.withFormats(getFormats()));
 			} else {
-				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(Format.CONSOLE, Format.HTML, Format.STATS));
+				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(getFormats()));
 			}
 			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
 			embedderControls.doGenerateViewAfterStories(true);
@@ -150,5 +155,18 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void setSteps(List<Step> steps) {
 		this.steps = steps;
 	}
+	
+	private Format[] getFormats() {
+
+		Format console = Format.CONSOLE;
+		
+		// Verifica se existe uma variável de ambiente chamada COLORED_CONSOLE e ela possui valor diferente de zero.
+		String ambiente = System.getenv("COLORED_CONSOLE");		
+		if(!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {	
+			console = new ColoredConsoleFormat();
+		}
+
+		return new Format[] { console, Format.HTML, Format.STATS };
+	}	
 
 }
