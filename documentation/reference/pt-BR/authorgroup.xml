@@ -3,6 +3,11 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <authorgroup>
 	<author>
+		<firstname>Flavio Cysne Ferreira</firstname>
+		<surname>Gomes</surname>
+		<affiliation>SERPRO</affiliation>
+	</author>
+	<author>
 		<firstname>Francisco Nauber</firstname>
 		<surname>Gois</surname>
 		<affiliation>SERPRO</affiliation>
