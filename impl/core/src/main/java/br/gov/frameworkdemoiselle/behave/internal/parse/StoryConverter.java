@@ -74,7 +74,7 @@ package br.gov.frameworkdemoiselle.behave.internal.parse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -86,7 +86,7 @@ import br.gov.frameworkdemoiselle.behave.util.RegularExpressionUtil;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class StoryConverter {
 
@@ -117,7 +117,7 @@ public class StoryConverter {
 	 * @throws IOException
 	 */
 	public static Map<String, String> convertReusedScenarios(Map<String, String> stories) throws IOException {
-		Map<String, String> convertedStories = new HashMap<String, String>();
+		Map<String, String> convertedStories = new LinkedHashMap<String, String>();
 
 		// Pega as definições das histórias (tudo que vem antes do primeiro
 		// cenário)
@@ -137,7 +137,7 @@ public class StoryConverter {
 	}
 
 	private static Map<String, List<Scenario>> extractScenarios(Map<String, String> stories) {
-		Map<String, List<Scenario>> scenarios = new HashMap<String, List<Scenario>>();
+		Map<String, List<Scenario>> scenarios = new LinkedHashMap<String, List<Scenario>>();
 		for (String storyPath : stories.keySet()) {
 			scenarios.put(storyPath, extractScenarios(stories.get(storyPath)));
 		}
@@ -176,7 +176,7 @@ public class StoryConverter {
 	 * @return retorna um mapa contendo o arquivo e a
 	 */
 	private static Map<String, String> extractStoryDefinitions(Map<String, String> stories) {
-		Map<String, String> storyDefinitions = new HashMap<String, String>();
+		Map<String, String> storyDefinitions = new LinkedHashMap<String, String>();
 		for (String storyPath : stories.keySet()) {
 			storyDefinitions.put(storyPath, extractStoryDefinition(stories.get(storyPath)));
 		}
@@ -238,7 +238,7 @@ public class StoryConverter {
 	}
 
 	private static Map<String, String> scenariosToStories(Map<String, String> storyDefinitions, Map<String, List<Scenario>> scenarios) {
-		Map<String, String> stories = new HashMap<String, String>();
+		Map<String, String> stories = new LinkedHashMap<String, String>();
 		for (String storyPath : scenarios.keySet()) {
 			stories.put(storyPath, storyDefinitions.get(storyPath) + scenariosToText(scenarios.get(storyPath)));
 		}
@@ -275,7 +275,7 @@ public class StoryConverter {
 	private static Map<String, Scenario> createScenariosIdentificationMap(Map<String, List<Scenario>> scenarios) {
 		// Converte todos os cenários de todas as stories em um map
 		// <Identificacao do cenário, cenário>
-		Map<String, Scenario> scenariosIdentificationMap = new HashMap<String, Scenario>();
+		Map<String, Scenario> scenariosIdentificationMap = new LinkedHashMap<String, Scenario>();
 		for (Entry<String, List<Scenario>> entrySet : scenarios.entrySet()) {
 			for (Scenario scenario : entrySet.getValue()) {
 				scenariosIdentificationMap.put(scenario.getIdentificationWithoutParametersName(), scenario);

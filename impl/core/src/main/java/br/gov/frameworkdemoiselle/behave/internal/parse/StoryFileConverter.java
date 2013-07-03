@@ -38,16 +38,17 @@ package br.gov.frameworkdemoiselle.behave.internal.parse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.util.FileUtil;
+
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class StoryFileConverter {
 
@@ -70,7 +71,7 @@ public class StoryFileConverter {
 
 	// originBaseFilesName = lista de nomes de arquivo sem a extensão
 	public static List<String> convertReusedScenarios(List<String> originalBaseFilesName, String originalExtension, String convertedExtension) throws IOException {
-		Map<String, String> originStories = new HashMap<String, String>();
+		Map<String, String> originStories = new LinkedHashMap<String, String>();
 
 		// Coloca o conteúdo dos arquivos de origem no map, já utilizando como
 		// chave o nome de destino do arquivo
