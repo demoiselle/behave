@@ -130,9 +130,15 @@ public class ALMIntegration implements Integration {
 				// Login
 				login(client);
 
+				Testplan plan;
+
 				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
 				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
-				Testplan plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+				if (responseTestPlanGet.getStatusLine().getStatusCode() != 201 && responseTestPlanGet.getStatusLine().getStatusCode() != 200) {
+					throw new BehaveException("Plano de teste com id " + result.get("testPlanId").toString() + " não encontrada na área de projeto " + projectAreaAlias);
+				} else {
+					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+				}
 
 				// --------------------------- TestCase (PUT)
 				// Conexão HTTPS
@@ -163,8 +169,8 @@ public class ALMIntegration implements Integration {
 				}
 			} else {
 				testCaseName = "urn:com.ibm.rqm:testcase:" + testCaseId;
-			}		
-			
+			}
+
 			// --------------------------- Work Item (PUT)
 			// Conexão HTTPS
 			client = HttpsClient.getNewHttpClient(ENCODING);
