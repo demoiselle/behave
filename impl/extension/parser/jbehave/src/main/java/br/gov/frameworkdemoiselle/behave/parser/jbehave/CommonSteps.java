@@ -49,6 +49,7 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
@@ -111,7 +112,7 @@ public class CommonSteps implements Step {
 		}
 		else
 		{
-			throw new BehaveException("");
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() +"] inválido");
 		}
 	}
 
