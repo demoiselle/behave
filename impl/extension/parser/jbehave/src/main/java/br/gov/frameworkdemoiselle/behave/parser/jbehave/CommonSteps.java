@@ -95,13 +95,22 @@ public class CommonSteps implements Step {
 	@When("seleciono a opção \"$value\"")
 	@Then("seleciono a opção \"$value\"")
 	public void informe(String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 
-		if (element instanceof Radio) {
+		if (element instanceof Radio)
+		{
 			((Radio) element).click();
-		} else if (element instanceof CheckBox) {
+		}
+		else if (element instanceof CheckBox)
+		{
 			((CheckBox) element).click();
-		} else {
+		}
+		else if (element instanceof Link)
+		{
+			((Link) element).click();
+		}
+		else
+		{
 			throw new BehaveException("");
 		}
 	}
