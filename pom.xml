@@ -52,7 +52,7 @@
 		<module>impl/extension/runner/webdriver</module>
 		<module>impl/extension/runner/fest</module>
 
-		<module>impl/extension/integration/alm</module>		
+		<module>impl/extension/integration/alm</module>
 		<module>documentation/reference</module>
 	</modules>
 
@@ -81,6 +81,11 @@
 
 	<repositories>
 		<repository>
+			<id>repo1.maven</id>
+			<name>Repo1 Maven</name>
+			<url>hhttp://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -103,6 +108,7 @@
 			</releases>
 		</repository>
 	</repositories>
+
 
 	<distributionManagement>
 		<site>
