@@ -41,6 +41,8 @@ import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+
 /**
  * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS
  * e RUNNERS disponíveis. Ele guarda os objetos em um hashtable para que o
@@ -88,7 +90,7 @@ public class InjectionManager {
 			}
 
 			if (!singletons.containsKey(clazz.toString()))
-				throw new RuntimeException("Não foram encontradas classes que implementem " + clazz.toString() + ".");
+				throw new BehaveException("Não foram encontradas classes que implementem " + clazz.toString() + ".");
 
 			return singletons.get(clazz.toString());
 		}
