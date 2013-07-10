@@ -3,9 +3,15 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
-		<revnumber>1.2.0-SNAPSHOT</revnumber>
+		<revnumber>1.1.0</revnumber>
+		<date>30/06/2013</date>
+		<authorinitials>vbs</authorinitials>
+		<revremark>Documentação de Referência.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.0.0</revnumber>
 		<date>15/05/2013</date>
 		<authorinitials>vbs</authorinitials>
-		<revremark>Primeira release da documentação.</revremark>
+		<revremark>Guia Rápido.</revremark>
 	</revision>
 </revhistory>
