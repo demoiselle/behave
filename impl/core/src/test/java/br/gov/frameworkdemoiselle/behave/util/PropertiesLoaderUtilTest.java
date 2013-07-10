@@ -44,6 +44,7 @@ import java.util.Properties;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
 /**
  * 
  * @author SERPRO

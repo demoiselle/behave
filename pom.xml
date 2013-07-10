@@ -26,7 +26,6 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -46,13 +45,12 @@
 		<module>parent/behave</module>
 		<module>archetype</module>
 		<module>impl/core</module>
-		<module>impl/extension/parser/imperative</module>
-		<module>impl/extension/parser/jbehave</module>
-		<module>impl/extension/parser/cucumber</module>
-		<module>impl/extension/runner/webdriver</module>
-		<module>impl/extension/runner/fest</module>
-
-		<module>impl/extension/integration/alm</module>
+		<module>impl/parser/imperative</module>
+		<module>impl/parser/jbehave</module>
+		<module>impl/parser/cucumber</module>
+		<module>impl/runner/webdriver</module>
+		<module>impl/runner/fest</module>
+		<module>impl/integration/alm</module>
 		<module>documentation/reference</module>
 	</modules>
 

@@ -38,6 +38,9 @@ package br.gov.frameworkdemoiselle.behave.internal.parse;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import br.gov.frameworkdemoiselle.behave.internal.parser.Scenario;
+import br.gov.frameworkdemoiselle.behave.internal.parser.ScenarioParameter;
 /**
  * 
  * @author SERPRO

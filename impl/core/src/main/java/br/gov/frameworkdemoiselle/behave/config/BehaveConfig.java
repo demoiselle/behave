@@ -43,7 +43,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import br.gov.frameworkdemoiselle.behave.util.PropertiesLoaderUtil;
+import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
 
 /**
  * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo behave.properties com a recurso

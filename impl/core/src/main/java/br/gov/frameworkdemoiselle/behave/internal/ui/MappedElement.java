@@ -39,7 +39,7 @@ package br.gov.frameworkdemoiselle.behave.internal.ui;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
+import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
 /**
  * 
