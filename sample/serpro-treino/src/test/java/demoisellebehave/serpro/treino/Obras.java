@@ -38,12 +38,12 @@ package demoisellebehave.serpro.treino;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
 public class Obras {
 
-	private BehaveController eng = BehaveController.getInstance();
+	private BehaveContext eng = BehaveContext.getInstance();
 
 	public Obras() {
 		eng.addSteps(new MySteps());

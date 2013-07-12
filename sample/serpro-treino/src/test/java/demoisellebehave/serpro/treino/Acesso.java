@@ -39,12 +39,12 @@ package demoisellebehave.serpro.treino;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
 public class Acesso {
 
-	private BehaveController eng = BehaveController.getInstance();
+	private BehaveContext eng = BehaveContext.getInstance();
 
 	Logger log = Logger.getLogger(Acesso.class);
 

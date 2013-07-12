@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
 public class Components {
-	private BehaveController eng = BehaveController.getInstance();
+	private BehaveContext eng = BehaveContext.getInstance();
 
 	@Test
 	public void testAcesso() throws Throwable {

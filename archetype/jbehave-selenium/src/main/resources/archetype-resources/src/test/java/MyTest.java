@@ -2,14 +2,14 @@ package ${packageName};
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
 public class MyTest {
 
-	private BehaveController eng = null;
+	private BehaveContext eng = null;
 
 	public MyTest() {
-		eng = BehaveController.getInstance();
+		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
 	}
 

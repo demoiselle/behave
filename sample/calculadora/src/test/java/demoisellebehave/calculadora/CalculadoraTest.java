@@ -38,14 +38,14 @@ package demoisellebehave.calculadora;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
 public class CalculadoraTest {
 
-	private BehaveController eng = null;
+	private BehaveContext eng = null;
 
 	public CalculadoraTest() {
-		eng = BehaveController.getInstance();
+		eng = BehaveContext.getInstance();
 		eng.addSteps(new MeusPassos());
 	}
 

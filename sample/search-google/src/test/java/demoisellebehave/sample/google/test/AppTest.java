@@ -38,7 +38,7 @@ package demoisellebehave.sample.google.test;
 
 import org.junit.Test;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveController;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.sample.google.test.steps.MySteps;
 
 public class AppTest {
@@ -46,7 +46,7 @@ public class AppTest {
 	@Test
 	public void testBDD() throws Throwable {
 		// Instância o motor de testes
-		BehaveController eng = BehaveController.getInstance();
+		BehaveContext eng = BehaveContext.getInstance();
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
 		// Adiciona histórias

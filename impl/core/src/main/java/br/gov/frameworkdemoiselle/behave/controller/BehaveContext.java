@@ -53,13 +53,13 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
  * @author SERPRO
  * 
  */
-public class BehaveController {
+public class BehaveContext {
 
-	private static BehaveController eng = new BehaveController();
+	private static BehaveContext eng = new BehaveContext();
 
 	private Parser parser;
 
-	private static Logger log = Logger.getLogger(BehaveController.class);
+	private static Logger log = Logger.getLogger(BehaveContext.class);
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 
@@ -67,11 +67,11 @@ public class BehaveController {
 
 	private List<String> storiesPath = new ArrayList<String>();
 
-	private BehaveController() {
+	private BehaveContext() {
 
 	}
 
-	public static BehaveController getInstance() {
+	public static BehaveContext getInstance() {
 		return eng;
 	}
 
@@ -134,7 +134,7 @@ public class BehaveController {
 		storiesPath.clear();
 	}
 
-	public BehaveController addStories(String storiesPath) {
+	public BehaveContext addStories(String storiesPath) {
 		log.debug("addStories:" + storiesPath);
 		this.storiesPath.add(storiesPath);
 		return this;

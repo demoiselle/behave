@@ -46,17 +46,17 @@ import org.junit.Test;
  * @author SERPRO
  *
  */
-public class BehaveControllerTest {
+public class BehaveContextTest {
 
 	@Test
 	public void testGetInstance() {
-		BehaveController controller=BehaveController.getInstance();
+		BehaveContext controller=BehaveContext.getInstance();
 		Assert.assertNotNull(controller);
 	}
 
 	@Test
 	public void testRunListOfString() {
-		BehaveController controller=BehaveController.getInstance();
+		BehaveContext controller=BehaveContext.getInstance();
 		List<String> listaPath=new ArrayList<String>();
 		controller.run(listaPath);
 	}
@@ -64,20 +64,20 @@ public class BehaveControllerTest {
 	//TODO Teste quebrado
 	@Test
 	public void testRunString() {
-//		BehaveController controller=BehaveController.getInstance();		
+//		BehaveContext controller=BehaveContext.getInstance();		
 //		controller.run("path");
 	}
 
 	@Test
 	public void testRun() {
-		BehaveController controller=BehaveController.getInstance();
+		BehaveContext controller=BehaveContext.getInstance();
 		controller.run();
 	}
 
 	//TODO Teste quebrado
 	@Test
 	public void testAddStories() {
-//		BehaveController controller=BehaveController.getInstance();
+//		BehaveContext controller=BehaveContext.getInstance();
 //		controller.addStories("path");
 //		controller.run();
 	}
