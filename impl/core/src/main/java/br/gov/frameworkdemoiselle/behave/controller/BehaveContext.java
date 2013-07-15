@@ -139,6 +139,8 @@ public class BehaveContext {
 	public void run() {
 		run(storiesPath);
 		storiesPath.clear();
+		this.fail = null;
+		this.step = null;
 	}
 
 	public BehaveContext addStories(String storiesPath) {
