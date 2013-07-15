@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -66,6 +67,9 @@ public class BehaveContext {
 	private List<Step> steps = new ArrayList<Step>();
 
 	private List<String> storiesPath = new ArrayList<String>();
+
+	private String step;
+	private Throwable fail;
 
 	private BehaveContext() {
 
@@ -113,6 +117,9 @@ public class BehaveContext {
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
 			parser.run();
+			if (fail != null){
+				Assert.fail("Passo [" + step + "] falha [" + fail.getMessage() + "]");
+			}
 		} catch (BehaveException ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
 		} finally {
@@ -138,5 +145,10 @@ public class BehaveContext {
 		log.debug("addStories:" + storiesPath);
 		this.storiesPath.add(storiesPath);
 		return this;
+	}
+
+	public void fail(String step, Throwable fail) {
+		this.step = step;
+		this.fail = fail;		
 	}
 }

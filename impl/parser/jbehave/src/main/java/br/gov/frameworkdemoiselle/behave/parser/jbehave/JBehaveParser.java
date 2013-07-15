@@ -53,6 +53,7 @@ import org.jbehave.core.embedder.StoryControls;
 import org.jbehave.core.i18n.LocalizedKeywords;
 import org.jbehave.core.parsers.RegexStoryParser;
 import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
@@ -66,6 +67,7 @@ import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.DefaultStoryReport;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.console.ColoredConsoleFormat;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
@@ -91,14 +93,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			configuration.useStepFinder(new StepFinder());
 			configuration.useStoryControls(new StoryControls());
 			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-			if (BehaveConfig.getIntegration_Enabled()) {
-				configuration.useStoryReporterBuilder(
-						new StoryReporterBuilder()
-						.withReporters(new ALMStoryReport())
-						.withFormats(getFormats()));
-			} else {
-				configuration.useStoryReporterBuilder(new StoryReporterBuilder().withFormats(getFormats()));
-			}
+			StoryReporter storyReporter =  BehaveConfig.getIntegration_Enabled() ? new ALMStoryReport() : new DefaultStoryReport();
+			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(storyReporter).withFormats(getFormats()));
 			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
 			embedderControls.doGenerateViewAfterStories(true);
 			embedderControls.doIgnoreFailureInStories(true);
@@ -109,6 +105,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.useThreads(1);
 		} catch (BehaveException e) {
 			logger.debug("Não foi possível iniciar o JBehaveParser", e);
+			throw e;			
 		}
 	}
 
@@ -117,15 +114,15 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public void run() {
-		logger.info("Iniciou o parser JBehave");
+		logger.info("Iniciando o parser JBehave");
 		Embedder embedder = configuredEmbedder();
 		try {
-			logger.info("Executar historia: " + storyPaths.toString());
+			logger.info("Executando estorias: " + storyPaths.toString());
 			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();
 		}
-		logger.info("Finalizou PARSER JBehave");
+		logger.info("Finalizando parser JBehave");
 	}
 
 	@Override
@@ -135,7 +132,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		if (BehaveConfig.getParser_CommonsStepsEnabled()){
+		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
 			steps.add(new CommonSteps());
 		}
@@ -155,19 +152,20 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void setSteps(List<Step> steps) {
 		this.steps = steps;
 	}
-	
+
 	private Format[] getFormats() {
 
 		Format console = Format.CONSOLE;
-		
-		// Verifica se existe uma variável de ambiente chamada COLORED_CONSOLE e ela possui valor diferente de zero.
+
+		// Verifica se existe uma variável de ambiente chamada COLORED_CONSOLE e
+		// ela possui valor diferente de zero.
 		// No console é necessário fazer: export COLORED_CONSOLE=1
-		String ambiente = System.getenv("COLORED_CONSOLE");		
-		if(!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {	
+		String ambiente = System.getenv("COLORED_CONSOLE");
+		if (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {
 			console = new ColoredConsoleFormat();
 		}
 
 		return new Format[] { console, Format.HTML, Format.STATS };
-	}	
+	}
 
 }
