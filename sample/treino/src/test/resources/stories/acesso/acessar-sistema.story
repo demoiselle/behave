@@ -17,13 +17,7 @@ Funcionalidade: Acesso ao Sistema
 		Dado que vou para a página "Tela Princial"
 		Quando clico em "Sair" 
 		Então será exibido "Usuário:"
-		E será exibido "Senha:"
-		
-	
-	Cenário: Cenário de envio para a ALM (Erro)
-	
-		Acesso ao Sistema com usuário "06762344887" e senha "00000"
-		Sair do "sistema"
+		E será exibido "Senha:"		
 		
 	Cenário: Cenário de envio para a ALM
 	

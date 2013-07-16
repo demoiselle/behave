@@ -36,24 +36,26 @@
  */
 package demoisellebehave.serpro.treino;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.serpro.treino.test.steps.MySteps;
 
-public class Obras {
+public class AcessoTests {
 
 	private BehaveContext eng = BehaveContext.getInstance();
 
-	public Obras() {
+	Logger log = Logger.getLogger(AcessoTests.class);
+
+	public AcessoTests() {
 		eng.addSteps(new MySteps());
 	}
 
 	@Test
-	public void testObras() throws Throwable {
-		eng.addStories("/stories/acesso/");
-		eng.addStories("/stories/obras/");
-		eng.run();
+	public void testAllAcesso() throws Throwable {
+		eng.run("/stories/acesso/");
 	}
+	
 
 }

@@ -34,12 +34,30 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.steps;
+package demoisellebehave.serpro.treino.test.pages;
 
-import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import demoisellebehave.serpro.treino.config.Config;
 
-public class MySteps implements Step {
+@ScreenMap(name = "Envio de Lançe",  base=Config.URLBASE, location="/private/pages/obra.html")
+public class EnvioLancePage {
 
+	@ElementMap(name = "Novo Valor", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'fmLance')][contains(@type, 'text')])[1]")
+	private TextField txtValorObra;	
 
+	@ElementMap(name = "Novo Prazo", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'fmLance')][contains(@type, 'text')])[2]")
+	private TextField txtPrazoObra;	
+
+	
+	@ElementMap(name = "Enviar Proposta", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'fmLance')]/span[./text()='Enviar Proposta'])")
+	private Button enviarProposta;	
+
+	
+
+	
 	
 }

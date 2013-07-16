@@ -43,8 +43,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import demoisellebehave.serpro.treino.config.Config;
 
-@ScreenMap(name = "Tela de Obras",  base=Config.URLBASE, location="/private/pages/obra.html")
-public class ObrasPage {
+@ScreenMap(name = "Lista de Obras",  base=Config.URLBASE, location="/private/pages/obra.html")
+public class ListaObrasPage {
 
 	@ElementMap(name = "Adicionar Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
 	private Button botaoAdicionarObra;
@@ -67,7 +67,10 @@ public class ObrasPage {
 	@ElementMap(name = "Botão de Excluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
 	private Button primeiroBotaoExcluir;
 	
-	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formRemoverObra')][contains(@type, 'submit')])[1]")
+	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formRemoverObra')]/span[./text()='Sim'])")
 	private Button sim;
+	
+	@ElementMap(name = "Enviar Lance na Primeira Obra", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formObra')][contains(@onclick, 'dlLance.show')])[1]")
+	private Button btPrimeiraObra;	
 	 
 }

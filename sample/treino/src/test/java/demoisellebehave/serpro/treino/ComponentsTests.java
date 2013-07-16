@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class Components {
+public class ComponentsTests {
 	private BehaveContext eng = BehaveContext.getInstance();
 
 	@Test
-	public void testAcesso() throws Throwable {
+	public void testAllComponents() throws Throwable {
 		ArrayList<String> stories = new ArrayList<String>();
-		stories.add("/stories/acesso/acesso.story");
-		stories.add("/stories/framework/components.story");
+		stories.add("/stories/acesso/acessar-sistema.story");
+		stories.add("/stories/components/components.story");
 
 		eng.run(stories);
 	}

@@ -23,7 +23,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>serpro-treino</artifactId>
+	<artifactId>treino</artifactId>
 	<version>1.0.0</version>
 
 	<parent>
@@ -32,7 +32,7 @@
 		<version>1</version>
 	</parent>
 
-	<name>Demoiselle Behave Serpro Treino</name>
+	<name>Demoiselle Behave Treino</name>
 
 	<description>Demoiselle Behave Serpro Treino</description>
 
