@@ -43,36 +43,37 @@ import br.gov.frameworkdemoiselle.behave.DataProvider;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class DataContainer implements DataProvider {
 
 	private static DataContainer dataContainer;
-	private Hashtable<String, String> data;
+	private Hashtable<String, Object> data;
 
 	private DataContainer() {
+		data = new Hashtable<String, Object>();
 	}
 
 	public static DataContainer getInstance() {
-		if (dataContainer == null)
+		if (dataContainer == null) {
 			dataContainer = new DataContainer();
+		}
 		return dataContainer;
 	}
 
-	private Hashtable<String, String> getData() {
-		if (data == null)
-			data = new Hashtable<String, String>();
-		return data;
+	public void put(String key, Object value) {
+		key = key.trim();
+		data.put(key, value);
 	}
 
-	public void addNewValue(String key, String value) {
-		getData().remove(key);
-		getData().put(key, value);
+	public Object get(String key) {
+		key = key.trim();
+		return data.get(key);
 	}
 
-	public String getValue(String key) {
-		String str = (String) getData().get(key);
-		return str;
+	public boolean containsKey(String key) {
+		key = key.trim();
+		return data.containsKey(key);
 	}
 
 }

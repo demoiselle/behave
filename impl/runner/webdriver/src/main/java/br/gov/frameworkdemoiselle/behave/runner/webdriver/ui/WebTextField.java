@@ -46,5 +46,11 @@ public class WebTextField extends WebBase implements TextField {
 		verifyState(StateUI.VISIBLE);
 		getElements().get(0).clear();
 	}
+	
+	@Override
+	public String getText() {
+		waitElement(0);
+		return getElements().get(0).getAttribute("value");
+	}
 
 }

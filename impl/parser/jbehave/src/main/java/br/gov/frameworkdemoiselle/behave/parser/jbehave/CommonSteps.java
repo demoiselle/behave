@@ -44,6 +44,7 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.dataprovider.DataContainer;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
@@ -119,6 +120,9 @@ public class CommonSteps implements Step {
 	@When("informo \"$value\" no campo \"$fieldName\"")
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
+		//Verifica se o valor esta no DataContainer		
+		value = DataContainer.getInstance().containsKey(value) ? (String) DataContainer.getInstance().get(value) : value;			
+		
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
 		if (element instanceof TextField) {
@@ -145,5 +149,17 @@ public class CommonSteps implements Step {
 			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
 		}
 	}
-
+	
+	@When("obtenho \"$var\" do campo \"$fieldName\"")
+	@Given("obtenho \"$var\" do campo \"$fieldName\"")
+	public void getValue(String var, String fieldName) {
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		if (element instanceof TextField) {
+			TextField textField = (TextField) element;
+			String value = textField.getText();
+			DataContainer.getInstance().put(var, value);	
+		}else{ 
+			throw new BehaveException("Operação não suporta para o elemento [" + fieldName + "]");
+		}
+	}
 }
