@@ -38,34 +38,26 @@ package br.gov.frameworkdemoiselle.behave.internal.dataprovider;
 
 import java.util.Hashtable;
 
-import br.gov.frameworkdemoiselle.behave.DataProvider;
+import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 
 /**
  * 
  * @author SERPRO
  * 
  */
-public class DataContainer implements DataProvider {
+public class DefaultDataProvider implements DataProvider {
+	
+	private static Hashtable<String, Object> data;
 
-	private static DataContainer dataContainer;
-	private Hashtable<String, Object> data;
-
-	private DataContainer() {
+	public DefaultDataProvider() {
 		data = new Hashtable<String, Object>();
-	}
-
-	public static DataContainer getInstance() {
-		if (dataContainer == null) {
-			dataContainer = new DataContainer();
-		}
-		return dataContainer;
 	}
 
 	public void put(String key, Object value) {
 		key = key.trim();
 		data.put(key, value);
 	}
-
+	
 	public Object get(String key) {
 		key = key.trim();
 		return data.get(key);
@@ -76,4 +68,7 @@ public class DataContainer implements DataProvider {
 		return data.containsKey(key);
 	}
 
+	public void clear() {
+		data.clear();
+	}
 }

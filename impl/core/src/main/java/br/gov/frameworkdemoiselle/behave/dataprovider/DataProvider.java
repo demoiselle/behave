@@ -34,13 +34,21 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave;
+package br.gov.frameworkdemoiselle.behave.dataprovider;
 
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
-public interface Service {
+public interface DataProvider {
+
+	public boolean containsKey(String key);
+
+	public Object get(String key);
+
+	public void put(String key, Object value);
+	
+	public void clear();
 
 }

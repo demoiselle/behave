@@ -37,10 +37,10 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -57,8 +57,9 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.WebBrowser;
 
 public class WebDriverRunner implements Runner {
 
-	private Logger logger = Logger.getLogger(this.toString());
+	private Logger logger = Logger.getLogger(WebDriverRunner.class);
 	private WebDriver driver;
+	private WebBrowser browser;
 
 	void setWebDriver(WebDriver driver) {
 		this.driver = driver;
@@ -66,9 +67,7 @@ public class WebDriverRunner implements Runner {
 
 	public Object getDriver() {
 		if (driver == null) {
-
-			String browserProperty = BehaveConfig.getRunner_ScreenType();
-			WebBrowser browser = Enum.valueOf(WebBrowser.class, browserProperty);
+			browser = Enum.valueOf(WebBrowser.class, BehaveConfig.getRunner_ScreenType());
 
 			// Uso opicionao do proxy
 			if (!BehaveConfig.getRunner_ProxyEnabled()) {
@@ -82,11 +81,16 @@ public class WebDriverRunner implements Runner {
 				driver = new FirefoxDriver(capabilities);
 			}
 
-			logger.log(Level.FINE, "Iniciou o driver - " + browser.toString());
+			logger.debug("Iniciou o driver - " + browser.toString());
 
 			// Configurações do driver
-			driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+			try{
+				driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+			}catch(UnsupportedCommandException e){
+				logger.error("Não foi possível configurar o timeout do [" + browser.toString() +"]");
+				logger.debug(e);
+			}
 		}
 		return driver;
 	}
@@ -135,10 +139,11 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void close() {
+		if (browser.equals(WebBrowser.GoogleChrome)) return;
 		driver.close();
 	}
 
-	public void quit() {
+	public void quit() {			
 		driver.quit();
 	}
 

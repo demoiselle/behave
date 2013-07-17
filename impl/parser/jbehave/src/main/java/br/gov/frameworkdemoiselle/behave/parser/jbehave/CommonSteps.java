@@ -43,8 +43,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.dataprovider.DataContainer;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
@@ -66,6 +66,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 public class CommonSteps implements Step {
 
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	protected Logger logger = Logger.getLogger(this.toString());
 	protected String currentPageName;
 
@@ -121,7 +122,7 @@ public class CommonSteps implements Step {
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
 		//Verifica se o valor esta no DataContainer		
-		value = DataContainer.getInstance().containsKey(value) ? (String) DataContainer.getInstance().get(value) : value;			
+		value = dataProvider.containsKey(value) ? (String) dataProvider.get(value) : value;			
 		
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
@@ -152,14 +153,23 @@ public class CommonSteps implements Step {
 	
 	@When("obtenho \"$var\" do campo \"$fieldName\"")
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
+	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			String value = textField.getText();
-			DataContainer.getInstance().put(var, value);	
+			dataProvider.put(var, value);	
 		}else{ 
 			throw new BehaveException("Operação não suporta para o elemento [" + fieldName + "]");
 		}
 	}
+	
+	@When("informo \"$key\" com valor \"$fieldName\"")
+	@Given("informo \"$key\" com valor \"$fieldName\"")
+	@Then("informo \"$key\" com valor \"$fieldName\"")
+	public void setDataProvider(String key, String value){
+		dataProvider.put(key, value);
+	}
+	
 }

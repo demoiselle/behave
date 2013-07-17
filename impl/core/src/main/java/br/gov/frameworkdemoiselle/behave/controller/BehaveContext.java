@@ -123,6 +123,8 @@ public class BehaveContext {
 		} catch (BehaveException ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
 		} finally {
+			storiesPath.clear();
+			steps.clear();
 			log.info("--------------------------------");
 			log.info(" Desligando Demoiselle Behave");
 			log.info("--------------------------------");
@@ -138,7 +140,6 @@ public class BehaveContext {
 
 	public void run() {
 		run(storiesPath);
-		storiesPath.clear();
 		this.fail = null;
 		this.step = null;
 	}

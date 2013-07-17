@@ -46,7 +46,7 @@ import java.util.GregorianCalendar;
 import org.jbehave.core.annotations.Given;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.dataprovider.DataContainer;
+import br.gov.frameworkdemoiselle.behave.internal.dataprovider.DefaultDataProvider;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 
 public class MySteps implements Step {
@@ -58,7 +58,7 @@ public class MySteps implements Step {
 	public void decrementoCentavo(double decremento, String variavel) {
 		try {
 			// Obtem valor da variável do DataContainer
-			DataContainer container = DataContainer.getInstance();
+			DefaultDataProvider container = DefaultDataProvider.getInstance();
 
 			String melhorValorString = (String) container.get(variavel);
 
@@ -78,7 +78,7 @@ public class MySteps implements Step {
 	public void decrementoDia(int valor, String variavel) {
 		try {
 			// Obtem valor da variável do DataContainer
-			DataContainer container = DataContainer.getInstance();
+			DefaultDataProvider container = DefaultDataProvider.getInstance();
 			String melhorDateString = (String) container.get(variavel);
 			
 			//Converte a string em data
