@@ -53,7 +53,7 @@
 	</organization>
 
 	<properties>
-		<behave.release.version>1.2.0-SNAPSHOT</behave.release.version>
+		<behave.release.version>1.2.0-BETA-2</behave.release.version>
 	</properties>
 
 	<repositories>
