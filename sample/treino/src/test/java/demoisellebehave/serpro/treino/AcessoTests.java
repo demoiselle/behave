@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
-import demoisellebehave.serpro.treino.test.steps.MySteps;
+import demoisellebehave.serpro.treino.steps.MySteps;
 
 public class AcessoTests {
 

@@ -34,21 +34,30 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.pages;
+package demoisellebehave.serpro.treino.pages;
 
-import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import demoisellebehave.serpro.treino.config.Config;
 
-@ScreenMap(name = "Tela Princial", base = Config.URLBASE, location = "/private/pages/index.html")
-public class PrincipalPage {
+@ScreenMap(name = "Envio de Lançe",  base=Config.URLBASE, location="/private/pages/obra.html")
+public class EnvioLancePage {
 
-	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
-	private Button sair;
+	@ElementMap(name = "Novo Valor", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'fmLance')][contains(@type, 'text')])[1]")
+	private TextField txtValorObra;	
 
-	@ElementMap(name = "Tela as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
-	private Button todasAsObras;
+	@ElementMap(name = "Novo Prazo", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'fmLance')][contains(@type, 'text')])[2]")
+	private TextField txtPrazoObra;	
 
+	
+	@ElementMap(name = "Enviar Proposta", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'fmLance')]/span[./text()='Enviar Proposta'])")
+	private Button enviarProposta;	
+
+	
+
+	
+	
 }

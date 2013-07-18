@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.steps;
+package demoisellebehave.serpro.treino.steps;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

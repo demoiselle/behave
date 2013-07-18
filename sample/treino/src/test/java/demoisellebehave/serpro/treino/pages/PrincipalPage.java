@@ -34,43 +34,21 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.test.pages;
+package demoisellebehave.serpro.treino.pages;
 
+import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
-import demoisellebehave.serpro.treino.config.Config;
 
-@ScreenMap(name = "Lista de Obras",  base=Config.URLBASE, location="/private/pages/obra.html")
-public class ListaObrasPage {
+@ScreenMap(name = "Tela Princial", base = Config.URLBASE, location = "/private/pages/index.html")
+public class PrincipalPage {
 
-	@ElementMap(name = "Adicionar Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
-	private Button botaoAdicionarObra;
-	
-	@ElementMap(name = "Nome da Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[1]")
-	private TextField nomeDaObra;
+	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
+	private Button sair;
 
-	@ElementMap(name = "Valor", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[2]")
-	private TextField valor;
-	
-	@ElementMap(name = "Prazo", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[3]")
-	private TextField prazo;
-	
-	@ElementMap(name = "Inserir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
-	private Button btInserir;
-	
-	@ElementMap(name = "Última Página", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-paginator-last ui-state-default ui-corner-all')])[1]")
-	private Button ultimaPagina;
-	
-	@ElementMap(name = "Botão de Excluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
-	private Button primeiroBotaoExcluir;
-	
-	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formRemoverObra')]/span[./text()='Sim'])")
-	private Button sim;
-	
-	@ElementMap(name = "Enviar Lance na Primeira Obra", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formObra')][contains(@onclick, 'dlLance.show')])[1]")
-	private Button btPrimeiraObra;	
-	 
+	@ElementMap(name = "Tela as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
+	private Button todasAsObras;
+
 }
