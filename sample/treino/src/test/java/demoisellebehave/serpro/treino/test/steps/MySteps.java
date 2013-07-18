@@ -46,10 +46,9 @@ import java.util.GregorianCalendar;
 import org.jbehave.core.annotations.Given;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.dataprovider.DefaultDataProvider;
-import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
 
-public class MySteps implements Step {
+public class MySteps extends CommonSteps {
 
 	private DecimalFormat formatDecimal = new DecimalFormat("###.0");
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -58,9 +57,7 @@ public class MySteps implements Step {
 	public void decrementoCentavo(double decremento, String variavel) {
 		try {
 			// Obtem valor da variável do DataContainer
-			DefaultDataProvider container = DefaultDataProvider.getInstance();
-
-			String melhorValorString = (String) container.get(variavel);
+			String melhorValorString = (String) dataProvider.get(variavel);
 
 			// Converte para double e decrementa
 			double melhorValorDouble = formatDecimal.parse(melhorValorString).doubleValue();
@@ -68,7 +65,7 @@ public class MySteps implements Step {
 
 			// Converta para String e retorna novo valor ao DataContainer
 			melhorValorString = formatDecimal.format(melhorValorDouble).replace(',', '.');
-			container.put(variavel, melhorValorString);
+			dataProvider.put(variavel, melhorValorString);
 		} catch (ParseException e) {
 			throw new BehaveException("Erro ao parsear número", e);
 		}
@@ -78,8 +75,7 @@ public class MySteps implements Step {
 	public void decrementoDia(int valor, String variavel) {
 		try {
 			// Obtem valor da variável do DataContainer
-			DefaultDataProvider container = DefaultDataProvider.getInstance();
-			String melhorDateString = (String) container.get(variavel);
+			String melhorDateString = (String) dataProvider.get(variavel);
 			
 			//Converte a string em data
 			Date melhorData = dateFormat.parse(melhorDateString);
@@ -92,7 +88,7 @@ public class MySteps implements Step {
 			melhorDateString = dateFormat.format(cl.getTime());
 			
 			//Converte data para string e e retorna novo valor ao DataContainer
-			container.put(variavel, melhorDateString);
+			dataProvider.put(variavel, melhorDateString);
 		} catch (ParseException e) {
 			throw new BehaveException("Erro ao parsear número", e);
 		}
