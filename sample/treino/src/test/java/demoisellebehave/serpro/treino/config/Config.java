@@ -3,6 +3,6 @@ package demoisellebehave.serpro.treino.config;
 
 public class Config {
 
-	public final static String URLBASE = "seprotreino.url";
+	public final static String URLBASE = "treino.url";
 	
 }
