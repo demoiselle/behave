@@ -134,7 +134,6 @@ public class WebDriverRunnerTest {
 		Mockito.when(driverExpected.getPageSource()).thenReturn("source");
 		WebDriverRunner runner = new WebDriverRunner();
 		runner.setWebDriver(driverExpected);
-		runner.close();
 	}
 
 	@Test
