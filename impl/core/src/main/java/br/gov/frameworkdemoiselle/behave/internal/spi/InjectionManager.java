@@ -55,11 +55,11 @@ public class InjectionManager {
 
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
 	private static InjectionManager instance;
-	
-	void setSingletons(Hashtable<String, Object> singletons){
-		this.singletons=singletons;
+
+	void setSingletons(Hashtable<String, Object> singletons) {
+		this.singletons = singletons;
 	}
-	
+
 	Logger log = Logger.getLogger(InjectionManager.class);
 
 	private InjectionManager() {
@@ -77,20 +77,18 @@ public class InjectionManager {
 			return singletons.get(clazz.toString());
 		} else {
 			ServiceLoader<Object> service = ServiceLoader.load(clazz);
-			int count = 0;
 
 			for (Object object : service) {
-				if (count > 0) {
-					throw new RuntimeException("Só pode existir 1 classe " + clazz.toString() + " selecionado no pom.xml como dependência.");
-				}
 
 				singletons.put(clazz.toString(), object);
 
-				count++;
+				break;
 			}
 
 			if (!singletons.containsKey(clazz.toString()))
-				throw new BehaveException("Não foram encontradas classes que implementem " + clazz.toString() + ".");
+				throw new BehaveException(
+						"Não foram encontradas classes que implementem "
+								+ clazz.toString() + ".");
 
 			return singletons.get(clazz.toString());
 		}
