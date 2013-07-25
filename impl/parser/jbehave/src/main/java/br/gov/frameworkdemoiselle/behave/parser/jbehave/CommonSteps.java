@@ -89,16 +89,16 @@ public class CommonSteps implements Step {
 		currentPageName = local;
 	}
 
-	@When("clico em \"$elementName\" referente a \"$locatorParameters\"")
-	@Then("clico em \"$elementName\" referente a \"$locatorParameters\"")
+	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
+	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
 		Button element = (Button) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 		element.click();
 	}
 	
-	@When("clico em \"$elementName\"")
-	@Then("clico em \"$elementName\"")
+	@When(value = "clico em \"$elementName\"", priority = 1)
+	@Then(value = "clico em \"$elementName\"", priority = 1)
 	public void clickButton(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
 
