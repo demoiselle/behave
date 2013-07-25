@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,13 +89,21 @@ public class CommonSteps implements Step {
 		currentPageName = local;
 	}
 
+	@When("clico em \"$elementName\" referente a \"$locatorParameters\"")
+	@Then("clico em \"$elementName\" referente a \"$locatorParameters\"")
+	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
+		Button element = (Button) runner.getElement(currentPageName, elementName);
+		element.setLocatorParameters(locatorParameters);
+		element.click();
+	}
+	
 	@When("clico em \"$elementName\"")
 	@Then("clico em \"$elementName\"")
 	public void clickButton(String elementName) {
 		Button element = (Button) runner.getElement(currentPageName, elementName);
 		element.click();
 	}
-
+	
 	@When("seleciono a opção \"$value\"")
 	@Then("seleciono a opção \"$value\"")
 	public void informe(String fieldName) {

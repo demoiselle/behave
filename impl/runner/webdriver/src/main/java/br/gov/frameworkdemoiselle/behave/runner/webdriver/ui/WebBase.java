@@ -27,12 +27,16 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
 public class WebBase extends MappedElement implements BaseUI {
 
+	private List<String> locatorParameters;
+	
 	public List<WebElement> getElements() {
 		List<WebElement> elements = new ArrayList<WebElement>();
 
 		for (String locator : getElementMap().locator()) {
-			By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
+			locator = getLocatorWithParameters(locator);
+			By by = ByConverter.convert(getElementMap().locatorType(), locator);
+			
 			try {
 				// Utiliza implicity wait
 				WebElement element = getDriver().findElement(by);
@@ -43,6 +47,20 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 
 		return elements;
+	}
+
+	private String getLocatorWithParameters(String locator) {
+		
+		if( getLocatorParameter() != null && !getLocatorParameter().isEmpty() && locator.matches( ".*%param[0-9]+%.*" )) {
+			int n = 1;
+			for( String parameter : getLocatorParameter() ) {
+				String tag = "%param"+n+"%";
+				if( locator.contains( tag )) 
+					locator = locator.replace(tag, parameter);
+				n++;
+			}
+		}
+		return locator;
 	}
 
 	public String getText() {
@@ -104,8 +122,13 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
-		waitClickable(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
-		waitVisibility(ByConverter.convert(getElementMap().locatorType(), getElementMap().locator()[index].toString()));
+
+		String locator = getLocatorWithParameters( getElementMap().locator()[index].toString() );
+		By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+		waitClickable(by);
+		waitVisibility(by);
+		
 	}
 
 	/**
@@ -148,5 +171,14 @@ public class WebBase extends MappedElement implements BaseUI {
 		WebDriver driver = (WebDriver) getRunner().getDriver();
 		return driver;
 	}
+
+	public List<String> getLocatorParameter() {
+		return locatorParameters;
+	}
+
+	public void setLocatorParameters(List<String> locatorParameter2) {
+		this.locatorParameters = locatorParameter2;
+	}
+
 
 }
