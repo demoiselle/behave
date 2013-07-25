@@ -268,7 +268,7 @@ public class StoryConverter {
 	private static void reuseScenario(Map<String, List<Scenario>> scenarios) {
 		Map<String, Scenario> scenariosIdentificationMap = createScenariosIdentificationMap(scenarios);
 		for (Entry<String, Scenario> entrySet : scenariosIdentificationMap.entrySet()) {
-			reuseScenarioSentences(entrySet.getValue(), scenariosIdentificationMap);
+			reuseScenarioSentences(entrySet.getValue(), entrySet.getValue(), scenariosIdentificationMap);
 		}
 	}
 
@@ -284,29 +284,40 @@ public class StoryConverter {
 		return scenariosIdentificationMap;
 	}
 
-	private static void reuseScenarioSentences(Scenario scenario, Map<String, Scenario> scenariosIdentificationMap) {
+	/**
+	 * @param topScenario
+	 *            : utilizado para o tratamento de loop infinito no reuso de
+	 *            histórias
+	 * @param scenario
+	 * @param scenariosIdentificationMap
+	 */
+	private static void reuseScenarioSentences(Scenario topScenario, Scenario scenario, Map<String, Scenario> scenariosIdentificationMap) {
 		List<String> sentences = new ArrayList<String>();
 		for (String sentence : scenario.getSentences()) {
-			if (!scenario.getReusable()) {
-				String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.getParser_PrefixesBddPattern(), sentence.trim(), 3);
-				if (sentenceWithoutPrefixAndParametersName == null) {
-					sentenceWithoutPrefixAndParametersName = sentence;
+			// Removida a condição que impedia o reuso de passos negócio dentro
+			// de passos de negócio
+			String sentenceWithoutPrefixAndParametersName = RegularExpressionUtil.getGroup(BehaveConfig.getParser_PrefixesBddPattern(), sentence.trim(), 3);
+			if (sentenceWithoutPrefixAndParametersName == null) {
+				sentenceWithoutPrefixAndParametersName = sentence;
+			}
+			sentenceWithoutPrefixAndParametersName = sentenceWithoutPrefixAndParametersName.trim();
+			sentenceWithoutPrefixAndParametersName = ScenarioParameter.removeParameterNames(sentenceWithoutPrefixAndParametersName).toUpperCase();
+
+			// Tratamento para loop infinito no reuso de histórias
+			if (sentenceWithoutPrefixAndParametersName.equals(topScenario.getIdentificationWithoutParametersName())) {
+				throw new BehaveException("Erro de referência cíclica encontrado no cenário: " + topScenario.getIdentification());
+			}
+
+			if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {
+				// A sentença é na verdade uma referência a outro cenário
+				Scenario scenarioReused = scenariosIdentificationMap.get(sentenceWithoutPrefixAndParametersName);
+				if (!scenarioReused.getConverted()) {
+					// Foi utilizada recursão pois é possível que um cenário
+					// chame outro cenário que chame outro cenário
+					reuseScenarioSentences(topScenario, scenarioReused, scenariosIdentificationMap);
 				}
-				sentenceWithoutPrefixAndParametersName = sentenceWithoutPrefixAndParametersName.trim();
-				sentenceWithoutPrefixAndParametersName = ScenarioParameter.removeParameterNames(sentenceWithoutPrefixAndParametersName).toUpperCase();
-				if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {
-					// A sentença é na verdade uma referência a outro cenário
-					Scenario scenarioReused = scenariosIdentificationMap.get(sentenceWithoutPrefixAndParametersName);
-					if (!scenarioReused.getConverted()) {
-						// Foi utilizada recursão pois é possível que um cenário
-						// chame outro cenário que chame outro cenário
-						reuseScenarioSentences(scenarioReused, scenariosIdentificationMap);
-					}
-					List<String> sentencesReplacedCallParameters = ScenarioParameter.replaceCallParameters(sentence.trim(), scenarioReused);
-					sentences.addAll(sentencesReplacedCallParameters);
-				} else {
-					sentences.add(sentence);
-				}
+				List<String> sentencesReplacedCallParameters = ScenarioParameter.replaceCallParameters(sentence.trim(), scenarioReused);
+				sentences.addAll(sentencesReplacedCallParameters);
 			} else {
 				sentences.add(sentence);
 			}
