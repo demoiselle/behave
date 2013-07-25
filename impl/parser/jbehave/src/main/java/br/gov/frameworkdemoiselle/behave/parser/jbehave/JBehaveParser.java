@@ -57,6 +57,7 @@ import org.jbehave.core.reporters.StoryReporter;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
+import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.ParameterConverters;
 import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.StepFinder;
@@ -83,19 +84,29 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			logger.info("Configurando o JBehave");
 
 			ParameterConverters parameterConverters = new ParameterConverters();
-			parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
+			parameterConverters.addConverters(new DateConverter(
+					new SimpleDateFormat("dd/MM/yyyy")));
 
 			configuration = new Configuration() {
 			};
+
+			// Utilizado para possibilitar a utilização de cenários
+			// parametrizados (Exemplos)
+			configuration.useParameterControls(new ParameterControls()
+					.useDelimiterNamedParameters(true));
 
 			configuration.useParameterConverters(parameterConverters);
 			configuration.useKeywords(getKeywordsLocale());
 			configuration.useStepFinder(new StepFinder());
 			configuration.useStoryControls(new StoryControls());
-			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
-			StoryReporter storyReporter =  BehaveConfig.getIntegration_Enabled() ? new ALMStoryReport() : new DefaultStoryReport();
-			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(storyReporter).withFormats(getFormats()));
-			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+			configuration.useStoryParser(new RegexStoryParser(configuration
+					.keywords()));
+			StoryReporter storyReporter = BehaveConfig.getIntegration_Enabled() ? new ALMStoryReport()
+					: new DefaultStoryReport();
+			configuration.useStoryReporterBuilder(new StoryReporterBuilder()
+					.withReporters(storyReporter).withFormats(getFormats()));
+			EmbedderControls embedderControls = configuredEmbedder()
+					.embedderControls();
 			embedderControls.doGenerateViewAfterStories(true);
 			embedderControls.doIgnoreFailureInStories(true);
 			embedderControls.doIgnoreFailureInView(true);
@@ -105,7 +116,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.useThreads(1);
 		} catch (BehaveException e) {
 			logger.debug("Não foi possível iniciar o JBehaveParser", e);
-			throw e;			
+			throw e;
 		}
 	}
 
@@ -132,8 +143,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
-		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
+		if (BehaveConfig.getParser_BeforeAfterStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
+		}
+		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new CommonSteps());
 		}
 		return new InstanceStepsFactory(configuration(), steps.toArray());
@@ -143,7 +156,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void setStoryPaths(List<String> storyPaths) {
 		List<String> aux = new ArrayList<String>();
 		for (String str : storyPaths) {
-			aux.add(str.replace(FileUtil.getAbsolutePath() + File.separatorChar, ""));
+			aux.add(str.replace(
+					FileUtil.getAbsolutePath() + File.separatorChar, ""));
 		}
 		this.storyPaths = aux;
 	}
@@ -161,7 +175,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		// ela possui valor diferente de zero.
 		// No console é necessário fazer: export COLORED_CONSOLE=1
 		String ambiente = System.getenv("COLORED_CONSOLE");
-		if (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {
+		if (!StringUtils.isEmpty(ambiente)
+				&& !"0".equals(ambiente.toLowerCase())) {
 			console = new ColoredConsoleFormat();
 		}
 

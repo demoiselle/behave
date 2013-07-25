@@ -65,8 +65,10 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
  */
 public class CommonSteps implements Step {
 
-	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
+	protected Runner runner = (Runner) InjectionManager.getInstance()
+			.getInstanceDependecy(Runner.class);
+	protected DataProvider dataProvider = (DataProvider) InjectionManager
+			.getInstance().getInstanceDependecy(DataProvider.class);
 	protected Logger logger = Logger.getLogger(this.toString());
 	protected String currentPageName;
 
@@ -91,8 +93,16 @@ public class CommonSteps implements Step {
 	@When("clico em \"$elementName\"")
 	@Then("clico em \"$elementName\"")
 	public void clickButton(String elementName) {
-		Button element = (Button) runner.getElement(currentPageName, elementName);
-		element.click();
+		Element element = runner.getElement(currentPageName, elementName);
+
+		if (element instanceof Button) {
+			((Button) element).click();
+		} else if (element instanceof Link) {
+			((Link) element).click();
+		} else {
+			throw new BehaveException("Tipo de elemento ["
+					+ element.getClass().getName() + "] inválido");
+		}
 	}
 
 	@When("seleciono a opção \"$value\"")
@@ -100,31 +110,27 @@ public class CommonSteps implements Step {
 	public void informe(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 
-		if (element instanceof Radio)
-		{
+		if (element instanceof Radio) {
 			((Radio) element).click();
-		}
-		else if (element instanceof CheckBox)
-		{
+		} else if (element instanceof CheckBox) {
 			((CheckBox) element).click();
-		}
-		else if (element instanceof Link)
-		{
+		} else if (element instanceof Link) {
 			((Link) element).click();
-		}
-		else
-		{
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() +"] inválido");
+		} else {
+			throw new BehaveException("Tipo de elemento ["
+					+ element.getClass().getName() + "] inválido");
 		}
 	}
 
 	@When("informo \"$value\" no campo \"$fieldName\"")
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
-		//Verifica se o valor esta no DataContainer		
-		value = dataProvider.containsKey(value) ? (String) dataProvider.get(value) : value;			
-		
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		// Verifica se o valor esta no DataContainer
+		value = dataProvider.containsKey(value) ? (String) dataProvider
+				.get(value) : value;
+
+		Element element = (Element) runner.getElement(currentPageName,
+				fieldName);
 
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
@@ -145,31 +151,35 @@ public class CommonSteps implements Step {
 
 	@Then("será exibido na \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = (Element) runner.getElement(currentPageName,
+				elementName);
 		if (!element.getText().contains(text)) {
-			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
+			throw new BehaveException("O texto [" + text
+					+ "] não foi encontrado no elemento [" + elementName + "]");
 		}
 	}
-	
+
 	@When("obtenho \"$var\" do campo \"$fieldName\"")
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = (Element) runner.getElement(currentPageName,
+				fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			String value = textField.getText();
-			dataProvider.put(var, value);	
-		}else{ 
-			throw new BehaveException("Operação não suporta para o elemento [" + fieldName + "]");
+			dataProvider.put(var, value);
+		} else {
+			throw new BehaveException("Operação não suporta para o elemento ["
+					+ fieldName + "]");
 		}
 	}
-	
+
 	@When("informo \"$key\" com valor \"$fieldName\"")
 	@Given("informo \"$key\" com valor \"$fieldName\"")
 	@Then("informo \"$key\" com valor \"$fieldName\"")
-	public void setDataProvider(String key, String value){
+	public void setDataProvider(String key, String value) {
 		dataProvider.put(key, value);
 	}
-	
+
 }
