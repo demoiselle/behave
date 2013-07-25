@@ -94,13 +94,19 @@ public class ALMIntegration implements Integration {
 	public void sendScenario(Hashtable<String, Object> result) {
 
 		try {
-			// Pega os dados de autenticação
-			log.debug("Iniciar autenticador");
-			AutenticatorClient autenticator = new AutenticatorClient(BehaveConfig.getIntegration_AuthenticatorPort(), BehaveConfig.getIntegration_AuthenticatorHost());
-			autenticator.open();
-			username = autenticator.getUser();
-			password = autenticator.getPassword();
-			autenticator.close();
+			// Tenta obter dados de autenticado vindo do Hashtable			
+			if (result.containsKey("user") && result.containsKey("password")){
+				username = (String) result.get("user");
+				password = (String) result.get("password");
+			}else{			
+				// Pega os dados de autenticação
+				log.debug("Acessarr autenticador");
+				AutenticatorClient autenticator = new AutenticatorClient(BehaveConfig.getIntegration_AuthenticatorPort(), BehaveConfig.getIntegration_AuthenticatorHost());
+				autenticator.open();
+				username = autenticator.getUser();
+				password = autenticator.getPassword();
+				autenticator.close();
+			}
 			
 			if (!started) {
 				// Encode do Alias do Projeto
