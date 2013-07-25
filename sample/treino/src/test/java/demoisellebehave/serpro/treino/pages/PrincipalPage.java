@@ -42,10 +42,10 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-@ScreenMap(name = "Tela Princial", base = Config.URLBASE, location = "/private/pages/index.html")
+@ScreenMap(name = "Tela Principal", base = Config.URLBASE, location = "/private/pages/index.html")
 public class PrincipalPage {
 
-	@ElementMap(name = "Sair", locatorType = ElementLocatorType.LinkText, locator = "Sair")
+	@ElementMap(name = "Sair", locatorType = ElementLocatorType.XPath, locator = "//a[span='Sair']")
 	private Button sair;
 
 	@ElementMap(name = "Tela as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
