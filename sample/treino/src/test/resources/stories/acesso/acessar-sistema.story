@@ -12,3 +12,7 @@ Dado que estou na página "Tela Principal"
 Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
+
+Cenário: Acesso ao Sistema com usuário "{usuário}"
+
+Acesso ao Sistema com usuário "{usuário}" e senha "188542"
