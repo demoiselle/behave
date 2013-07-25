@@ -122,13 +122,11 @@ public class BehaveConfig {
 	}
 
 	public static String getParser_IdentificationScenarioPattern() {
-		return getProperty("behave.parser.identification.scenario.pattern."
-				+ getParser_Language());
+		return getProperty("behave.parser.identification.scenario.pattern." + getParser_Language());
 	}
 
 	public static String getParser_PrefixesBddPattern() {
-		return getProperty("behave.parser.prefixes.bdd.pattern."
-				+ getParser_Language());
+		return getProperty("behave.parser.prefixes.bdd.pattern." + getParser_Language());
 	}
 
 	// prefixo do arquivo bdd
@@ -142,21 +140,18 @@ public class BehaveConfig {
 	}
 
 	public static boolean getParser_CommonsStepsEnabled() {
-		return Boolean.parseBoolean(getProperty(
-				"behave.parser.commonssteps.enabled", "true"));
+		return Boolean.parseBoolean(getProperty("behave.parser.commonssteps.enabled", "true"));
 	}
 
 	public static boolean getParser_BeforeAfterStepsEnabled() {
-		return Boolean.parseBoolean(getProperty(
-				"behave.parser.beforeaftersteps.enabled", "true"));
+		return Boolean.parseBoolean(getProperty("behave.parser.beforeaftersteps.enabled", "true"));
 	}
 
 	/** INTEGRATION PROPERTIES **/
 
 	// habilita a integracao
 	public static boolean getIntegration_Enabled() {
-		return Boolean.parseBoolean(getProperty(
-				"behave.integration.alm.enabled", "false"));
+		return Boolean.parseBoolean(getProperty("behave.integration.alm.enabled", "false"));
 	}
 
 	// url de autenticacao
@@ -181,8 +176,7 @@ public class BehaveConfig {
 
 	// porta do autenticador
 	public static Integer getIntegration_AuthenticatorPort() {
-		return Integer.parseInt(getProperty(
-				"behave.integration.authenticator.port", "9990"));
+		return Integer.parseInt(getProperty("behave.integration.authenticator.port", "9990"));
 	}
 
 	// host de origem
@@ -194,20 +188,17 @@ public class BehaveConfig {
 
 	// Temo máximo para timeout de espera da tela
 	public static Long getRunner_ScreenMaxWait() {
-		return Long.parseLong(getProperty("behave.runner.screen.maxWait",
-				"10000"));
+		return Long.parseLong(getProperty("behave.runner.screen.maxWait", "10000"));
 	}
 
 	// Tempo mínimo de espera da tela
 	public static Long getRunner_ScreenMinWait() {
-		return Long
-				.parseLong(getProperty("behave.runner.screen.minWait", "100"));
+		return Long.parseLong(getProperty("behave.runner.screen.minWait", "100"));
 	}
 
 	// Modo proxy do navegador
 	public static boolean getRunner_ProxyEnabled() {
-		return Boolean.parseBoolean(getProperty("behave.runner.proxy.enabled",
-				"false"));
+		return Boolean.parseBoolean(getProperty("behave.runner.proxy.enabled", "false"));
 	}
 
 	// URL do proxy

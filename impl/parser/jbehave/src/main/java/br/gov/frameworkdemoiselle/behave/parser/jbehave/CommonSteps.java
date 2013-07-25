@@ -65,10 +65,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
  */
 public class CommonSteps implements Step {
 
-	protected Runner runner = (Runner) InjectionManager.getInstance()
-			.getInstanceDependecy(Runner.class);
-	protected DataProvider dataProvider = (DataProvider) InjectionManager
-			.getInstance().getInstanceDependecy(DataProvider.class);
+	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	protected Logger logger = Logger.getLogger(this.toString());
 	protected String currentPageName;
 
@@ -100,8 +98,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Link) {
 			((Link) element).click();
 		} else {
-			throw new BehaveException("Tipo de elemento ["
-					+ element.getClass().getName() + "] inválido");
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
 
@@ -117,8 +114,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Link) {
 			((Link) element).click();
 		} else {
-			throw new BehaveException("Tipo de elemento ["
-					+ element.getClass().getName() + "] inválido");
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
 
@@ -126,11 +122,9 @@ public class CommonSteps implements Step {
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
 		// Verifica se o valor esta no DataContainer
-		value = dataProvider.containsKey(value) ? (String) dataProvider
-				.get(value) : value;
+		value = dataProvider.containsKey(value) ? (String) dataProvider.get(value) : value;
 
-		Element element = (Element) runner.getElement(currentPageName,
-				fieldName);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
@@ -151,11 +145,9 @@ public class CommonSteps implements Step {
 
 	@Then("será exibido na \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(currentPageName,
-				elementName);
+		Element element = (Element) runner.getElement(currentPageName, elementName);
 		if (!element.getText().contains(text)) {
-			throw new BehaveException("O texto [" + text
-					+ "] não foi encontrado no elemento [" + elementName + "]");
+			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
 		}
 	}
 
@@ -163,15 +155,13 @@ public class CommonSteps implements Step {
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName,
-				fieldName);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			String value = textField.getText();
 			dataProvider.put(var, value);
 		} else {
-			throw new BehaveException("Operação não suporta para o elemento ["
-					+ fieldName + "]");
+			throw new BehaveException("Operação não suporta para o elemento [" + fieldName + "]");
 		}
 	}
 
