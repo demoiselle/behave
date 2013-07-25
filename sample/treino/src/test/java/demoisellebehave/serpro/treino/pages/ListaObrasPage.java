@@ -72,5 +72,8 @@ public class ListaObrasPage {
 	
 	@ElementMap(name = "Enviar Lance na Primeira Obra", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formObra')][contains(@onclick, 'dlLance.show')])[1]")
 	private Button btPrimeiraObra;	
+	
+	@ElementMap(name = "Excluir Obra", locatorType = ElementLocatorType.XPath, locator = "(//tr[td/span/span='%param1%']//button)[1]")
+	private Button btExcluir;
 	 
 }

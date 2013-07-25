@@ -51,7 +51,7 @@ public class ObrasTests {
 
 	@Test
 	public void testAllObras() throws Throwable {
-		eng.addStories("/stories/acesso/");
+		eng.addStories("/stories/acesso/acessar-sistema.story");
 		eng.addStories("/stories/obras/");
 		eng.run();
 	}
