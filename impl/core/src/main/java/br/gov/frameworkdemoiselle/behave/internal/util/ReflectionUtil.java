@@ -95,7 +95,7 @@ public class ReflectionUtil {
 		if (clazz == null)
 			throw new RuntimeException("Nenhuma Página foi encontrada com o nome [" + pageName + "].");
 
-		Set<Field> fields = ReflectionUtils.getFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
+		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
 
 		Class<?> clazzF = null;
 
