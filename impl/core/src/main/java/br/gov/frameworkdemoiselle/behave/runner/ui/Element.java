@@ -36,6 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.ui;
 
+import java.util.List;
+
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 
 /**
@@ -50,5 +52,7 @@ public interface Element {
 	public void setElementMap(ElementMap elementMap);
 	
 	public String getText();
+	
+	public void setLocatorParameters(List<String> Parameters);
 
 }
