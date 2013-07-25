@@ -42,6 +42,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+
 /**
  * Anotação utilizada para mapear os campos com os atributos dentro de uma
  * página (Classe anotada com @Page).
@@ -58,5 +60,7 @@ public @interface ElementMap {
 	public ElementLocatorType locatorType() default ElementLocatorType.Id;
 
 	public String[] locator();
+	
+	public Class<?> implementedBy() default InjectionManager.class;
 
 }
