@@ -75,7 +75,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 		try {
 			for (Scenario scenario : story.getScenarios()) {
 				// Somente envia para a ALM se o cenário tem Título (Title)
-				if (!scenario.getTitle().equals("")) {
+				if (!scenario.getTitle().equals("") && !scenario.getSteps().isEmpty()) {
 					Meta meta = scenario.getMeta();
 
 					Hashtable<String, Object> scenarioData = new Hashtable<String, Object>();
