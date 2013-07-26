@@ -211,13 +211,16 @@ public class GenerateXMLString {
 	public static Testplan getTestPlanObject(HttpResponse response) throws IOException, JAXBException {
 
 		Testplan plan = null;
-		String xmlString = "";
+		StringBuffer xmlString = new StringBuffer();
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			InputStream instream = entity.getContent();
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-				xmlString = reader.readLine();
+				String line = "";
+				while ((line = reader.readLine()) != null) {
+					xmlString.append(line);
+			    }
 			} finally {
 				instream.close();
 			}
@@ -226,7 +229,7 @@ public class GenerateXMLString {
 		if (!xmlString.equals("")) {
 			JAXBContext jaxbContext = JAXBContext.newInstance(Testplan.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			StringReader reader = new StringReader(xmlString);
+			StringReader reader = new StringReader(xmlString.toString());
 			plan = (Testplan) unmarshaller.unmarshal(reader);
 		}
 
