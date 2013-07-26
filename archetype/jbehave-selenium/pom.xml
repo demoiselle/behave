@@ -27,7 +27,7 @@
 	<groupId>br.gov.frameworkdemoiselle.component.behave.archetype</groupId>
 	<artifactId>jbehave-selenium-archetype</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.0-BETA-3</version>
+	<version>1.2.0-SNAPSHOT</version>
 
 	<organization>
 		<name>SERPRO</name>
