@@ -125,25 +125,20 @@ public class WebDriverRunner implements Runner {
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
 
-		// Exige que a classe seja uma interface
-		if (!clazz.isInterface())
-			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface.");
-
 		Element element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
-		if( map.implementedBy().equals( InjectionManager.class ) )
+		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da interface
-		else {
-			// Garante que a classe fornecida realmente implementa a interface Element
-			if( ! Element.class.isAssignableFrom( map.implementedBy() ) )
-				throw new RuntimeException("A class [" + map.implementedBy().getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface para 'Element'.");
+		// Instancia a classe fornecida explicitamente como implementação da interface Element
+		else if( Element.class.isAssignableFrom( clazz ) )
 			try {
-				element = (Element) map.implementedBy().newInstance();
+				element = (Element) clazz.newInstance();
 			} catch (Exception e) {
 				element = null;
 			} 
-		}
+		else
+			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface para 'Element'.");
+
 		if( element == null )
 			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da página [" + currentPageName + "].");
 			
