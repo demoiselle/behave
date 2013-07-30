@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -179,6 +180,30 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void setLocatorParameters(List<String> locatorParameter2) {
 		this.locatorParameters = locatorParameter2;
 	}
+	
+	/**
+	 * Retorna um Driver executor de códigos Javascript.
+	 * Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
+	 * 
+	 * @return {@link JavascriptExecutor}
+	 */
+	public JavascriptExecutor getJavascirptExecutor() {
+		if( !JavascriptExecutor.class.isAssignableFrom( this.runner.getDriver().getClass() ) )
+			throw new BehaveException("O driver [" + this.runner.getDriver().getClass() + "] não permite a execução de código Javascript.");
 
+		return (JavascriptExecutor) this.runner.getDriver();		
+	}
+
+	/**
+	 * Retorna o ID do primeiro elemento de tela mapeado.
+	 * 
+	 * @return
+	 */
+	public String getId() {
+		String id = getElements().get(0).getAttribute("id");
+		if( id == null || id.isEmpty() )
+			throw new BehaveException("O elemento [" + this.getElementMap().name() + "] não possui um ID definido.");
+		return id;
+	}
 
 }
