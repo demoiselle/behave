@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -54,6 +55,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
+import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
@@ -106,6 +109,10 @@ public class CommonSteps implements Step {
 			((Button) element).click();
 		} else if (element instanceof Link) {
 			((Link) element).click();
+		} else if (element instanceof Menu) {
+			((Menu) element).click();
+		} else if (element instanceof MenuItem) {
+			((MenuItem) element).click();
 		} else {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
@@ -153,6 +160,7 @@ public class CommonSteps implements Step {
 	}
 
 	@Then("será exibido na \"$elementName\" o valor \"$text\"")
+	@Alias("será exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		if (!element.getText().contains(text)) {
