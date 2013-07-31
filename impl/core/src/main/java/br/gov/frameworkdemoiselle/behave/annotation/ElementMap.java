@@ -60,7 +60,5 @@ public @interface ElementMap {
 	public ElementLocatorType locatorType() default ElementLocatorType.Id;
 
 	public String[] locator();
-	
-	public Class<?> implementedBy() default InjectionManager.class;
 
 }

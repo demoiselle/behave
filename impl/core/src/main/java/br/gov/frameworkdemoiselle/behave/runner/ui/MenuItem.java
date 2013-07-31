@@ -42,5 +42,9 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
  *
  */
 public interface MenuItem extends BaseUI {
+	
+	public void click();
+	
+	public void mouseOver();
 
 }
