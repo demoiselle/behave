@@ -188,5 +188,16 @@ public class CommonSteps implements Step {
 	public void setDataProvider(String key, String value) {
 		dataProvider.put(key, value);
 	}
+	
+	@When("movo o mouse sobre \"$element\"")
+	public void moverMouse(String elementName) {
+		Element element = runner.getElement(currentPageName, elementName);
+		
+		if (element instanceof Menu) {
+			((Menu) element).mouseOver();
+		} else if (element instanceof MenuItem) {
+			((MenuItem) element).mouseOver();
+		}  
+	}
 
 }
