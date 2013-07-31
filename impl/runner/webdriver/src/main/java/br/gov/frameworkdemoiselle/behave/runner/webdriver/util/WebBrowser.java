@@ -32,6 +32,7 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
+			System.setProperty("webdriver.safari.noinstall", "true");
 			return new SafariDriver();
 		}
 	},
