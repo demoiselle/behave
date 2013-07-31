@@ -34,37 +34,24 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.annotation;
+package br.gov.frameworkdemoiselle.behave.runner.fest.annotaiton;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Anotação utilizada para marcar as páginas (telas) utilizadas nas estórias.
+ * Anotação utilizada para indicar o índice do elemento no runner Desktop página
  * 
  * @author SERPRO
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ScreenMap {
+@Target(value = { ElementType.FIELD })
+public @interface ElementIndex {
 
-	/**
-	 * Propriedade que determina o texto que irá na estórias para que a chamada
-	 * da tela ocorra.
-	 */
-	public String name();
-	
-	/**
-	 * Propriedade que determina a localização base do location
-	 * @return
-	 */
-	public String base() default "";
-
-	/**
-	 * Propriedade que determina a localização que será chamada quando a
-	 * propriedade name() for encontrada para determinada página.
-	 */
-	public String location();
+	public int index() default 0;
 
 }

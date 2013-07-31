@@ -2,9 +2,9 @@ Funcionalidade: Acesso
 
 Como um: visitante
 Eu quero: acessar o Google
-De modo que: a página inicial apareceça para mim
+De modo que: a tela inicial apareceça para mim
 
 Cenário: Acesso ao Google
 
-Dado que vou para a página "Tela de Busca"
+Dado que vou para a tela "Tela de Busca"
 Então será exibido "Google"

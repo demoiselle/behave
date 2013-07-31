@@ -7,12 +7,12 @@ Cenário: Enviar Lance Vencedor
 
 Acesso ao Sistema com usuário "06762344887" e senha "188542"
 
-Dado que vou para a página "Lista de Obras"
+Dado que vou para a tela "Lista de Obras"
 Então será exibido "Arena da Baixada"
 Quando clico em "Enviar Lance na Primeira Obra"
 Então será exibido "Novo Lançe"
 
-Dado que estou na página "Envio de Lançe"
+Dado que estou na tela "Envio de Lançe"
 
 Dado que obtenho "O melhor Valor" do campo "Novo Valor"
 
@@ -31,12 +31,12 @@ Cenário: Enviar Lance Perdedor
 
 Acesso ao Sistema com usuário "06762344887" e senha "188542"
 
-Dado que vou para a página "Lista de Obras"
+Dado que vou para a tela "Lista de Obras"
 Então será exibido "Arena da Baixada"
 Quando clico em "Enviar Lance na Primeira Obra"
 Então será exibido "Novo Lançe"
 
-Dado que estou na página "Envio de Lançe"
+Dado que estou na tela "Envio de Lançe"
 
 Dado que obtenho "O melhor Valor" do campo "Novo Valor"
 Dado que obtenho "O melhor Prazo" do campo "Novo Prazo"

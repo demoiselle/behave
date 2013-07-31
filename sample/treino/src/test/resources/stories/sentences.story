@@ -1,8 +1,8 @@
 Funcionalidade: Acesso ao Sistema
 
-	Cenário: que vou para a página "{tela}"
+	Cenário: que vou para a tela "{tela}"
 	
-	Cenário: que estou na página "{tela}"
+	Cenário: que estou na tela "{tela}"
 	
 	Cenário: informo "{valor}" no campo "{campo}"
 	

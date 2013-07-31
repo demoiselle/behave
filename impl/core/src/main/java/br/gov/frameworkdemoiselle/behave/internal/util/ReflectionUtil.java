@@ -72,7 +72,7 @@ public class ReflectionUtil {
 		}
 
 		if (urlFinal.equals(""))
-			throw new RuntimeException("Nenhuma Página foi encontrada com o nome [" + name + "].");
+			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + name + "].");
 
 		return urlFinal;
 	}
@@ -93,7 +93,7 @@ public class ReflectionUtil {
 		}
 
 		if (clazz == null)
-			throw new RuntimeException("Nenhuma Página foi encontrada com o nome [" + pageName + "].");
+			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + pageName + "].");
 
 		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
 
@@ -129,7 +129,7 @@ public class ReflectionUtil {
 		}
 
 		if (clazz == null)
-			throw new RuntimeException("Nenhuma Página foi encontrada com o nome [" + pageName + "].");
+			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + pageName + "].");
 
 		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
 

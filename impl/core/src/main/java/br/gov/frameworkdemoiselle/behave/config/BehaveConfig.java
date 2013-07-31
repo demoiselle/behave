@@ -215,6 +215,15 @@ public class BehaveConfig {
 		return getProperty("behave.runner.screen.type");
 	}
 
+	/*
+	 * Configurações especificas para testes Desktop
+	 */
+
+	// Caminho para o JAR do executável do App
+	public static String getRunner_MainClass() {
+		return getProperty("behave.runner.app.mainClass");
+	}
+
 	/**
 	 * Exibe o valor das propriedades do DBehave caso o log esteja no modo debug
 	 */

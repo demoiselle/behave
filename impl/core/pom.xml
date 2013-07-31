@@ -63,5 +63,9 @@
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 	</dependencies>
 </project>
