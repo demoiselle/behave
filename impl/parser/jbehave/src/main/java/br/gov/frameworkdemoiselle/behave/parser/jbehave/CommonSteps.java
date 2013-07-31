@@ -118,8 +118,8 @@ public class CommonSteps implements Step {
 		}
 	}
 	
-	@When("seleciono a opção \"$value\"")
-	@Then("seleciono a opção \"$value\"")
+	@When(value = "seleciono a opção \"$value\"", priority = 1)
+	@Then(value = "seleciono a opção \"$value\"", priority = 1)
 	public void informe(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 
@@ -129,6 +129,17 @@ public class CommonSteps implements Step {
 			((CheckBox) element).click();
 		} else if (element instanceof Link) {
 			((Link) element).click();
+		} else {
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+		}
+	}
+
+	@When(value = "seleciono a opcao de indice \"$indice\" no campo \"$fieldName\"", priority = 10)
+	@Then(value = "seleciono a opcao de indice \"$indice\" no campo \"$fieldName\"", priority = 10)
+	public void selecionaIndice(String indice, String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		if (element instanceof Select) {
+			((Select) element).selectByIndex(Integer.valueOf(indice));
 		} else {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
@@ -147,7 +158,7 @@ public class CommonSteps implements Step {
 			textField.clear();
 			textField.sendKeys(value);
 		} else if (element instanceof Select) {
-			((Select) element).selectValue(value);
+			((Select) element).selectByVisibleText(value);
 		} else {
 			throw new BehaveException("Elemento não encontrado na tela");
 		}

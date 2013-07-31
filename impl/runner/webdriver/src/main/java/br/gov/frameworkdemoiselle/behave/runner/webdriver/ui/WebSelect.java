@@ -5,11 +5,20 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 
 public class WebSelect extends WebBase implements Select {
 
-	public void selectValue(String value) {
+	/**
+	 * Select all options that display text matching the argument. That is, when
+	 * given "Bar" this would select an option like: <option
+	 * value="foo">Bar</option> text.
+	 * 
+	 * @param valueThe
+	 *            visible text to match against
+	 */
+	public void selectByVisibleText(String value) {
 		if (getElements().get(0).getTagName().equals("select")) {
 			// Select comum e usa um helper do selenium
 			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
@@ -34,6 +43,39 @@ public class WebSelect extends WebBase implements Select {
 			}
 		}
 
+	}
+
+	/**
+	 * Select the option at the given index. This is done by examing the "index"
+	 * attribute of an element, and not merely by counting.
+	 * 
+	 * @param index
+	 *            The option at this index will be selected
+	 */
+	public void selectByIndex(int index) {
+		if (getElements().get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			lSelect.selectByIndex(index);
+		} else {
+			throw new BehaveException("Passo suportado apenas para tag Select.");
+		}
+	}
+
+	/**
+	 * Select all options that have a value matching the argument. That is, when
+	 * given "foo" this would select an option like: <option
+	 * value="foo">Bar</option>
+	 * 
+	 * @param value
+	 *            The value to match against
+	 */
+	public void selectByValue(String value) {
+		if (getElements().get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			lSelect.selectByValue(value);
+		} else {
+			throw new BehaveException("Passo suportado apenas para tag Select.");
+		}
 	}
 
 }
