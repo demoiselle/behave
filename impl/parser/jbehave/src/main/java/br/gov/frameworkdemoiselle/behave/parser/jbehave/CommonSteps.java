@@ -74,9 +74,9 @@ public class CommonSteps implements Step {
 	protected Logger logger = Logger.getLogger(this.toString());
 	protected String currentPageName;
 
-	@Given("vou para a página \"$local\"")
-	@Then("vou para a página \"$local\"")
-	@When("vou para a página \"$local\"")
+	@Given("vou para a tela \"$local\"")
+	@Then("vou para a tela \"$local\"")
+	@When("vou para a tela \"$local\"")
 	public void goToWithName(String local) {
 		logger.log(Level.FINE, "Go to screen " + local);
 		currentPageName = local;
@@ -84,9 +84,9 @@ public class CommonSteps implements Step {
 		runner.navigateTo(url);
 	}
 
-	@Given("estou na página \"$local\"")
-	@Then("estou na página \"$local\"")
-	@When("estou na página \"$local\"")
+	@Given("estou na tela \"$local\"")
+	@Then("estou na tela \"$local\"")
+	@When("estou na tela \"$local\"")
 	public void pageWithName(String local) {
 		logger.log(Level.FINE, "Go to screen " + local);
 		currentPageName = local;
@@ -99,7 +99,7 @@ public class CommonSteps implements Step {
 		element.setLocatorParameters(locatorParameters);
 		element.click();
 	}
-	
+
 	@When(value = "clico em \"$elementName\"", priority = 1)
 	@Then(value = "clico em \"$elementName\"", priority = 1)
 	public void clickButton(String elementName) {
@@ -117,7 +117,7 @@ public class CommonSteps implements Step {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
-	
+
 	@When("seleciono a opção \"$value\"")
 	@Then("seleciono a opção \"$value\"")
 	public void informe(String fieldName) {
@@ -188,16 +188,16 @@ public class CommonSteps implements Step {
 	public void setDataProvider(String key, String value) {
 		dataProvider.put(key, value);
 	}
-	
+
 	@When("movo o mouse sobre \"$element\"")
 	public void moverMouse(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
-		
+
 		if (element instanceof Menu) {
 			((Menu) element).mouseOver();
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).mouseOver();
-		}  
+		}
 	}
 
 }
