@@ -32,7 +32,9 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.safari.noinstall", "true");
+			boolean driverConfigurado = !BehaveConfig.getRunner_ScreenDriverPath().isEmpty();
+			System.setProperty("webdriver.safari.noinstall", String.valueOf(driverConfigurado));
+			System.setProperty("webdriver.safari.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new SafariDriver();
 		}
 	},
