@@ -21,13 +21,12 @@
 	"LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses 
 	/> ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, 
 	Fifth Floor, Boston, MA 02111-1301, USA. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.gov.serpro</groupId>
-	<artifactId>calculadora</artifactId>
+
+	<artifactId>treino-desktop</artifactId>
 	<version>1.0.0</version>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
@@ -35,17 +34,16 @@
 		<version>1</version>
 	</parent>
 
-	<name>Demoiselle Behave Calculadora</name>
+	<name>Demoiselle Behave Treino Desktop</name>
+	<description>Demoiselle Behave Treino Desktop</description>
 
-	<description>Demoiselle Behave Calculadora</description>
-	
 	<organization>
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
 	<properties>
-		<project.alias>calculadora</project.alias>
+		<project.alias>treino-desktop</project.alias>
 	</properties>
 
 	<dependencies>
@@ -55,7 +53,13 @@
 			<version>1.2.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-runner-fest</artifactId>
+			<version>1.2.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>		
+	</dependencies>	
 
 	<repositories>
 		<repository>
