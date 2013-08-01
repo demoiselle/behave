@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.component.behave.treinodesktop;
+package demoisellebehave.serpro.treino;
 
 /**
  * Hello world!

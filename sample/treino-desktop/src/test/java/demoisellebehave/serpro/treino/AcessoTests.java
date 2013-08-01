@@ -34,7 +34,7 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.behave.treinodesktop;
+package demoisellebehave.serpro.treino;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;

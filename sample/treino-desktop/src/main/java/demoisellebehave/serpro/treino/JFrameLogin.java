@@ -8,7 +8,7 @@
  *
  * Created on 01/08/2013, 16:49:37
  */
-package br.gov.frameworkdemoiselle.component.behave.treinodesktop;
+package demoisellebehave.serpro.treino;
 
 /**
  *
