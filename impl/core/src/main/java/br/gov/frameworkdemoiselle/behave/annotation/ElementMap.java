@@ -42,8 +42,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
-
 /**
  * Anotação utilizada para mapear os campos com os atributos dentro de uma
  * página (Classe anotada com @Page).

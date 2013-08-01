@@ -1,7 +1,7 @@
 Funcionalidade: Acesso ao Sistema
 
 Eu quero: acessar o sistema
-De modo que: a página inicial apareceça para mim
+De modo que: a tela inicial apareceça para mim
  
 Cenário: Teste com tabela de exemplos
 

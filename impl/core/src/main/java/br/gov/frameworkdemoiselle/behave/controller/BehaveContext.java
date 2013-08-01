@@ -117,7 +117,7 @@ public class BehaveContext {
 			parser.setSteps(steps);
 			parser.setStoryPaths(finalArray);
 			parser.run();
-			if (fail != null){
+			if (fail != null) {
 				Assert.fail("Passo [" + step + "] falha [" + fail.getMessage() + "]");
 			}
 		} catch (BehaveException ex) {
@@ -152,6 +152,6 @@ public class BehaveContext {
 
 	public void fail(String step, Throwable fail) {
 		this.step = step;
-		this.fail = fail;		
+		this.fail = fail;
 	}
 }

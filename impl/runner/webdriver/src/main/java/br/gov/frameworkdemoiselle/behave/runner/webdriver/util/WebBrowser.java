@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 
@@ -18,6 +19,23 @@ public enum WebBrowser {
 		@Override
 		public WebDriver getWebDriver() {
 			return new FirefoxDriver();
+		}
+	},
+	Safari{
+		
+		// Só para windows ou mac
+		
+		@Override
+		public String toString() {
+			return "Safari";
+		}
+
+		@Override
+		public WebDriver getWebDriver() {
+			boolean driverConfigurado = !BehaveConfig.getRunner_ScreenDriverPath().isEmpty();
+			System.setProperty("webdriver.safari.noinstall", String.valueOf(driverConfigurado));
+			System.setProperty("webdriver.safari.driver", BehaveConfig.getRunner_ScreenDriverPath());
+			return new SafariDriver();
 		}
 	},
 	InternetExplorer {

@@ -8,8 +8,8 @@ Funcionalidade: Testes
 
 		Acesso ao Sistema com usuário "06762344887" e senha "188542"
 	
-		Dado que estou na página "Tela Principal"
-		Quando vou para a página "Tela de Componentes"
+		Dado que estou na tela "Tela Principal"
+		Quando vou para a tela "Tela de Componentes"
 	
 		Seleção de Valores de Componentes com "Opção 1" e "Opção 1"
 		Seleção de Valores de Componentes com "Opção 1" e "Opção 3"
