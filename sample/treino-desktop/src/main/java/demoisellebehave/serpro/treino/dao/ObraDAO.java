@@ -11,8 +11,6 @@ import org.hibernate.criterion.Restrictions;
 
 public class ObraDAO {
 
-	private static final long serialVersionUID = 1L;
-	
 	private Session session = null;
 
 	public Obra save(Obra proj) {
