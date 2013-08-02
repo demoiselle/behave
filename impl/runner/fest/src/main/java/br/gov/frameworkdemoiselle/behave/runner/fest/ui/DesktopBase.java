@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.fest.swing.core.BasicComponentFinder;
@@ -62,6 +69,73 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && textField.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
+			}
+		}
+
+		if (component instanceof JLabel) {
+			JLabel label = (JLabel) component;
+
+			if (label.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && label.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && label.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JSpinner) {
+			JSpinner spinner = (JSpinner) component;
+
+			if (spinner.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && spinner.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JMenuItem) {
+			JMenuItem menuItem = (JMenuItem) component;
+
+			if (menuItem.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && menuItem.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menuItem.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JCheckBox) {
+			JCheckBox checkBox = (JCheckBox) component;
+
+			if (checkBox.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && checkBox.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && checkBox.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JRadioButton) {
+			JRadioButton radio = (JRadioButton) component;
+
+			if (radio.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && radio.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && radio.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JFileChooser) {
+			JFileChooser fileChooser = (JFileChooser) component;
+
+			if (fileChooser.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && fileChooser.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JTabbedPane) {
+			JTabbedPane tabbedPane = (JTabbedPane) component;
+
+			for (int i = 0; i < tabbedPane.getComponentCount(); i++) {
+				// Busca no título, mas o locator esta como LABEL!
+				if (getElementMap().locatorType() == ElementLocatorType.Label && tabbedPane.getTitleAt(i).equalsIgnoreCase(getElementMap().locator()[0])) {
+					return true;
+				}
 			}
 		}
 
