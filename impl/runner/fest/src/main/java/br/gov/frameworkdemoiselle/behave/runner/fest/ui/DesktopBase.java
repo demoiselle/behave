@@ -3,7 +3,6 @@ package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 import java.awt.Component;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -15,6 +14,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.fest.swing.core.BasicComponentFinder;
 import org.fest.swing.core.ComponentFinder;
 import org.fest.swing.core.ComponentMatcher;
@@ -27,7 +27,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
 public class DesktopBase extends MappedElement implements BaseUI {
 
-	private Logger logger = Logger.getLogger(this.toString());
+	Logger log = Logger.getLogger(DesktopBase.class);
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
@@ -42,7 +42,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 		});
 
 		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice
-		logger.info("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle());
+		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle());
 
 		if (findedComponents.size() == 0) {
 			throw new BehaveException("Elemento não encontrado.");
@@ -149,7 +149,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 
 	@Override
 	public String getText() {
-		return null;
+		throw new BehaveException("Método não implementado, ele deve ser implementado pelo componente Desktop.");
 	}
 
 	protected void waitThreadSleep(Long delay) {
