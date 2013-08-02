@@ -1,7 +1,9 @@
 Funcionalidade: Acesso ao Sistema
 
-Eu quero: enviar lançes
-De modo que: eu posso concorrer no sistema de lançe
+Narrativa:
+Para obter concorrência no sistema de lançe
+Como um usuário
+Desejo enviar lançes
 		 
 Cenário: Enviar Lance Vencedor
 

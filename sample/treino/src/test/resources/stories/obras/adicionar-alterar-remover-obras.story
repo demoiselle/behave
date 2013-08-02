@@ -1,13 +1,13 @@
 Funcionalidade: Acesso ao Sistema
 
-!--Como um: visitante
-Eu quero: acessar o sistema
-De modo que: a tela inicial apareceça para mim
+Narrativa:
+Para obter a tela inicial apareceça para mim
+Como um visitante
+Desejo acessar o sistema
 	
 Cenário: Adicionar Obras
 
 Acesso ao Sistema com usuário "19296496063" e senha "205253"
-
 Dado que estou na tela "Tela Principal"
 Então vou para a tela "Lista de Obras"
 Quando clico em "Adicionar Obra"
@@ -26,7 +26,6 @@ Sair do "Sistema"
 Cenário: Excluir Obra
 
 Acesso ao Sistema com usuário "19296496063" e senha "205253"
-
 Dado que estou na tela "Tela Principal"
 Então vou para a tela "Lista de Obras"
 Quando clico em "Última tela"

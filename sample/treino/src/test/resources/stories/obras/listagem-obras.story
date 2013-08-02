@@ -1,8 +1,9 @@
 Funcionalidade: Listagem de Obras
 
-!--Como um: visitante
-Eu quero: acessar o sistema
-De modo que: a tela inicial apareceça para mim
+Narrativa:
+Para obter a tela inicial apareceça para mim
+Como um usuário
+Desejo acessar o sistema
 
 Cenário: Listar Obras
 
