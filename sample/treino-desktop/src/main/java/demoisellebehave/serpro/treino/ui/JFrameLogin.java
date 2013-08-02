@@ -38,16 +38,20 @@ public class JFrameLogin extends javax.swing.JFrame {
         btEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplicação de Treino Desktop - Login");
 
         jLabel1.setText("Usuário:");
 
         jLabel2.setText("Senha:");
 
+        txtLogin.setName("user"); // NOI18N
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
             }
         });
+
+        txtSenha.setName("password"); // NOI18N
 
         btEntrar.setText("Entrar");
         btEntrar.addActionListener(new java.awt.event.ActionListener() {

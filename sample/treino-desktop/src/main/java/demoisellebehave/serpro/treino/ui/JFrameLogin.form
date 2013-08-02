@@ -1,11 +1,13 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Aplica&#xe7;&#xe3;o de Treino Desktop - Login"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -74,11 +76,17 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLogin">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="user" noResource="true"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtSenha">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="password" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btEntrar">
       <Properties>

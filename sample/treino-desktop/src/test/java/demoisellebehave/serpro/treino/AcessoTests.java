@@ -47,13 +47,12 @@ public class AcessoTests {
 
 	Logger log = Logger.getLogger(AcessoTests.class);
 
-	public AcessoTests() {		
+	public AcessoTests() {
 	}
 
 	@Test
 	public void testAllAcesso() throws Throwable {
 		eng.run("/stories/acesso/");
 	}
-	
 
 }

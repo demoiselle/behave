@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import org.fest.swing.core.BasicComponentFinder;
 import org.fest.swing.core.ComponentFinder;
@@ -50,6 +51,16 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			if (button.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && button.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && button.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JTextField) {
+			JTextField textField = (JTextField) component;
+
+			if (textField.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && textField.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && textField.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			}
 		}
