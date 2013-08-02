@@ -10,13 +10,20 @@
  */
 package demoisellebehave.serpro.treino.ui;
 
+import demoisellebehave.serpro.treino.dao.User;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 03397040477
  */
 public class JFrameLogin extends javax.swing.JFrame {
 
-    	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+       
+    private static ResourceBundle bundle;
 	/** Creates new form JFrameLogin */
     public JFrameLogin() {
         initComponents();
@@ -44,6 +51,7 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         jLabel2.setText("Senha:");
 
+        txtLogin.setText("19296496063");
         txtLogin.setName("user"); // NOI18N
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,6 +59,7 @@ public class JFrameLogin extends javax.swing.JFrame {
             }
         });
 
+        txtSenha.setText("205253");
         txtSenha.setName("password"); // NOI18N
 
         btEntrar.setText("Entrar");
@@ -102,9 +111,33 @@ public class JFrameLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
-        // TODO add your handling code here:
+       try{
+            find(txtLogin.getText(), new String(txtSenha.getPassword()));
+            this.setVisible(false);
+            JFrameListaObras frameObras = new JFrameListaObras();          
+            frameObras.setVisible(true);
+       }catch(RuntimeException e){
+           JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+       }        
     }//GEN-LAST:event_btEntrarActionPerformed
 
+    
+    
+    public User find(String login, String password) {
+        try {
+                if (bundle == null) {
+                        bundle = ResourceBundle.getBundle("treino_login");
+                }
+                String senha = bundle.getString(login);
+                if (senha != null && senha.equals(password)) {
+                        return new User(login, password);
+                }else{
+                        throw new RuntimeException("Usuário ou senha Inválida");
+                }
+        } catch (MissingResourceException e) {
+               throw new RuntimeException("Usuário ou senha Inválida");
+        }
+    }
     /**
      * @param args the command line arguments
      */

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
@@ -7,7 +7,6 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -77,6 +76,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtLogin">
       <Properties>
+        <Property name="text" type="java.lang.String" value="19296496063"/>
         <Property name="name" type="java.lang.String" value="user" noResource="true"/>
       </Properties>
       <Events>
@@ -85,6 +85,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtSenha">
       <Properties>
+        <Property name="text" type="java.lang.String" value="205253"/>
         <Property name="name" type="java.lang.String" value="password" noResource="true"/>
       </Properties>
     </Component>
