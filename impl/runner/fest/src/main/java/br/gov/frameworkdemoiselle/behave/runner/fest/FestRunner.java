@@ -38,12 +38,12 @@ package br.gov.frameworkdemoiselle.behave.runner.fest;
 
 import java.awt.Container;
 import java.awt.Window;
-import java.util.logging.Logger;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.fest.swing.core.Robot;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;

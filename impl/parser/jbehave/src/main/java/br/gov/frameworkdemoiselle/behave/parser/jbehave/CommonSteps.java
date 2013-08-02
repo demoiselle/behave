@@ -37,9 +37,8 @@
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -78,7 +77,7 @@ public class CommonSteps implements Step {
 	@Then("vou para a tela \"$local\"")
 	@When("vou para a tela \"$local\"")
 	public void goToWithName(String local) {
-		logger.log(Level.FINE, "Go to screen " + local);
+		logger.debug("Go to screen " + local);
 		currentPageName = local;
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
@@ -88,7 +87,7 @@ public class CommonSteps implements Step {
 	@Then("estou na tela \"$local\"")
 	@When("estou na tela \"$local\"")
 	public void pageWithName(String local) {
-		logger.log(Level.FINE, "Go to screen " + local);
+		logger.debug("Go to screen " + local);
 		currentPageName = local;
 	}
 
