@@ -144,7 +144,7 @@ public class ReflectionUtil {
 		}
 
 		if (map == null)
-			throw new RuntimeException("Nenhum Elemento foi encontrado com o nome [" + elementName + "] na página [" + pageName + "].");
+			throw new RuntimeException("Nenhum Elemento foi encontrado com o nome [" + elementName + "] na tela [" + pageName + "].");
 
 		return map;
 	}
