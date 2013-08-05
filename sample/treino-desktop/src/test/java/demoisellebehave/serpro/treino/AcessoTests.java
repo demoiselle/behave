@@ -41,6 +41,11 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class AcessoTests {
 
 	private BehaveContext eng = BehaveContext.getInstance();

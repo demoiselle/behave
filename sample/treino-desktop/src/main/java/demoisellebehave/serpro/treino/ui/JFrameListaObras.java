@@ -1,30 +1,68 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * JFrameListaObras.java
- *
- * Created on 02/08/2013, 16:59:52
+ * Demoiselle Framework
+ * Copyright (C) 2013 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 package demoisellebehave.serpro.treino.ui;
 
 import demoisellebehave.serpro.treino.dao.Obra;
 import demoisellebehave.serpro.treino.dao.ObraDAO;
+import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
- * @author 03397040477
+ * @author SERPRO
  */
 public class JFrameListaObras extends javax.swing.JFrame {
 
-	private static final long serialVersionUID = 1L;
-	/** Creates new form JFrameListaObras */
-    public JFrameListaObras() {
+    private static JFrameListaObras instance = new JFrameListaObras();
+    private static final long serialVersionUID = 1L;
+    private DecimalFormat formatDecimal = new DecimalFormat("###.0");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    static JFrameListaObras getInstance() {
+        return instance;
+    }
+
+    /** Creates new form JFrameListaObras */
+    private JFrameListaObras() {
         initComponents();
         this.frameListaObras.setVisible(false);
         initDB();
@@ -43,6 +81,9 @@ public class JFrameListaObras extends javax.swing.JFrame {
         tabelaObras = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         botaoAdicionar = new javax.swing.JButton();
+        botaoAlterar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         menuListarObras = new javax.swing.JMenuItem();
@@ -56,10 +97,36 @@ public class JFrameListaObras extends javax.swing.JFrame {
         frameListaObras.setResizable(true);
         frameListaObras.setTitle("Lista de Obras");
         frameListaObras.setVisible(true);
+        frameListaObras.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                frameListaObrasFocusGained(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(tabelaObras);
 
         botaoAdicionar.setText("Adicionar");
+        botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarActionPerformed(evt);
+            }
+        });
+
+        botaoAlterar.setText("Alterar");
+        botaoAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Excluir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Enviar Lançe");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,28 +134,35 @@ public class JFrameListaObras extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(botaoAdicionar)
-                .addContainerGap(546, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+                .addComponent(jButton2))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(botaoAdicionar)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoAdicionar)
+                .addComponent(botaoAlterar)
+                .addComponent(jButton1)
+                .addComponent(jButton2))
         );
 
         javax.swing.GroupLayout frameListaObrasLayout = new javax.swing.GroupLayout(frameListaObras.getContentPane());
         frameListaObras.getContentPane().setLayout(frameListaObrasLayout);
         frameListaObrasLayout.setHorizontalGroup(
             frameListaObrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(frameListaObrasLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
         );
         frameListaObrasLayout.setVerticalGroup(
             frameListaObrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameListaObrasLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
         );
 
         menu.setText("Obras");
@@ -130,7 +204,9 @@ public class JFrameListaObras extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(frameListaObras)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(frameListaObras)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -142,13 +218,53 @@ public class JFrameListaObras extends javax.swing.JFrame {
     }//GEN-LAST:event_menuSairActionPerformed
 
     private void menuListarObrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarObrasActionPerformed
-        carregarObras();
+        atualizarLista();
         this.frameListaObras.setVisible(true);
     }//GEN-LAST:event_menuListarObrasActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
+        JFrameObra.getIntance().setObra(null);
+        JFrameObra.getIntance().setVisible(true);
+    }//GEN-LAST:event_botaoAdicionarActionPerformed
+
+    private void frameListaObrasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_frameListaObrasFocusGained
+    }//GEN-LAST:event_frameListaObrasFocusGained
+
+    private void botaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarActionPerformed
+        int[] rows = tabelaObras.getSelectedRows();
+        if (rows == null || rows.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma obra", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String id = (String) tabelaObras.getModel().getValueAt(rows[0], 0);
+            ObraDAO obraDao = new ObraDAO();
+            Obra obra = obraDao.load(Long.parseLong(id));
+            JFrameObra.getIntance().setObra(obra);
+            JFrameObra.getIntance().setVisible(true);
+        }
+
+    }//GEN-LAST:event_botaoAlterarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int[] rows = tabelaObras.getSelectedRows();
+        if (rows == null || rows.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma obra", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String id = (String) tabelaObras.getModel().getValueAt(rows[0], 0);
+            ObraDAO obraDao = new ObraDAO();
+            Obra obra = obraDao.load(Long.parseLong(id));
+            
+            int n = JOptionPane.showConfirmDialog(null, "Deseja remover a obra [" + obra.getNome() + "] ?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (n == 0) {
+                obraDao.remove(obra);
+                JOptionPane.showMessageDialog(this, "Obra [" + obra.getNome() + "] removida!", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                JFrameListaObras.getInstance().atualizarLista();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,15 +278,23 @@ public class JFrameListaObras extends javax.swing.JFrame {
         });
     }
 
-    private void carregarObras() {
-        String[] col = new String[]{"Obra", "Valor", "Prazo", "Vencedor"};        
-        DefaultTableModel dtm = new DefaultTableModel(col, 0);
-        this.tabelaObras.setModel(dtm);
-
+    public void atualizarLista() {
+        if (tabelaObras.getModel().getRowCount() == 0) {
+            String[] col = new String[]{"ID", "Obra", "Valor", "Prazo", "Vencedor"};
+            DefaultTableModel dtm = new DefaultTableModel(col, 0);
+            tabelaObras.setModel(dtm);
+            TableColumn colId = tabelaObras.getColumn("ID");
+            colId.setPreferredWidth(0);
+            colId.setMinWidth(0);
+            colId.setWidth(0);
+            colId.setMaxWidth(0);
+        }
+        DefaultTableModel dtm = (DefaultTableModel) tabelaObras.getModel();
+        dtm.setRowCount(0);
         ObraDAO dao = new ObraDAO();
         List<Obra> listaObras = dao.list();
-        for(Obra obra : listaObras){
-            String[] registro = {obra.getNome(), obra.getValor().toString(), obra.getPrazo().toString(), obra.getVencedor()};
+        for (Obra obra : listaObras) {
+            String[] registro = {obra.getId() + "", obra.getNome(), formatDecimal.format(obra.getValor()), dateFormat.format(obra.getPrazo()), obra.getVencedor()};
             dtm.insertRow(dtm.getRowCount(), registro);
         }
 
@@ -190,14 +314,15 @@ public class JFrameListaObras extends javax.swing.JFrame {
             dao.save(new Obra("Maracanã", 100000.00, "30/07/2014"));
             dao.save(new Obra("Mineirão", 100000.00, "30/07/2014"));
         } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAlterar;
     private javax.swing.JInternalFrame frameListaObras;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
