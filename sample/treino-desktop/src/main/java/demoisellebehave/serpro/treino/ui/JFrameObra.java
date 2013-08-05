@@ -1,12 +1,38 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * JFrameObra.java
- *
- * Created on 05/08/2013, 13:52:12
+ * Demoiselle Framework
+ * Copyright (C) 2013 SERPRO
+ * ----------------------------------------------------------------------------
+ * This file is part of Demoiselle Framework.
+ * 
+ * Demoiselle Framework is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License version 3
+ * along with this program; if not,  see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ * ----------------------------------------------------------------------------
+ * Este arquivo é parte do Framework Demoiselle.
+ * 
+ * O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
+ * modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
+ * do Software Livre (FSF).
+ * 
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
+ * GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
+ * APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
+ * para maiores detalhes.
+ * 
+ * Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
+ * "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses/>
+ * ou escreva para a Fundação do Software Livre (FSF) Inc.,
+ * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
 package demoisellebehave.serpro.treino.ui;
 
@@ -22,14 +48,15 @@ import javax.swing.JOptionPane;
  */
 public class JFrameObra extends javax.swing.JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private static JFrameObra instance = new JFrameObra();
+    private static final long serialVersionUID = 1L;
+    private static JFrameObra instance = new JFrameObra();
     private Obra obra;
     private ObraDAO dao = new ObraDAO();
 
     /** Creates new form JFrameObra */
-    public JFrameObra() {
+    private JFrameObra() {
         initComponents();
+        UICommons.centraliza(this);
     }
 
     public static JFrameObra getIntance() {
@@ -37,16 +64,16 @@ public class JFrameObra extends javax.swing.JFrame {
     }
     private DecimalFormat formatDecimal = new DecimalFormat("###.0");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public void setObra(Obra obra) {
         this.obra = obra;
-        if (obra == null || obra.getId() == null){  
+        if (obra == null || obra.getId() == null) {
             obra = new Obra();
             txtObra.setText("");
             txtPrazo.setText("");
-            txtValor.setText(""); 
+            txtValor.setText("");
             this.btConfirmar.setText("Inserir Obra");
-        }else{
+        } else {
             txtObra.setText(obra.getNome());
             txtPrazo.setText(dateFormat.format(obra.getPrazo()));
             txtValor.setText(formatDecimal.format(obra.getValor()));
@@ -72,6 +99,7 @@ public class JFrameObra extends javax.swing.JFrame {
         txtPrazo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Edição de Obra");
 
         jLabel1.setText("Nome da Obra:");
 
@@ -141,7 +169,7 @@ public class JFrameObra extends javax.swing.JFrame {
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
         try {
-            if (obra == null || obra.getId() == null) {                
+            if (obra == null || obra.getId() == null) {
                 obra = new Obra();
                 obra.setNome(txtObra.getText());
                 obra.setPrazo(dateFormat.parse(txtPrazo.getText()));
@@ -151,7 +179,7 @@ public class JFrameObra extends javax.swing.JFrame {
                 this.setVisible(false);
                 JFrameListaObras.getInstance().atualizarLista();
                 obra = null;
-            } else {                
+            } else {
                 obra.setNome(txtObra.getText());
                 obra.setPrazo(dateFormat.parse(txtPrazo.getText()));
                 obra.setValor(formatDecimal.parse(txtValor.getText()).doubleValue());
@@ -215,6 +243,4 @@ public class JFrameObra extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrazo;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
-
-
 }

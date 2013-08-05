@@ -34,31 +34,27 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.screens;
+package demoisellebehave.serpro.treino.ui;
 
-import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
-import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
-import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-@ScreenMap(name = "Tela de Login", location = "Autenticação")
-public class LoginScreen {
-
-	@ElementMap(name = "Rótulo Usuário", locatorType = ElementLocatorType.Label, locator = "Usuário:")
-	private Label labelUsuario;
-
-	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.Name, locator = "user")
-	private TextField campoUsuario;
-
-	@ElementMap(name = "Rótulo Senha", locatorType = ElementLocatorType.Label, locator = "Senha:")
-	private Label labelSenha;
-
-	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.Name, locator = "password")
-	private TextField campoSenha;
-
-	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.Label, locator = "Entrar")
-	private Button botaoEnviar;
-
+/**
+ *
+ * @author SERPRO
+ */
+public class UICommons {
+    
+    public static void centraliza(javax.swing.JFrame frame){
+        Dimension  screenSize  = Toolkit.getDefaultToolkit().getScreenSize();  
+        Dimension  frameSize   = frame.getSize();    
+        if (frameSize.height > screenSize.height) {  
+            frameSize.height = screenSize.height;  
+        }  
+        if (frameSize.width > screenSize.width) {  
+            frameSize.width = screenSize.width;  
+        }  
+        frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2); 
+    }
+    
 }

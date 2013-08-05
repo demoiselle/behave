@@ -49,7 +49,7 @@ public class AplicacaoTreino
     {  
         java.awt.EventQueue.invokeLater(new Runnable() {           
             public void run() {
-                new JFrameLogin().setVisible(true);
+                JFrameLogin.getInstance().setVisible(true);
             }
         });
     }

@@ -48,7 +48,6 @@ import org.hibernate.cfg.AnnotationConfiguration;
  */
 public class HibernateUtil {
     private static SessionFactory sessionFactory;  
-    public static String status = "-";  
       
     static   
     {  
