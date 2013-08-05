@@ -70,7 +70,7 @@ public class CommonSteps implements Step {
 
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
-	protected Logger logger = Logger.getLogger(this.toString());
+	private Logger logger = Logger.getLogger(CommonSteps.class);
 	protected String currentPageName;
 
 	@Given("vou para a tela \"$local\"")
