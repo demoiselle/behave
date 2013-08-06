@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class ComponentsTests {
+public class ComponentsTest {
 	private BehaveContext eng = BehaveContext.getInstance();
 
 	@Test

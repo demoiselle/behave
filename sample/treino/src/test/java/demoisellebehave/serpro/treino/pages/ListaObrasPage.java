@@ -40,6 +40,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import demoisellebehave.serpro.treino.config.Config;
 
@@ -61,11 +62,11 @@ public class ListaObrasPage {
 	@ElementMap(name = "Inserir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
 	private Button btInserir;
 	
-	@ElementMap(name = "Última Página", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-paginator-last ui-state-default ui-corner-all')])[1]")
-	private Button ultimaPagina;
+	@ElementMap(name = "Registros por Página", locatorType = ElementLocatorType.XPath, locator = "(//select[contains(@title, 'Rows')])[1]")
+	private Select ultimaPagina;
 	
-	@ElementMap(name = "Botão de Excluir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@class, 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only')])[1]")
-	private Button primeiroBotaoExcluir;
+	@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'formObra')][.//text()='%param1%']//button)[1]")
+	private Button primeiroBotaoExcluir;	
 	
 	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formRemoverObra')]/span[./text()='Sim'])")
 	private Button sim;

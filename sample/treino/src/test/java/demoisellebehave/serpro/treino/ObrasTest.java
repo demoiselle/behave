@@ -41,11 +41,11 @@ import org.junit.Test;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.serpro.treino.steps.MySteps;
 
-public class ObrasTests {
+public class ObrasTest {
 
 	private BehaveContext eng = BehaveContext.getInstance();
 
-	public ObrasTests() {
+	public ObrasTest() {
 		eng.addSteps(new MySteps());
 	}
 

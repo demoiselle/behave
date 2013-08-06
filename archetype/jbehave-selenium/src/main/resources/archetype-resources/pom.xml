@@ -37,6 +37,16 @@
 					<target>1.6</target>
 					<source>1.6</source>
 				</configuration>
+			</plugin>		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.15</version>
+				<configuration>
+					<forkCount>3</forkCount> <!-- número máximo de threads -->					
+					<reuseForks>false</reuseForks> <!-- levanta uma jvm para cada fork -->		
+					<parallel>classes</parallel> <!-- paraleliza por classe -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
