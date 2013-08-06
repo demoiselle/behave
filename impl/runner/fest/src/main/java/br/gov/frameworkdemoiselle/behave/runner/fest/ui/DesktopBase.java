@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -31,6 +32,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
+		
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
 		// Finder
@@ -42,10 +44,10 @@ public class DesktopBase extends MappedElement implements BaseUI {
 		});
 
 		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice
-		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle());
+		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle() + " | Locator: " + getElementMap().locator()[0]);
 
 		if (findedComponents.size() == 0) {
-			throw new BehaveException("Elemento não encontrado.");
+			throw new BehaveException("Elemento não encontrado." + runner.currentContainer.toString());
 		} else {
 			return (Component) findedComponents.toArray()[0];
 		}
@@ -86,6 +88,16 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			JSpinner spinner = (JSpinner) component;
 
 			if (spinner.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && spinner.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			}
+		}
+
+		if (component instanceof JMenu) {
+			JMenu menu = (JMenu) component;
+
+			if (menu.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && menu.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menu.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			}
 		}
@@ -138,6 +150,14 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				}
 			}
 		}
+//		try {
+//			ComponentFinder cfAll = BasicComponentFinder.finderWithCurrentAwtHierarchy();
+//			if (getElementMap().locatorType() == ElementLocatorType.Label) {
+//				cfAll.findByLabel(getElementMap().locator()[0]);
+//			}
+//		} catch (Exception e) {
+//			log.debug(e);
+//		}
 
 		return false;
 	}

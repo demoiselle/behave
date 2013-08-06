@@ -1,8 +1,10 @@
 Funcionalidade: Acesso ao Sistema
 
-Eu quero: acessar o sistema
-De modo que: a tela inicial apareceça para mim
- 
+Narrativa:
+Para obter a tela inicial apareceça para mim
+Como um usuário
+Desejo acessar o sistema
+
 Cenário: Teste com tabela de exemplos
 
 Acesso ao Sistema com usuário "<usuario>" e senha "<senha>"
