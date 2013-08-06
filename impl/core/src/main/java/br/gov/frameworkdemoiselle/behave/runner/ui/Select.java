@@ -39,10 +39,36 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public interface Select extends BaseUI {
 
-	public void selectValue(String value);
-	
+	/**
+	 * Seleciona as opções que exibem o texto correspondente ao parâmetro. Ou
+	 * seja, passando "Bar" como parâmetro, selecionará a seguinte opção:
+	 * <option value="foo">Bar</option>
+	 * 
+	 * @param value
+	 *            O texto visível na combo.
+	 */
+	public void selectByVisibleText(String value);
+
+	/**
+	 * Seleciona a opção no índice passado como argumento.
+	 * 
+	 * @param index
+	 *            Índice da opção que será selecionada.
+	 */
+	public void selectByIndex(int index);
+
+	/**
+	 * Seleciona a opção que contém o valor correspondente ao parâmetro. Ou
+	 * seja, passando "foo" como parâmetro, selecionará a seguinte opção:
+	 * <option value="foo">Bar</option>
+	 * 
+	 * @param value
+	 *            O valor da opção na combobox.
+	 */
+	public void selectByValue(String value);
+
 }
