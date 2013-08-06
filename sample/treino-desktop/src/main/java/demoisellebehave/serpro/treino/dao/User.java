@@ -64,16 +64,12 @@ public class User implements Serializable {
 	@Column(name = "login", length = 30)
 	private String login;
 
-	@Column(name = "name", length = 150)
-	private String name;
-
 	@Column(name = "password", length = 256)
 	private String password;
 
 	public User(String login, String password) {
 		setLogin(login);
 		setPassword(password);
-		setName(login);		
 	}
 
 	public User() {
@@ -93,14 +89,6 @@ public class User implements Serializable {
 
 	public void setLogin(String login) {
 		this.login = login;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPassword() {

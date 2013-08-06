@@ -64,6 +64,7 @@ public class JFrameListaObras extends javax.swing.JFrame {
     /** Creates new form JFrameListaObras */
     private JFrameListaObras() {
         initComponents();
+        UICommons.centraliza(this);
         this.frameListaObras.setVisible(false);
         initDB();
     }
@@ -80,10 +81,10 @@ public class JFrameListaObras extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaObras = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        btNovoLance = new javax.swing.JButton();
         botaoAdicionar = new javax.swing.JButton();
         botaoAlterar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         menuListarObras = new javax.swing.JMenuItem();
@@ -104,6 +105,16 @@ public class JFrameListaObras extends javax.swing.JFrame {
         });
 
         jScrollPane1.setViewportView(tabelaObras);
+
+        jPanel1.setBackground(new java.awt.Color(245, 210, 147));
+        jPanel1.setForeground(new java.awt.Color(210, 194, 131));
+
+        btNovoLance.setText("Enviar Lançe");
+        btNovoLance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoLanceActionPerformed(evt);
+            }
+        });
 
         botaoAdicionar.setText("Adicionar");
         botaoAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,43 +137,47 @@ public class JFrameListaObras extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Enviar Lançe");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(botaoAdicionar)
+                .addContainerGap()
+                .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                .addComponent(btNovoLance, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoAdicionar)
-                .addComponent(botaoAlterar)
-                .addComponent(jButton1)
-                .addComponent(jButton2))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoAdicionar)
+                    .addComponent(botaoAlterar)
+                    .addComponent(jButton1)
+                    .addComponent(btNovoLance))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout frameListaObrasLayout = new javax.swing.GroupLayout(frameListaObras.getContentPane());
         frameListaObras.getContentPane().setLayout(frameListaObrasLayout);
         frameListaObrasLayout.setHorizontalGroup(
             frameListaObrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         frameListaObrasLayout.setVerticalGroup(
             frameListaObrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(frameListaObrasLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         menu.setText("Obras");
@@ -204,9 +219,7 @@ public class JFrameListaObras extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(frameListaObras)
-                .addGap(20, 20, 20))
+            .addComponent(frameListaObras, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -256,7 +269,7 @@ public class JFrameListaObras extends javax.swing.JFrame {
             String id = (String) tabelaObras.getModel().getValueAt(rows[0], 0);
             ObraDAO obraDao = new ObraDAO();
             Obra obra = obraDao.load(Long.parseLong(id));
-            
+
             int n = JOptionPane.showConfirmDialog(null, "Deseja remover a obra [" + obra.getNome() + "] ?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (n == 0) {
                 obraDao.remove(obra);
@@ -265,6 +278,20 @@ public class JFrameListaObras extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btNovoLanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoLanceActionPerformed
+        int[] rows = tabelaObras.getSelectedRows();
+        if (rows == null || rows.length == 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma obra", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String id = (String) tabelaObras.getModel().getValueAt(rows[0], 0);
+            ObraDAO obraDao = new ObraDAO();
+            Obra obra = obraDao.load(Long.parseLong(id));
+            JFrameLance.getInstance().setObra(obra);
+            JFrameLance.getInstance().setVisible(true);
+            JFrameLance.getInstance().setVisible(true);
+        }
+    }//GEN-LAST:event_btNovoLanceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,9 +347,9 @@ public class JFrameListaObras extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionar;
     private javax.swing.JButton botaoAlterar;
+    private javax.swing.JButton btNovoLance;
     private javax.swing.JInternalFrame frameListaObras;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
