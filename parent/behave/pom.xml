@@ -26,7 +26,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-parent</artifactId>
-	<version>1-SNAPSHOT</version>
+	<version>1</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -53,7 +53,7 @@
 	</organization>
 
 	<properties>
-		<behave.release.version>1.2.0-SNAPSHOT</behave.release.version>
+		<behave.release.version>1.2.0-BETA-3</behave.release.version>
 	</properties>
 
 	<repositories>
