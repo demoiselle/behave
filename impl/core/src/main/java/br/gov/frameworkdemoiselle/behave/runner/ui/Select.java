@@ -44,31 +44,30 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 public interface Select extends BaseUI {
 
 	/**
-	 * Select all options that display text matching the argument. That is, when
-	 * given "Bar" this would select an option like: <option
-	 * value="foo">Bar</option> text.
+	 * Seleciona as opções que exibem o texto correspondente ao parâmetro. Ou
+	 * seja, passando "Bar" como parâmetro, selecionará a seguinte opção:
+	 * <option value="foo">Bar</option>
 	 * 
-	 * @param valueThe
-	 *            visible text to match against
+	 * @param value
+	 *            O texto visível na combo.
 	 */
 	public void selectByVisibleText(String value);
 
 	/**
-	 * Select the option at the given index. This is done by examing the "index"
-	 * attribute of an element, and not merely by counting.
+	 * Seleciona a opção no índice passado como argumento.
 	 * 
 	 * @param index
-	 *            The option at this index will be selected
+	 *            Índice da opção que será selecionada.
 	 */
 	public void selectByIndex(int index);
 
 	/**
-	 * Select all options that have a value matching the argument. That is, when
-	 * given "foo" this would select an option like: <option
-	 * value="foo">Bar</option>
+	 * Seleciona a opção que contém o valor correspondente ao parâmetro. Ou
+	 * seja, passando "foo" como parâmetro, selecionará a seguinte opção:
+	 * <option value="foo">Bar</option>
 	 * 
 	 * @param value
-	 *            The value to match against
+	 *            O valor da opção na combobox.
 	 */
 	public void selectByValue(String value);
 

@@ -134,12 +134,23 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@When(value = "seleciono a opcao de indice \"$indice\" no campo \"$fieldName\"", priority = 10)
-	@Then(value = "seleciono a opcao de indice \"$indice\" no campo \"$fieldName\"", priority = 10)
-	public void selecionaIndice(String indice, String fieldName) {
+	@When(value = "seleciono a opção de índice \"$indice\" no campo \"$fieldName\"", priority = 10)
+	@Then(value = "seleciono a opção de índice \"$indice\" no campo \"$fieldName\"", priority = 10)
+	public void selectByIndex(String indice, String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
+		} else {
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+		}
+	}
+
+	@When(value = "seleciono a opção de valor \"$value\" no campo \"$fieldName\"", priority = 20)
+	@Then(value = "seleciono a opção de valor \"$value\" no campo \"$fieldName\"", priority = 20)
+	public void selectByValue(String value, String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		if (element instanceof Select) {
+			((Select) element).selectByValue(value);
 		} else {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}

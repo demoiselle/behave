@@ -8,15 +8,13 @@ import org.openqa.selenium.WebElement;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 
+/**
+ * @author SERPRO
+ */
 public class WebSelect extends WebBase implements Select {
 
 	/**
-	 * Select all options that display text matching the argument. That is, when
-	 * given "Bar" this would select an option like: <option
-	 * value="foo">Bar</option> text.
-	 * 
-	 * @param valueThe
-	 *            visible text to match against
+	 * {@inheritDoc}
 	 */
 	public void selectByVisibleText(String value) {
 		if (getElements().get(0).getTagName().equals("select")) {
@@ -46,11 +44,7 @@ public class WebSelect extends WebBase implements Select {
 	}
 
 	/**
-	 * Select the option at the given index. This is done by examing the "index"
-	 * attribute of an element, and not merely by counting.
-	 * 
-	 * @param index
-	 *            The option at this index will be selected
+	 * {@inheritDoc}
 	 */
 	public void selectByIndex(int index) {
 		if (getElements().get(0).getTagName().equals("select")) {
@@ -62,12 +56,7 @@ public class WebSelect extends WebBase implements Select {
 	}
 
 	/**
-	 * Select all options that have a value matching the argument. That is, when
-	 * given "foo" this would select an option like: <option
-	 * value="foo">Bar</option>
-	 * 
-	 * @param value
-	 *            The value to match against
+	 * {@inheritDoc}
 	 */
 	public void selectByValue(String value) {
 		if (getElements().get(0).getTagName().equals("select")) {
