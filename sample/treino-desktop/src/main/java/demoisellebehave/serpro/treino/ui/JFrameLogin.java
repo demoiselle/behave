@@ -55,7 +55,7 @@ public class JFrameLogin extends javax.swing.JFrame {
     private static ResourceBundle bundle;
     private static User user;
 	/** Creates new form JFrameLogin */
-    private JFrameLogin() {
+    public JFrameLogin() {
         initComponents();
         UICommons.centraliza(this);
     }

@@ -32,7 +32,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
-		
+
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
 		// Finder
@@ -47,7 +47,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle() + " | Locator: " + getElementMap().locator()[0]);
 
 		if (findedComponents.size() == 0) {
-			throw new BehaveException("Elemento não encontrado." + runner.currentContainer.toString());
+			throw new BehaveException("Elemento não encontrado." + runner.currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: " + runner.getHierarchy() + "\r----------------------------------------------");
 		} else {
 			return (Component) findedComponents.toArray()[0];
 		}
@@ -150,14 +150,6 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				}
 			}
 		}
-//		try {
-//			ComponentFinder cfAll = BasicComponentFinder.finderWithCurrentAwtHierarchy();
-//			if (getElementMap().locatorType() == ElementLocatorType.Label) {
-//				cfAll.findByLabel(getElementMap().locator()[0]);
-//			}
-//		} catch (Exception e) {
-//			log.debug(e);
-//		}
 
 		return false;
 	}

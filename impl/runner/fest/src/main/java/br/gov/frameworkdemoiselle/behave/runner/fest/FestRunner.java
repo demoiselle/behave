@@ -38,12 +38,16 @@ package br.gov.frameworkdemoiselle.behave.runner.fest;
 
 import java.awt.Container;
 import java.awt.Window;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
+import org.fest.swing.core.BasicComponentPrinter;
+import org.fest.swing.core.ComponentPrinter;
 import org.fest.swing.core.Robot;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
@@ -147,6 +151,15 @@ public class FestRunner implements Runner {
 
 		throw new BehaveException("Nenhuma tela encontrada.");
 
+	}
+
+	public String getHierarchy() {
+		ComponentPrinter printer = BasicComponentPrinter.printerWithCurrentAwtHierarchy();		
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		PrintStream printStream = new PrintStream(out, true);
+		printer.printComponents(printStream, currentContainer);
+		printStream.flush();
+		return new String(out.toByteArray());
 	}
 
 	@Override
