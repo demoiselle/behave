@@ -5,11 +5,18 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 
+/**
+ * @author SERPRO
+ */
 public class WebSelect extends WebBase implements Select {
 
-	public void selectValue(String value) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByVisibleText(String value) {
 		if (getElements().get(0).getTagName().equals("select")) {
 			// Select comum e usa um helper do selenium
 			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
@@ -34,6 +41,30 @@ public class WebSelect extends WebBase implements Select {
 			}
 		}
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByIndex(int index) {
+		if (getElements().get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			lSelect.selectByIndex(index);
+		} else {
+			throw new BehaveException("Passo suportado apenas para tag Select.");
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByValue(String value) {
+		if (getElements().get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			lSelect.selectByValue(value);
+		} else {
+			throw new BehaveException("Passo suportado apenas para tag Select.");
+		}
 	}
 
 }

@@ -42,13 +42,13 @@ import org.junit.Test;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.serpro.treino.steps.MySteps;
 
-public class AcessoTests {
+public class AcessoTest {
 
 	private BehaveContext eng = BehaveContext.getInstance();
 
-	Logger log = Logger.getLogger(AcessoTests.class);
+	Logger log = Logger.getLogger(AcessoTest.class);
 
-	public AcessoTests() {
+	public AcessoTest() {
 		eng.addSteps(new MySteps());
 	}
 
