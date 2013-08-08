@@ -16,7 +16,7 @@ public class DesktopMenu extends DesktopBase implements Menu {
 
 	@Override
 	public void mouseOver() {
-		
+		runner.robot.moveMouse(getElement());
 	}
 
 }
