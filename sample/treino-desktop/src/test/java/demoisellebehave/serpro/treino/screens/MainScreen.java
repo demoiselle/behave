@@ -12,6 +12,9 @@ public class MainScreen {
 	@ElementMap(name = "Menu Principal Obras", locatorType = ElementLocatorType.Label, locator = "Obras")
 	private Menu mainLevelObras;
 
+	@ElementMap(name = "Obras", locatorType = ElementLocatorType.Label, locator = "Todas as Obras")
+	private MenuItem secondLevelObras;
+	
 	@ElementMap(name = "Menu Principal Sair", locatorType = ElementLocatorType.Label, locator = "Sair")
 	private Menu mainLevelSair;
 

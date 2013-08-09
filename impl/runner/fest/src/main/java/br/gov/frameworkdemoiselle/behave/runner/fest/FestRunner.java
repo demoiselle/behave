@@ -158,7 +158,8 @@ public class FestRunner implements Runner {
 			}
 		}
 
-		throw new BehaveException("Nenhuma tela encontrada.");
+		// No caso de não encontrar a tela especificada lança a Exception
+		throw new BehaveException("Nenhuma tela encontrada. \rContainer: \r" + currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + getHierarchy() + "\r----------------------------------------------");
 
 	}
 
