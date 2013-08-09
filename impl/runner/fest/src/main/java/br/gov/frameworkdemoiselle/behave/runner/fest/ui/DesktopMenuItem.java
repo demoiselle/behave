@@ -17,8 +17,7 @@ public class DesktopMenuItem extends DesktopBase implements MenuItem {
 
 	@Override
 	public void mouseOver() {
-		// TODO Auto-generated method stub
-
+		runner.robot.moveMouse(getElement());
 	}
 
 }

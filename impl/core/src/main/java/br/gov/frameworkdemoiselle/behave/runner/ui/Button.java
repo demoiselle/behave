@@ -44,5 +44,7 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 public interface Button extends BaseUI {
 
 	public void click();
+	
+	public void mouseOver();
 
 }

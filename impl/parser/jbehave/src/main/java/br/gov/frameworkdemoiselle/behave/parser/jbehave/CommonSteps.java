@@ -51,6 +51,7 @@ import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
@@ -94,9 +95,20 @@ public class CommonSteps implements Step {
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
-		Button element = (Button) runner.getElement(currentPageName, elementName);
+		Element element = (Button) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
-		element.click();
+		
+		if (element instanceof Button) {
+			((Button) element).click();
+		} else if (element instanceof Link) {
+			((Link) element).click();
+		} else if (element instanceof Menu) {
+			((Menu) element).click();
+		} else if (element instanceof MenuItem) {
+			((MenuItem) element).click();
+		} else {
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+		}
 	}
 
 	@When(value = "clico em \"$elementName\"", priority = 1)
@@ -116,6 +128,25 @@ public class CommonSteps implements Step {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
+	
+	@When(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
+	@Then(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
+	public void informeWithParameters(String elementName, List<String> locatorParameters) {
+		Element element = runner.getElement(currentPageName, elementName);
+		element.setLocatorParameters(locatorParameters);
+
+		if (element instanceof Radio) {
+			((Radio) element).click();
+		} else if (element instanceof CheckBox) {
+			((CheckBox) element).click();
+		} else if (element instanceof Link) {
+			((Link) element).click();
+		} else if (element instanceof Calendar) {
+			((Calendar) element).click();
+		} else {
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+		}
+	}
 
 	@When(value = "seleciono a opção \"$value\"", priority = 1)
 	@Then(value = "seleciono a opção \"$value\"", priority = 1)
@@ -128,6 +159,8 @@ public class CommonSteps implements Step {
 			((CheckBox) element).click();
 		} else if (element instanceof Link) {
 			((Link) element).click();
+		} else if (element instanceof Calendar) {
+			((Calendar) element).click();
 		} else {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
@@ -218,6 +251,8 @@ public class CommonSteps implements Step {
 			((Menu) element).mouseOver();
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).mouseOver();
+		} else if (element instanceof Button) {
+			((Button) element).mouseOver();
 		}
 	}
 

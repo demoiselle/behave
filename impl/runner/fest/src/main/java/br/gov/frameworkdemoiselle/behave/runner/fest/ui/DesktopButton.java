@@ -13,4 +13,9 @@ public class DesktopButton extends DesktopBase implements Button {
 		buttonFix.click();
 	}
 
+	@Override
+	public void mouseOver() {
+		runner.robot.moveMouse(getElement());		
+	}
+
 }
