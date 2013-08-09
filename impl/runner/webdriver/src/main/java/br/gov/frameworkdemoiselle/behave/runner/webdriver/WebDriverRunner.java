@@ -84,11 +84,11 @@ public class WebDriverRunner implements Runner {
 			logger.debug("Iniciou o driver - " + browser.toString());
 
 			// Configurações do driver
-			try{
+			try {
 				driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-			}catch(UnsupportedCommandException e){
-				logger.error("Não foi possível configurar o timeout do [" + browser.toString() +"]");
+			} catch (UnsupportedCommandException e) {
+				logger.error("Não foi possível configurar o timeout do [" + browser.toString() + "]");
 				logger.debug(e);
 			}
 		}
@@ -130,18 +130,18 @@ public class WebDriverRunner implements Runner {
 		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
 		// Instancia a classe fornecida explicitamente como implementação da interface Element
-		else if( Element.class.isAssignableFrom( clazz ) )
+		else if (Element.class.isAssignableFrom(clazz))
 			try {
 				element = (Element) clazz.newInstance();
 			} catch (Exception e) {
 				element = null;
-			} 
+			}
 		else
 			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface para 'Element'.");
 
-		if( element == null )
+		if (element == null)
 			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da página [" + currentPageName + "].");
-			
+
 		element.setElementMap(map);
 
 		return element;
@@ -152,11 +152,12 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void close() {
-		if (browser.equals(WebBrowser.GoogleChrome)) return;
+		if (browser.equals(WebBrowser.GoogleChrome))
+			return;
 		driver.close();
 	}
 
-	public void quit() {			
+	public void quit() {
 		driver.quit();
 	}
 

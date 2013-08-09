@@ -39,7 +39,7 @@ package br.gov.frameworkdemoiselle.behave.annotation;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public enum ElementLocatorType {
 
