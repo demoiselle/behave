@@ -41,7 +41,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-parent</artifactId>
-	<version>3-SNAPSHOT</version>	
+	<version>1.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -101,18 +101,17 @@
 		</repository>
 	</repositories>
 
-
 	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
-		</repository>
 		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/snapshot</url>
 		</snapshotRepository>
+		<repository>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Nexus Release Repository</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/release</url>
+		</repository>
 	</distributionManagement>
 
 	<dependencies>
@@ -179,8 +178,8 @@
 			<!-- test -->
 			<dependency>
 				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>				
-				<version>4.8.1</version>
+				<artifactId>junit</artifactId>
+				<version>4.4</version>
 			</dependency>
 
 			<!-- Utils -->
@@ -196,7 +195,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -217,6 +216,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>	
+	</build>
 
 </project>

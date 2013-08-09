@@ -39,23 +39,26 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>br.gov.frameworkdemoiselle.component</groupId>
 	<artifactId>demoiselle-behave-build</artifactId>
+	<version>1.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
-		<artifactId>demoiselle-build-parent</artifactId>
+		<artifactId>demoiselle-component-build-parent</artifactId>
 		<version>8</version>
+		<relativePath>../internal/parent/build/component</relativePath>
 	</parent>
 
-	<name>Demoiselle Behave Build Aggregator</name>
-	<description>A liberação de versões do framework deve ser feita a partir deste build, que fará automaticamente o build de todos os artefatos com versionamento sincronizado. Jamais gere uma versão do framework sem utilizar este build.</description>
-
-	<properties>
-		<project.alias>behave</project.alias>
-	</properties>
+	<name>Demoiselle Behave</name>
+	<description>
+		A liberação de versões deste componente deve ser feita a partir deste build, que fará automaticamente o build
+		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão deste componente sem utilizar este build.
+	</description>
 
 	<modules>
+		<module>documentation/reference</module>
 		<module>parent/behave</module>
 		<module>archetype</module>
 		<module>impl/core</module>
@@ -65,7 +68,6 @@
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
 		<module>impl/integration/alm</module>
-		<module>documentation/reference</module>
 	</modules>
 
 	<build>
@@ -84,6 +86,23 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/snapshot</url>
+		</snapshotRepository>
+		<repository>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Nexus Release Repository</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/release</url>
+		</repository>
+		<site>
+			<id>demoiselle.sourceforge.net</id>
+			<url>${site.url}</url>
+		</site>
+	</distributionManagement>
+
 	<scm>
 		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
 		<developerConnection>scm:git:git@github.com:demoiselle/${project.alias}.git</developerConnection>
@@ -92,11 +111,6 @@
 	</scm>
 
 	<repositories>
-		<repository>
-			<id>repo1.maven</id>
-			<name>Repo1 Maven</name>
-			<url>hhttp://repo1.maven.org/maven2</url>
-		</repository>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
 			<name>Sonatype Nexus Snapshots</name>
@@ -121,11 +135,7 @@
 		</repository>
 	</repositories>
 
-
-	<distributionManagement>
-		<site>
-			<id>demoiselle.sourceforge.net</id>
-			<url>${site.url}</url>
-		</site>
-	</distributionManagement>
+	<properties>
+		<project.alias>behave</project.alias>
+	</properties>
 </project>

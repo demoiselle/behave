@@ -49,18 +49,17 @@
 		<url>http://www.serpro.gov.br</url>
 	</organization>
 
-
 	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/internal</url>
-		</repository>
 		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/repositories/component/snapshots</url>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/snapshot</url>
 		</snapshotRepository>
+		<repository>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Nexus Release Repository</name>
+			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/release</url>
+		</repository>
 	</distributionManagement>
 
 	<name>Demoiselle Behave Selenium Archetype</name>
