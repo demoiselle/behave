@@ -129,6 +129,9 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 
 					currentTitle = title;
+					
+					logger.debug("Navigate To (Dialog): " + title);
+					
 					return;
 				}
 			}
@@ -137,13 +140,19 @@ public class FestRunner implements Runner {
 		// Procura por Frames
 		for (Window w : JFrame.getWindows()) {
 			if (w instanceof JFrame && w.isVisible()) {
-				if (title.trim().equalsIgnoreCase(((JFrame) w).getTitle().trim())) {
-					currentContainer = (JPanel) ((JFrame) w).getRootPane().getContentPane();
+				
+				JFrame frame = (JFrame) w;
+				
+				if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
+					currentContainer = frame;
 					currentContainer.setFocusTraversalKeysEnabled(true);
 					currentContainer.setVisible(true);
 					currentContainer.setEnabled(true);
 
 					currentTitle = title;
+					
+					logger.debug("Navigate To (Frame): " + title);
+					
 					return;
 				}
 			}

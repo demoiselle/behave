@@ -6,7 +6,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 
-@ScreenMap(name = "Tela Principal", location = "Painel Principal")
+@ScreenMap(name = "Painel Principal", location = "Painel Principal")
 public class MainScreen {
 
 	@ElementMap(name = "Menu Principal Obras", locatorType = ElementLocatorType.Label, locator = "Obras")

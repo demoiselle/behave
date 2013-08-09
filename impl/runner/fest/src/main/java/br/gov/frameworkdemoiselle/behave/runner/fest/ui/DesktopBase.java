@@ -47,7 +47,7 @@ public class DesktopBase extends MappedElement implements BaseUI {
 		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle() + " | Locator: " + getElementMap().locator()[0]);
 
 		if (findedComponents.size() == 0) {
-			throw new BehaveException("Elemento não encontrado." + runner.currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: " + runner.getHierarchy() + "\r----------------------------------------------");
+			throw new BehaveException("Elemento não encontrado. \rContainer: \r" + runner.currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + runner.getHierarchy() + "\r----------------------------------------------");
 		} else {
 			return (Component) findedComponents.toArray()[0];
 		}
