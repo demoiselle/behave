@@ -1,6 +1,7 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
 
 /**
@@ -11,7 +12,7 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
  * @author lmveloso
  * 
  */
-public class RichSelect extends WebBase {
+public class RichSelect extends WebBase implements Select {
 
 	/**
 	 * Clica no campo do rich:select, provocando a abertura ou o fechamento do menu popup.
@@ -58,14 +59,14 @@ public class RichSelect extends WebBase {
 
 		// Se o label do item de menu foi informado, seleciona o elemento da popupList
 		if (txtMenuItem != null && !txtMenuItem.isEmpty()) {
-			String jsClickItemCode = "return (function(){ var val = '" + txtMenuItem + "'; var rfs = RichFaces.$('" + getId() + "'); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == val ) { rfs.originalItems[ n ].click(); return true; } } return false; })();";
+			String jsClickItemCode = "return (function(val, id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == val ) { rfs.originalItems[ n ].click(); return true; } } return false; })('" + txtMenuItem + "','" + getId() + "');";
 
 			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
 			if (!clicked)
 				throw new BehaveException("Não foi possível clicar no item [" + txtMenuItem + "] do elemento [" + this.getElementMap().name() + "].");
 		}
 	}
-
+	
 	/**
 	 * Utiliza a API Javascritp do Richfaces para mostrar o popup com itens do rich:select
 	 */
@@ -101,4 +102,41 @@ public class RichSelect extends WebBase {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByVisibleText(String value) {
+		clickMenuItem(value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByIndex(int index) {
+
+		checkRichfacesComponent();
+
+		String jsClickItemCode = "return (function(index,id){ var rfs = RichFaces.$(id); if( index >= 0 && index < rfs.originalItems.length ) { rfs.originalItems.get( index ).click(); return true; } return false; })("+index+",'" + getId() + "');";
+
+		Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
+		if (!clicked)
+			throw new BehaveException("Não foi possível clicar no item [" + index + "] do elemento [" + this.getElementMap().name() + "].");
+		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void selectByValue(String value) {
+		checkRichfacesComponent();
+
+		// Se o label do item de menu foi informado, seleciona o elemento da popupList
+		if (value != null && !value.isEmpty()) {
+			String jsClickItemCode = "return (function(value,id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == value ) { rfs.originalItems[ n ].click(); return true; } } return false; })('"+value+"','" + getId() + "');";
+
+			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
+			if (!clicked)
+				throw new BehaveException("Não foi possível clicar no item [" + value + "] do elemento [" + this.getElementMap().name() + "].");
+		}
+	}
 }
