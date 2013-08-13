@@ -40,7 +40,7 @@
 
 	<artifactId>demoiselle-behave-reference</artifactId>
 	<packaging>jdocbook</packaging>
-	<version>1.2.0-BETA5</version>
+	<version>1.2.0-SNAPSHOT</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -74,8 +74,4 @@
 	<properties>
 		<project.context>components/behave/reference</project.context>
 	</properties>
-
-  <scm>
-    <tag>1.2.0-BETA5</tag>
-  </scm>
 </project>
