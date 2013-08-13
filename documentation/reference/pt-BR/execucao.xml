@@ -105,4 +105,90 @@
 		</para>
 		<programlisting>x11vnc -display :2</programlisting>
 	</section>
+
+	<section>
+		<title>Integração Contínua</title>
+		<para>
+			Para execução de testes funcionais em modo background sob um ambiente de integração contínua 
+			se faz necessário a instalação de plugins que permitam gerenciar o Xvfb. O Jenkins possui o 
+			plugin:
+			<ulink
+				url	="https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin">https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin
+			</ulink>
+			que permite realizar este controle.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-01.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-01.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Xvfb Plugin</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Após instalar o plugin configure-o pelo menu “Gerenciar o Jenkins → Configurar o sistema” na seção
+			Xvfb installation, informe um nome “padrão” e a pasta em que o executável do Xvfb foi instalado “/usr/bin”.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-02.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-02.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Configuração do Sistema</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Para cada projeto Jenkins configure na seção “Ambiente de Construção” a 
+			instalação, seu timeout, as dimensões da tela e seu display:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-03.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-03.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Configuração do Projeto</para>
+				</caption>
+			</mediaobject>
+		</para>			
+		<para>
+			Ao executar seu projeto, o Jenkins iniciará o Xvfb antes da construção da build 
+			e finalizar o processo ao final da build:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-04.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-04.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Console</para>
+				</caption>
+			</mediaobject>
+		</para>			
+	</section>
+		
 </chapter>
