@@ -81,14 +81,18 @@
 
 	<repositories>
 		<repository>
-			<id>demoiselle-behave-snapshots</id>
-			<name>Demoiselle Behave Snapshots</name>
-			<url>http://centro3.cta.serpro/maven/repositories/component/snapshots/</url>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
 		<repository>
-			<id>demoiselle-behave-releases</id>
-			<name>Demoiselle Behave Releases</name>
-			<url>http://centro3.cta.serpro/maven/repositories/component/internal/</url>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
 		</repository>
 	</repositories>
 
