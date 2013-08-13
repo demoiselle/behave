@@ -52,20 +52,27 @@
 	<name>Demoiselle Behave Component Reference Documentation</name>
 	<description>Demoiselle Report Component Reference Documentation</description>
 
+<!-- 	<distributionManagement> -->
+<!-- 		<repository> -->
+<!-- 			<id>demoiselle-behave.internal</id> -->
+<!-- 			<name>Repositorio Interno</name> -->
+<!-- 			<url>file:///rede/aplic/archiva/documentation/internal</url> -->
+<!-- 		</repository> -->
+<!-- 		<snapshotRepository> -->
+<!-- 			<id>demoiselle-behave.snapshots</id> -->
+<!-- 			<name>Repositorio Interno</name> -->
+<!-- 			<url>file:///rede/aplic/archiva/documentation/snapshots</url> -->
+<!-- 		</snapshotRepository> -->
+<!-- 	</distributionManagement> -->
+
 	<distributionManagement>
-		<repository>
-			<id>demoiselle-behave.internal</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/documentation/internal</url>
-		</repository>
-		<snapshotRepository>
-			<id>demoiselle-behave.snapshots</id>
-			<name>Repositorio Interno</name>
-			<url>file:///rede/aplic/archiva/documentation/snapshots</url>
-		</snapshotRepository>
+		<site>
+			<id>demoiselle.sourceforge.net</id>
+			<url>${site.url}</url>
+		</site>
 	</distributionManagement>
 
 	<properties>
-		<project.context>component/behave/reference</project.context>
+		<project.context>components/behave/reference</project.context>
 	</properties>
 </project>
