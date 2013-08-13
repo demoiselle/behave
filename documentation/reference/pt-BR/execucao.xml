@@ -7,8 +7,7 @@
 	<para>
 		Este capítulo apresenta recursos avançados para execução de testes com o Demoiselle Behave que
 		podem auxiliar a montagem de um ambiente para execução de testes funcionais.
-	</para>
-	
+	</para>	
 	<section>
 		<title>Execução Paralela</title>
 		<para>
