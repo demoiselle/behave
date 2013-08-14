@@ -41,7 +41,7 @@
 	<groupId>br.gov.frameworkdemoiselle.component.behave.archetype</groupId>
 	<artifactId>jbehave-selenium-archetype</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.0-BETA5</version>
+	<version>1.2.0-SNAPSHOT</version>
 	
 	<parent>
         <groupId>br.gov.frameworkdemoiselle</groupId>
@@ -83,8 +83,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-  <scm>
-    <tag>1.2.0-BETA5</tag>
-  </scm>
 </project>
