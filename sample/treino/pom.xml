@@ -109,7 +109,7 @@
 			<url>http://demoiselle.sourceforge.net/repository/release</url>
 		</repository>
 	</repositories>
-	
+	<!-- 
 	<build>
 		<plugins>
 			<plugin>
@@ -117,12 +117,12 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.15</version>
 				<configuration>
-					<forkCount>3</forkCount> <!-- número máximo de threads -->					
-					<reuseForks>false</reuseForks> <!-- levanta uma jvm para cada fork -->		
-					<parallel>classes</parallel> <!-- paraleliza por classe -->
+					<forkCount>3</forkCount> 					
+					<reuseForks>false</reuseForks>		
+					<parallel>classes</parallel>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	
+	 -->
 </project>

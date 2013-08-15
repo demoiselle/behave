@@ -1,13 +1,14 @@
-Funcionalidade: Operar Calculadora
+Funcionalidade: Operar a Calculadora
 
-Eu quero: utilizar as funcionalidasde básicas da calculadora
-De modo que: a calculadora execute as operações básicas
+Narrativa:
+Para obter as operações básicas da calculadora
+Como um usuário qualquer
+Desejo resolver problemas matemáticos de forma mais rápida
 
 Cenário: Limpar Calculadora no Início
 
 Quando inicio a Calculadora
 Então seu valor será "0"
-
 
 Cenário: Limpar Calculadora depois de uma operação
 
