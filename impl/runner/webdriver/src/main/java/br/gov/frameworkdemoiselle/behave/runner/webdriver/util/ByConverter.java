@@ -59,8 +59,10 @@ public class ByConverter {
 			by = By.tagName(locator);
 		} else if (type == ElementLocatorType.XPath) {
 			by = By.xpath(locator);
-		} else {
-			throw new RuntimeException("Locator Type não encontrado.");
+		} else if (type == ElementLocatorType.Value) {
+			by = By.xpath("//*[@value='" + locator + "']");
+		}else {
+			throw new RuntimeException("Locator " + type + " não encontrado.");
 		}
 
 		return by;

@@ -60,6 +60,7 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 import org.jbehave.core.steps.ParameterControls;
 import org.jbehave.core.steps.ParameterConverters;
 import org.jbehave.core.steps.ParameterConverters.DateConverter;
+import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -67,6 +68,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.converter.MapConverter;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.DefaultStoryReport;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.console.ColoredConsoleFormat;
@@ -84,7 +86,9 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			logger.info("Configurando o JBehave");
 
 			ParameterConverters parameterConverters = new ParameterConverters();
-			parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("dd/MM/yyyy")));
+			parameterConverters.addConverters(new ParameterConverter[] {
+					new DateConverter(new SimpleDateFormat("dd/MM/yyyy")),
+					new MapConverter() });
 
 			configuration = new Configuration() {
 			};
