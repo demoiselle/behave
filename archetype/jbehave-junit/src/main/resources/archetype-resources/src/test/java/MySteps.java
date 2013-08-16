@@ -36,8 +36,8 @@ public class MySteps implements Step {
 		calculadora.subtraction(valor);
 	}
 	
-	@When("multiploco \"$valor\"")
-	public void whenMultiploco(double valor) {
+	@When("multiplico \"$valor\"")
+	public void whenMultiplico(double valor) {
 		calculadora.multiplication(valor);
 	}
 	
