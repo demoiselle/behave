@@ -125,6 +125,7 @@ public class BehaveContext {
 			}
 		} catch (BehaveException ex) {
 			log.error("Erro ao executar o Demoiselle Behave", ex);
+			throw ex;
 		} finally {
 			storiesPath.clear();
 			steps.clear();

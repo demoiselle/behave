@@ -63,8 +63,8 @@ public class MapConverter implements ParameterConverter {
 		return false;
 	}
 
-	protected Map<String, Object> buildDataMap(String value) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	protected Map<String, String> buildDataMap(String value) {
+		Map<String, String> map = new HashMap<String, String>();
 		String[] parameters = value.substring(0, value.length()).split(",");
 		for (String parameter : parameters) {
 			String[] token = parameter.split("=>");
