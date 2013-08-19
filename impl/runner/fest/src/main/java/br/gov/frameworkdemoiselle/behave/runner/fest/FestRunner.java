@@ -60,6 +60,9 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
+import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopElement;
+import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
@@ -188,17 +191,18 @@ public class FestRunner implements Runner {
 			throw new RuntimeException("Não existe tela selecionada.");
 
 		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
+		ElementIndex index = DesktopReflectionUtil.getElementIndex(currentPageName, elementName);
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
 
-		Element element = null;
+		DesktopElement element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
 		if (clazz.isInterface())
-			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
+			element = (DesktopElement) InjectionManager.getInstance().getInstanceDependecy(clazz);
 		// Instancia a classe fornecida explicitamente como implementação da interface Element
 		else if (Element.class.isAssignableFrom(clazz))
 			try {
-				element = (Element) clazz.newInstance();
+				element = (DesktopElement) clazz.newInstance();
 			} catch (Exception e) {
 				element = null;
 			}
@@ -209,6 +213,7 @@ public class FestRunner implements Runner {
 			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da tela [" + currentPageName + "].");
 
 		element.setElementMap(map);
+		element.setElementIndex(index);		
 
 		return element;
 	}

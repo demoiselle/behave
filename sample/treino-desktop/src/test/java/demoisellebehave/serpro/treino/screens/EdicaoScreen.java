@@ -34,24 +34,44 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.fest.annotaiton;
+package demoisellebehave.serpro.treino.screens;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
-/**
- * Anotação utilizada para indicar o índice do elemento no runner Desktop página
- * 
- * @author SERPRO
- */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.FIELD })
-public @interface ElementIndex {
+@ScreenMap(name = "Edição de Obra", location = "Edição de Obra")
+public class EdicaoScreen {
 
-	public int index() default 0;
+	@ElementMap(name = "Rótulo Nome da Obra", locatorType = ElementLocatorType.Label, locator = "Nome da Obra:")
+	private Label lblNomeObra;
+
+	@ElementMap(name = "Nome da Obra", locatorType = ElementLocatorType.ClassName, locator = "JTextField")
+	@ElementIndex(index = 1)
+	private TextField txtNomeObra;
+
+	@ElementMap(name = "Rótulo Valor", locatorType = ElementLocatorType.Label, locator = "Valor:")
+	private Label lblValor;
+
+	@ElementMap(name = "Valor", locatorType = ElementLocatorType.ClassName, locator = "JTextField")
+	@ElementIndex(index = 0)
+	private TextField txtValor;
+
+	@ElementMap(name = "Rótulo Prazo", locatorType = ElementLocatorType.Label, locator = "Prazo:")
+	private Label lblPrazo;
+
+	@ElementMap(name = "Prazo", locatorType = ElementLocatorType.ClassName, locator = "JTextField")
+	@ElementIndex(index = 2)
+	private TextField txtPrazo;
+
+	@ElementMap(name = "Inserir", locatorType = ElementLocatorType.Label, locator = "Inserir Obra")
+	private Button btnInserir;
+
+	@ElementMap(name = "Cancelar", locatorType = ElementLocatorType.Label, locator = "Cancelar")
+	private Button btnCancelar;
 
 }

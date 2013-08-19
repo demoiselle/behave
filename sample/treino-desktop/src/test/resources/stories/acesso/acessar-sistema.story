@@ -15,7 +15,3 @@ Quando clico em "Menu Principal Sair"
 E clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
-
-Cenário: Acesso ao Sistema com usuário "{usuário}"
-
-Acesso ao Sistema com usuário "{usuário}" e senha "188542"

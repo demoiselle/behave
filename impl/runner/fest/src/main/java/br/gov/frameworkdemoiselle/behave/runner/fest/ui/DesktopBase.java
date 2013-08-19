@@ -38,7 +38,6 @@ package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
 import java.awt.Component;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -58,11 +57,11 @@ import org.fest.swing.core.ComponentMatcher;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
+import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopMappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
-public class DesktopBase extends MappedElement implements BaseUI {
+public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 	Logger log = Logger.getLogger(DesktopBase.class);
 	protected FestRunner runner = (FestRunner) getRunner();
@@ -84,11 +83,21 @@ public class DesktopBase extends MappedElement implements BaseUI {
 
 		if (findedComponents.size() == 0) {
 			throw new BehaveException("Elemento não encontrado. \rContainer: \r" + runner.currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + runner.getHierarchy() + "\r----------------------------------------------");
+		} else if (findedComponents.size() > 1) {
+			// Pega pelo indice
+			return (Component) findedComponents.toArray()[getElementIndex().index()];
 		} else {
 			return (Component) findedComponents.toArray()[0];
 		}
+
 	}
 
+	/**
+	 * 
+	 * @param component
+	 * @return
+	 */
+	// TODO Melhoria geral deste método, tentar generalizar a maneira com que os objetos são encontrados
 	private boolean matcher(Component component) {
 		if (component instanceof JButton) {
 			JButton button = (JButton) component;
@@ -96,6 +105,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			if (button.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && button.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && button.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JButton")) {
 				return true;
 			}
 		}
@@ -107,6 +118,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && textField.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTextField")) {
+				return true;
 			}
 		}
 
@@ -115,7 +128,9 @@ public class DesktopBase extends MappedElement implements BaseUI {
 
 			if (label.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && label.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && label.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (getElementMap().locatorType() == ElementLocatorType.Label && label.getText() != null && label.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JLabel")) {
 				return true;
 			}
 		}
@@ -124,6 +139,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			JSpinner spinner = (JSpinner) component;
 
 			if (spinner.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && spinner.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JSpinner")) {
 				return true;
 			}
 		}
@@ -135,6 +152,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menu.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JMenu")) {
+				return true;
 			}
 		}
 
@@ -144,6 +163,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			if (menuItem.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && menuItem.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menuItem.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JMenuItem")) {
 				return true;
 			}
 		}
@@ -155,6 +176,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && checkBox.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JCheckBox")) {
+				return true;
 			}
 		}
 
@@ -165,6 +188,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.Label && radio.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JRadioButton")) {
+				return true;
 			}
 		}
 
@@ -172,6 +197,8 @@ public class DesktopBase extends MappedElement implements BaseUI {
 			JFileChooser fileChooser = (JFileChooser) component;
 
 			if (fileChooser.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && fileChooser.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
+				return true;
+			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JFileChooser")) {
 				return true;
 			}
 		}
@@ -183,21 +210,13 @@ public class DesktopBase extends MappedElement implements BaseUI {
 				// Busca no título, mas o locator esta como LABEL!
 				if (getElementMap().locatorType() == ElementLocatorType.Label && tabbedPane.getTitleAt(i).equalsIgnoreCase(getElementMap().locator()[0])) {
 					return true;
+				} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTabbedPane")) {
+					return true;
 				}
 			}
 		}
 
 		return false;
-	}
-
-	@Override
-	public void setLocatorParameters(List<String> Parameters) {
-
-	}
-
-	@Override
-	public String getText() {
-		throw new BehaveException("Método não implementado, ele deve ser implementado pelo componente Desktop.");
 	}
 
 	protected void waitThreadSleep(Long delay) {

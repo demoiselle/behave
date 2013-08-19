@@ -34,30 +34,17 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino;
+package demoisellebehave.serpro.treino.screens;
 
-import org.apache.log4j.Logger;
-import org.junit.Test;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+@ScreenMap(name = "Edição de Obra - Informação", location = "Informação")
+public class InformacaoEdicaoScreen {
 
-/**
- * 
- * @author SERPRO
- *
- */
-public class AcessoTests {
-
-	private BehaveContext eng = BehaveContext.getInstance();
-
-	Logger log = Logger.getLogger(AcessoTests.class);
-
-	public AcessoTests() {
-	}
-
-	@Test
-	public void testAllAcesso() throws Throwable {
-		eng.run("/stories/acesso/");
-	}
+	@ElementMap(name = "OK", locatorType = ElementLocatorType.Label, locator = "OK")
+	private Button btnOk;
 
 }

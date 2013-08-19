@@ -34,25 +34,24 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino;
+package br.gov.frameworkdemoiselle.behave.runner.fest.annotation;
 
-import org.junit.Test;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+/**
+ * Anotação utilizada para indicar o índice do elemento no runner Desktop tela
+ * 
+ * @author SERPRO
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value = { ElementType.FIELD })
+public @interface ElementIndex {
 
-public class ObrasTest {
-
-	private BehaveContext eng = BehaveContext.getInstance();
-
-	public ObrasTest() {
-		// eng.addSteps(new MySteps());
-	}
-
-	@Test
-	public void testAllObras() throws Throwable {
-		eng.addStories("/stories/acesso/");
-		eng.addStories("/stories/obras/");
-		eng.run();
-	}
+	public int index() default 0;
 
 }
