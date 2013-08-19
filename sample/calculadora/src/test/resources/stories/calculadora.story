@@ -56,3 +56,16 @@ Quando multiploco "5"
 Quando subtraio "1"
 Então seu valor será "24"
 
+Cenário: Soma com massa
+
+Quando inicio a Calculadora
+Então realizo várias somas da <lista>
+
+Exemplos:
+|lista|
+|valor01 => "4.0", valor02 => "6.0", resultado => "10.0"|
+|valor01 => "5.0", valor02 => "9.0", resultado => "14.0"|
+|valor01 => "6.0", valor02 => "10.0", resultado => "16.0"|
+|valor01 => "7.0", valor02 => "11.0", resultado => "18.0"|
+|valor01 => "8.0", valor02 => "12.0", resultado => "20.0"|
+

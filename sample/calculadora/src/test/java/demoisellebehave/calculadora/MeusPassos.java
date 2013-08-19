@@ -38,6 +38,10 @@ package demoisellebehave.calculadora;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Map;
+
+import junit.framework.Assert;
+
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
@@ -87,5 +91,13 @@ public class MeusPassos implements Step {
 	public void whenLimpo() {
 		calculadora.limpar();
 	}
+	
+	@Then("realizo v\u00E1rias somas da $lista")
+	public void variasSomas(Map<String, String> lista) {
+		calculadora.soma(Double.parseDouble(lista.get("valor01")));
+		calculadora.soma(Double.parseDouble(lista.get("valor02")));
+		Assert.assertEquals(calculadora.resultado(), Double.parseDouble(lista.get("resultado")));
+	}
+
 
 }
