@@ -36,7 +36,7 @@ Cenário: Multiplicação
 
 Quando inicio a Calculadora
 Quando adiciono "10"
-Quando multiploco "2"
+Quando multiplico "2"
 Então seu valor será "20"
 
 Cenário: Divisão
@@ -51,7 +51,7 @@ Cenário: Quatro operações
 Quando inicio a Calculadora
 Quando adiciono "10"
 Quando divido "2"
-Quando multiploco "5"
+Quando multiplico "5"
 Quando subtraio "1"
 Então seu valor será "24"
 
