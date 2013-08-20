@@ -52,7 +52,6 @@ import org.fest.swing.core.Robot;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
-import org.fest.swing.fixture.JComponentFixture;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -75,7 +74,7 @@ public class FestRunner implements Runner {
 	public Container mainContainer;
 	public Container currentContainer;
 	public FrameFixture mainFixture;
-	public JComponentFixture currentFixture;
+	// public JComponentFixture currentFixture;
 	public String currentTitle;
 
 	@Override
@@ -132,9 +131,9 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 
 					currentTitle = title;
-					
+
 					logger.debug("Navigate To (Dialog): " + title);
-					
+
 					return;
 				}
 			}
@@ -143,9 +142,9 @@ public class FestRunner implements Runner {
 		// Procura por Frames
 		for (Window w : JFrame.getWindows()) {
 			if (w instanceof JFrame && w.isVisible()) {
-				
+
 				JFrame frame = (JFrame) w;
-				
+
 				if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
 					currentContainer = frame;
 					currentContainer.setFocusTraversalKeysEnabled(true);
@@ -153,9 +152,9 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 
 					currentTitle = title;
-					
+
 					logger.debug("Navigate To (Frame): " + title);
-					
+
 					return;
 				}
 			}
@@ -167,7 +166,7 @@ public class FestRunner implements Runner {
 	}
 
 	public String getHierarchy() {
-		ComponentPrinter printer = BasicComponentPrinter.printerWithCurrentAwtHierarchy();		
+		ComponentPrinter printer = BasicComponentPrinter.printerWithCurrentAwtHierarchy();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		PrintStream printStream = new PrintStream(out, true);
 		printer.printComponents(printStream, currentContainer);
@@ -213,7 +212,7 @@ public class FestRunner implements Runner {
 			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da tela [" + currentPageName + "].");
 
 		element.setElementMap(map);
-		element.setElementIndex(index);		
+		element.setElementIndex(index);
 
 		return element;
 	}
@@ -225,12 +224,15 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void close() {
-
+		
 	}
 
 	@Override
 	public void quit() {
-
+		mainFixture.cleanUp();
+		mainContainer = null;
+		currentContainer = null;
+		application = null;
 	}
 
 	@Override

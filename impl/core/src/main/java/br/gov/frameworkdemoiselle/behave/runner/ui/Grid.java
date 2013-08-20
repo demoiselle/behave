@@ -39,8 +39,10 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public interface Grid extends BaseUI {
+
+	public void clickRow(String reference);
 
 }

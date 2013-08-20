@@ -48,6 +48,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
@@ -213,6 +214,12 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTabbedPane")) {
 					return true;
 				}
+			}
+		}
+
+		if (component instanceof JTable) {
+			if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTable")) {
+				return true;
 			}
 		}
 

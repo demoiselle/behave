@@ -109,7 +109,7 @@ public class JFrameListaObras extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(245, 210, 147));
         jPanel1.setForeground(new java.awt.Color(210, 194, 131));
 
-        btNovoLance.setText("Enviar Lançe");
+        btNovoLance.setText("Enviar Lance");
         btNovoLance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btNovoLanceActionPerformed(evt);

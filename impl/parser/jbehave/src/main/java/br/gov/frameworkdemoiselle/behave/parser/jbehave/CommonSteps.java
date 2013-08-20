@@ -54,6 +54,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
@@ -95,9 +96,9 @@ public class CommonSteps implements Step {
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
-		Element element = (Button) runner.getElement(currentPageName, elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
-		
+
 		if (element instanceof Button) {
 			((Button) element).click();
 		} else if (element instanceof Link) {
@@ -128,7 +129,7 @@ public class CommonSteps implements Step {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
-	
+
 	@When(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void informeWithParameters(String elementName, List<String> locatorParameters) {
@@ -253,6 +254,17 @@ public class CommonSteps implements Step {
 			((MenuItem) element).mouseOver();
 		} else if (element instanceof Button) {
 			((Button) element).mouseOver();
+		}
+	}
+
+	@When("clico na linha da tabela \"$table\" referente a \"$reference\"")
+	public void clickRowTable(String table, String reference) {
+		Element element = runner.getElement(currentPageName, table);
+
+		if (element instanceof Grid) {
+			((Grid) element).clickRow(reference);
+		} else {
+			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
 

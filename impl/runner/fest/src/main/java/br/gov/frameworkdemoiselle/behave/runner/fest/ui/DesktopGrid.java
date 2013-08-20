@@ -34,14 +34,27 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
+
+import javax.swing.JTable;
+
+import org.fest.swing.core.MouseButton;
+import org.fest.swing.data.TableCell;
+import org.fest.swing.fixture.JTableFixture;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
-public class WebGrid extends WebBase implements Grid {
+public class DesktopGrid extends DesktopBase implements Grid {
 
 	@Override
 	public void clickRow(String reference) {
+
+		// Pegar a linha que tenha o texto do parâmetro referente a
+
+		JTable table = (JTable) getElement();
+		JTableFixture tFix = new JTableFixture(runner.robot, table);
+		TableCell cell = tFix.cell(reference);
+		tFix.click(cell, MouseButton.LEFT_BUTTON);
 
 	}
 

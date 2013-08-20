@@ -10,10 +10,6 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	protected ElementIndex elementIndex;
 
-	public void setLocatorParameters(List<String> Parameters) {
-		throw new BehaveException("Método não implementado.");
-	}
-
 	public String getText() {
 		throw new BehaveException("Método não implementado, ele deve ser implementado pelo componente Desktop.");
 	}
@@ -24,6 +20,10 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	public void setElementIndex(ElementIndex elementIndex) {
 		this.elementIndex = elementIndex;
+	}
+
+	public void setLocatorParameters(List<String> Parameters) {
+		throw new BehaveException("Método não implementado.");
 	}
 
 }

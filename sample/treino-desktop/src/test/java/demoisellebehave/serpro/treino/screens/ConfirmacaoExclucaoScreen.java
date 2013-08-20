@@ -34,15 +34,23 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+package demoisellebehave.serpro.treino.screens;
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
-public class WebGrid extends WebBase implements Grid {
+@ScreenMap(name = "Lista de Obras - Confirmação", location = "Confirmação")
+public class ConfirmacaoExclucaoScreen {
 
-	@Override
-	public void clickRow(String reference) {
+	@ElementMap(name = "Yes", locatorType = ElementLocatorType.Label, locator = "Yes")
+	private Button btnYes;
 
-	}
+	@ElementMap(name = "No", locatorType = ElementLocatorType.Label, locator = "No")
+	private Button btnNo;
 
+	@ElementMap(name = "OK", locatorType = ElementLocatorType.Label, locator = "OK")
+	private Button btnOk;
+	
 }

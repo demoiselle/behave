@@ -10,8 +10,6 @@ Então vou para a tela "Painel Principal"
 
 Cenário: Sair do "{sistema}"
 
-Dado que estou na tela "Painel Principal"
+Dado que vou para a tela "Painel Principal"
 Quando clico em "Menu Principal Sair"
 E clico em "Sair"
-Então será exibido "Usuário:"
-E será exibido "Senha:"

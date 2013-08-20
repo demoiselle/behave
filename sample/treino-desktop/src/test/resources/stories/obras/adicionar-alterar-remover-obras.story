@@ -17,21 +17,21 @@ Então vou para a tela "Edição de Obra"
 Então será exibido no "Rótulo Nome da Obra" o valor "Nome da Obra:"
 Então será exibido no "Rótulo Valor" o valor "Valor:"
 Então será exibido no "Rótulo Prazo" o valor "Prazo:"
-
 Quando informo "Nova Obra" no campo "Nome da Obra"
 Quando informo "28/05/2013" no campo "Prazo"
 Quando informo "99999999.9" no campo "Valor"
 Quando clico em "Inserir"
-
 Então vou para a tela "Edição de Obra - Informação"
 Quando clico em "OK"
 
 Cenário: Excluir Obra
 
 Dado que vou para a tela "Lista de Obras"
-Quando clico em "Excluir" referente a "Nova Obra"
-Então será exibido "Remover Obra: Nova Obra ?"
-Quando clico em "Sim"
-Então será exibido "Nova Obra. Registo removido."
+Quando clico na linha da tabela "Tabela de Obras" referente a "Nova Obra"
+Quando clico em "Excluir Obra"
+Então vou para a tela "Lista de Obras - Confirmação"
+Quando clico em "Yes"
+Então vou para a tela "Lista de Obras - Confirmação"
+Quando clico em "OK"
 
 Sair do "Sistema"
