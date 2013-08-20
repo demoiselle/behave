@@ -36,6 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner;
 
+import java.io.File;
+
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
@@ -67,5 +69,7 @@ public interface Runner {
 	public Object getDriver();
 	
 	public Screen getScreen();
+	
+	public File getScreenshot();
 
 }

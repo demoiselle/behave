@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,7 @@ import br.gov.frameworkdemoiselle.behave.internal.parser.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
+import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 /**
  * 
@@ -157,5 +159,11 @@ public class BehaveContext {
 	public void fail(String step, Throwable fail) {
 		this.step = step;
 		this.fail = fail;
+		
+		if ( BehaveConfig.getRunner_ScreenshotEnabled() ) {
+			Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+			File screenshot = runner.getScreenshot();
+			log.info(" Screenshot = " + screenshot.getAbsolutePath());
+		}
 	}
 }
