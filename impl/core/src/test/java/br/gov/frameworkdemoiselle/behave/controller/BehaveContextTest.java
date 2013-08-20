@@ -36,9 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 /**
