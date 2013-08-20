@@ -40,8 +40,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
 @ScreenMap(name = "Lista de Obras", location = "Painel Principal")
 public class ListaObrasScreen {
@@ -49,31 +48,16 @@ public class ListaObrasScreen {
 	@ElementMap(name = "Adicionar Obra", locatorType = ElementLocatorType.Label, locator = "Adicionar")
 	private Button botaoAdicionarObra;
 
-	@ElementMap(name = "Nome da Obra", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[1]")
-	private TextField nomeDaObra;
+	@ElementMap(name = "Alterar Obra", locatorType = ElementLocatorType.Label, locator = "Alterar")
+	private Button botaoAlterarObra;
 
-	@ElementMap(name = "Valor", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[2]")
-	private TextField valor;
+	@ElementMap(name = "Excluir Obra", locatorType = ElementLocatorType.Label, locator = "Excluir")
+	private Button botaoExcluirObra;
 
-	@ElementMap(name = "Prazo", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra:j_idt')][contains(@type, 'text')])[3]")
-	private TextField prazo;
+	@ElementMap(name = "Enviar Lance", locatorType = ElementLocatorType.Label, locator = "Enviar Lance")
+	private Button botaoEnviarLanceObra;
 
-	@ElementMap(name = "Inserir", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, 'formObra')][contains(@type, 'submit')])[1]")
-	private Button btInserir;
-
-	@ElementMap(name = "Registros por Página", locatorType = ElementLocatorType.XPath, locator = "(//select[contains(@title, 'Rows')])[1]")
-	private Select ultimaPagina;
-
-	@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'formObra')][.//text()='%param1%']//button)[1]")
-	private Button primeiroBotaoExcluir;
-
-	@ElementMap(name = "Sim", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formRemoverObra')]/span[./text()='Sim'])")
-	private Button sim;
-
-	@ElementMap(name = "Enviar Lance na Primeira Obra", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formObra')][contains(@onclick, 'dlLance.show')])[1]")
-	private Button btPrimeiraObra;
-
-	@ElementMap(name = "Excluir Obra", locatorType = ElementLocatorType.XPath, locator = "(//tr[td/span/span='%param1%']//button)[1]")
-	private Button btExcluir;
+	@ElementMap(name = "Tabela de Obras", locatorType = ElementLocatorType.ClassName, locator = "JTable")
+	private Grid table;
 
 }

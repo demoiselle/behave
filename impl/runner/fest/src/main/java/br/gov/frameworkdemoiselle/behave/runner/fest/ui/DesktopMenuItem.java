@@ -48,7 +48,6 @@ public class DesktopMenuItem extends DesktopBase implements MenuItem {
 	public void click() {
 		JMenuItemFixture menuFix = new JMenuItemFixture(runner.robot, (JMenuItem) getElement());
 		menuFix.click();
-
 	}
 
 	@Override
