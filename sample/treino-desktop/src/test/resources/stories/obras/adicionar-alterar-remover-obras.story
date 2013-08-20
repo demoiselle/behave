@@ -30,7 +30,7 @@ Dado que vou para a tela "Lista de Obras"
 Quando clico na linha da tabela "Tabela de Obras" referente a "Nova Obra"
 Quando clico em "Excluir Obra"
 Então vou para a tela "Lista de Obras - Confirmação"
-Quando clico em "Yes"
+Quando clico em "Sim"
 Então vou para a tela "Lista de Obras - Confirmação"
 Quando clico em "OK"
 

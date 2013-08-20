@@ -45,6 +45,7 @@ import org.reflections.Reflections;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 /**
  * 
  * @author SERPRO
@@ -143,8 +144,9 @@ public class ReflectionUtil {
 			}
 		}
 
-		if (map == null)
-			throw new RuntimeException("Nenhum Elemento foi encontrado com o nome [" + elementName + "] na tela [" + pageName + "].");
+		if (map == null){
+			throw new BehaveException("Elemento não encontrado com nome [" + elementName + "] na tela [" + pageName + "].");
+		}
 
 		return map;
 	}

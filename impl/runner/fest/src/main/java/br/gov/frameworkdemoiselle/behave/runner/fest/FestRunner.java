@@ -41,6 +41,8 @@ import java.awt.Window;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -78,7 +80,6 @@ public class FestRunner implements Runner {
 	public FrameFixture mainFixture;
 	// public JComponentFixture currentFixture;
 	public String currentTitle;
-	private int countScreenshot;
 
 	@Override
 	public void start() {
@@ -248,8 +249,11 @@ public class FestRunner implements Runner {
 		return null;
 	}
 	
-	public File getScreenshot() {
-		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+(++countScreenshot)+".png");
+	public File getScreenshot() {		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+		String fileName = format.format(GregorianCalendar.getInstance().getTime());
+		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+(fileName)+".png");
+		
 		screenshotFile.getParentFile().mkdirs();
 		
 		ScreenshotTaker screenshotTaker = new ScreenshotTaker();

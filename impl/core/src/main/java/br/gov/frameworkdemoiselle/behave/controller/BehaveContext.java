@@ -58,7 +58,7 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
  */
 public class BehaveContext {
 
-	public static final ThreadLocal<BehaveContext> userThreadLocal = new ThreadLocal<BehaveContext>();
+	public static final BehaveContext userThreadLocal = new BehaveContext();
 
 	private Parser parser;
 
@@ -77,11 +77,8 @@ public class BehaveContext {
 
 	}	
 	
-	public static BehaveContext getInstance() {		
-		if (userThreadLocal.get() == null){
-			userThreadLocal.set(new BehaveContext());
-		}
-		return userThreadLocal.get();		
+	public static BehaveContext getInstance() {	
+		return userThreadLocal;		
 	}	
 
 	public void addSteps(Step step) {
