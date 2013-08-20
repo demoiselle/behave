@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -53,7 +54,7 @@ public class WebScreen extends WebBase implements Screen {
 
 	public void waitText(String text, Long timeout) {
 		int totalMilliseconds = 0;
-		while (!((WebDriver) runner.getDriver()).getPageSource().contains(text)) {
+		while (!((WebDriver) runner.getDriver()).findElement(By.tagName("body")).getText().contains(text)) {
 			try {
 				logger.debug("Aguardando o elemento [" + text + "]");
 				Thread.sleep(1000);
