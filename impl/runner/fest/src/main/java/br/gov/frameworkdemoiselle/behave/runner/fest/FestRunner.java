@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.runner.fest;
 import java.awt.Container;
 import java.awt.Window;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 
 import javax.swing.JDialog;
@@ -52,6 +53,7 @@ import org.fest.swing.core.Robot;
 import org.fest.swing.edt.GuiActionRunner;
 import org.fest.swing.edt.GuiQuery;
 import org.fest.swing.fixture.FrameFixture;
+import org.fest.swing.image.ScreenshotTaker;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -76,6 +78,7 @@ public class FestRunner implements Runner {
 	public FrameFixture mainFixture;
 	// public JComponentFixture currentFixture;
 	public String currentTitle;
+	private int countScreenshot;
 
 	@Override
 	public void start() {
@@ -243,6 +246,16 @@ public class FestRunner implements Runner {
 	@Override
 	public Screen getScreen() {
 		return null;
+	}
+	
+	public File getScreenshot() {
+		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+(++countScreenshot)+".png");
+		screenshotFile.getParentFile().mkdirs();
+		
+		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
+		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
+		
+		return screenshotFile;
 	}
 
 }
