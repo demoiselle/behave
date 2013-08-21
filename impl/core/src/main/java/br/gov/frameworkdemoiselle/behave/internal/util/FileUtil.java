@@ -128,7 +128,7 @@ public class FileUtil {
 			folder = new File(FileUtil.getAbsolutePath() + folderRoot);
 			folderRoot = folder.getAbsolutePath();
 			if (!folder.exists()) {
-				throw new RuntimeException("Caminho [" + folderRoot + "] não encontrado ");
+				throw new BehaveException("Caminho [" + folderRoot + "] não encontrado ");
 			}
 		}
 
