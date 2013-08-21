@@ -39,19 +39,21 @@ package demoisellebehave.serpro.treino;
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import demoisellebehave.serpro.treino.steps.MySteps;
 
 public class ObrasTest {
 
 	private BehaveContext eng = BehaveContext.getInstance();
 
 	public ObrasTest() {
-		// eng.addSteps(new MySteps());
+		eng.addSteps(new MySteps());
 	}
 
 	@Test
 	public void testAllObras() throws Throwable {
-		eng.addStories("/stories/acesso/");
-		eng.addStories("/stories/obras/");
+		eng.addStories("/stories/acesso/acessar-sistema.story");
+		eng.addStories("/stories/obras/adicionar-alterar-remover-obras.story");
+		eng.addStories("/stories/obras/enviar-lance.story");
 		eng.run();
 	}
 

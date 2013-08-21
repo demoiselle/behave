@@ -60,4 +60,10 @@ public class DesktopTextField extends DesktopBase implements TextField {
 		sendKeys("");
 	}
 
+	@Override
+	public String getText() {
+		JTextComponentFixture textFix = new JTextComponentFixture(runner.robot, (JTextComponent) getElement());
+		return textFix.text();
+	}
+	
 }

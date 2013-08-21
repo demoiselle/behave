@@ -79,7 +79,7 @@ public class JFrameLance extends javax.swing.JFrame {
         btCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Enviar Lançe");
+        setTitle("Enviar Lance");
 
         jLabel1.setText("Obra:");
 
@@ -95,7 +95,7 @@ public class JFrameLance extends javax.swing.JFrame {
 
         jLabel6.setText("Novo Prazo:");
 
-        btEnviarLance.setText("Enviar Lançe");
+        btEnviarLance.setText("Enviar Lance");
         btEnviarLance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEnviarLanceActionPerformed(evt);
