@@ -38,8 +38,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<groupId>br.gov.component.demoiselle.archetypes</groupId>
 	<artifactId>demoiselle-behave-archetype-build</artifactId>
 	<packaging>pom</packaging>
+	<version>1.2.0-SNAPSHOT</version>
 
 	<name>Demoiselle Behave Archetypes Build Aggregator</name>
 	<description />
