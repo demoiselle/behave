@@ -34,5 +34,7 @@ Quando informo "O melhor Prazo" no campo "Novo Prazo"
 Quando clico em "Enviar Lance"
 Quando vou para a tela "Enviar Lance - Erro"
 Então clico em "OK"
+Dado que vou para a tela "Enviar Lance"
+Então clico em "Cancelar"
 
 Sair do "sistema"

@@ -21,4 +21,7 @@ public class EnviarLanceScreen {
 	@ElementMap(name = "Enviar Lance", locatorType = ElementLocatorType.Label, locator = "Enviar Lance")
 	private Button btnEnviar;
 
+	@ElementMap(name = "Cancelar", locatorType = ElementLocatorType.Label, locator = "Cancelar")
+	private Button btnCancelar;
+	
 }
