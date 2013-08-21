@@ -26,7 +26,7 @@ E decremento "1" dia "O melhor Prazo"
 Quando informo "O melhor Valor" no campo "Novo Valor"
 Quando informo "O melhor Prazo" no campo "Novo Prazo"
 Quando clico em "Enviar Proposta"
-!-- Então será exibido "Proposta Aceita!!!"
+Então será exibido "Proposta Aceita!!!"
 Sair do "sistema"
 
 Cenário: Enviar Lance Perdedor

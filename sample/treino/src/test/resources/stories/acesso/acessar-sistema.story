@@ -4,7 +4,7 @@ Dado que vou para a tela "Tela de Login"
 Quando informo "{usuário}" no campo "Campo Usuário"
 E informo "{senha}" no campo "Campo Senha"
 Quando clico em "Entrar"
-Então será exibido "Todas as Obras"
+Então será exibido "Obras"
 
 Cenário: Sair do "{sistema}"
 
