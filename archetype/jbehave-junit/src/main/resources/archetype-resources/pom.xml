@@ -47,15 +47,25 @@
 	<description>Descrição do ${artifactId}</description>
 
 	<dependencies>
-		<!-- demoiselle-behave (jbehave) -->
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
+			<version>1.2.0-BETA6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</repository>
+		<repository>
+			<id>demoiselle.sourceforge.net-snapshot</id>
+			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
+		</repository>
+	</repositories>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -73,27 +83,10 @@
 				<configuration>
 					<forkCount>3</forkCount> <!-- número máximo de threads -->					
 					<reuseForks>false</reuseForks> <!-- levanta uma jvm para cada fork -->		
-					<parallel>classes</parallel> <!-- paraleliza por classe -->
+					<parallel>classes</parallel> <!-- paralelismo por classe -->
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</repository>
-		<repository>
-			<id>sonatype-nexus-releases</id>
-			<name>Sonatype Nexus Releases</name>
-			<url>https://oss.sonatype.org/content/repositories/releases</url>
-		</repository>
-		<repository>
-			<id>demoiselle.sourceforge.net-release</id>
-			<url>http://demoiselle.sourceforge.net/repository/release</url>
-		</repository>
-	</repositories>
 
 </project>
