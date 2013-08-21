@@ -45,24 +45,12 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-documentation-parent</artifactId>
-		<version>8</version>
+		<version>9</version>
 	</parent>
 
 	<name>Demoiselle Behave Component Reference Documentation</name>
 	<description>Demoiselle Report Component Reference Documentation</description>
 
-<!-- 	<distributionManagement> -->
-<!-- 		<repository> -->
-<!-- 			<id>demoiselle-behave.internal</id> -->
-<!-- 			<name>Repositorio Interno</name> -->
-<!-- 			<url>file:///rede/aplic/archiva/documentation/internal</url> -->
-<!-- 		</repository> -->
-<!-- 		<snapshotRepository> -->
-<!-- 			<id>demoiselle-behave.snapshots</id> -->
-<!-- 			<name>Repositorio Interno</name> -->
-<!-- 			<url>file:///rede/aplic/archiva/documentation/snapshots</url> -->
-<!-- 		</snapshotRepository> -->
-<!-- 	</distributionManagement> -->
 
 	<distributionManagement>
 		<site>
