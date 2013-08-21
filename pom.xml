@@ -55,6 +55,7 @@
 		A liberação de versões deste componente deve ser feita a partir deste build, que fará automaticamente o build
 		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão deste componente sem utilizar este build.
 	</description>
+	
 
 	<modules>
 		<module>parent/behave</module>
@@ -71,6 +72,15 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<preparationGoals>clean install</preparationGoals>
+					<goals>${release.goals}</goals>					
+				</configuration>
+			</plugin>		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -135,6 +145,7 @@
 	</repositories>
 
 	<properties>
+		<release.goals>deploy wagon:upload site site:deploy</release.goals>
 		<project.alias>behave</project.alias>
 	</properties>
 </project>
