@@ -36,49 +36,76 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
-import org.junit.Assert;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 import org.junit.Test;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class BehaveContextTest {
 
 	@Test
 	public void testGetInstance() {
-		BehaveContext controller=BehaveContext.getInstance();
-		Assert.assertNotNull(controller);
+		BehaveContext controller = BehaveContext.getInstance();
+		assertNotNull(controller);
 	}
 
-	//TODO Teste quebrado
 	@Test
 	public void testRunListOfString() {
-		// BehaveContext controller=BehaveContext.getInstance();
-		// List<String> listaPath=new ArrayList<String>();
-		// controller.run(listaPath);
+		try {
+			BehaveContext controller = BehaveContext.getInstance();
+			List<String> listaPath = new ArrayList<String>();
+			controller.run(listaPath);
+			fail("exceção não lançada");
+		} catch (BehaveException ex) {
+			assertEquals("Lista de histórias vazias. Informe ao menos uma história", ex.getMessage());
+		}
 	}
 
-	//TODO Teste quebrado
 	@Test
 	public void testRunString() {
-//		BehaveContext controller=BehaveContext.getInstance();		
-//		controller.run("path");
+		try {
+			BehaveContext controller = BehaveContext.getInstance();
+			controller.run("path");
+			fail("exceção não lançada");
+		} catch (BehaveException ex) {
+			assertTrue(ex.getMessage().contains("Caminho"));
+			assertTrue(ex.getMessage().contains("não encontrado"));
+			assertTrue(ex.getMessage().contains("behave/impl/core/target/test-classespath]"));
+		}
 	}
 
-	//TODO Teste quebrado
+	// TODO Teste quebrado
 	@Test
 	public void testRun() {
-		//BehaveContext controller=BehaveContext.getInstance();
-		//controller.run();
+		try {
+			BehaveContext controller = BehaveContext.getInstance();
+			controller.run();
+			fail("exceção não lançada");
+		} catch (BehaveException ex) {
+			assertEquals("Lista de histórias vazias. Informe ao menos uma história", ex.getMessage());
+		}
 	}
 
-	//TODO Teste quebrado
 	@Test
 	public void testAddStories() {
-//		BehaveContext controller=BehaveContext.getInstance();
-//		controller.addStories("path");
-//		controller.run();
+		try {
+			BehaveContext controller = BehaveContext.getInstance();
+			controller.addStories("path");
+			controller.run();
+			fail("exceção não lançada");
+		} catch (BehaveException ex) {
+			assertTrue(ex.getMessage().contains("Caminho"));
+			assertTrue(ex.getMessage().contains("não encontrado"));
+			assertTrue(ex.getMessage().contains("behave/impl/core/target/test-classespath]"));
+		}
 	}
 
 }
