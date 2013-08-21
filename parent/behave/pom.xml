@@ -68,6 +68,7 @@
 
 	<properties>
 		<behave.release.version>1.2.0-SNAPSHOT</behave.release.version>
+		<release.goals>deploy wagon:upload site site:deploy</release.goals>
 	</properties>
 
 	<repositories>
@@ -197,6 +198,15 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<preparationGoals>clean install</preparationGoals>
+					<goals>${release.goals}</goals>					
+				</configuration>
+			</plugin>			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
