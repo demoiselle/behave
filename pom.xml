@@ -59,7 +59,8 @@
 
 	<modules>
 		<module>parent/behave</module>
-		<module>archetype</module>
+		<module>archetype/jbehave-junit</module>
+		<module>archetype/jbehave-selenium</module>
 		<module>impl/core</module>
 		<module>impl/parser/imperative</module>
 		<module>impl/parser/jbehave</module>

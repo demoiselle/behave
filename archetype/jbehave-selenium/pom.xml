@@ -72,6 +72,12 @@
 	<description>Archetype for automated functional tests in web applications</description>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>				
+			</resource>
+		</resources>	
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
