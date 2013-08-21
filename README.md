@@ -5,16 +5,24 @@
 ## Links úteis
 
 * [Documentação](http://demoiselle.sourceforge.net/docs/components/behave/reference/1.2.0-BETA5/html/index.html): Aprenda mais!
-* [Fórum](http://forum.frameworkdemoiselle.gov.br): Fóruns de discussão
-* [Tracker](https://github.com/demoiselle/behave/issues): Submissão/acompanhamento de Bugs, Improvements e New Features
+* [Fórum](https://github.com/demoiselle/behave/issues): Abra uma issue para discutirmos um assunto.
+* [Tracker](https://github.com/demoiselle/behave/issues): Abra uma issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades
 
 ## Repositório Maven
 
-    <repository>
-  		<id>demoiselle.sourceforge.net</id>
-		<url>http://demoiselle.sourceforge.net/repository/release</url>
-	</repository>
+	<repositories>
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+		<repository>
+			<id>sonatype-nexus-releases</id>
+			<name>Sonatype Nexus Releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases</url>
+		</repository>		
+	</repositories>
 
 ## Contribuindo
-
+ 
 * Faça um clone do projeto: ('git clone https://github.com/demoiselle/behave.git')
