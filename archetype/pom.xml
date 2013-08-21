@@ -41,13 +41,6 @@
 	<artifactId>demoiselle-behave-archetype-build</artifactId>
 	<packaging>pom</packaging>
 
-	<parent>
-        <groupId>br.gov.frameworkdemoiselle</groupId>
-        <artifactId>demoiselle-parent</artifactId>
-        <version>8</version>
-        <relativePath>../../../../internal/parent/demoiselle</relativePath>
-    </parent>
-    
 	<name>Demoiselle Behave Archetypes Build Aggregator</name>
 	<description />
 

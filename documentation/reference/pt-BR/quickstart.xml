@@ -83,13 +83,14 @@
 			</mediaobject>
 		</para>
 		<para>
-			Deve ser preenchido o valor
+			Informe no campo Catalog File url:
 			<emphasis>
-				http://centro3.cta.serpro/maven/repositories/component/archetype-catalog.xml
+				http://demoiselle.sourceforge.net/repository/archetype-catalog.xml
 			</emphasis>
-			no Catalog File.
-			O nome Demoiselle-Behave pode ser preenchido na
-			descrição.
+			No campo Description informe:
+			<emphasis>
+				Framework Demoiselle
+			</emphasis>		
 		</para>
 		<para>
 			<mediaobject>
