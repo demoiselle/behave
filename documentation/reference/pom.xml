@@ -38,18 +38,31 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.frameworkdemoiselle.component</groupId>
-	<artifactId>demoiselle-behave-documentation-build</artifactId>
-	<version>1.0.0</version>
-	<packaging>pom</packaging>
+	<artifactId>demoiselle-behave-reference</artifactId>
+	<packaging>jdocbook</packaging>
+	<version>1.2.0-SNAPSHOT</version>
 
-	<name>Documentation Build Aggregator</name>
-	<description />
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-documentation-parent</artifactId>
+		<version>9</version>
+	</parent>
 
-	<modules>
-		<module>reference</module>
-	</modules>
+	<name>Demoiselle Behave Component Reference Documentation</name>
+	<description>Demoiselle Behave Component Reference Documentation</description>
 
+
+	<distributionManagement>
+		<site>
+			<id>demoiselle.sourceforge.net</id>
+			<url>${site.url}</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+		<project.context>components/behave/reference</project.context>
+	</properties>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -60,5 +73,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
+	</build>	
 </project>
