@@ -62,9 +62,7 @@
 		<module>archetype/jbehave-junit</module>
 		<module>archetype/jbehave-selenium</module>
 		<module>impl/core</module>
-		<module>impl/parser/imperative</module>
 		<module>impl/parser/jbehave</module>
-		<module>impl/parser/cucumber</module>
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
 		<module>impl/integration/alm</module>
