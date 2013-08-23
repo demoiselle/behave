@@ -4,11 +4,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-/**
- * 
- * @author SERPRO
- *
- */
+
 @ScreenMap(name = "Seja Bem Vindo", location = "Seja Bem Vindo")
 public class MyInfoScreen {
 	

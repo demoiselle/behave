@@ -5,10 +5,6 @@ import java.awt.Toolkit;
 
 import javax.swing.JOptionPane;
 
-/**
- * 
- * @author SERPRO
- */
 public class MyFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;

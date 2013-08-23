@@ -7,11 +7,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
-/**
- * 
- * @author SERPRO
- *
- */
 @ScreenMap(name = "Tela de Login", location = "Autenticação")
 public class MyScreen {
 
