@@ -1,0 +1,17 @@
+<archetype>
+	<id>jbehave-selenium-archetype</id>
+	<sources>
+		<source>src/main/java/MyFrame.java</source>
+	</sources>	
+	<testSources>
+		<source>src/test/java/MyTest.java</source>
+		<source>src/test/java/MyScreen.java</source>
+		<source>src/test/java/MyErrorScreen.java</source>
+		<source>src/test/java/MyInfoScreen.java</source>
+	</testSources>
+	<testResources>
+		<resource>src/test/resources/behave.properties</resource>
+		<resource>src/test/resources/log4j.xml</resource>
+		<resource>src/test/resources/stories/login.story</resource>
+	</testResources>
+</archetype>

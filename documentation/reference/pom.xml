@@ -48,8 +48,8 @@
 		<version>9</version>
 	</parent>
 
-	<name>Demoiselle Behave Component Reference Documentation</name>
-	<description>Demoiselle Behave Component Reference Documentation</description>
+	<name>Demoiselle Behave Reference Documentation</name>
+	<description>Demoiselle Behave Reference Documentation</description>
 
 
 	<distributionManagement>

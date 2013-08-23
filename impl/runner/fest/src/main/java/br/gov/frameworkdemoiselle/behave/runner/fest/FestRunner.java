@@ -246,7 +246,7 @@ public class FestRunner implements Runner {
 
 	@Override
 	public Screen getScreen() {
-		return null;
+		return (Screen) InjectionManager.getInstance().getInstanceDependecy(Screen.class);
 	}
 	
 	public File getScreenshot() {		

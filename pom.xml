@@ -61,6 +61,7 @@
 		<module>parent/behave</module>
 		<module>archetype/jbehave-junit</module>
 		<module>archetype/jbehave-selenium</module>
+        <module>archetype/jbehave-fest</module>
 		<module>impl/core</module>
 		<module>impl/parser/jbehave</module>
 		<module>impl/runner/webdriver</module>
