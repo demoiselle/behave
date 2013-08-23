@@ -125,7 +125,7 @@
 			objetos a serem testados e seus idenficadores.
 
 		</para>
-		<programlisting language="java">package packageName;
+		<programlisting>package packageName;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;

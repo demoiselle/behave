@@ -210,7 +210,7 @@ Sair do "sistema"</programlisting>
 			<citetitle>Funcionalidades:</citetitle>
 			<itemizedlist>
 				<listitem>
-					Passos com coloração de acordo com o tipo
+					Passos com coloração (Syntax highlighting)
 				</listitem>
 				<listitem>
 					Link entre os passos escritos nas histórias e o método dentro do código Java					
@@ -228,7 +228,7 @@ Sair do "sistema"</programlisting>
 			<para>
 				O Plugin já foi testado nas versões Indigo (3.7) e Juno (4.2)
 				do
-				Eclipse, usando JDK 3.6 ou superior.
+				Eclipse.
 			</para>
 
 			<citetitle>Instalação usando o Eclipse:</citetitle>
