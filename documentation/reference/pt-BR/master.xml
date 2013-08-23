@@ -105,7 +105,6 @@ JUnit. O modulo Integration é responsável pela abstração do componente que i
 integrações entre a solução e as ferramentas externas da empresa como ALM (RQM).
 O framework funciona de modo que histórias escritas em TXT são enviadas ao módulo Parser e posteriormente enviada
 para o Runner, responsável por interagir com um navegador web ou uma tela Desktop, utilizando o framework Selenium ou Fest respectivamente.
-
 		</para>
 		
 					<para>
@@ -154,6 +153,9 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="screenmapping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="estoria.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="desktop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="execucao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="xpath.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	
 </book>

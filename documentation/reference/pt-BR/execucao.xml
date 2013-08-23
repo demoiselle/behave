@@ -5,33 +5,59 @@
 
 	<title>Execução de Testes</title>
 	<para>
-		Este capítulo apresenta recursos avançados para execução de testes com o Demoiselle Behave que
-		podem auxiliar a montagem de um ambiente para execução de testes funcionais.
-	</para>	
+		Este capítulo apresenta recursos avançados para execução de
+		testes com o Demoiselle Behave que
+		podem auxiliar a montagem de um
+		ambiente para execução de testes funcionais.
+	</para>
 	<section>
 		<title>Execução Paralela</title>
 		<para>
-			A execução de testes de forma paralela pode ser uma alternativa para reduzir o 
-			tempo de execução das baterias. Neste caso observe que esta abordagem aumenta a 
-			necessidade de processamento da máquina de ativação dos testes, além disso deve-se 
-			garantir a independência entre os testes para evitar falsos positivos.
+			A execução de testes de forma paralela pode ser uma alternativa
+			para reduzir o
+			tempo de execução das baterias. Neste caso observe que
+			esta abordagem
+			aumenta a
+			necessidade de processamento da máquina de
+			ativação dos testes, além disso
+			deve-se
+			garantir a independência entre
+			os testes para evitar falsos positivos.
 		</para>
 		<para>
-			O Demoiselle Behave recomenda a utilização do plugin maven maven-surefire-plugin que
-			gerencia a execução do teste conforme os seguintes parâmetros:
+			O Demoiselle Behave recomenda a utilização do plugin maven
+			maven-surefire-plugin que
+			gerencia a execução do teste conforme os
+			seguintes parâmetros:
 		</para>
 		<itemizedlist>
-			<listitem>forkCount: Determina o número máximo de threads que deverão ser paralelizadas</listitem>
-			<listitem>reuseForks=false: Garante a execução das threads em JVMs isoladas. Esta configuração
-			evita que dados utilizados por uma thread sejam afetadas por outras.</listitem>
-			<listitem>parallel=classes. Define a estratégia de paralelização, neste caso, cada classe de 
-			teste do JUnit será instanciada por uma thread até atingir o número máximo de threads (forkCount). 
-			Recomendamos utilizar o nível de classe, pois havendo a necessidade de dependência entre os testes, 
-			esta pode ser realizada dentro da classe JUnit.</listitem>
+			<listitem>
+				forkCount: Determina o número máximo de threads que deverão ser
+				paralelizadas
+			</listitem>
+			<listitem>
+				reuseForks=false: Garante a execução das threads em JVMs isoladas.
+				Esta configuração
+				evita que dados utilizados por uma thread sejam
+				afetadas por outras.
+			</listitem>
+			<listitem>
+				parallel=classes. Define a estratégia de paralelização, neste caso,
+				cada classe de
+				teste do JUnit será instanciada por uma thread até
+				atingir o número
+				máximo de threads (forkCount).
+				Recomendamos utilizar
+				o nível de classe, pois havendo a necessidade de
+				dependência entre os
+				testes,
+				esta pode ser realizada dentro da classe JUnit.
+			</listitem>
 		</itemizedlist>
 		<para>
-			Segue abaixo o exemplo para configuração do plugin no arquivo pom.xml do projeto:
-		</para>		
+			Segue abaixo o exemplo para configuração do plugin no arquivo
+			pom.xml do projeto:
+		</para>
 		<programlisting>
 &lt;build&gt;
 	&lt;plugins&gt;
@@ -46,27 +72,37 @@
 			&lt;/configuration&gt;
 		&lt;/plugin&gt;
 	&lt;/plugins&gt;
-&lt;/build&gt;			
-		</programlisting>
-		<para>		
-		Para executar seu teste de forma paralela acine o menu “Run as → Maven Test” 
-		do eclipse ou no terminal  execute “mvn test”.
+&lt;/build&gt; </programlisting>
+		<para>
+			Para executar seu teste de forma paralela acine o menu “Run as →
+			Maven
+			Test”
+			do eclipse ou no terminal execute “mvn test”.
 		</para>
 	</section>
 
 	<section>
 		<title>Modo Background</title>
 		<para>
-			A execução de testes em modo background é um recurso importante quando se deseja criar um ambiente 
-			dedicado para execução de testes. Normalmente estes ambientes não possuem interface gráfica que 
-			impedem o acionamento de navegadores.
+			A execução de testes em modo background é um recurso importante
+			quando se deseja criar um ambiente
+			dedicado para execução de testes.
+			Normalmente estes ambientes não possuem
+			interface gráfica que
+			impedem o
+			acionamento de navegadores.
 		</para>
 		<para>
-			Outra situação comum acontece quando o testador executa os testes em sua estação de trabalho e 
-			necessita utilizar outros programas que concorrerão com sua tela devido a utilização de navegadores.
+			Outra situação comum acontece quando o testador executa os
+			testes em sua estação de trabalho e
+			necessita utilizar outros
+			programas que concorrerão com sua tela devido a
+			utilização de
+			navegadores.
 		</para>
 		<para>
-			Para ambientes linux, que possuem ferramentas para emulação de tela, o Demoiselle Behave recomenda 
+			Para ambientes linux, que possuem ferramentas para emulação de
+			tela, o Demoiselle Behave recomenda
 			a utilização da ferramenta Xvfb.
 		</para>
 		<para>
@@ -82,14 +118,17 @@
 		<programlisting>Xvfb :2 -screen 0 1024x768x24</programlisting>
 
 		<para>
-			É possível instanciar vários processos Xvfb por meio de identificadores diferentes. 
-			No exemplo acima foi definido com o identificaro “2”
+			É possível instanciar vários processos Xvfb por meio de
+			identificadores diferentes.
+			No exemplo acima foi definido com o
+			identificaro “2”
 		</para>
 
 		<para>
-			Para executar um aplicativo que utiliza a interface gráfica acione o comando DISPLAY:
+			Para executar um aplicativo que utiliza a interface gráfica
+			acione o comando DISPLAY:
 		</para>
-		
+
 		<programlisting>DISPLAY=:2 firefox</programlisting>
 
 		<para>
@@ -99,8 +138,10 @@
 		<programlisting>DISPLAY=:2 mvn test</programlisting>
 
 		<para>
-			Para visualizar processos rodando no Xvfb use o x11vnc (apt-get install x11vnc)  
-			que  instanciará o serviço vnc para um identificador xvfb específico:
+			Para visualizar processos rodando no Xvfb use o x11vnc (apt-get
+			install x11vnc)
+			que instanciará o serviço vnc para um identificador
+			xvfb específico:
 		</para>
 		<programlisting>x11vnc -display :2</programlisting>
 	</section>
@@ -108,11 +149,13 @@
 	<section>
 		<title>Integração Contínua</title>
 		<para>
-			Para execução de testes funcionais em modo background sob um ambiente de integração contínua 
-			se faz necessário a instalação de plugins que permitam gerenciar o Xvfb. O Jenkins possui o 
+			Para execução de testes funcionais em modo background sob um ambiente
+			de integração contínua
+			se faz necessário a instalação de plugins que
+			permitam gerenciar o
+			Xvfb. O Jenkins possui o
 			plugin:
-			<ulink
-				url	="https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin">https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin
+			<ulink url="https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin">https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin
 			</ulink>
 			que permite realizar este controle.
 		</para>
@@ -132,8 +175,11 @@
 			</mediaobject>
 		</para>
 		<para>
-			Após instalar o plugin configure-o pelo menu “Gerenciar o Jenkins → Configurar o sistema” na seção
-			Xvfb installation, informe um nome “padrão” e a pasta em que o executável do Xvfb foi instalado “/usr/bin”.
+			Após instalar o plugin configure-o pelo menu “Gerenciar o
+			Jenkins → Configurar o sistema” na seção
+			Xvfb installation, informe um
+			nome “padrão” e a pasta em que o executável do Xvfb foi instalado
+			“/usr/bin”.
 		</para>
 		<para>
 			<mediaobject>
@@ -151,8 +197,10 @@
 			</mediaobject>
 		</para>
 		<para>
-			Para cada projeto Jenkins configure na seção “Ambiente de Construção” a 
-			instalação, seu timeout, as dimensões da tela e seu display:
+			Para cada projeto Jenkins configure na seção “Ambiente de
+			Construção” a
+			instalação, seu timeout, as dimensões da tela e seu
+			display:
 		</para>
 		<para>
 			<mediaobject>
@@ -168,9 +216,10 @@
 					<para>Configuração do Projeto</para>
 				</caption>
 			</mediaobject>
-		</para>			
+		</para>
 		<para>
-			Ao executar seu projeto, o Jenkins iniciará o Xvfb antes da construção da build 
+			Ao executar seu projeto, o Jenkins iniciará o Xvfb antes da
+			construção da build
 			e finalizar o processo ao final da build:
 		</para>
 		<para>
@@ -187,7 +236,7 @@
 					<para>Console</para>
 				</caption>
 			</mediaobject>
-		</para>			
+		</para>
 	</section>
-		
+
 </chapter>

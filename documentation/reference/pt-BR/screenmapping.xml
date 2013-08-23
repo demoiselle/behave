@@ -18,13 +18,14 @@
 			diferentes formas de encontrar
 			um objeto na tela são denominadas
 			localizadores.
-			Neste tutorial serão utilizadas algumas ferramentas de apoio para escolha
+			Neste tutorial serão utilizadas algumas ferramentas de
+			apoio para escolha
 			dos objetos. De forma exemplificativa
-			o tutorial apresentará um
-			exemplo onde o usuário irá buscar uma informação na página do
+			o tutorial
+			apresentará um
+			exemplo onde o usuário irá buscar uma informação na
+			página do
 			SERPRO(www.serpro.gov.br).
-
-
 		</para>
 		<para>
 			<mediaobject>
@@ -124,8 +125,7 @@
 			objetos a serem testados e seus idenficadores.
 
 		</para>
-		<programlisting>
-		package packageNAme;
+		<programlisting>package packageName;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
@@ -142,38 +142,35 @@ public class MyPage {
 	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.XPath, locator = ".//*[@id='livesearch0']/div/input[1]")
 	private Button button;
 
-}
-		
-		</programlisting>
+}</programlisting>
 		<para>
-			O motor do framework escolhe automaticamente que ação será realizada dependendo do tipo de objeto aplicado ao elemento
-			da interface gráfica. No exemplo acima o tipo Button indica que a ação de clique deve ser realizada.
+			O motor do framework escolhe automaticamente que ação será
+			realizada dependendo do tipo de objeto aplicado ao elemento
+			da
+			interface gráfica. No exemplo acima o tipo Button indica que a ação
+			de clique deve ser realizada.
 		</para>
 		<para>
-			Outros tipos de elementos são CheckBox,  Link,   Radio, Screen, Select e TextField.
-			Para cada elemento visual foi criada uma interface que é implementada por uma classe que define como a ação deve ser realizada.
+			Outros tipos de elementos são CheckBox, Link, Radio, Screen,
+			Select e TextField.
+			Para cada elemento visual foi criada uma interface
+			que é implementada por uma classe que define como a ação deve ser
+			realizada.
 		</para>
-		<programlisting>
-package br.gov.frameworkdemoiselle.behave.runner.ui;
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.ui;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
-/**
- * 
- * @author SERPRO
- *
- */
+
 public interface Radio extends BaseUI {
 
 	public void click();
 	
-}
-		
-		</programlisting>
+}</programlisting>
 		<para>
-		A seguir segue implementação da classe Radio para Web utilizando Selenium.
+			A seguir segue implementação da classe Radio para Web utilizando
+			Selenium.
 		</para>
-		<programlisting>
-		package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 
@@ -185,12 +182,14 @@ public class WebRadio extends WebBase implements Radio {
 		getElements().get(0).click();
 	}
 
-}
-		
-		</programlisting>
+}</programlisting>
 		<para>
-		 	A implementação da classe para a interface visual é configurada utilizando o conceito de SPI no framework.
-		 	Para cada interface existe um arquivo que indica que implementação sera escolhida para cada interface.
+			A implementação da classe para a interface visual é configurada
+			utilizando o conceito de SPI no framework.
+			Para cada interface existe
+			um arquivo que indica que implementação sera
+			escolhida para cada
+			interface.
 		</para>
 		<para>
 			<mediaobject>
@@ -208,6 +207,6 @@ public class WebRadio extends WebBase implements Radio {
 				</caption>
 			</mediaobject>
 		</para>
-			</section>
+	</section>
 
 </chapter>
