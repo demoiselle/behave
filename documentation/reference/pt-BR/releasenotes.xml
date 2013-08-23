@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE authorgroup PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="release">
+
+	<title>Release Notes</title>
+
+	<para>
+		<tip>
+			<para>
+				Para reportar problemas, abrir discussões ou perguntar algo utilize
+				as
+				<emphasis>Issues</emphasis>
+				do GitHub no endereço
+				<ulink url="https://github.com/demoiselle/behave/issues">https://github.com/demoiselle/behave/issues</ulink>
+				.
+			</para>
+		</tip>
+	</para>
+
+	<para>
+		<citetitle>Versão 1.2.0</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<emphasis>[R09]</emphasis>
+				- Permitir execução para interface Desktop - (Java Swing)
+			</listitem>
+			<listitem>
+				<emphasis>[R12]</emphasis>
+				- Execução dos testes em modo background
+			</listitem>
+			<listitem>
+				<emphasis>[R14]</emphasis>
+				- Controle de execuções em paralelo
+			</listitem>
+			<listitem>
+				<emphasis>[Melhoria]</emphasis>
+				- Material de Treinamento
+			</listitem>
+			<listitem>
+				<emphasis>[Bug]</emphasis>
+				Erro na Integração ALM
+			</listitem>
+			<listitem>
+				<emphasis>[Bug]</emphasis>
+				Correção para o Bug: Problema com a palavra-chave
+				Funcionalidade
+			</listitem>
+			<listitem>
+				<emphasis>[Melhoria]</emphasis>
+				Permitir a utilização de cenários parametrizados
+				juntamente com o
+				reuso de cenários
+			</listitem>
+		</itemizedlist>
+
+	</para>
+
+	<para>
+		<citetitle>Versão 1.1.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<emphasis>[R01]</emphasis>
+				- Reuso de dados entre histórias
+			</listitem>
+			<listitem>
+				<emphasis>[R03]</emphasis>
+				- Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
+			</listitem>
+			<listitem>
+				<emphasis>[R06]</emphasis>
+				- Execução parametrizável
+			</listitem>
+			<listitem>
+				<emphasis>[R07]</emphasis>
+				- Reuso de componentes para interação com a tela
+			</listitem>
+			<listitem>
+				<emphasis>[R10]</emphasis>
+				- Permitir a execução de testes além de interface gráfica
+			</listitem>
+			<listitem>
+				<emphasis>[Melhoria]</emphasis>
+				- Documentação de Referência
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Versão 1.0.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<emphasis>[R02]</emphasis>
+				- Reuso de histórias
+			</listitem>
+			<listitem>
+				<emphasis>[R04]</emphasis>
+				-Execução dos testes na Integração continua
+			</listitem>
+			<listitem>
+				<emphasis>[R05]</emphasis>
+				- Integração com IDEs de desenvolvimento homologadas
+			</listitem>
+			<listitem>
+				<emphasis>[R08]</emphasis>
+				- Desacoplamento com as tecnologias de referência
+			</listitem>
+			<listitem>
+				<emphasis>[R11]</emphasis>
+				- Permitir debug da execução
+			</listitem>
+			<listitem>
+				<emphasis>[R13]</emphasis>
+				- Simplicidade de montagem de ambiente
+			</listitem>
+			<listitem>
+				<emphasis>[Melhoria]</emphasis>
+				- Estrutura do Projeto - Padrão Demoiselle
+			</listitem>
+		</itemizedlist>
+	</para>
+</chapter>
+
