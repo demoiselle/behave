@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -47,6 +48,7 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parser.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
@@ -58,7 +60,7 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
  */
 public class BehaveContext {
 
-	public static final BehaveContext userThreadLocal = new BehaveContext();
+	public static final BehaveContext instance = new BehaveContext();
 
 	private Parser parser;
 
@@ -72,13 +74,15 @@ public class BehaveContext {
 
 	private String step;
 	private Throwable fail;
+	
+	private ResourceBundle bundle;
 
 	private BehaveContext() {
-
+		bundle = BehaveMessage.create("demoiselle-core-bundle");
 	}	
 	
 	public static BehaveContext getInstance() {	
-		return userThreadLocal;		
+		return instance;		
 	}	
 
 	public void addSteps(Step step) {
@@ -87,7 +91,7 @@ public class BehaveContext {
 
 	@SuppressWarnings("unchecked")
 	public void run(List<String> storiesPath) {
-		try {
+		try {			
 			log.info("--------------------------------");
 			log.info(" Iniciando Demoiselle Behave");
 			log.info("--------------------------------");
@@ -95,7 +99,7 @@ public class BehaveContext {
 			BehaveConfig.logValueProperties();
 
 			if (storiesPath == null || storiesPath.isEmpty()) {
-				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
+				throw new BehaveException(bundle.getString("exception-empty-story-list"));
 			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
