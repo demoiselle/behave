@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="xpath">
+
+	<title>XPath</title>
+
+	<section>
+		<title>Noções Básicas</title>
+		<para>
+			Texto
+		</para>
+	</section>
+	
+	<section>
+		<title>Funções Básicas</title>
+		<para>
+			Texto
+		</para>
+	</section>
+
+	<section>
+		<title>Exemplos Práticos</title>
+		<para>
+			Texto
+		</para>
+	</section>
+
+</chapter>
