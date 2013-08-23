@@ -54,7 +54,7 @@ public class BehaveMessageTest {
 		ResourceBundle bm = BehaveMessage.create("demoiselle-core-bundle");
 		assertEquals("message-exception-001-pt", bm.getString("exception-001"));
 		
-		System.setProperty("message.locale", "en");
+		System.setProperty("behave.message.locale", "en");
 		
 		bm = BehaveMessage.create("demoiselle-core-bundle");
 		assertEquals("message-exception-001-en", bm.getString("exception-001"));		
