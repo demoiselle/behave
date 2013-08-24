@@ -57,7 +57,7 @@ import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
  */
 public class BehaveConfig {
 
-	public static Properties properties;
+	private static Properties properties;
 
 	private static Logger log = Logger.getLogger(BehaveConfig.class);
 

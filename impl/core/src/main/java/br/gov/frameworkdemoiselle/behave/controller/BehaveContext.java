@@ -39,7 +39,6 @@ package br.gov.frameworkdemoiselle.behave.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -75,10 +74,10 @@ public class BehaveContext {
 	private String step;
 	private Throwable fail;
 	
-	private ResourceBundle bundle;
+	private BehaveMessage message;
 
 	private BehaveContext() {
-		bundle = BehaveMessage.create("demoiselle-core-bundle");
+		message = new BehaveMessage("demoiselle-core-bundle");
 	}	
 	
 	public static BehaveContext getInstance() {	
@@ -99,7 +98,7 @@ public class BehaveContext {
 			BehaveConfig.logValueProperties();
 
 			if (storiesPath == null || storiesPath.isEmpty()) {
-				throw new BehaveException(bundle.getString("exception-empty-story-list"));
+				throw new BehaveException(message.getString("exception-empty-story-list"));
 			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);

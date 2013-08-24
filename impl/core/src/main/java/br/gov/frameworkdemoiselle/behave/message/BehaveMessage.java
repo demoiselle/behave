@@ -36,15 +36,37 @@
  */
 package br.gov.frameworkdemoiselle.behave.message;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-
+/**
+ * 
+ * @author SERPRO
+ *
+ */
 public class BehaveMessage {
-	
-	public static ResourceBundle create(String baseName){		
-		return ResourceBundle.getBundle(baseName, new Locale(BehaveConfig.getProperty("behave.message.locale", "pt")));
+
+	private ResourceBundle rb = null;
+
+	public BehaveMessage(String baseName) {
+		rb = ResourceBundle.getBundle(baseName, new Locale(BehaveConfig.getProperty("behave.message.locale", "pt")));
 	}
 
+	public String getString(String key, Object... params) {
+		if (params == null || params.length == 0) {
+			return getString(key);
+		} else {
+			return MessageFormat.format(getString(key), params);
+		}
+	}
+	
+	public String getString(String key) {
+		if (rb.containsKey(key)) {
+			return rb.getString(key);
+		} else {
+			return "??{" + key + "}??";
+		}
+	}
 }
