@@ -46,13 +46,16 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 /**
  * 
  * @author SERPRO
  *
  */
 public class ReflectionUtil {
-
+	
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
+	
 	public static String getLocation(String name) {
 		Reflections reflections = new Reflections("");
 		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
@@ -72,8 +75,9 @@ public class ReflectionUtil {
 			}
 		}
 
-		if (urlFinal.equals(""))
-			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + name + "].");
+		if (urlFinal.equals("")){
+			throw new BehaveException(bm.getString("exception-screen-not-found", name));
+		}
 
 		return urlFinal;
 	}
@@ -93,8 +97,9 @@ public class ReflectionUtil {
 			}
 		}
 
-		if (clazz == null)
-			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + pageName + "].");
+		if (clazz == null){
+			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
+		}
 
 		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
 
@@ -108,8 +113,9 @@ public class ReflectionUtil {
 			}
 		}
 
-		if (clazzF == null)
-			throw new RuntimeException("Nenhum E...");
+		if (clazzF == null){
+			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
+		}
 
 		return clazzF;
 	}
@@ -130,7 +136,7 @@ public class ReflectionUtil {
 		}
 
 		if (clazz == null)
-			throw new RuntimeException("Nenhuma Tela foi encontrada com o nome [" + pageName + "].");
+			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
 
 		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
 
@@ -145,7 +151,7 @@ public class ReflectionUtil {
 		}
 
 		if (map == null){
-			throw new BehaveException("Elemento não encontrado com nome [" + elementName + "] na tela [" + pageName + "].");
+			throw new BehaveException(bm.getString("exception-element-not-found", elementName, pageName));
 		}
 
 		return map;

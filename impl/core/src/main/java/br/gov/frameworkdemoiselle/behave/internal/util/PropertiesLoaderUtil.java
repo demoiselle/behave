@@ -42,11 +42,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -59,6 +62,7 @@ public class PropertiesLoaderUtil implements Serializable {
 
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
 
 	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
 
@@ -73,7 +77,7 @@ public class PropertiesLoaderUtil implements Serializable {
 			}
 			return config;
 		} catch (IOException e) {
-			throw new BehaveException("Não foi possível carregar o arquivo de propriedades.", e);
+			throw new BehaveException(bm.getString("exception-error-load-properties-file"), e);
 		}
 	}
 
@@ -109,8 +113,6 @@ public class PropertiesLoaderUtil implements Serializable {
 					confs.add(new ConfigLevelPropertie(level, localProp));
 				}
 
-				// logger.log(Level.INFO, "Carregando configuração [" + url +
-				// "] com nível " + level);
 			}
 
 			// Ordena por level
@@ -124,10 +126,9 @@ public class PropertiesLoaderUtil implements Serializable {
 
 			// logger.log(Level.INFO, "Language " +
 			// allProperties.getProperty("behave.parser.language"));
-
 			return allProperties;
 		} catch (Exception ex) {
-			throw new BehaveException("Não foi possível carregar o behave.properties", ex);
+			throw new BehaveException(bm.getString("exception-error-load-properties-file"), ex);
 		}
 	}
 

@@ -74,10 +74,10 @@ public class BehaveContext {
 	private String step;
 	private Throwable fail;
 	
-	private BehaveMessage message;
+	private BehaveMessage bm;
 
 	private BehaveContext() {
-		message = new BehaveMessage("demoiselle-core-bundle");
+		bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 	}	
 	
 	public static BehaveContext getInstance() {	
@@ -92,13 +92,13 @@ public class BehaveContext {
 	public void run(List<String> storiesPath) {
 		try {			
 			log.info("--------------------------------");
-			log.info(" Iniciando Demoiselle Behave");
+			log.info(bm.getString("message-behave-start"));
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
 
 			if (storiesPath == null || storiesPath.isEmpty()) {
-				throw new BehaveException(message.getString("exception-empty-story-list"));
+				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
@@ -123,16 +123,16 @@ public class BehaveContext {
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
-				Assert.fail("Passo [" + step + "] falha [" + fail.getMessage() + "]");
+				Assert.fail(bm.getString("exception-scenario-cyclic-reference", step, fail.getMessage()));
 			}
 		} catch (BehaveException ex) {
-			log.error("Erro ao executar o Demoiselle Behave", ex);
+			log.error(bm.getString("exception-general"), ex);
 			throw ex;
 		} finally {
 			storiesPath.clear();
 			steps.clear();
 			log.info("--------------------------------");
-			log.info(" Desligando Demoiselle Behave");
+			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
 		}
 
@@ -163,7 +163,7 @@ public class BehaveContext {
 		if ( BehaveConfig.getRunner_ScreenshotEnabled() ) {
 			Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 			File screenshot = runner.getScreenshot();
-			log.info(" Screenshot = " + screenshot.getAbsolutePath());
+			log.info(bm.getString("screenshot") +  " = " + screenshot.getAbsolutePath());
 		}
 	}
 }

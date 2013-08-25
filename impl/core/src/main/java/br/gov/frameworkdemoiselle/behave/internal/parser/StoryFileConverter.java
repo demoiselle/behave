@@ -42,8 +42,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -51,6 +53,8 @@ import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
  * 
  */
 public class StoryFileConverter {
+	
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	public static List<String> convertReusedScenarios(List<String> originalFolderes, String originalExtension, String convertedExtension, Boolean includeSubFolder) {
 		try {
@@ -60,7 +64,7 @@ public class StoryFileConverter {
 			}
 			return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);
 		} catch (IOException ex) {
-			throw new BehaveException("erro ao converter historias", ex);
+			throw new BehaveException(bm.getString("exception-scenarios-convert"), ex);
 		}
 	}
 

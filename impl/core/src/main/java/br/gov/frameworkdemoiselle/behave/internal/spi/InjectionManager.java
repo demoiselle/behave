@@ -41,7 +41,9 @@ import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS
@@ -55,6 +57,7 @@ public class InjectionManager {
 
 	private Hashtable<String, Object> singletons = new Hashtable<String, Object>();
 	private static InjectionManager instance;
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	void setSingletons(Hashtable<String, Object> singletons) {
 		this.singletons = singletons;
@@ -77,19 +80,13 @@ public class InjectionManager {
 			return singletons.get(clazz.toString());
 		} else {
 			ServiceLoader<Object> service = ServiceLoader.load(clazz);
-
 			for (Object object : service) {
-
 				singletons.put(clazz.toString(), object);
-
 				break;
 			}
-
-			if (!singletons.containsKey(clazz.toString()))
-				throw new BehaveException(
-						"Não foram encontradas classes que implementem "
-								+ clazz.toString() + ".");
-
+			if (!singletons.containsKey(clazz.toString())){
+				throw new BehaveException(bm.getString("exception-injection-class-not-found", clazz.toString()));
+			}
 			return singletons.get(clazz.toString());
 		}
 

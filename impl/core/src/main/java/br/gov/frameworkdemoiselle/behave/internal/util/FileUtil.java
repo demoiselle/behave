@@ -48,7 +48,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -58,6 +60,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 public class FileUtil {
 
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	public static String loadFile(String pFilePath) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -91,7 +94,7 @@ public class FileUtil {
 			File file = new File(loader.getResource("").getFile());
 			return URLDecoder.decode(file.getAbsolutePath(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			throw new BehaveException("Problema de encoding", e);
+			throw new BehaveException(bm.getString("exception-enconding-error"), e);
 		}
 	}
 
@@ -128,7 +131,7 @@ public class FileUtil {
 			folder = new File(FileUtil.getAbsolutePath() + folderRoot);
 			folderRoot = folder.getAbsolutePath();
 			if (!folder.exists()) {
-				throw new BehaveException("Caminho [" + folderRoot + "] não encontrado ");
+				throw new BehaveException(bm.getString("exception-path-not-found",folderRoot));
 			}
 		}
 

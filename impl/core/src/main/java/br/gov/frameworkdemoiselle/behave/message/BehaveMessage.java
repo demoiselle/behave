@@ -50,10 +50,24 @@ public class BehaveMessage {
 
 	private ResourceBundle rb = null;
 
+	/**
+	 * Constroi o BehaveMessage a partir do nome do bundle
+	 * @param baseName
+	 */
 	public BehaveMessage(String baseName) {
 		rb = ResourceBundle.getBundle(baseName, new Locale(BehaveConfig.getProperty("behave.message.locale", "pt")));
 	}
+	
+	public BehaveMessage(String baseName, Locale locale) {
+		rb = ResourceBundle.getBundle(baseName, locale);
+	}
 
+	/**
+	 * Obtem a mensagem no bundle
+	 * @param key chave da mensagem
+	 * @param params parametros da mensagem
+	 * @return
+	 */
 	public String getString(String key, Object... params) {
 		if (params == null || params.length == 0) {
 			return getString(key);
@@ -62,7 +76,7 @@ public class BehaveMessage {
 		}
 	}
 	
-	public String getString(String key) {
+	private String getString(String key) {
 		if (rb.containsKey(key)) {
 			return rb.getString(key);
 		} else {
