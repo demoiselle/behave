@@ -20,7 +20,6 @@
 	<section>
 		<title>Configurações do Parser</title>
 		<para>
-
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.parser.language:</citetitle>
@@ -31,7 +30,6 @@
 					<emphasis>pt</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.identification.scenario.pattern:
 					</citetitle>
@@ -40,7 +38,6 @@
 					<emphasis>^(\\s)*(CEN\u00C1RIO|Cen\u00E1rio|cen\u00E1rio)\:(.*)
 					</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.prefixes.bdd.pattern:
 					</citetitle>
@@ -50,7 +47,6 @@
 						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas )(.*)
 					</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.story.extension.original:
 					</citetitle>
@@ -62,7 +58,6 @@
 					<emphasis>story</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.story.extension.converted:
 					</citetitle>
@@ -73,7 +68,6 @@
 					no core, mas no caso do JBehave o padrão é
 					<emphasis>storyConverted</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.commonssteps.enabled:
 					</citetitle>
@@ -83,7 +77,6 @@
 					<emphasis>ativado</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.beforeaftersteps.enabled:
 					</citetitle>
@@ -95,13 +88,11 @@
 					.
 				</listitem>
 			</itemizedlist>
-
 		</para>
 	</section>
 	<section>
 		<title>Configurações do Runner</title>
 		<para>
-
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.runner.screen.maxWait</citetitle>
@@ -111,7 +102,6 @@
 					<emphasis>10000 milisegundos</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.runner.screen.minWait</citetitle>
 					: propriedade que seleciona a linguagem que o
@@ -247,17 +237,38 @@
 			</itemizedlist>
 		</para>
 	</section>
-
 	<section>
 		<title>Configurações do Integration - Autenticator ALM</title>
 		<para>
 			<warning>
 				<para>
-					O Autenticator é necessário para que a integração com a ALM funcione
-					corretamente, não sendo possível fazer a integração sem esse
+					O Autenticator é necessário para que a integração com a ALM
+					funcione
+					corretamente, não sendo possível fazer a integração sem
+					esse
 					utilitário.
+					Caso o Autenticator não esteja disponível a seguinte
+					mensagem será
+					exebida na exceção lançada:
+					<citetitle>br.gov.frameworkdemoiselle.behave.exception.BehaveException:
+						Autenticador inacessível. Verifique se o processo foi iniciado
+					</citetitle>
 				</para>
 			</warning>
+			<section>
+				<title>Instação no Projeto</title>
+				<para>
+					Para fazer uso do módulo de integração basta acrescentar a
+					dependência no pom.xml do projeto.
+
+					<programlisting><![CDATA[<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+	<artifactId>demoiselle-behave-integration-alm</artifactId>
+	<version>1.x.x</version>
+	<scope>test</scope>
+</dependency>]]></programlisting>
+				</para>
+			</section>
 			<section>
 				<title>Motivações</title>
 				<para>
@@ -282,7 +293,6 @@
 					</itemizedlist>
 				</para>
 			</section>
-
 			<section>
 				<title>Utilização</title>
 				<para>
@@ -299,11 +309,7 @@
 						</listitem>
 					</itemizedlist>
 				</para>
-
 			</section>
-
 		</para>
 	</section>
-
-
 </chapter>
