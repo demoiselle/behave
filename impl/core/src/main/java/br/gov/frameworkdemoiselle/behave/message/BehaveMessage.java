@@ -76,7 +76,7 @@ public class BehaveMessage {
 		}
 	}
 	
-	private String getString(String key) {
+	public String getString(String key) {
 		if (rb.containsKey(key)) {
 			return rb.getString(key);
 		} else {
