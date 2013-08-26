@@ -123,19 +123,19 @@ public class BehaveContext {
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
-				Assert.fail(bm.getString("exception-scenario-cyclic-reference", step, fail.getMessage()));
+				Assert.fail(bm.getString("exception-fail-step", step, fail.getMessage()));
 			}
 		} catch (BehaveException ex) {
 			log.error(bm.getString("exception-general"), ex);
 			throw ex;
 		} finally {
+			fail = null;
 			storiesPath.clear();
 			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
 		}
-
 	}
 
 	public void run(String storiesPath) {
