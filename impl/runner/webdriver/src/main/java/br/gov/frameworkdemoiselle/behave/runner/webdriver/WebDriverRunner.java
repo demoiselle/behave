@@ -174,19 +174,22 @@ public class WebDriverRunner implements Runner {
 	
 	public File getScreenshot() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
-		String fileName = format.format(GregorianCalendar.getInstance().getTime());
+		String fileName = format.format(GregorianCalendar.getInstance().getTime());	
+		return saveScreenshotTo(BehaveConfig.getRunner_ScreenshotPath()+fileName+".png");
+	}
+	
+	public File saveScreenshotTo(String fileName) {
 		
-		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+fileName+".png");
-		screenshotFile.getParentFile().mkdirs();
+		File screenshotFile = new File(fileName);
 		
+		screenshotFile.getParentFile().mkdirs();				
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
 		} catch (IOException e) {
 			return null;
-		}
-		
-		return screenshotFile;
+		}		
+		return screenshotFile;		
 	}
 
 }

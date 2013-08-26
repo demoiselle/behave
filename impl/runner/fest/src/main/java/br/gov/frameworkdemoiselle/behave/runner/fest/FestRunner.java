@@ -252,14 +252,15 @@ public class FestRunner implements Runner {
 	public File getScreenshot() {		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
 		String fileName = format.format(GregorianCalendar.getInstance().getTime());
-		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+(fileName)+".png");
-		
-		screenshotFile.getParentFile().mkdirs();
-		
+		return saveScreenshotTo(BehaveConfig.getRunner_ScreenshotPath()+(fileName)+".png");
+	}
+
+	public File saveScreenshotTo(String fileName) {		
+		File screenshotFile = new File(fileName);		
+		screenshotFile.getParentFile().mkdirs();						
 		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
-		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
-		
-		return screenshotFile;
+		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());	
+		return screenshotFile;		
 	}
 
 }

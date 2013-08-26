@@ -191,6 +191,11 @@
 				<artifactId>jbehave-core</artifactId>
 				<version>3.8</version>
 			</dependency>
+			<dependency>
+				<groupId>org.jbehave.web</groupId>
+	   			<artifactId>jbehave-web-selenium</artifactId>
+	   			<version>3.5.4</version>
+			</dependency>			
 
 			<!-- runner -->
 			<dependency>
