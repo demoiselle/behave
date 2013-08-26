@@ -23,35 +23,49 @@
 
 		<itemizedlist>
 			<listitem>
-				<emphasis>[R09]</emphasis>
-				- Permitir execução para interface Desktop - (Java Swing)
+				<ulink url="https://github.com/demoiselle/behave/issues/11">
+					<emphasis>[R09]</emphasis>
+					- Permitir execução para interface Desktop - (Java Swing)
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R12]</emphasis>
-				- Execução dos testes em modo background
+				<ulink url="https://github.com/demoiselle/behave/issues/14">
+					<emphasis>[R12]</emphasis>
+					- Execução dos testes em modo background
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R14]</emphasis>
-				- Controle de execuções em paralelo
+				<ulink url="https://github.com/demoiselle/behave/issues/16">
+					<emphasis>[R14]</emphasis>
+					- Controle de execuções em paralelo
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Melhoria]</emphasis>
-				- Material de Treinamento
+				<ulink url="https://github.com/demoiselle/behave/issues/44">
+					<emphasis>[Bug]</emphasis>
+					Erro na Integração ALM
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Bug]</emphasis>
-				Erro na Integração ALM
+				<ulink url="https://github.com/demoiselle/behave/issues/43">
+					<emphasis>[Bug]</emphasis>
+					Correção para o Bug: Problema com a palavra-chave
+					Funcionalidade
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Bug]</emphasis>
-				Correção para o Bug: Problema com a palavra-chave
-				Funcionalidade
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Melhoria]</emphasis>
+					- Material de Treinamento
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Melhoria]</emphasis>
-				Permitir a utilização de cenários parametrizados
-				juntamente com o
-				reuso de cenários
+				<ulink url="https://github.com/demoiselle/behave/issues/21">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir a utilização de cenários parametrizados
+					juntamente com o
+					reuso de cenários
+				</ulink>
 			</listitem>
 		</itemizedlist>
 
@@ -61,28 +75,40 @@
 		<citetitle>Versão 1.1.0</citetitle>
 		<itemizedlist>
 			<listitem>
-				<emphasis>[R01]</emphasis>
-				- Reuso de dados entre histórias
+				<ulink url="https://github.com/demoiselle/behave/issues/4">
+					<emphasis>[R01]</emphasis>
+					- Reuso de dados entre histórias
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R03]</emphasis>
-				- Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
+				<ulink url="https://github.com/demoiselle/behave/issues/5">
+					<emphasis>[R03]</emphasis>
+					- Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R06]</emphasis>
-				- Execução parametrizável
+				<ulink url="https://github.com/demoiselle/behave/issues/8">
+					<emphasis>[R06]</emphasis>
+					- Execução parametrizável
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R07]</emphasis>
-				- Reuso de componentes para interação com a tela
+				<ulink url="https://github.com/demoiselle/behave/issues/9">
+					<emphasis>[R07]</emphasis>
+					- Reuso de componentes para interação com a tela
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R10]</emphasis>
-				- Permitir a execução de testes além de interface gráfica
+				<ulink url="https://github.com/demoiselle/behave/issues/12">
+					<emphasis>[R10]</emphasis>
+					- Permitir a execução de testes além de interface gráfica
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Melhoria]</emphasis>
-				- Documentação de Referência
+				<ulink url="https://github.com/demoiselle/behave/issues/17">
+					<emphasis>[Melhoria]</emphasis>
+					- Documentação de Referência
+				</ulink>
 			</listitem>
 		</itemizedlist>
 	</para>
@@ -91,32 +117,46 @@
 		<citetitle>Versão 1.0.0</citetitle>
 		<itemizedlist>
 			<listitem>
-				<emphasis>[R02]</emphasis>
-				- Reuso de histórias
+				<ulink url="https://github.com/demoiselle/behave/issues/2">
+					<emphasis>[R02]</emphasis>
+					- Reuso de histórias
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R04]</emphasis>
-				-Execução dos testes na Integração continua
+				<ulink url="https://github.com/demoiselle/behave/issues/6">
+					<emphasis>[R04]</emphasis>
+					- Execução dos testes na Integração continua
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R05]</emphasis>
-				- Integração com IDEs de desenvolvimento homologadas
+				<ulink url="https://github.com/demoiselle/behave/issues/7">
+					<emphasis>[R05]</emphasis>
+					- Integração com IDEs de desenvolvimento homologadas
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R08]</emphasis>
-				- Desacoplamento com as tecnologias de referência
+				<ulink url="https://github.com/demoiselle/behave/issues/10">
+					<emphasis>[R08]</emphasis>
+					- Desacoplamento com as tecnologias de referência
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R11]</emphasis>
-				- Permitir debug da execução
+				<ulink url="https://github.com/demoiselle/behave/issues/13">
+					<emphasis>[R11]</emphasis>
+					- Permitir debug da execução
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[R13]</emphasis>
-				- Simplicidade de montagem de ambiente
+				<ulink url="https://github.com/demoiselle/behave/issues/15">
+					<emphasis>[R13]</emphasis>
+					- Simplicidade de montagem de ambiente
+				</ulink>
 			</listitem>
 			<listitem>
-				<emphasis>[Melhoria]</emphasis>
-				- Estrutura do Projeto - Padrão Demoiselle
+				<ulink url="https://github.com/demoiselle/behave/issues/3">
+					<emphasis>[Melhoria]</emphasis>
+					- Estrutura do Projeto - Padrão Demoiselle
+				</ulink>
 			</listitem>
 		</itemizedlist>
 	</para>
