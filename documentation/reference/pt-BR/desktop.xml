@@ -65,9 +65,8 @@
 	<section>
 		<title>Mapeamentos</title>
 		<para>
-			O runner Desktop possui somente 3 tipos de localizadores
-			implementados (1.2.0), seguem eles:
-			
+			O runner Desktop utiliza 3 tipos de localizadores, seguem eles:
+						
 			<itemizedlist>
 				<listitem>
 					<citetitle>Label:</citetitle> Seleciona o objeto de tela que possua o text visível.
