@@ -72,6 +72,7 @@ import br.gov.frameworkdemoiselle.behave.parser.jbehave.converter.MapConverter;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.ALMStoryReport;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.DefaultStoryReport;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.console.ColoredConsoleFormat;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.report.html.ScreenShootingHtmlFormat;
 
 public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
@@ -167,7 +168,6 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	private Format[] getFormats() {
 
 		Format console = Format.CONSOLE;
-
 		// Verifica se existe uma variável de ambiente chamada COLORED_CONSOLE e
 		// ela possui valor diferente de zero.
 		// No console é necessário fazer: export COLORED_CONSOLE=1
@@ -175,8 +175,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		if (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {
 			console = new ColoredConsoleFormat();
 		}
+		
+		Format screenshootingFormat = new ScreenShootingHtmlFormat();
 
-		return new Format[] { console, Format.HTML, Format.STATS };
+		return new Format[] { console, screenshootingFormat, Format.STATS };
 	}
 
 }
