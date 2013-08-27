@@ -210,16 +210,16 @@ Sair do "sistema"</programlisting>
 			<citetitle>Funcionalidades:</citetitle>
 			<itemizedlist>
 				<listitem>
-					Passos com coloração de acordo com o tipo
+					Passos com coloração (Syntax highlighting)
 				</listitem>
 				<listitem>
 					Link entre os passos escritos nas histórias e o método dentro do código Java					
 				</listitem>
 				<listitem>
-					Auto completar nos passos criados no código java, inclusive os passos comuns.
+					Auto completar nos passos criados no código java, inclusive os passos comuns
 				</listitem>
 				<listitem>
-					Validação dos passos, detectando se existem passos não mapeados por exemplo.
+					Validação dos passos, detectando se existem passos não mapeados por exemplo
 				</listitem>
 			</itemizedlist>
 
@@ -228,7 +228,7 @@ Sair do "sistema"</programlisting>
 			<para>
 				O Plugin já foi testado nas versões Indigo (3.7) e Juno (4.2)
 				do
-				Eclipse, usando JDK 3.6 ou superior.
+				Eclipse.
 			</para>
 
 			<citetitle>Instalação usando o Eclipse:</citetitle>
@@ -243,7 +243,7 @@ Sair do "sistema"</programlisting>
 				</listitem>
 				<listitem>
 					3. Após adicionar a localização procure pelo plugin JBehave Eclipse e
-					siga o procedimento padrão para instalação de plugins.
+					siga o procedimento padrão para instalação de plugins
 				</listitem>
 			</itemizedlist>
 

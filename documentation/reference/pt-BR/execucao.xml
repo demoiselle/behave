@@ -32,23 +32,31 @@
 		</para>
 		<itemizedlist>
 			<listitem>
-				forkCount: Determina o número máximo de threads que deverão ser
+				<citetitle>forkCount</citetitle>
+				: Determina o número máximo de threads que deverão ser
 				paralelizadas
 			</listitem>
 			<listitem>
-				reuseForks=false: Garante a execução das threads em JVMs isoladas.
+				<citetitle>threadCount</citetitle>
+				: Número máximo de threads por jvm
+			</listitem>
+			<listitem>
+				<citetitle>reuseForks=false</citetitle>
+				: Garante a execução das threads em JVMs isoladas.
 				Esta configuração
 				evita que dados utilizados por uma thread sejam
 				afetadas por outras.
 			</listitem>
 			<listitem>
-				parallel=classes. Define a estratégia de paralelização, neste caso,
+				<citetitle>parallel=classes</citetitle>
+				: Define a estratégia de paralelização, neste caso,
 				cada classe de
 				teste do JUnit será instanciada por uma thread até
 				atingir o número
 				máximo de threads (forkCount).
 				Recomendamos utilizar
-				o nível de classe, pois havendo a necessidade de
+				o nível de
+				classe, pois havendo a necessidade de
 				dependência entre os
 				testes,
 				esta pode ser realizada dentro da classe JUnit.
@@ -64,9 +72,10 @@
 		&lt;plugin&gt;
 			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
 			&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
-			&lt;version&gt;2.15&lt;/version&gt;
-			&lt;configuration&gt;
+			&lt;version&gt;2.16&lt;/version&gt;
+			&lt;configuration&gt;			
 				&lt;forkCount&gt;3&lt;/forkCount&gt; 				
+				&lt;threadCount&gt;1&lt;/threadCount&gt;
 				&lt;reuseForks&gt;false&lt;/reuseForks&gt; 
 				&lt;parallel&gt;classes&lt;/parallel&gt;
 			&lt;/configuration&gt;
@@ -236,6 +245,17 @@
 					<para>Console</para>
 				</caption>
 			</mediaobject>
+		</para>
+	</section>
+
+	<section>
+		<title>Relatórios JBehave</title>
+		<para>
+			A final da execução dos testes automatizados são gerados
+			relatórios na
+			pasta
+			<citetitle>target/jbehave/view</citetitle>
+			.
 		</para>
 	</section>
 

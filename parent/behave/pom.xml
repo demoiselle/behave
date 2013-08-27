@@ -160,14 +160,14 @@
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-integration-alm</artifactId>
 				<version>${behave.release.version}</version>
-			</dependency>	
+			</dependency>
 
 			<dependency>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 				<version>${behave.release.version}</version>
-			</dependency>		
-							
+			</dependency>
+
 			<dependency>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-runner-fest</artifactId>
@@ -178,7 +178,7 @@
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-runner-webdriver</artifactId>
 				<version>${behave.release.version}</version>
-			</dependency>				
+			</dependency>
 
 			<!-- parser -->
 			<dependency>
@@ -190,6 +190,11 @@
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-core</artifactId>
 				<version>3.8</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbehave.web</groupId>
+				<artifactId>jbehave-web-selenium</artifactId>
+				<version>3.5.4</version>
 			</dependency>
 
 			<!-- runner -->
@@ -228,9 +233,9 @@
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<preparationGoals>clean install</preparationGoals>
-					<goals>${release.goals}</goals>					
+					<goals>${release.goals}</goals>
 				</configuration>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -254,7 +259,55 @@
 					<target>1.6</target>
 					<source>1.6</source>
 				</configuration>
-			</plugin>		
+			</plugin>
+
+			<!-- Relatórios JBehave -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-jbehave-site-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<overwriteReleases>false</overwriteReleases>
+							<overwriteSnapshots>true</overwriteSnapshots>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jbehave.site</groupId>
+									<artifactId>jbehave-site-resources</artifactId>
+									<version>3.1.1</version>
+									<type>zip</type>
+									<outputDirectory> ${project.build.directory}/jbehave/view</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-jbehave-reports-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<overwriteReleases>false</overwriteReleases>
+							<overwriteSnapshots>true</overwriteSnapshots>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jbehave</groupId>
+									<artifactId>jbehave-core</artifactId>
+									<version>${jbehave.core.version}</version>
+									<outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+									<includes>**\/*.css,**\/*.ftl,**\/*.js</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

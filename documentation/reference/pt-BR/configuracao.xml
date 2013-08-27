@@ -12,102 +12,14 @@
 	<tip>
 		<para>
 			Também é possível alterar estas configurações utilizando o
-			parâmetro -D para a chamada da maquina virtual Java
+			parâmetro -D para a chamada da maquina virtual Java.
+			Por exemplo:
+			-Dbehave.integration.alm.enabled=true .
 		</para>
 	</tip>
-
-	<para>
-
-		# ------------------
-		Configurações da Integração ALM
-		------------------
-
-		# Default: false
-		#
-		behave.integration.alm.enabled=false
-
-		# Default: null | Campo
-		obrigatório para integração com a ALM. Endereço
-		completo do caminho
-		para autenticação na ALM
-		# behave.integration.alm.url.security
-
-		#
-		Default: null | Campo obrigatório para integração com a ALM. Endereço
-		completo do caminho para os serviços REST
-		#
-		behave.integration.alm.url.services
-
-		# Default: null | Campo obrigatório
-		para integração com a ALM. Alias da
-		área de projeto, tomar cuidado com
-		áreas renomeadas, pois o Alias não
-		é alterado
-		#
-		behave.integration.alm.projectArea
-
-		# Default: null | Campo obrigatório
-		para integração com a ALM. Id do
-		plano de testes que pertence a área de
-		projeto
-		# behave.integration.alm.testPlanId
-
-		# Default: localhost |
-		Endereço (IP) do Autenticator
-		#
-		behave.integration.authenticator.host=localhost
-
-		# Default: 9990 | Porta
-		utilizada para comunicação com o Autenticator
-		#
-		behave.integration.authenticator.port=9990
-
-		# ------------------
-		Configurações do Runner ------------------
-
-		# Default: 10000
-		#
-		behave.runner.screen.maxWait=10000
-
-		# Default: 100
-		#
-		behave.runner.screen.minWait=100
-
-		# Default: false
-		#
-		behave.runner.proxy.enabled=false
-
-		# Default: null
-		#
-		behave.runner.proxy.url
-
-		# Default: null
-		#
-		behave.runner.screen.driverPath
-
-		# Default: null - WebDriver Default:
-		MozillaFirefox | Opções do
-		WebDriver: MozillaFirefox, InternetExplorer,
-		GoogleChrome. No caso do
-		IE e Chrome são necessárias configurações
-		adicionais.
-		# behave.runner.screen.type=MozillaFirefox
-
-		# Default: false
-		| Ativa ou desativa a cópia de tela em caso de erro
-		#
-		behave.runner.screenshot.enabled=true
-
-		# Default: null | Local aonde
-		será colocada a imagem do erro
-		#
-		behave.runner.screen.screenshotPath=/tmp
-	</para>
-
 	<section>
 		<title>Configurações do Parser</title>
 		<para>
-
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.parser.language:</citetitle>
@@ -118,7 +30,6 @@
 					<emphasis>pt</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.identification.scenario.pattern:
 					</citetitle>
@@ -127,7 +38,6 @@
 					<emphasis>^(\\s)*(CEN\u00C1RIO|Cen\u00E1rio|cen\u00E1rio)\:(.*)
 					</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.prefixes.bdd.pattern:
 					</citetitle>
@@ -137,7 +47,6 @@
 						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas )(.*)
 					</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.story.extension.original:
 					</citetitle>
@@ -149,7 +58,6 @@
 					<emphasis>story</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.story.extension.converted:
 					</citetitle>
@@ -160,7 +68,6 @@
 					no core, mas no caso do JBehave o padrão é
 					<emphasis>storyConverted</emphasis>
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.commonssteps.enabled:
 					</citetitle>
@@ -170,7 +77,6 @@
 					<emphasis>ativado</emphasis>
 					.
 				</listitem>
-
 				<listitem>
 					<citetitle>behave.parser.beforeaftersteps.enabled:
 					</citetitle>
@@ -182,144 +88,213 @@
 					.
 				</listitem>
 			</itemizedlist>
-
 		</para>
 	</section>
-
-
 	<section>
 		<title>Configurações do Runner</title>
 		<para>
-
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.runner.screen.maxWait</citetitle>
 					: propriedade que seleciona a linguagem que o
 					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
-					.
-				</listitem>
-
-				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					O valor padrão é
+					<emphasis>10000 milisegundos</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
+					<citetitle>behave.runner.screen.minWait</citetitle>
 					: propriedade que seleciona a linguagem que o
 					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					O valor padrão é
+					<emphasis>100 milisegundos</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
+					<citetitle>behave.runner.proxy.enabled</citetitle>
 					: propriedade que seleciona a linguagem que o
 					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					O valor padrão é
+					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
+					<citetitle>behave.runner.proxy.url</citetitle>
 					: propriedade que seleciona a linguagem que o
 					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.runner.screen.type</citetitle>
+					: Opções do
+					WebDriver: MozillaFirefox, InternetExplorer,
+					GoogleChrome. No caso do
+					IE e Chrome são necessárias configurações
+					adicionais.
+					O valor padrão é
+					<emphasis>MozillaFirefox</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
+					<citetitle>behave.runner.screen.driverPath</citetitle>
 					: propriedade que seleciona a linguagem que o
 					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
-				</listitem>
-
+				</listitem>			
 			</itemizedlist>
 		</para>
 	</section>
-
 	<section>
 		<title>Configurações do Integration</title>
 		<para>
-
 			<itemizedlist>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
-					.
-				</listitem>
-
-				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.alm.enabled</citetitle>
+					: propriedade que habilita/desabilita a funcionalidade de
+					integração com a ALM.
+					O valor padrão é
+					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.alm.url.security</citetitle>
+					: Campo obrigatório para integração com a ALM. Endereço
+					completo do
+					caminho para autenticação na ALM
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.alm.url.services</citetitle>
+					: Campo obrigatório para integração com a ALM. Endereço
+					completo do
+					caminho para os serviços REST
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.alm.projectArea</citetitle>
+					: Campo obrigatório
+					para integração com a ALM. Alias da
+					área de
+					projeto, tomar cuidado com
+					áreas renomeadas, pois o Alias não
+					é
+					alterado
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.alm.testPlanId</citetitle>
+					: Campo obrigatório
+					para integração com a ALM. Id do
+					plano de testes
+					que pertence a área de
+					projeto
+					O valor padrão é
+					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o padrão é
-					<emphasis>pt</emphasis>
+					<citetitle>behave.integration.authenticator.host</citetitle>
+					: Endereço (IP) do Autenticator
+					O valor padrão é
+					<emphasis>localhost</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.authenticator.port</citetitle>
+					: Porta
+					utilizada para comunicação com o Autenticator
+					O valor padrão
+					é
+					<emphasis>9990</emphasis>
 					.
 				</listitem>
 
 			</itemizedlist>
 		</para>
 	</section>
+	<section>
+		<title>Configurações do Integration - Autenticator ALM</title>
+		<para>
+			<warning>
+				<para>
+					O Autenticator é necessário para que a integração com a ALM
+					funcione
+					corretamente, não sendo possível fazer a integração sem
+					esse
+					utilitário.
+					Caso o Autenticator não esteja disponível a seguinte
+					mensagem será
+					exebida na exceção lançada:
+					<citetitle>br.gov.frameworkdemoiselle.behave.exception.BehaveException:
+						Autenticador inacessível. Verifique se o processo foi iniciado
+					</citetitle>
+				</para>
+			</warning>
+			<section>
+				<title>Instação no Projeto</title>
+				<para>
+					Para fazer uso do módulo de integração basta acrescentar a
+					dependência no pom.xml do projeto.
 
+					<programlisting><![CDATA[<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+	<artifactId>demoiselle-behave-integration-alm</artifactId>
+	<version>1.x.x</version>
+	<scope>test</scope>
+</dependency>]]></programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Motivações</title>
+				<para>
+					<itemizedlist>
+						<listitem>
+							Todas as chamadas Rest ao RQM necessitam de um usuário e senha
+							válidos para a plataforma Jazz.
+						</listitem>
+						<listitem>
+							Por segurança não recomendamos armazenar de forma persistente
+							estas informações.
+						</listitem>
+						<listitem>
+							O componente “demoiselle-behave-integration-alm” provê uma forma
+							segura de armazenar o usuário e senha do testador.
+						</listitem>
+						<listitem>
+							O armazenamento é realizado em memória de forma criptografada e
+							podendo ser acessado apenas localmente na estação do testador
+							durante a execução dos testes.
+						</listitem>
+					</itemizedlist>
+				</para>
+			</section>
+			<section>
+				<title>Utilização</title>
+				<para>
+					<itemizedlist>
+						<listitem>
+							Chama via linha de comando:
 
+							<programlisting>java -jar demoiselle-behave-integrtion-alm-[versao].java</programlisting>
+						</listitem>
+						<listitem>
+							Parâmetros:
+
+							<programlisting>-p [porta] -o [ip-de-origem]</programlisting>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</section>
+		</para>
+	</section>
 </chapter>

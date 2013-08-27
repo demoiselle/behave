@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE authorgroup PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="release">
+
+	<title>Release Notes</title>
+
+	<para>
+		<tip>
+			<para>
+				Para reportar problemas, abrir discussões ou perguntar algo utilize
+				as
+				<emphasis>Issues</emphasis>
+				do GitHub no endereço
+				<ulink url="https://github.com/demoiselle/behave/issues">https://github.com/demoiselle/behave/issues</ulink>
+				.
+			</para>
+		</tip>
+	</para>
+
+	<para>
+		<citetitle>Versão 1.2.0</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/11">
+					<emphasis>[R09]</emphasis>
+					- Permitir execução para interface Desktop - (Java Swing)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/14">
+					<emphasis>[R12]</emphasis>
+					- Execução dos testes em modo background
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/16">
+					<emphasis>[R14]</emphasis>
+					- Controle de execuções em paralelo
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/44">
+					<emphasis>[Bug]</emphasis>
+					Erro na Integração ALM
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/43">
+					<emphasis>[Bug]</emphasis>
+					Correção para o Bug: Problema com a palavra-chave
+					Funcionalidade
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Melhoria]</emphasis>
+					- Material de Treinamento
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/21">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir a utilização de cenários parametrizados
+					juntamente com o
+					reuso de cenários
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Melhoria]</emphasis>
+					- Melhoria no relatório do JBehave com Screenshot de erros
+				</ulink>
+			</listitem>
+		</itemizedlist>
+
+	</para>
+
+	<para>
+		<citetitle>Versão 1.1.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/4">
+					<emphasis>[R01]</emphasis>
+					- Reuso de dados entre histórias
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/5">
+					<emphasis>[R03]</emphasis>
+					- Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/8">
+					<emphasis>[R06]</emphasis>
+					- Execução parametrizável
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/9">
+					<emphasis>[R07]</emphasis>
+					- Reuso de componentes para interação com a tela
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/12">
+					<emphasis>[R10]</emphasis>
+					- Permitir a execução de testes além de interface gráfica
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/17">
+					<emphasis>[Melhoria]</emphasis>
+					- Documentação de Referência
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Versão 1.0.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/2">
+					<emphasis>[R02]</emphasis>
+					- Reuso de histórias
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/6">
+					<emphasis>[R04]</emphasis>
+					- Execução dos testes na Integração continua
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/7">
+					<emphasis>[R05]</emphasis>
+					- Integração com IDEs de desenvolvimento homologadas
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/10">
+					<emphasis>[R08]</emphasis>
+					- Desacoplamento com as tecnologias de referência
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/13">
+					<emphasis>[R11]</emphasis>
+					- Permitir debug da execução
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/15">
+					<emphasis>[R13]</emphasis>
+					- Simplicidade de montagem de ambiente
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/3">
+					<emphasis>[Melhoria]</emphasis>
+					- Estrutura do Projeto - Padrão Demoiselle
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+</chapter>
+

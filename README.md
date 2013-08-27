@@ -4,9 +4,9 @@
 
 ## Links úteis
 
-* [Documentação](http://demoiselle.sourceforge.net/docs/components/behave/reference/1.2.0-BETA5/html/index.html): Aprenda mais!
-* [Fórum](https://github.com/demoiselle/behave/issues): Abra uma issue para discutirmos um assunto.
-* [Tracker](https://github.com/demoiselle/behave/issues): Abra uma issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades
+* [Documentação](http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html): Aprenda agora!
+* [Fórum](https://github.com/demoiselle/behave/issues): Abra um issue para discutirmos um assunto.
+* [Bugs e Sugestões](https://github.com/demoiselle/behave/issues): Abra um issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades
 * [Catálogo de Arquétipos Releases](http://demoiselle.sourceforge.net/repository/archetype-catalog.xml): Para versões estáveis
 * [Catálogo de Arquétipos Snapshot](http://demoiselle.sourceforge.net/repository/archetype-catalog-snapshot.xml): Para versões de desenvolvimento (snapshot)
 

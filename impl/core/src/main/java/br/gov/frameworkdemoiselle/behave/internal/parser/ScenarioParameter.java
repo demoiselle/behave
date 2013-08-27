@@ -43,8 +43,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.RegularExpressionUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -54,6 +56,8 @@ import br.gov.frameworkdemoiselle.behave.internal.util.RegularExpressionUtil;
 public class ScenarioParameter {
 
 	private static final String PARAMETER_PATTERN = "(\"([^\"]*)\")";
+	
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	/**
 	 * Substitui os nome de parâmetro por parâmetros vazios, viabilizando a
@@ -83,7 +87,7 @@ public class ScenarioParameter {
 	 */
 	public static List<String> replaceCallParameters(String scenarioCall, Scenario scenarioReused) {
 		if(scenarioReused.getIdentification()==null){
-			throw new BehaveException("Identificação do cenário nula");
+			throw new BehaveException(bm.getString("exception-scenario-null"));
 		}
 		Map<String, String> parametersCalled = getReusedParameters(scenarioReused.getIdentification(), scenarioCall);
 		if (parametersCalled.isEmpty()) {

@@ -5,53 +5,87 @@
 
 	<title>Testando aplicações Desktop</title>
 	<para>
-
+		O Framework Demoiselle Behave possui um Runner específico para
+		testes
+		de aplicações Desktop (Swing), neste capítulo este assunto será
+		abordado.
 	</para>
-	<tip>
+	<section>
+		<title>Iniciando um projeto utilizando o Arquétipo (Modelo de Projeto)
+		</title>
 		<para>
-			O componente já traz consigo a dependência para o JasperBehaves,
-			pois, até o momento, é a única ferramenta com suporte.
+			Na criação do projeto é possível seleciona o arquétipo
+			<emphasis>jbehave-fest-archetype</emphasis>
+			para ter um início rápido de um projeto para automação de testes
+			Desktop (Swing).
 		</para>
-	</tip>
-	<programlisting role="XML"><![CDATA[<dependency>
-	<groupId>br.gov.frameworkdemoiselle.component</groupId>
-	<artifactId>demoiselle-Behave</artifactId>
-	<version>2.0.0</version>
-	<type>jar</type>
-	<scope>compile</scope>
+	</section>
+	<section>
+		<title>Iniciando um projeto utilizando um projeto existente (Projeto
+			WebDriver)</title>
+		<para>
+			Para transformar um projeto existente em um projeto de testes
+			funcionais Desktop basta alterar o runner e fazer as configurações
+			necessárias.
+
+			Alterar a dependência do runner.
+
+			<programlisting><![CDATA[<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+	<artifactId>demoiselle-behave-runner-fest</artifactId>
+	<version>1.x.x</version>
+	<scope>test</scope>
 </dependency>]]></programlisting>
-	<important>
-		<para>
-			Fique atento apenas para a versão do componente. No momento em que
-			escrevíamos esta
-			documentação, o
-			<emphasis>Demoiselle Behave</emphasis>
-			encontrava-se na versão 2.0.0.
-			Verifique constantemente nossos
-			repositórios e fique sempre atento a nossos informes
-			sobre o
-			lançamento de novas versões!
 		</para>
-	</important>
+	</section>
 
 	<section>
-		<title>Configurações</title>
+		<title>Configurações Desktop</title>
 		<para>
-			Texto
+			Todas as configurações já citadas anteriormente e que são pertinentes
+			ao Desktop também podem ser utilizadas, abaixo estão as configurações
+			específicas para Desktop.
+
+			<itemizedlist>
+				<listitem>
+					Adicionar o projeto no
+					<emphasis>classpath</emphasis>
+					do projeto de testes.
+				</listitem>
+				<listitem>
+					Adicionar a configuração
+					<emphasis>behave.runner.app.mainClass</emphasis>
+					nas propriedades apontando para a class que inicia o projeto
+					Desktop.
+				</listitem>
+			</itemizedlist>
 		</para>
 	</section>
 
 	<section>
 		<title>Mapeamentos</title>
 		<para>
-			Texto
-		</para>
-	</section>
+			O runner Desktop utiliza 3 tipos de localizadores, seguem eles:
+						
+			<itemizedlist>
+				<listitem>
+					<citetitle>Label:</citetitle> Seleciona o objeto de tela que possua o text visível.
+				</listitem>
+				<listitem>
+					<citetitle>Name:</citetitle> Seleciona o objeto de tela que tenha o identificador selecionado pelo desenvolvedor.
+				</listitem>
+				<listitem>
+					<citetitle>ClassName:</citetitle> Seleciona o objeto de tela que tenha a classe definida (JPanel, JButton...)  
+				</listitem>
+			</itemizedlist>
+			
+			Adicionalmente a estes localizadores é possível selecionar o índice que o objeto esta utilizando a anotação @ElementIndex, como por exemplo:
+			
+			<programlisting>@ElementMap(name = "Nome do Elemento na História", locatorType = ElementLocatorType.ClassName, locator = "JTextField")
+<citetitle>@ElementIndex(index = 1)</citetitle>
+private TextField atributo;</programlisting>
 
-	<section>
-		<title>Frases</title>
-		<para>
-			Texto
+			Por padrão o índice do objeto é 0.
 		</para>
 	</section>
 

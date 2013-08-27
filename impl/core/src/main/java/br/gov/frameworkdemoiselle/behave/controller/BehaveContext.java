@@ -36,7 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +46,9 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.parser.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 /**
  * 
@@ -58,7 +57,7 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
  */
 public class BehaveContext {
 
-	public static final BehaveContext userThreadLocal = new BehaveContext();
+	public static final BehaveContext instance = new BehaveContext();
 
 	private Parser parser;
 
@@ -73,13 +72,15 @@ public class BehaveContext {
 	private String step;
 	private Throwable fail;
 
-	private BehaveContext() {
+	private BehaveMessage bm;
 
-	}	
-	
-	public static BehaveContext getInstance() {	
-		return userThreadLocal;		
-	}	
+	private BehaveContext() {
+		bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
+	}
+
+	public static BehaveContext getInstance() {
+		return instance;
+	}
 
 	public void addSteps(Step step) {
 		steps.add(step);
@@ -89,13 +90,13 @@ public class BehaveContext {
 	public void run(List<String> storiesPath) {
 		try {
 			log.info("--------------------------------");
-			log.info(" Iniciando Demoiselle Behave");
+			log.info(bm.getString("message-behave-start"));
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
 
 			if (storiesPath == null || storiesPath.isEmpty()) {
-				throw new BehaveException("Lista de histórias vazias. Informe ao menos uma história");
+				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
@@ -120,19 +121,19 @@ public class BehaveContext {
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
-				Assert.fail("Passo [" + step + "] falha [" + fail.getMessage() + "]");
+				Assert.fail(bm.getString("exception-fail-step", step, fail.getMessage()));
 			}
 		} catch (BehaveException ex) {
-			log.error("Erro ao executar o Demoiselle Behave", ex);
+			log.error(bm.getString("exception-general"), ex);
 			throw ex;
 		} finally {
+			fail = null;
 			storiesPath.clear();
 			steps.clear();
 			log.info("--------------------------------");
-			log.info(" Desligando Demoiselle Behave");
+			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
 		}
-
 	}
 
 	public void run(String storiesPath) {
@@ -156,11 +157,5 @@ public class BehaveContext {
 	public void fail(String step, Throwable fail) {
 		this.step = step;
 		this.fail = fail;
-		
-		if ( BehaveConfig.getRunner_ScreenshotEnabled() ) {
-			Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-			File screenshot = runner.getScreenshot();
-			log.info(" Screenshot = " + screenshot.getAbsolutePath());
-		}
 	}
 }

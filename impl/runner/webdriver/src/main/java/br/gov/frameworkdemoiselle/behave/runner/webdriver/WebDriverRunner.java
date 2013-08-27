@@ -38,8 +38,6 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -171,21 +169,17 @@ public class WebDriverRunner implements Runner {
 	public Screen getScreen() {
 		return (Screen) InjectionManager.getInstance().getInstanceDependecy(Screen.class);
 	}
-	
-	public File getScreenshot() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
-		String fileName = format.format(GregorianCalendar.getInstance().getTime());
-		
-		File screenshotFile = new File(BehaveConfig.getRunner_ScreenshotPath()+fileName+".png");
+
+	public File saveScreenshotTo(String fileName) {
+		File screenshotFile = new File(fileName);
+
 		screenshotFile.getParentFile().mkdirs();
-		
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
 		} catch (IOException e) {
 			return null;
 		}
-		
 		return screenshotFile;
 	}
 

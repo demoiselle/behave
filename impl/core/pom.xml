@@ -51,9 +51,9 @@
 		<version>1.2.0-SNAPSHOT</version>		
 	</parent>
 
-	<name>Demoiselle Behave Component</name>
+	<name>Demoiselle Behave Core</name>
 
-	<description>Demoiselle Behave Component</description>
+	<description>Demoiselle Behave Core</description>
 
 	<licenses>
 		<license>

@@ -9,16 +9,21 @@
 	<preface>
 		<title>Demoiselle Behave</title>
 		<para>
-			Behavior Driven Development(BDD) é uma técnica desenvolvida por Dan
+			Behavior Driven Development(BDD) é uma técnica desenvolvida por
+			Dan
 			North em 2003 com o objetivo de facilitar a colaboração entre
 			desenvolvedores , setores de qualidade
-			e cliente em um projeto de software. A técnica parte do principio de
-			que especificando histórias de usuário em um formato adequado, as
+			e cliente em um projeto de
+			software. A técnica parte do principio de
+			que especificando histórias
+			de usuário em um formato adequado, as
 			histórias especificadas
-			poderiam ser utilizadas tanto como requisito como artefato de entrada para
+			poderiam
+			ser utilizadas tanto como requisito como artefato de entrada para
 			testes automatizados. A técnica se utilizada de uma linguagem
 			denominada linguagem ubíqua
-			que permite que os testes de aceitação sejam escritos em uma linguagem
+			que permite que os testes de aceitação
+			sejam escritos em uma linguagem
 			mais próxima da linguagem de negócio.
 		</para>
 		<para>
@@ -32,36 +37,45 @@
 			<orderedlist numeration="arabic">
 				<listitem>
 					<para>
-						Envolver os stakeholder do projeto (<citetitle pubwork="webpage">Wikipedia</citetitle>)
+						Envolver os stakeholder do projeto (
+						<citetitle pubwork="webpage">Wikipedia</citetitle>
+						)
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Usar derivação por exemplos para descrever o comportamento de uma aplicação ou
+						Usar derivação por exemplos para descrever o comportamento de
+						uma aplicação ou
 						unidades de código
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Automatizar os exemplos para prover um feedback rápido e testes de regressão
+						Automatizar os exemplos para prover um feedback rápido e
+						testes de regressão
 					</para>
-				</listitem>				
+				</listitem>
 				<listitem>
 					<para>
 						Usar Mocks para
-						auxiliar na colaboração entre módulos e códigos que ainda não
+						auxiliar na colaboração entre módulos e
+						códigos que ainda não
 						foram escritos
 					</para>
 				</listitem>
 			</orderedlist>
-					</para>
-		<para>
-			O Demoisele-Behave é um  framework que permite ao usuários automatizar testes utilizando recursos de BDD.
 		</para>
 		<para>
-			A aplicação apresenta quatro módulos principais Core, Parser, Runner e Integration. O Core é responsável pelas principais interfaces
-			do framework.O Controller responsável pela orquestração das informações entre os outros 3 projetos
-			
+			O Demoisele-Behave é um framework que permite ao usuários
+			automatizar testes utilizando recursos de BDD.
+		</para>
+		<para>
+			A aplicação apresenta quatro módulos principais Core, Parser,
+			Runner e Integration. O Core é responsável pelas principais
+			interfaces
+			do framework.O Controller responsável pela orquestração das
+			informações entre os outros 3 projetos
+
 		</para>
 		<para>
 			<mediaobject>
@@ -71,7 +85,7 @@
 				</imageobject>
 				<imageobject role="html">
 					<imagedata fileref="images/arquitetura.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Arquitetura da ferramenta Demoisele-Behave.
@@ -80,18 +94,20 @@
 			</mediaobject>
 		</para>
 		<para>
-		O Parser é responsável pela abstração do componente que irá transformar a história em código Java para enviar ao Runner por
-        meio de sentenças padrões ou específicas de cada projeto.		
+			O Parser é responsável pela abstração do componente que irá
+			transformar a história em código Java para enviar ao Runner por
+			meio
+			de sentenças padrões ou específicas de cada projeto.
 		</para>
-			<para>
+		<para>
 			<mediaobject>
 				<imageobject role="fo">
-					<imagedata fileref="images/parsertamanhoreduzido.png" align="center"
-						format="PNG" scalefit="1" width="75%" />
+					<imagedata fileref="images/parsertamanhoreduzido.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<imageobject role="html">
-					<imagedata fileref="images/parsertamanhoreduzido.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+					<imagedata fileref="images/parsertamanhoreduzido.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Modelo de Funcionamento do Parser.
@@ -100,14 +116,26 @@
 			</mediaobject>
 		</para>
 		<para>
-		O Runner é responsável pela abstração do componente que irá fazer as manipulações de tela, como o Selenium ou até mesmo diretamente o
-JUnit. O modulo Integration é responsável pela abstração do componente que irá fazer as
-integrações entre a solução e as ferramentas externas da empresa como ALM (RQM).
-O framework funciona de modo que histórias escritas em TXT são enviadas ao módulo Parser e posteriormente enviada
-para o Runner, responsável por interagir com um navegador web ou uma tela Desktop, utilizando o framework Selenium ou Fest respectivamente.
+			O Runner é responsável pela abstração do componente que irá
+			fazer as
+			manipulações de tela, como o Selenium ou até mesmo
+			diretamente o
+			JUnit. O modulo Integration é responsável pela abstração
+			do
+			componente que irá fazer as
+			integrações entre a solução e as
+			ferramentas externas da empresa como ALM (RQM).
+			O framework funciona
+			de modo que histórias escritas em TXT são
+			enviadas ao módulo Parser e
+			posteriormente enviada
+			para o Runner, responsável por interagir com um
+			navegador web ou uma tela
+			Desktop, utilizando o framework Selenium ou
+			Fest respectivamente.
 		</para>
-		
-					<para>
+
+		<para>
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/funcionamento.png" align="center"
@@ -115,7 +143,7 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 				</imageobject>
 				<imageobject role="html">
 					<imagedata fileref="images/funcionamento.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Funcionamento do Demoisele-Behave.
@@ -124,10 +152,12 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 			</mediaobject>
 		</para>
 		<para>
-			A ferramenta deve permitir que projetistas de testes escrevam histórias que serão lidas e acionarão scripts
-			de testes automatizados criados por desenvolvedores de teste.
+			A ferramenta deve permitir que projetistas de testes escrevam
+			histórias que serão lidas e acionarão scripts
+			de testes automatizados
+			criados por desenvolvedores de teste.
 		</para>
-				<para>
+		<para>
 			<mediaobject>
 				<imageobject role="fo">
 					<imagedata fileref="images/processo.png" align="center"
@@ -135,7 +165,7 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 				</imageobject>
 				<imageobject role="html">
 					<imagedata fileref="images/processo.png" align="center"
-						format="PNG" scalefit="1" width="75%"/>
+						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
 					<para>Modelo de Uso do Demoisele-Behave.
@@ -144,18 +174,19 @@ para o Runner, responsável por interagir com um navegador web ou uma tela Deskt
 			</mediaobject>
 		</para>
 	</preface>
-	
+
 
 	<!-- índice -->
 	<toc />
 
 	<!-- capítulos -->
+	<xi:include href="releasenotes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="screenmapping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="estoria.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="desktop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="execucao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="xpath.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	
+	<!-- <xi:include href="xpath.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
+
 </book>

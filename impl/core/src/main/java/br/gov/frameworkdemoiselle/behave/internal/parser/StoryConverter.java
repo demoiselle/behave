@@ -82,6 +82,7 @@ import java.util.Map.Entry;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.RegularExpressionUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -91,6 +92,8 @@ import br.gov.frameworkdemoiselle.behave.internal.util.RegularExpressionUtil;
 public class StoryConverter {
 
 	private static final String LINE_BREAK_TOKEN = "\n";
+	
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	/*
 	 * Definições: story=arquivo com um ou mais cenários ;
@@ -162,8 +165,7 @@ public class StoryConverter {
 				if (!scenariosSignature.contains(scenario.getIdentificationWithoutParametersName())) {
 					scenariosSignature.add(scenario.getIdentificationWithoutParametersName());
 				} else {
-					// Já existe um cenário com esta assinatura
-					throw new BehaveException("Existe mais de um cenário com o nome [" + scenario.getIdentification() + "], só pode existir 1.");
+					throw new BehaveException(bm.getString("exception-scenario-duplicated", scenario.getIdentification()));
 				}
 			}
 		}
@@ -305,7 +307,7 @@ public class StoryConverter {
 
 			// Tratamento para loop infinito no reuso de histórias
 			if (sentenceWithoutPrefixAndParametersName.equals(topScenario.getIdentificationWithoutParametersName())) {
-				throw new BehaveException("Erro de referência cíclica encontrado no cenário: " + topScenario.getIdentification());
+				throw new BehaveException(bm.getString("exception-scenario-cyclic-reference", topScenario.getIdentification()));
 			}
 
 			if (scenariosIdentificationMap.containsKey(sentenceWithoutPrefixAndParametersName)) {

@@ -34,53 +34,49 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.config;
+package br.gov.frameworkdemoiselle.behave.message;
 
-import java.util.Enumeration;
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mockito.Mockito;
+
 /**
  * 
  * @author SERPRO
  *
  */
-public class BehaveConfigTest {
+public class BehaveMessageTest {
 
-	/***
-	 * Teste retorno propriedade
-	 */
 	@Test
-	public void testGetProperty() {
-		
-		  
-		
-		  Properties properties=Mockito.mock(Properties.class);
-			Mockito.when(properties.containsKey(Mockito.anyObject())).thenReturn(true);
-			Mockito.when(properties.keys()).thenReturn(new Enumeration<Object>() {
-				
-				@Override
-				public Object nextElement() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				
-				@Override
-				public boolean hasMoreElements() {
-					// TODO Auto-generated method stub
-					return false;
-				}
-			});
-			
-		BehaveConfig.properties=properties;	
-		BehaveConfig.getProperty("property1");
-		
+	public void testGetStringByLocale() {
+		System.setProperty("behave.message.locale", "pt");
+
+		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		assertEquals("message-exception-001-pt", message.getString("exception-001"));
+
+		System.setProperty("behave.message.locale", "en");
+
+		message = new BehaveMessage("demoiselle-core-bundle");
+		assertEquals("message-exception-001-en", message.getString("exception-001"));
+	}
+
+	@Test
+	public void testGetStringParans() {
+		System.setProperty("behave.message.locale", "pt");
+
+		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		assertEquals("message pt: [demoiselle behave]", message.getString("message-param", "demoiselle", "behave"));
+
+		System.setProperty("behave.message.locale", "en");
+
+		message = new BehaveMessage("demoiselle-core-bundle");
+		assertEquals("message en: [demoiselle behave]", message.getString("message-param", "demoiselle", "behave"));
 	}
 	
 	@Test
-	public void testContains() {
-		
+	public void testGetStringNotFound() {
+		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		assertEquals("??{mykey}??", message.getString("mykey"));
 	}
 
 }

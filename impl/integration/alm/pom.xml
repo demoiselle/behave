@@ -52,8 +52,8 @@
 		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 
-	<name>Demoiselle Behave JBevave Extension - Integration - ALM</name>
-	<description>Demoiselle Behave JBevave Extension - Integration - ALM</description>
+	<name>Demoiselle Behave Integration - ALM</name>
+	<description>Demoiselle Behave Integration - ALM</description>
 
 	<url>http://www.frameworkdemoiselle.gov.br</url>
 
