@@ -67,6 +67,12 @@
 					reuso de cenários
 				</ulink>
 			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Melhoria]</emphasis>
+					- Melhoria no relatório do JBehave com Screenshot de erros
+				</ulink>
+			</listitem>
 		</itemizedlist>
 
 	</para>
