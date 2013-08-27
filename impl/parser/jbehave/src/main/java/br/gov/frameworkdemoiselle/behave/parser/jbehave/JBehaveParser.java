@@ -176,7 +176,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			console = new ColoredConsoleFormat();
 		}
 		
-		Format screenshootingFormat = new ScreenShootingHtmlFormat();
+		Format screenshootingFormat = new ScreenShootingHtmlFormat(getKeywordsLocale());
 
 		return new Format[] { console, screenshootingFormat, Format.STATS };
 	}

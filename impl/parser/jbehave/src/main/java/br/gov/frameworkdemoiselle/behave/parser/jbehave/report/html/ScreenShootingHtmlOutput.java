@@ -3,6 +3,7 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave.report.html;
 import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
+import org.jbehave.core.configuration.Keywords;
 import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.HtmlOutput;
@@ -13,9 +14,10 @@ public class ScreenShootingHtmlOutput extends HtmlOutput {
 	private ScreenShootingMaker maker;
 	private static final Logger logger = Logger.getLogger(ScreenShootingHtmlOutput.class);
 
-	public ScreenShootingHtmlOutput(PrintStream output, StoryReporterBuilder reporterBuilder) {
-		super(output, reporterBuilder.keywords());
-		this.maker = new ScreenShootingMaker();
+	public ScreenShootingHtmlOutput(PrintStream output, StoryReporterBuilder reporterBuilder,
+			Keywords keywords) {
+		super(output, keywords);
+		this.maker = new ScreenShootingMaker(reporterBuilder);
 		super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" + "<br/><img src=\"screenshots/failed-scenario-{3}.png\" alt=\"failing screenshot\"/></div>\n");
 	}
 
