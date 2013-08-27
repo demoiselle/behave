@@ -144,22 +144,7 @@
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
-				</listitem>
-
-				<listitem>
-					<citetitle>behave.runner.screenshot.enabled</citetitle>
-					: Ativa ou desativa a cópia de tela em caso de erro.
-					O valor padrão
-					é
-					<emphasis>desabilitado</emphasis>
-					.
-				</listitem>
-				<listitem>
-					<citetitle>behave.runner.screen.screenshotPath</citetitle>
-					: Local aonde será colocada a imagem do erro. O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
-				</listitem>
+				</listitem>			
 			</itemizedlist>
 		</para>
 	</section>

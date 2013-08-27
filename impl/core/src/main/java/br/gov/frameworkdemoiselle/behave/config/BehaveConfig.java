@@ -218,16 +218,6 @@ public class BehaveConfig {
 		return getProperty("behave.runner.screen.type");
 	}
 	
-	// Ativa ou não "screenshot" na falha
-	public static boolean getRunner_ScreenshotEnabled() {
-		return Boolean.parseBoolean(getProperty("behave.runner.screenshot.enabled", "false"));
-	}
-	
-	// URL do screenshot
-	public static String getRunner_ScreenshotPath() {
-		return getProperty("behave.runner.screen.screenshotPath", System.getProperty("java.io.tmpdir"));
-	}
-
 	/*
 	 * Configurações especificas para testes Desktop
 	 */
