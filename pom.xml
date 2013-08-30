@@ -40,7 +40,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component</groupId>
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
