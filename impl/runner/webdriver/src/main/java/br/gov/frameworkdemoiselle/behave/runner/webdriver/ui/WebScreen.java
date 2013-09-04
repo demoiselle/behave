@@ -46,6 +46,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class WebScreen extends WebBase implements Screen {
@@ -96,7 +97,7 @@ public class WebScreen extends WebBase implements Screen {
 				logger.debug("Aguardando o elemento [" + text + "]");
 				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				throw new BehaveException(e);
 			}
 
 			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
