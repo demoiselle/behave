@@ -36,10 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
@@ -52,9 +56,42 @@ public class WebScreen extends WebBase implements Screen {
 		waitText(text, BehaveConfig.getRunner_ScreenMaxWait());
 	}
 
+	/**
+	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop
+	 * controlado por nós e não pelo implicityWait do Webdriver. Por isso zeramos o implicityWait e depois
+	 * voltamos para o valor padrão das propriedades.
+	 */
 	public void waitText(String text, Long timeout) {
+		
 		int totalMilliseconds = 0;
-		while (!((WebDriver) runner.getDriver()).findElement(By.tagName("body")).getText().contains(text)) {
+				
+		// Enquando não encontrar o text na tela
+		while (true) {			
+			try {
+				((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait			
+				List<WebElement> elements = ((WebDriver) runner.getDriver()).findElements(By.tagName("body"));				
+				
+				// Se encontrou o elemento Body na tela
+				if (elements.size() > 0) {
+					// Verifica se o elemento body da tela tem o texto informado
+					if (elements.get(0).getText().contains(text)) {
+						// Se tem o texto no body sai do loop
+						break;
+					}
+				} else {
+					logger.debug("Não encontrou a tag body na página. Verificando todo o código fonte.");
+					if (((WebDriver) runner.getDriver()).getPageSource().contains(text)) {
+						break;
+					}
+				}
+			} catch (Exception ex) {
+				logger.debug("Provavelmente a tag body não foi encontrada no corpo da página.");
+			} finally {
+				((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+			}
+			
 			try {
 				logger.debug("Aguardando o elemento [" + text + "]");
 				Thread.sleep(1000);
@@ -66,6 +103,7 @@ public class WebScreen extends WebBase implements Screen {
 
 			if (totalMilliseconds > timeout)
 				Assert.fail("Texto não encontrado na tela. Texto: " + text);
+			
 		}
 	}
 
