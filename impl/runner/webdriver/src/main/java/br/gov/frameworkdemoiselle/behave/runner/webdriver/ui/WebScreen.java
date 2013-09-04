@@ -94,12 +94,12 @@ public class WebScreen extends WebBase implements Screen {
 			
 			try {
 				logger.debug("Aguardando o elemento [" + text + "]");
-				Thread.sleep(1000);
+				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			totalMilliseconds += 1000;
+			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
 			if (totalMilliseconds > timeout)
 				Assert.fail("Texto não encontrado na tela. Texto: " + text);
