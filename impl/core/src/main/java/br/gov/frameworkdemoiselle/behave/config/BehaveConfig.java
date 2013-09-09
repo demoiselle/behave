@@ -209,9 +209,19 @@ public class BehaveConfig {
 		return getProperty("behave.runner.proxy.url");
 	}
 
-	// URL do proxy
+	// URL do driver
 	public static String getRunner_ScreenDriverPath() {
 		return getProperty("behave.runner.screen.driverPath");
+	}
+	
+	// Ativa o uso do profile do navegador
+	public static boolean getRunner_ProfileEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
+	}
+	
+	// URL do profile
+	public static String getRunner_ProfilePath() {
+		return getProperty("behave.runner.profile.url");
 	}
 
 	public static String getRunner_ScreenType() {

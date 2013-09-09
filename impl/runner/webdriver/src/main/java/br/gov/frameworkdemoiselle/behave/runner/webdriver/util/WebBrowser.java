@@ -36,9 +36,12 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.util;
 
+import java.io.File;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -54,6 +57,12 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
+			if ( BehaveConfig.getRunner_ProfileEnabled() ) {
+				File profileDir = new File(BehaveConfig.getRunner_ProfilePath());
+	            FirefoxProfile profile = new FirefoxProfile(profileDir);
+	            return new FirefoxDriver(profile);
+			}
+			
 			return new FirefoxDriver();
 		}
 	},
