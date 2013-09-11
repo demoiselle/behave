@@ -94,13 +94,15 @@ public class BehaveContext {
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
+			
+			allOriginalStoriesPath.clear();
 
 			if (storiesPath == null || storiesPath.isEmpty()) {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 			// Armazena o array antigo para retirar as histórias depois
 			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
-
+			
 			// Adiciono as novas histórias
 			allOriginalStoriesPath.addAll(storiesPath);
 
@@ -129,7 +131,6 @@ public class BehaveContext {
 		} finally {
 			fail = null;
 			storiesPath.clear();
-			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
