@@ -209,7 +209,7 @@ public class BehaveConfig {
 		return getProperty("behave.runner.proxy.url");
 	}
 
-	// Localização do profile
+	// Localização do driver que faz ligação entre o navegador e o webdriver
 	public static String getRunner_ScreenDriverPath() {
 		return getProperty("behave.runner.screen.driverPath");
 	}
