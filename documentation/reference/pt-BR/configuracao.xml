@@ -96,32 +96,29 @@
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
+					: Tempo máximo de espera em uma ação na tela,
 					O valor padrão é
 					<emphasis>10000 milisegundos</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.minWait</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
+					: Tempo mínimo de espera em uma ação na tela,
 					O valor padrão é
 					<emphasis>100 milisegundos</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.proxy.enabled</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
+					: propriedade que ativa ou desativa o uso de
+					proxy no navegador,
 					O valor padrão é
 					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.proxy.url</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
+					: URL do proxy,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -139,8 +136,31 @@
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.driverPath</citetitle>
-					: propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
+					: Localização do driver que faz	ligação 
+					entre o navegador e o webdriver,
+					O valor padrão é
+					<emphasis>vazio</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.profile.enabled</citetitle>
+					: propriedade que ativa ou desativa o uso de
+					profile no navegador,
+					O valor padrão é
+					<emphasis>desabilitado</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.profilePath</citetitle>
+					: Localização do profile,
+					O valor padrão é
+					<emphasis>vazio</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.app.mainClass</citetitle>
+					: Nome de domínio totalmente qualificado da 
+					classe principal da aplicação sobre testes,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
