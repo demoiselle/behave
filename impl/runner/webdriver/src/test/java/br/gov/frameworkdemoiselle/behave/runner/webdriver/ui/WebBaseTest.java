@@ -57,6 +57,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 public class WebBaseTest {
 
 	@Test
+	@Ignore
 	public void testGetElements() {
 		WebDriver driver = Mockito.mock(WebDriver.class);
 
@@ -95,6 +96,7 @@ public class WebBaseTest {
 	}
 
 	@Test
+	@Ignore
 	public void testVerifyState() {
 		WebElement element = Mockito.mock(WebElement.class);
 		Mockito.when(element.isDisplayed()).thenReturn(true);

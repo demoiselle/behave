@@ -41,8 +41,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -62,26 +61,81 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
 import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
 public class WebBase extends MappedElement implements BaseUI {
 
 	private List<String> locatorParameters;
-	
+	private SwitchDriver frame;
+
+	// private Logger logger = Logger.getLogger(this.toString());
+
+	/**
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
+	 * 
+	 * @return Lista de elementos encontrados
+	 */
 	public List<WebElement> getElements() {
 		List<WebElement> elements = new ArrayList<WebElement>();
 
 		for (String locator : getElementMap().locator()) {
 
+			int totalMilliseconds = 0;
+			boolean found = false;
+
 			locator = getLocatorWithParameters(locator);
 			By by = ByConverter.convert(getElementMap().locatorType(), locator);
-			
-			try {
-				// Utiliza implicity wait
-				WebElement element = getDriver().findElement(by);
-				elements.add(element);
-			} catch (Throwable ex) {
-				throw new BehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
+
+			while (true) {
+				try {
+					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+					frame = new SwitchDriver(getDriver());
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+
+						// Muda de frame
+						frame.switchNextFrame();
+
+						try {
+							// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait
+							List<WebElement> elementsFound = ((WebDriver) runner.getDriver()).findElements(by);
+
+							// Se encontrou o elemento na tela adiciona no array
+							if (elementsFound.size() > 0) {
+								for (WebElement element : elementsFound) {
+									elements.add(element);
+									found = true;
+								}
+								break;
+							}
+
+						} catch (Exception e) {
+							// Ignora o erro quando não encontra o elemento, tenta novamente
+							// logger.debug("1- O elemento [" + getElementMap().name() + "] AINDA não foi encontrado na página, tentar de novo.");
+						}
+					}
+				} catch (Exception ex) {
+					// logger.debug("2 - O elemento [" + getElementMap().name() + "] AINDA não foi encontrado na página, tentar de novo.");
+				} finally {
+					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				}
+
+				if (found)
+					break;
+
+				try {
+					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+				} catch (InterruptedException e) {
+					throw new BehaveException(e);
+				}
+
+				totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
+
+				if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait())
+					throw new BehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
+
 			}
 		}
 
@@ -89,12 +143,12 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	private String getLocatorWithParameters(String locator) {
-		
-		if( getLocatorParameter() != null && !getLocatorParameter().isEmpty() && locator.matches( ".*%param[0-9]+%.*" )) {
+
+		if (getLocatorParameter() != null && !getLocatorParameter().isEmpty() && locator.matches(".*%param[0-9]+%.*")) {
 			int n = 1;
-			for( String parameter : getLocatorParameter() ) {
-				String tag = "%param"+n+"%";
-				if( locator.contains( tag )) 
+			for (String parameter : getLocatorParameter()) {
+				String tag = "%param" + n + "%";
+				if (locator.contains(tag))
 					locator = locator.replace(tag, parameter);
 				n++;
 			}
@@ -114,17 +168,6 @@ public class WebBase extends MappedElement implements BaseUI {
 		} catch (InterruptedException ex) {
 			throw new BehaveException("Thread sleep interrompido", ex);
 		}
-	}
-	
-	public int countFrames(){
-		int countFrames = 0;
-		getDriver().switchTo().defaultContent();
-        Pattern pattern = Pattern.compile("(<frame(.*?)name=\")(.*?)(\")");
-        Matcher matcher = pattern.matcher(getDriver().getPageSource());
-        while(matcher.find()) {
-        	countFrames++;
-        }        
-        return countFrames;		
 	}
 
 	public boolean verifyState(StateUI state) {
@@ -173,18 +216,16 @@ public class WebBase extends MappedElement implements BaseUI {
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
 
-		String locator = getLocatorWithParameters( getElementMap().locator()[index].toString() );
+		String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
 		waitVisibility(by);
-		
+
 	}
 
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading,
-	 * e se existir, ele sempre espera que este elemento desapareça antes de
-	 * continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
@@ -229,18 +270,17 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void setLocatorParameters(List<String> locatorParameter2) {
 		this.locatorParameters = locatorParameter2;
 	}
-	
+
 	/**
-	 * Retorna um Driver executor de códigos Javascript.
-	 * Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
 	public JavascriptExecutor getJavascirptExecutor() {
-		if( !JavascriptExecutor.class.isAssignableFrom( this.runner.getDriver().getClass() ) )
+		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass()))
 			throw new BehaveException("O driver [" + this.runner.getDriver().getClass() + "] não permite a execução de código Javascript.");
 
-		return (JavascriptExecutor) this.runner.getDriver();		
+		return (JavascriptExecutor) this.runner.getDriver();
 	}
 
 	/**
@@ -250,7 +290,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	public String getId() {
 		String id = getElements().get(0).getAttribute("id");
-		if( id == null || id.isEmpty() )
+		if (id == null || id.isEmpty())
 			throw new BehaveException("O elemento [" + this.getElementMap().name() + "] não possui um ID definido.");
 		return id;
 	}

@@ -41,12 +41,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 public class SwitchDriver {
-	
-	private Logger logger = Logger.getLogger(SwitchDriver.class);
+
+	// private Logger logger = Logger.getLogger(SwitchDriver.class);
 	private WebDriver driver;
 	private List<Node> nodes;
 	private int nextFrame = 0;
@@ -62,25 +61,29 @@ public class SwitchDriver {
 		Node node = new Node(null, "root");
 		nodes.add(node);
 		mapFrames(node);
-		logger.debug(this);
+		// logger.debug(this);
 	}
 
 	/**
 	 * Move o driver para seus diversos frames
 	 */
-	public void switchNextFrame(){
+	public void switchNextFrame() {
 		Node node = nodes.get(nextFrame);
-		logger.debug("switch frame:" + node);
+		// logger.debug("switch frame:" + node);
 		node.switchDriver();
-		nextFrame = (nextFrame == nodes.size()-1) ? 0 : (nextFrame + 1);		
+		nextFrame = (nextFrame == nodes.size() - 1) ? 0 : (nextFrame + 1);
 	}
-	
+
+	public int countFrames() {
+		return nodes.size();
+	}
+
 	private void mapFrames(Node _parent) {
 		_parent.switchDriver();
-		Pattern pattern = Pattern.compile("(<frame(.*?)name=\")(.*?)(\")");
+		Pattern pattern = Pattern.compile("(<(.*?)frame(.*?)name=\")(.*?)(\")");
 		Matcher matcher = pattern.matcher(driver.getPageSource());
 		while (matcher.find()) {
-			Node frame = new Node(_parent, matcher.group(3));			
+			Node frame = new Node(_parent, matcher.group(4));
 			nodes.add(frame);
 			mapFrames(frame);
 		}
@@ -125,7 +128,7 @@ public class SwitchDriver {
 				toSTring.append("\n").append(name);
 			} else {
 				toSTring.append(parent).append("->");
-				toSTring.append(name);				
+				toSTring.append(name);
 			}
 			return toSTring.toString();
 		}
