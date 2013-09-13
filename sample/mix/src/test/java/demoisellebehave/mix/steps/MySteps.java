@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 
 public class MySteps extends CommonSteps {
 	
@@ -29,9 +30,12 @@ public class MySteps extends CommonSteps {
 		WebDriver driver = (WebDriver) runner.getDriver();
 		frames = getFrames(driver.getPageSource());
 		
-		Frame frame = new Frame(driver);
-		frame.mapFrames();		
-		System.out.println(frame);
+		SwitchDriver switchDriver = new SwitchDriver(driver);
+		System.out.println(switchDriver);
+		System.out.println("----");
+		for (int i = 0; i < 30; i++) {
+			switchDriver.switchNextFrame();	
+		}		
 	}
 	
 	
@@ -48,7 +52,7 @@ public class MySteps extends CommonSteps {
 	}
 	
 	public List<String> getFrames(String pageSource){		
-        Pattern pattern = Pattern.compile("(<frame(.*?)name=\")(.*?)(\")");
+        Pattern pattern = Pattern.compile("(<frame(.*?)name=\")(.*?)(\")", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(pageSource);
         List<String> listMatches = new ArrayList<String>();
         while(matcher.find()) {

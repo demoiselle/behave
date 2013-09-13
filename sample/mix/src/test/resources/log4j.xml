@@ -25,5 +25,11 @@
 		<appender-ref ref="LOG-FILE" />
 		<appender-ref ref="LOG-CONSOLE" />
 	</category>
+	
+	<category name="demoisellebehave.mix">
+		<priority value="${log4j.behave.priority}" />
+		<appender-ref ref="LOG-FILE" />
+		<appender-ref ref="LOG-CONSOLE" />
+	</category>	
 
 </log4j:configuration>
