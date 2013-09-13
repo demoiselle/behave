@@ -189,17 +189,17 @@ public class BehaveConfig {
 
 	/** RUNNER Properties **/
 
-	// Temo máximo para timeout de espera da tela
+	// Tempo máximo de espera em uma ação na tela
 	public static Long getRunner_ScreenMaxWait() {
 		return Long.parseLong(getProperty("behave.runner.screen.maxWait", "10000"));
 	}
 
-	// Tempo mínimo de espera da tela
+	// Tempo mínimo de espera em uma ação na tela
 	public static Long getRunner_ScreenMinWait() {
 		return Long.parseLong(getProperty("behave.runner.screen.minWait", "100"));
 	}
 
-	// Modo proxy do navegador
+	// Ativa ou desativa o uso de proxy no navegador
 	public static boolean getRunner_ProxyEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.proxy.enabled", "false"));
 	}
@@ -209,19 +209,19 @@ public class BehaveConfig {
 		return getProperty("behave.runner.proxy.url");
 	}
 
-	// URL do driver
+	// Localização do driver que faz ligação entre o navegador e o webdriver
 	public static String getRunner_ScreenDriverPath() {
 		return getProperty("behave.runner.screen.driverPath");
 	}
 	
-	// Ativa o uso do profile do navegador
+	// Ativa o uso de profile no navegador
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
 	
-	// URL do profile
+	// Localização do profile
 	public static String getRunner_ProfilePath() {
-		return getProperty("behave.runner.profile.url");
+		return getProperty("behave.runner.screen.profilePath");
 	}
 
 	public static String getRunner_ScreenType() {
@@ -232,7 +232,7 @@ public class BehaveConfig {
 	 * Configurações especificas para testes Desktop
 	 */
 
-	// Caminho para o JAR do executável do App
+	// Nome de domínio totalmente qualificado da classe principal da aplicação sobre testes
 	public static String getRunner_MainClass() {
 		return getProperty("behave.runner.app.mainClass");
 	}
