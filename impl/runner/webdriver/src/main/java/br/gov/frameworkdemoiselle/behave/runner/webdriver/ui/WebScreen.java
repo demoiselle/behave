@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -65,12 +66,28 @@ public class WebScreen extends WebBase implements Screen {
 	public void waitText(String text, Long timeout) {
 		
 		int totalMilliseconds = 0;
+		int frameIndex = -1;
 				
 		// Enquando não encontrar o text na tela
 		while (true) {			
 			try {
 				((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
+				
+				//se houve frames, faz o switchTo para cada verificação.
+				int totalFrames = countFrames();				 
+				if (totalFrames > 0){									
+					if (++frameIndex >= totalFrames){
+						logger.debug("---defaultContent---");
+						getDriver().switchTo().defaultContent();
+						frameIndex = 0;
+					}else{
+						getDriver().switchTo().frame(frameIndex);
+						logger.debug("---frame[" +  frameIndex + "]---");
+						
+					}
+				}
+				
+				System.out.println(getDriver().getPageSource());
 				// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait			
 				List<WebElement> elements = ((WebDriver) runner.getDriver()).findElements(By.tagName("body"));				
 				

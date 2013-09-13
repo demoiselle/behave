@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -112,6 +114,17 @@ public class WebBase extends MappedElement implements BaseUI {
 		} catch (InterruptedException ex) {
 			throw new BehaveException("Thread sleep interrompido", ex);
 		}
+	}
+	
+	public int countFrames(){
+		int countFrames = 0;
+		getDriver().switchTo().defaultContent();
+        Pattern pattern = Pattern.compile("(<frame(.*?)name=\")(.*?)(\")");
+        Matcher matcher = pattern.matcher(getDriver().getPageSource());
+        while(matcher.find()) {
+        	countFrames++;
+        }        
+        return countFrames;		
 	}
 
 	public boolean verifyState(StateUI state) {
