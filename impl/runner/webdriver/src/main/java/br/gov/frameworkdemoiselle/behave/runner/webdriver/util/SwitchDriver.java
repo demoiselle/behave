@@ -45,7 +45,6 @@ import org.openqa.selenium.WebDriver;
 
 public class SwitchDriver {
 
-	// private Logger logger = Logger.getLogger(SwitchDriver.class);
 	private WebDriver driver;
 	private List<Node> nodes;
 	private int nextFrame = 0;
@@ -58,18 +57,16 @@ public class SwitchDriver {
 	private void mapFrames() {
 		nodes = new ArrayList<SwitchDriver.Node>();
 		driver.switchTo().defaultContent();
-		Node node = new Node(null, "root");
+		Node node = new Node(null, 0, "root");
 		nodes.add(node);
 		mapFrames(node);
-		// logger.debug(this);
 	}
 
 	/**
 	 * Move o driver para seus diversos frames
 	 */
-	public void switchNextFrame() {
+	public void switchNextFrame() {		
 		Node node = nodes.get(nextFrame);
-		// logger.debug("switch frame:" + node);
 		node.switchDriver();
 		nextFrame = (nextFrame == nodes.size() - 1) ? 0 : (nextFrame + 1);
 	}
@@ -80,12 +77,13 @@ public class SwitchDriver {
 
 	private void mapFrames(Node _parent) {
 		_parent.switchDriver();
-		Pattern pattern = Pattern.compile("(<(.*?)frame(.*?)name=\")(.*?)(\")");
+		Pattern pattern = Pattern.compile("(<(.*?)frame(.*?)src=\"(.*?)\"(.*?)\\>)", Pattern.CASE_INSENSITIVE);				
 		Matcher matcher = pattern.matcher(driver.getPageSource());
+		int index = -1;
 		while (matcher.find()) {
-			Node frame = new Node(_parent, matcher.group(4));
+			Node frame = new Node(_parent, ++index, matcher.group(4));
 			nodes.add(frame);
-			mapFrames(frame);
+			mapFrames(frame);			
 		}
 	}
 
@@ -101,12 +99,14 @@ public class SwitchDriver {
 	private class Node {
 
 		private Node parent;
-		private String name;
+		private int frame;
+		private String src;
 
-		public Node(Node parent, String name) {
+		public Node(Node parent, int frame, String src) {
 			super();
 			this.parent = parent;
-			this.name = name;
+			this.frame = frame;
+			this.src = src;
 		}
 
 		/**
@@ -117,7 +117,7 @@ public class SwitchDriver {
 				driver.switchTo().defaultContent();
 			} else {
 				parent.switchDriver();
-				driver.switchTo().frame(name);
+				driver.switchTo().frame(frame);
 			}
 		}
 
@@ -125,10 +125,9 @@ public class SwitchDriver {
 		public String toString() {
 			StringBuffer toSTring = new StringBuffer();
 			if (isRoot()) {
-				toSTring.append("\n").append(name);
+				toSTring.append("\n[").append(frame).append(":").append(src).append("]");
 			} else {
-				toSTring.append(parent).append("->");
-				toSTring.append(name);
+				toSTring.append(parent).append("->[").append(frame).append(":").append(src).append("]");
 			}
 			return toSTring.toString();
 		}

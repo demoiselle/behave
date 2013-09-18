@@ -16,8 +16,13 @@ public class FrameTest {
 	}
 
 	@Test
-	public void testAllStories() throws Throwable {
-		eng.run("/stories/frames");
+	public void testFrames() throws Throwable {
+		eng.run("/stories/frames/frames.story");
+	}
+
+	@Test
+	public void testIFrames() throws Throwable {
+		eng.run("/stories/frames/iframes.story");
 	}
 
 }

@@ -1,12 +1,15 @@
-Funcionalidade: Acesso
+Funcionalidade: Acesso ao Javadoc
 
 Narrativa:
-Para obter a tela inicial apareceça para mim
+Para obter o javadoc da classe Cache
 Como um visitante
-Desejo acessar o Google
+Desejo acessar a documentacao do hibernate
 
-Cenário: Acesso a Tela com Frames
+Cenário: Acesso ao JavaDoc da classe Cache
 
-Dado que vou para a tela "Principal"
-Quando clico em "Get started"
-Então será exibido "Getting started"
+Dado que vou para a tela "Javadoc do Hibernate"
+Então será exibido "Hibernate JavaDoc (3.5.6-Final)"
+Quando clico em "org.hibernate"
+Então será exibido "Cache"
+Quando clico em "Cache"
+Então será exibido "Provides an API for querying/managing the second level cache regions"
