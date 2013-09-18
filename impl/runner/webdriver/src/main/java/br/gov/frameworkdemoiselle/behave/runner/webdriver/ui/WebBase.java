@@ -45,9 +45,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
@@ -63,6 +67,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
+
+import com.google.common.base.Function;
 
 public class WebBase extends MappedElement implements BaseUI {
 
@@ -216,12 +222,20 @@ public class WebBase extends MappedElement implements BaseUI {
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
 
-		String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
-		By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
 		waitVisibility(by);
 
+		// Getting around a WebDriver StaleElementReferenceException - issue #101 - https://github.com/demoiselle/behave/issues/101
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS).pollingEvery(1, TimeUnit.SECONDS).ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class);
+
+		wait.until(new Function<WebDriver, WebElement>() {
+			public WebElement apply(WebDriver driver) {
+				return driver.findElement(by);
+			}
+		});
 	}
 
 	/**
@@ -253,7 +267,6 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	private void waitVisibility(By by) {
-
 		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
