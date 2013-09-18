@@ -47,14 +47,17 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
@@ -65,6 +68,8 @@ public class WebDriverRunner implements Runner {
 	private Logger logger = Logger.getLogger(WebDriverRunner.class);
 	private WebDriver driver;
 	private WebBrowser browser;
+	public static String MESSAGEBUNDLE = "demoiselle-runner-webdriver-bundle";
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	void setWebDriver(WebDriver driver) {
 		this.driver = driver;
@@ -73,8 +78,6 @@ public class WebDriverRunner implements Runner {
 	public Object getDriver() {
 		if (driver == null) {
 			browser = Enum.valueOf(WebBrowser.class, BehaveConfig.getRunner_ScreenType());
-
-			// Uso opicionao do proxy
 			if (!BehaveConfig.getRunner_ProxyEnabled()) {
 				driver = browser.getWebDriver();
 			} else {
@@ -85,16 +88,12 @@ public class WebDriverRunner implements Runner {
 				capabilities.setCapability(CapabilityType.PROXY, proxy);
 				driver = new FirefoxDriver(capabilities);
 			}
-
-			logger.debug("Iniciou o driver - " + browser.toString());
-
-			// Configurações do driver
+			logger.debug(message.getString("message-webdriver-started", browser.toString()));
 			try {
 				driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 			} catch (UnsupportedCommandException e) {
-				logger.error("Não foi possível configurar o timeout do [" + browser.toString() + "]");
-				logger.debug(e);
+				logger.error(message.getString("message-configure-timeout", browser.toString()), e);
 			}
 		}
 		return driver;
@@ -106,7 +105,11 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void navigateTo(String url) {
-		driver.navigate().to(url);
+		try {
+			driver.navigate().to(url);
+		} catch (WebDriverException cause) {
+			throw new BehaveException(message.getString("exception-navigate-to", url), cause);
+		}
 	}
 
 	public void get(String url) {
@@ -123,29 +126,34 @@ public class WebDriverRunner implements Runner {
 
 	public Element getElement(String currentPageName, String elementName) {
 
-		if ((currentPageName == null) || (currentPageName.equals("")))
-			throw new RuntimeException("Não existe página selecionada.");
+		if ((currentPageName == null) || (currentPageName.equals(""))) {
+			throw new BehaveException(message.getString("exception-page-not-selected"));
+		}
 
 		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
 
 		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
 
 		Element element = null;
-		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
+		// Comportamento padrão usa o InjectionManager para resolver quem
+		// implementa a interface
 		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da interface Element
-		else if (Element.class.isAssignableFrom(clazz))
+		// Instancia a classe fornecida explicitamente como implementação da
+		// interface Element
+		else if (Element.class.isAssignableFrom(clazz)) {
 			try {
 				element = (Element) clazz.newInstance();
 			} catch (Exception e) {
 				element = null;
 			}
-		else
-			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da página [" + currentPageName + "] não é uma interface para 'Element'.");
+		} else {
+			throw new BehaveException(message.getString("exception-class-not-element", clazz.getName(), elementName, currentPageName));
+		}
 
-		if (element == null)
-			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da página [" + currentPageName + "].");
+		if (element == null){
+			throw new BehaveException(message.getString("exception-instance-element", elementName, currentPageName));
+		}
 
 		element.setElementMap(map);
 
@@ -157,8 +165,9 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void close() {
-		if (browser.equals(WebBrowser.GoogleChrome))
+		if (browser.equals(WebBrowser.GoogleChrome)){
 			return;
+		}
 		driver.close();
 	}
 
@@ -178,7 +187,7 @@ public class WebDriverRunner implements Runner {
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
 		} catch (IOException e) {
-			return null;
+			throw new BehaveException(message.getString("exception-save-screenshot"), e);			
 		}
 		return screenshotFile;
 	}

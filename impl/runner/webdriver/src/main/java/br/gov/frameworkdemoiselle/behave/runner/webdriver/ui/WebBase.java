@@ -61,9 +61,11 @@ import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
 import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
@@ -73,7 +75,8 @@ import com.google.common.base.Function;
 public class WebBase extends MappedElement implements BaseUI {
 
 	private List<String> locatorParameters;
-	private SwitchDriver frame;
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
+	private SwitchDriver switchTo;
 
 	// private Logger logger = Logger.getLogger(this.toString());
 
@@ -97,12 +100,12 @@ public class WebBase extends MappedElement implements BaseUI {
 				try {
 					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-					frame = new SwitchDriver(getDriver());
+					switchTo = new SwitchDriver(getDriver());
 
-					for (int i = 0; i < frame.countFrames(); i++) {
+					for (int i = 0; i < switchTo.countFrames(); i++) {
 
 						// Muda de frame
-						frame.switchNextFrame();
+						switchTo.switchNextFrame();
 
 						try {
 							// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait
@@ -128,19 +131,21 @@ public class WebBase extends MappedElement implements BaseUI {
 					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				}
 
-				if (found)
+				if (found){
 					break;
+				}
 
 				try {
 					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 				} catch (InterruptedException e) {
-					throw new BehaveException(e);
+					throw new BehaveException(message.getString("exception-thread-sleep"), e);
 				}
 
 				totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
-				if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait())
-					throw new BehaveException("O elemento [" + getElementMap().name() + "] não foi encontrado na página.");
+				if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()){
+					throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+				}
 
 			}
 		}
@@ -154,8 +159,9 @@ public class WebBase extends MappedElement implements BaseUI {
 			int n = 1;
 			for (String parameter : getLocatorParameter()) {
 				String tag = "%param" + n + "%";
-				if (locator.contains(tag))
+				if (locator.contains(tag)){
 					locator = locator.replace(tag, parameter);
+				}
 				n++;
 			}
 		}
@@ -172,7 +178,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
-			throw new BehaveException("Thread sleep interrompido", ex);
+			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
 	}
 
@@ -208,7 +214,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				break;
 
 			default:
-				throw new RuntimeException("Opcao errada para metodo 'verifyStateUI'.");
+				throw new BehaveException(message.getString("exception-invalid-option", state, "verifyState"));
 			}
 
 		}
@@ -290,9 +296,9 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * @return {@link JavascriptExecutor}
 	 */
 	public JavascriptExecutor getJavascirptExecutor() {
-		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass()))
-			throw new BehaveException("O driver [" + this.runner.getDriver().getClass() + "] não permite a execução de código Javascript.");
-
+		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass())){
+			throw new BehaveException(message.getString("exception-javascript-driver", runner.getDriver().getClass()));
+		}
 		return (JavascriptExecutor) this.runner.getDriver();
 	}
 
@@ -303,8 +309,9 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	public String getId() {
 		String id = getElements().get(0).getAttribute("id");
-		if (id == null || id.isEmpty())
-			throw new BehaveException("O elemento [" + this.getElementMap().name() + "] não possui um ID definido.");
+		if (id == null || id.isEmpty()){
+			throw new BehaveException(message.getString("exception-id-not-found", this.getElementMap().name()));
+		}
 		return id;
 	}
 

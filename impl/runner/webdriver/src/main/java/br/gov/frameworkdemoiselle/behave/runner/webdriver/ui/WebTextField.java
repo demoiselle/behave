@@ -39,10 +39,15 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 import org.openqa.selenium.Keys;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public class WebTextField extends WebBase implements TextField {
+	
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	public void sendKeys(CharSequence... keysToSend) {
 		verifyState(StateUI.ENABLE);
@@ -72,8 +77,9 @@ public class WebTextField extends WebBase implements TextField {
 
 			totalMilliseconds += 1000;
 
-			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait())
-				throw new RuntimeException("Limpeza de campo não concluída com sucesso.");
+			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()){
+				throw new BehaveException(message.getString("exception-not-clean"));
+			}
 		}
 	}
 

@@ -39,9 +39,14 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.util;
 import org.openqa.selenium.By;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public class ByConverter {
-
+	
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
+	
 	public static By convert(ElementLocatorType type, String locator) {
 		By by = null;
 
@@ -62,7 +67,7 @@ public class ByConverter {
 		} else if (type == ElementLocatorType.Value) {
 			by = By.xpath("//*[@value='" + locator + "']");
 		}else {
-			throw new RuntimeException("Locator " + type + " não encontrado.");
+			throw new BehaveException(message.getString("exception-invalid-option", type, "convert"));
 		}
 
 		return by;

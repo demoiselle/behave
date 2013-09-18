@@ -42,13 +42,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 /**
  * @author SERPRO
  */
 public class WebSelect extends WebBase implements Select {
 
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,7 +90,7 @@ public class WebSelect extends WebBase implements Select {
 			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
 			lSelect.selectByIndex(index);
 		} else {
-			throw new BehaveException("Passo suportado apenas para tag Select.");
+			throw new BehaveException(message.getString("exception-invalid-step"));
 		}
 	}
 
@@ -99,7 +102,7 @@ public class WebSelect extends WebBase implements Select {
 			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
 			lSelect.selectByValue(value);
 		} else {
-			throw new BehaveException("Passo suportado apenas para tag Select.");
+			throw new BehaveException(message.getString("exception-invalid-step"));
 		}
 	}
 

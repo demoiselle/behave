@@ -37,7 +37,9 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
 
 /**
@@ -49,6 +51,8 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
  * 
  */
 public class RichCalendar extends WebBase implements Calendar {
+	
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	/*
 	 * (non-Javadoc)
@@ -145,8 +149,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	 * Método para garantir que o componente correto foi selecionado
 	 */
 	private void checkRichfacesComponent() {
-		if (!isRichCalendar())
-			throw new BehaveException("O elemento [" + this.getElementMap().name() + "] selecionado possui ID [" + getId() + "] mas não é um componente do tipo rich:calendar.");
+		if (!isRichCalendar()){
+			throw new BehaveException(message.getString("exception-not-rich-type", this.getElementMap().name(), getId(), "rich:calendar"));
+		}
 
 	}
 }

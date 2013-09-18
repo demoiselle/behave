@@ -46,12 +46,15 @@ import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 
 public class WebScreen extends WebBase implements Screen {
 
 	// private Logger logger = Logger.getLogger(this.toString());
+	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	private SwitchDriver frame;
 
@@ -122,8 +125,9 @@ public class WebScreen extends WebBase implements Screen {
 
 			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
-			if (totalMilliseconds > timeout)
-				Assert.fail("Texto não encontrado na tela. Texto: " + text);
+			if (totalMilliseconds > timeout){
+				Assert.fail(message.getString("message-text-not-found", text));
+			}
 
 		}
 	}
