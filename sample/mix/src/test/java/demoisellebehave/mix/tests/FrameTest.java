@@ -24,5 +24,10 @@ public class FrameTest {
 	public void testIFrames() throws Throwable {
 		eng.run("/stories/frames/iframes.story");
 	}
+	
+	@Test
+	public void testPopup() throws Throwable {
+		eng.run("/stories/popup/popup.story");
+	}
 
 }

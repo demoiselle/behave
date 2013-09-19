@@ -50,16 +50,15 @@ public class SwitchDriver {
 	private int nextFrame = 0;
 
 	public SwitchDriver(WebDriver driver) {
-		this.driver = driver;
-		mapFrames();
+		this.driver = driver;		
 	}
 
-	private void mapFrames() {
+	public void bind() {
 		nodes = new ArrayList<SwitchDriver.Node>();
 		driver.switchTo().defaultContent();
 		Node node = new Node(null, 0, "root");
 		nodes.add(node);
-		mapFrames(node);
+		bindNodes(node);
 	}
 
 	/**
@@ -75,15 +74,21 @@ public class SwitchDriver {
 		return nodes.size();
 	}
 
-	private void mapFrames(Node _parent) {
+	private void bindNodes(Node _parent) {
+		bindNodes(_parent, "(<frame(.*?)src=\"(.*?)\"(.*?)\\>)");
+		bindNodes(_parent, "(<iframe(.*?)src=\"(.*?)\"(.*?)\\>)");
+	}
+	
+	private void bindNodes(Node _parent, String regex) {
 		_parent.switchDriver();
-		Pattern pattern = Pattern.compile("(<(.*?)frame(.*?)src=\"(.*?)\"(.*?)\\>)", Pattern.CASE_INSENSITIVE);				
-		Matcher matcher = pattern.matcher(driver.getPageSource());
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);	
+		String pageSource = driver.getPageSource();
+		Matcher matcher = pattern.matcher(pageSource);
 		int index = -1;
 		while (matcher.find()) {
-			Node frame = new Node(_parent, ++index, matcher.group(4));
+			Node frame = new Node(_parent, ++index, matcher.group(3));
 			nodes.add(frame);
-			mapFrames(frame);			
+			bindNodes(frame);			
 		}
 	}
 
@@ -125,7 +130,7 @@ public class SwitchDriver {
 		public String toString() {
 			StringBuffer toSTring = new StringBuffer();
 			if (isRoot()) {
-				toSTring.append("\n[").append(frame).append(":").append(src).append("]");
+				toSTring.append("[").append(frame).append(":").append(src).append("]");
 			} else {
 				toSTring.append(parent).append("->[").append(frame).append(":").append(src).append("]");
 			}
@@ -136,5 +141,9 @@ public class SwitchDriver {
 			return (parent == null);
 		}
 
+	}
+
+	public String currentFrame() {
+		return nodes.get(nextFrame).toString();
 	}
 }

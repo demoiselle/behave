@@ -36,11 +36,13 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -53,82 +55,64 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 
 public class WebScreen extends WebBase implements Screen {
 
-	// private Logger logger = Logger.getLogger(this.toString());
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	private SwitchDriver frame;
+	private WebDriver driver;
 
 	public void waitText(String text) {
 		waitText(text, BehaveConfig.getRunner_ScreenMaxWait());
 	}
 
 	/**
-	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
+	 * Neste método waitText estamos forçando que seja verificado dentro do body
+	 * através de um loop controlado por nós e não pelo implicityWait do
+	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
+	 * valor padrão das propriedades.
 	 */
 	public void waitText(String text, Long timeout) {
+		try {
+			boolean found = false;
 
-		int totalMilliseconds = 0;
-		boolean found = false;
+			driver = (WebDriver) runner.getDriver();
+			frame = new SwitchDriver(driver);
+			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
-		// Enquando não encontrar o text na tela
-		while (true) {
-			try {
-				((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
-				frame = new SwitchDriver(getDriver());
-
-				// Procura nos frames
+			while (true) {
+				frame.bind();
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				for (int i = 0; i < frame.countFrames(); i++) {
-
-					// Muda de frame
 					frame.switchNextFrame();
-					
-					try {
-						// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait
-						List<WebElement> elements = ((WebDriver) runner.getDriver()).findElements(By.tagName("body"));
-
-						// Se encontrou o elemento Body na tela
-						if (elements.size() > 0) {
-							// Verifica se o elemento body da tela tem o texto informado
-							if (elements.get(0).getText().contains(text)) {
-								// Se tem o texto no body sai do loop
-								found = true;
-								break;
-							}
-						} else {
-							// logger.debug("Não encontrou a tag body na página. Verificando todo o código fonte.");
-							if (((WebDriver) runner.getDriver()).getPageSource().contains(text)) {
-								found = true;
-								break;
-							}
+					List<WebElement> elements = driver.findElements(By.tagName("body"));
+					if (elements.size() > 0) {
+						if (elements.get(0).getText().contains(text)) {
+							found = true;
+							break;
 						}
-					} catch (Exception e) {
-						// Ignora o erro quando não encontra o elemento, tenta novamente
-						// logger.debug("1- O elemento [" + getElementMap().name() + "] AINDA não foi encontrado na página, tentar de novo.");
+					} else {
+						if (driver.getPageSource().contains(text)) {
+							found = true;
+							break;
+						}
 					}
 				}
-			} catch (Exception ex) {
-				// logger.debug("Provavelmente a tag body não foi encontrada no corpo da página.");
-			} finally {
-				((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-			}
-
-			if (found)
-				break;
-
-			try {
-				// logger.debug("Aguardando o elemento [" + text + "]");
+				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				if (found) {
+					break;
+				}
 				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
-			} catch (InterruptedException e) {
-				throw new BehaveException(e);
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-not-found", text));
+				}
 			}
-
-			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
-
-			if (totalMilliseconds > timeout){
-				Assert.fail(message.getString("message-text-not-found", text));
-			}
-
+		} catch (BehaveException be) {
+			throw be;
+		} catch (NoSuchFrameException ex) {
+			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+		} catch (InterruptedException e) {
+			throw new BehaveException(message.getString("exception-thread-sleep"), e);
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
 	}
 

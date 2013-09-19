@@ -21,7 +21,7 @@
 	</appender>
 
 	<category name="br.gov.frameworkdemoiselle.behave">
-		<priority value="${log4j.behave.priority}" />
+		<priority value="debug" />
 		<appender-ref ref="LOG-FILE" />
 		<appender-ref ref="LOG-CONSOLE" />
 	</category>

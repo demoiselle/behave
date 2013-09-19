@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,81 +77,61 @@ public class WebBase extends MappedElement implements BaseUI {
 
 	private List<String> locatorParameters;
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
-	private SwitchDriver switchTo;
+	private SwitchDriver frame;
+	private WebDriver driver;
 
 	// private Logger logger = Logger.getLogger(this.toString());
 
 	/**
-	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
+	 * ele busca o elemento em todos os frames
 	 * 
 	 * @return Lista de elementos encontrados
 	 */
 	public List<WebElement> getElements() {
-		List<WebElement> elements = new ArrayList<WebElement>();
+		try {
+			List<WebElement> elements = new ArrayList<WebElement>();
+			for (String locator : getElementMap().locator()) {
 
-		for (String locator : getElementMap().locator()) {
+				boolean found = false;
 
-			int totalMilliseconds = 0;
-			boolean found = false;
-
-			locator = getLocatorWithParameters(locator);
-			By by = ByConverter.convert(getElementMap().locatorType(), locator);
-
-			while (true) {
-				try {
-					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
-					switchTo = new SwitchDriver(getDriver());
-
-					for (int i = 0; i < switchTo.countFrames(); i++) {
-
-						// Muda de frame
-						switchTo.switchNextFrame();
-
-						try {
-							// Tenta encontrar o elemento na tela, antes era utilizado o findElement que utiliza o implicityWait
-							List<WebElement> elementsFound = ((WebDriver) runner.getDriver()).findElements(by);
-
-							// Se encontrou o elemento na tela adiciona no array
-							if (elementsFound.size() > 0) {
-								for (WebElement element : elementsFound) {
-									elements.add(element);
-									found = true;
-								}
-								break;
+				locator = getLocatorWithParameters(locator);
+				By by = ByConverter.convert(getElementMap().locatorType(), locator);
+				driver = (WebDriver) runner.getDriver();
+				frame = new SwitchDriver(driver);
+				long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+				while (true) {
+					frame.bind();
+					driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+						List<WebElement> elementsFound = driver.findElements(by);
+						if (elementsFound.size() > 0) {
+							for (WebElement element : elementsFound) {
+								elements.add(element);
+								found = true;
 							}
-
-						} catch (Exception e) {
-							// Ignora o erro quando não encontra o elemento, tenta novamente
-							// logger.debug("1- O elemento [" + getElementMap().name() + "] AINDA não foi encontrado na página, tentar de novo.");
+							break;
 						}
 					}
-				} catch (Exception ex) {
-					// logger.debug("2 - O elemento [" + getElementMap().name() + "] AINDA não foi encontrado na página, tentar de novo.");
-				} finally {
-					((WebDriver) runner.getDriver()).manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-				}
-
-				if (found){
-					break;
-				}
-
-				try {
+					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+					if (found) {
+						break;
+					}
 					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
-				} catch (InterruptedException e) {
-					throw new BehaveException(message.getString("exception-thread-sleep"), e);
+					if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+					}
 				}
-
-				totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
-
-				if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()){
-					throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
-				}
-
 			}
+			return elements;
+		} catch (BehaveException be) {
+			throw be;
+		} catch (InterruptedException e) {
+			throw new BehaveException(message.getString("exception-thread-sleep"), e);
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
-
-		return elements;
 	}
 
 	private String getLocatorWithParameters(String locator) {
@@ -159,7 +140,7 @@ public class WebBase extends MappedElement implements BaseUI {
 			int n = 1;
 			for (String parameter : getLocatorParameter()) {
 				String tag = "%param" + n + "%";
-				if (locator.contains(tag)){
+				if (locator.contains(tag)) {
 					locator = locator.replace(tag, parameter);
 				}
 				n++;
@@ -234,7 +215,8 @@ public class WebBase extends MappedElement implements BaseUI {
 		waitClickable(by);
 		waitVisibility(by);
 
-		// Getting around a WebDriver StaleElementReferenceException - issue #101 - https://github.com/demoiselle/behave/issues/101
+		// Getting around a WebDriver StaleElementReferenceException - issue
+		// #101 - https://github.com/demoiselle/behave/issues/101
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS).pollingEvery(BehaveConfig.getRunner_ScreenMinWait(), TimeUnit.MILLISECONDS).ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class);
 
 		wait.until(new Function<WebDriver, WebElement>() {
@@ -245,7 +227,9 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading,
+	 * e se existir, ele sempre espera que este elemento desapareça antes de
+	 * continuar.
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
@@ -291,12 +275,13 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em
+	 * uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
 	public JavascriptExecutor getJavascirptExecutor() {
-		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass())){
+		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass())) {
 			throw new BehaveException(message.getString("exception-javascript-driver", runner.getDriver().getClass()));
 		}
 		return (JavascriptExecutor) this.runner.getDriver();
@@ -309,7 +294,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	public String getId() {
 		String id = getElements().get(0).getAttribute("id");
-		if (id == null || id.isEmpty()){
+		if (id == null || id.isEmpty()) {
 			throw new BehaveException(message.getString("exception-id-not-found", this.getElementMap().name()));
 		}
 		return id;
