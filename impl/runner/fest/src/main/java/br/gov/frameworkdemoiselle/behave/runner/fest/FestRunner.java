@@ -178,7 +178,8 @@ public class FestRunner implements Runner {
 
 	@Override
 	public String getCurrentUrl() {
-		return null;
+		// Utilizado no screenshot
+		return currentTitle;
 	}
 
 	@Override
