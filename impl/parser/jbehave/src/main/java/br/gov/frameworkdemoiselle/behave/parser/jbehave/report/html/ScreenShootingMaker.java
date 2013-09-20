@@ -88,13 +88,13 @@ public class ScreenShootingMaker {
 		try {
 			runner.saveScreenshotTo(screenshotPath);
 		} catch (Exception ex) {			
-			logger.warn("Erro ao salvar screenshot da página '" + currentUrl + "'. Caminho: " + screenshotPath
+			logger.warn("Erro ao salvar screenshot da tela '" + currentUrl + "'. Caminho: " + screenshotPath
 					+ ". Causa: " + ex.getMessage() + ".");
 			ex.printStackTrace();
 			return;			
 		}
 
-		logger.info("Screenshot da página '" + currentUrl + "' salvo em '" + screenshotPath + "' com "
+		logger.info("Screenshot da tela '" + currentUrl + "' salvo em '" + screenshotPath + "' com "
 					+ new File(screenshotPath).length() + " bytes");
 	}
 
