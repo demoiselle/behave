@@ -211,6 +211,7 @@ public class CommonSteps implements Step {
 		}
 	}
 	
+	@When("informo: $table")
 	@Given("informo: $table")
 	public void setDataProvideTable(ExamplesTable table) {
 		for (Map<String, String> row : table.getRows()) {
