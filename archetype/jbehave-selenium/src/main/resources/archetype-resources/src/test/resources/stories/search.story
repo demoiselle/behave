@@ -14,4 +14,4 @@ Cenário: Pesquisa Simples
 
 Dado que vou para a tela "Tela de Busca"
 Quando informo "Demoiselle Behave" no campo "Campo de Busca"
-Então será exibido "https://github.com/demoiselle/behave/"
+Então será exibido "https://github.com/demoiselle/behave"
