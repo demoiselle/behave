@@ -1,8 +1,9 @@
 Funcionalidade: Pesquisa Simples
 
-Como um: visitante
-Eu quero: fazer uma busca simples
-De modo que: me mostre os resultados
+Narrativa:
+Para obter o resultado da busca
+Como um visitante
+Desejo fazer uma busca simples
 
 Cenário: Utilização da funcionalidade de pesquisa
 
