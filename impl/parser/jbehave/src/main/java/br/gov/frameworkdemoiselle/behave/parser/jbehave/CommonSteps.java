@@ -36,13 +36,16 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.core.model.ExamplesTable;
 
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -205,6 +208,34 @@ public class CommonSteps implements Step {
 			((Select) element).selectByVisibleText(value);
 		} else {
 			throw new BehaveException("Elemento não encontrado na tela");
+		}
+	}
+	
+	@When("informo: $table")
+	@Given("informo: $table")
+	public void setDataProvideTable(ExamplesTable table) {
+		for (Map<String, String> row : table.getRows()) {
+			Iterator<String> it = row.keySet().iterator();
+			
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				
+				setDataProvider(key, row.get(key));
+			}
+		}
+	}
+	
+	@When("informo o campo: $table")
+	@Alias("informo os campos: $table")
+	public void informeCanpos(ExamplesTable table) {
+		for (Map<String, String> row : table.getRows()) {
+			Iterator<String> it = row.keySet().iterator();
+			
+			while (it.hasNext()) {
+				String key = (String) it.next();
+				
+				informe(row.get(key), key);
+			}
 		}
 	}
 

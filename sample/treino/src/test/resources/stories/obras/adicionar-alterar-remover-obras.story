@@ -20,6 +20,32 @@ Quando clico em "Inserir"
 Quando informo "100" no campo "Registros por Página"
 Então será exibido "Nome da Obra"
 
+Quando clico em "Adicionar Obra"
+Então será exibido "Cadastro"
+Quando informo os campos: 
+|Nome da Obra|Valor|Prazo|
+|Nova Obra 2|22222.2|22/02/2013|
+Quando clico em "Inserir"
+Então será exibido "Nome da Obra"
+
+Quando informo:
+|obra|valor|prazo|
+|Nova Obra 4|44444.4|24/04/2013|
+
+Quando clico em "Adicionar Obra"
+Então será exibido "Cadastro"
+Quando informo "obra" no campo "Nome da Obra"
+Quando informo "valor" no campo "Valor"
+Quando informo "prazo" no campo "Prazo"
+Quando clico em "Inserir"
+Então será exibido "Nome da Obra"
+
+Quando clico em "Adicionar Obra"
+Então será exibido "Cadastro"
+Quando informo os campos: stories/obras/nova-obra.table
+Quando clico em "Inserir"
+Então será exibido "Nome da Obra"
+
 Sair do "Sistema"
 
 Cenário: Excluir Obra
