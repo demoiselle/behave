@@ -1,8 +1,9 @@
 Funcionalidade: pedido
 
-Como um: visitante
-Eu quero: clicar em um botão
-De modo que: algo interessante seja buscado
+Narrativa:
+Para obter algo interessante seja buscado
+Como um visitante
+Desejo clicar em um botão
 
 Cenário: Utilização da funcionalidade estou com sorte
 
