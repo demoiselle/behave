@@ -34,43 +34,12 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.parser.jbehave;
+package br.gov.frameworkdemoiselle.behave.runner.fest;
 
-import org.apache.log4j.Logger;
-import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStories;
+import javax.swing.JFrame;
 
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
-import br.gov.frameworkdemoiselle.behave.parser.Step;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
+public interface FestStartup {
 
-public class BeforeAfterSteps implements Step {
-
-	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-	private Logger logger = Logger.getLogger(BeforeAfterSteps.class);
-
-	@BeforeStories
-	public void startStories() {
-		try {
-			logger.info(">>Iniciando Aplicação<<");
-			runner.start();
-		} catch (BehaveException e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-
-	@AfterStories
-	public void stopStories() {
-		try {
-			runner.close();
-			runner.quit();
-			logger.info(">>Finalizando Aplicação<<");
-		} catch (BehaveException e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
+	public JFrame getFrame();
 
 }

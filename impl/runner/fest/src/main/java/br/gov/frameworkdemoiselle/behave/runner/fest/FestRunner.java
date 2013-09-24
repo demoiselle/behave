@@ -60,6 +60,7 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopElement;
@@ -69,10 +70,14 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class FestRunner implements Runner {
 
+	
+	public static String MESSAGEBUNDLE = "demoiselle-runner-fest-bundle";
 	private Logger logger = Logger.getLogger(this.toString());
+	
+	private BehaveMessage message = new BehaveMessage(MESSAGEBUNDLE);
 
 	public Robot robot;
-	public Object application;
+	public JFrame mainFrame;
 	public Container mainContainer;
 	public Container currentContainer;
 	public FrameFixture mainFixture;
@@ -81,40 +86,58 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void start() {
-		logger.info("Iniciou o FEST...");
+		
+		logger.info(message.getString("message-fest-started"));
 
-		// A aplicação tem que estar no classpath do projeto maven
-		if (application == null) {
-
+		if (mainFrame == null) {			
+			mainFrame = getInstance(true);
+			if (mainFrame == null){
+				mainFrame =getInstance(false);
+			}
+			if (mainFrame == null){
+				throw new BehaveException("Propriedades behave.runner.app.mainClass e behave.runner.app.startupFrame não informadas no behave.properties");
+			}
 			JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
-
 				protected JFrame executeInEDT() {
-					String className = BehaveConfig.getRunner_MainClass();
-
-					logger.info("Iniciando aplicação com a classe " + className);
-
-					try {
-						application = Class.forName(className).newInstance();
-					} catch (ClassNotFoundException ex) {
-						throw new BehaveException("A classe " + className + " não foi encontrada no classpath da aplicação, é necessário incluir o JAR da aplicação desktop no projeto.");
-					} catch (Exception ex) {
-						throw new BehaveException(ex);
-					}
-
-					return (JFrame) application;
+					return mainFrame;			
 				}
-
 			});
-
 			mainContainer = frame;
 			mainContainer.setVisible(true);
 
 			mainFixture = new FrameFixture((JFrame) mainContainer);
 			robot = mainFixture.robot;
 		}
-
 		currentContainer = mainContainer;
 	}
+	
+	private JFrame getInstance(boolean mainClass) {
+		String clazz = (mainClass) ? BehaveConfig.getProperty("behave.runner.app.mainClass") : BehaveConfig.getProperty("behave.runner.app.startupFrame");
+		logger.info(message.getString("message-fest-started"));
+		try {						
+			if (clazz == null || clazz.equals("")){
+				return null;
+			}
+			logger.info(message.getString("message-fest-class", clazz));
+			Object instance =  Class.forName(clazz).newInstance();
+			if (mainClass){
+				return (JFrame) instance;	
+			}else{
+				return ((FestStartup) instance).getFrame();
+			}		
+		}  catch (InstantiationException e) {
+			throw new BehaveException(e);
+		} catch (IllegalAccessException e) {
+			throw new BehaveException(e);
+		} catch (ClassNotFoundException e) {
+			throw new BehaveException(message.getString("exception-main-class-not-found", clazz), e);
+		} catch (ClassCastException e) {			
+			throw new BehaveException(e);
+		} 
+		
+	}
+
+	
 
 	@Override
 	public void get(String url) {
@@ -160,10 +183,11 @@ public class FestRunner implements Runner {
 					return;
 				}
 			}
+		}		
+		if (currentContainer == null){
+			throw new BehaveException("Aplicação não carregada. Verifique as configurações do projeto");
 		}
-
-		// No caso de não encontrar a tela especificada lança a Exception
-		throw new BehaveException("Nenhuma tela encontrada. \rContainer: \r" + currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + getHierarchy() + "\r----------------------------------------------");
+		throw new BehaveException("Tela não encontrada. \rContainer: \r" + currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + getHierarchy() + "\r----------------------------------------------");
 
 	}
 
@@ -235,7 +259,7 @@ public class FestRunner implements Runner {
 		mainFixture.cleanUp();
 		mainContainer = null;
 		currentContainer = null;
-		application = null;
+		mainFrame = null;
 	}
 
 	@Override

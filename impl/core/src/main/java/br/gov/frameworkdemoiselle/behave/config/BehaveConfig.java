@@ -232,11 +232,6 @@ public class BehaveConfig {
 	 * Configurações especificas para testes Desktop
 	 */
 
-	// Nome de domínio totalmente qualificado da classe principal da aplicação sobre testes
-	public static String getRunner_MainClass() {
-		return getProperty("behave.runner.app.mainClass");
-	}
-
 	/**
 	 * Exibe o valor das propriedades do DBehave caso o log esteja no modo debug
 	 */
