@@ -65,6 +65,5 @@ public @interface ScreenMap {
 	 * Propriedade que determina a localização que será chamada quando a
 	 * propriedade name() for encontrada para determinada página.
 	 */
-	public String location();
-
+	public String location() default "";
 }
