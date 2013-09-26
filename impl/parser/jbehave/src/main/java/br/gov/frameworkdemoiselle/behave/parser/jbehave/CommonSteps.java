@@ -152,8 +152,8 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@When(value = "seleciono a opção \"$value\"", priority = 1)
-	@Then(value = "seleciono a opção \"$value\"", priority = 1)
+	@When(value = "seleciono a opção \"$fieldName\"", priority = 1)
+	@Then(value = "seleciono a opção \"$fieldName\"", priority = 1)
 	public void informe(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 
