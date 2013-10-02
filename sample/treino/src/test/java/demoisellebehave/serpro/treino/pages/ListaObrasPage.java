@@ -76,5 +76,8 @@ public class ListaObrasPage {
 	
 	@ElementMap(name = "Excluir Obra", locatorType = ElementLocatorType.XPath, locator = "(//tr[td/span/span='%param1%']//button)[1]")
 	private Button btExcluir;
+	
+	@ElementMap(name = "Excluir Nova Obra", locatorType = ElementLocatorType.XPath, locator = "(//tr[td[1]//.='%param1%'][td[2]//.='%param2%']//button)[1]")
+	private Button btExcluirNova;
 	 
 }
