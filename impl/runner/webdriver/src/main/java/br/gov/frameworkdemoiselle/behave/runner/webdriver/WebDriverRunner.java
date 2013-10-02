@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -192,9 +193,14 @@ public class WebDriverRunner implements Runner {
 		return screenshotFile;
 	}
 
-	public void setScreen(String screenName) {
-		// TODO Auto-generated method stub
-		
+	public void setScreen(String screenName) {        
+        Set<String> lWindowHandles = driver.getWindowHandles();
+        for(String lWindowHandle : lWindowHandles){
+            WebDriver lWindow = driver.switchTo().window(lWindowHandle);            
+            if(lWindow.getTitle().toUpperCase().indexOf(screenName.toUpperCase())>=0){               
+                return;             
+            }
+        }        
 	}
 
 }

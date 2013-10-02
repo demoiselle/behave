@@ -10,9 +10,13 @@ public class PopupPage {
 
 	@ElementMap(name = "link POP-up", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='POP-up']")
 	private Link linkPopup;
-	
+
+	@ScreenMap(name = "Nova Janela")
+	public class Popup {
+
+		@ElementMap(name = "Fechar", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Fechar']")
+		private Link fechar;
+
+	}
 
 }
-
-
-

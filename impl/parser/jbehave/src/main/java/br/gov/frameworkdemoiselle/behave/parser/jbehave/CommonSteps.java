@@ -36,7 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +50,7 @@ import org.jbehave.core.model.ExamplesTable;
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
@@ -101,16 +101,10 @@ public class CommonSteps implements Step {
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
-		List<String> novosLocatorParameters = new ArrayList<String>();
-		
-		for (String locatorParameter : locatorParameters ) {
-			String novoLocatorParameter = dataProvider.containsKey(locatorParameter) ? (String) dataProvider.get(locatorParameter) : locatorParameter;
-			
-			novosLocatorParameters.add(novoLocatorParameter);
-		}
-		
+		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
+
 		Element element = runner.getElement(currentPageName, elementName);
-		element.setLocatorParameters(novosLocatorParameters);
+		element.setLocatorParameters(locatorParameters);
 
 		if (element instanceof Button) {
 			((Button) element).click();
@@ -124,6 +118,9 @@ public class CommonSteps implements Step {
 			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
 		}
 	}
+	
+	
+	
 
 	@When(value = "clico em \"$elementName\"", priority = 1)
 	@Then(value = "clico em \"$elementName\"", priority = 1)
@@ -146,16 +143,10 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void informeWithParameters(String elementName, List<String> locatorParameters) {
-		List<String> novosLocatorParameters = new ArrayList<String>();
-		
-		for (String locatorParameter : locatorParameters ) {
-			String novoLocatorParameter = dataProvider.containsKey(locatorParameter) ? (String) dataProvider.get(locatorParameter) : locatorParameter;
-			
-			novosLocatorParameters.add(novoLocatorParameter);
-		}
-		
+		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
+				
 		Element element = runner.getElement(currentPageName, elementName);
-		element.setLocatorParameters(novosLocatorParameters);
+		element.setLocatorParameters(locatorParameters);
 
 		if (element instanceof Radio) {
 			((Radio) element).click();
@@ -213,8 +204,8 @@ public class CommonSteps implements Step {
 	@When("informo \"$value\" no campo \"$fieldName\"")
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void informe(String value, String fieldName) {
-		// Verifica se o valor esta no DataContainer
-		value = dataProvider.containsKey(value) ? (String) dataProvider.get(value) : value;
+
+		value = DataProviderUtil.replaceValue(value);
 
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 
