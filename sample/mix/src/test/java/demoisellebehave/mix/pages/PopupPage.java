@@ -3,22 +3,14 @@ package demoisellebehave.mix.pages;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 
-@ScreenMap(name = "Principal de Pop-ups", location = "http://allwebco-templates.com/support/S_add_pop.htm")
+@ScreenMap(name = "Janela", location = "http://demoiselle.sourceforge.net/docs/components/behave/samples/windows.html")
 public class PopupPage {
 
-	@ElementMap(name = "link de popup", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Click here to see a sample']")
+	@ElementMap(name = "link POP-up", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='POP-up']")
 	private Link linkPopup;
 	
-	@ScreenMap(name = "Popup", location = "http://allwebco-templates.com/support/scripts/pop-up.html")
-	public class Poup{
-		
-		@ElementMap(name = "Fechar Janeja", locatorType = ElementLocatorType.XPath, locator = "//input[@value='Close Window']")
-		private Button btClose;
-		
-	}
 
 }
 

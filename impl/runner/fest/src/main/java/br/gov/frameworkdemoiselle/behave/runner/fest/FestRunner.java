@@ -280,4 +280,7 @@ public class FestRunner implements Runner {
 		return screenshotFile;
 	}
 
+	public void setScreen(String screenName) {
+	}
+
 }

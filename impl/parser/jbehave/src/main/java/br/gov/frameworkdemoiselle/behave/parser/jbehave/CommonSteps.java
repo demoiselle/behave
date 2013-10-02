@@ -94,6 +94,7 @@ public class CommonSteps implements Step {
 	public void pageWithName(String local) {
 		logger.debug("Go to screen " + local);
 		currentPageName = local;
+		runner.setScreen(local);
 	}
 
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)

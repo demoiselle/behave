@@ -72,4 +72,6 @@ public interface Runner {
 	
 	public File saveScreenshotTo(String fileName);
 
+	public void setScreen(String screenName);
+
 }

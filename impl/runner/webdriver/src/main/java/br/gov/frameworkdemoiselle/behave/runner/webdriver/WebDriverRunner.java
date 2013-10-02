@@ -192,4 +192,9 @@ public class WebDriverRunner implements Runner {
 		return screenshotFile;
 	}
 
+	public void setScreen(String screenName) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

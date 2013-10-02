@@ -7,14 +7,6 @@ Desejo ...
 
 Cenário: Acesso a Pagina de pop-up
 
-Dado que vou para a tela "Principal de Pop-ups"
-Então será exibido "Adding an additional pop-up window"
-Quando clico em "link de popup"
-
-Então estou na tela "Popup"
-E será exibido "Put Your Page Title Here"
-
-Quando clico em "Fechar Janeja"
-
-Então vou para a tela "Principal de Pop-ups"
-Então será exibido "Adding an additional pop-up window"
+Dado que vou para a tela "Janela"
+Então será exibido "Demoiselle Behave - Exemplo com Multiplas Janelas"
+Quando clico em "link POP-up"
