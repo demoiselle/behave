@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -99,8 +100,16 @@ public class CommonSteps implements Step {
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
+		List<String> novosLocatorParameters = new ArrayList<String>();
+		
+		for (String locatorParameter : locatorParameters ) {
+			String novoLocatorParameter = dataProvider.containsKey(locatorParameter) ? (String) dataProvider.get(locatorParameter) : locatorParameter;
+			
+			novosLocatorParameters.add(novoLocatorParameter);
+		}
+		
 		Element element = runner.getElement(currentPageName, elementName);
-		element.setLocatorParameters(locatorParameters);
+		element.setLocatorParameters(novosLocatorParameters);
 
 		if (element instanceof Button) {
 			((Button) element).click();
@@ -136,8 +145,16 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "seleciono a opção \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void informeWithParameters(String elementName, List<String> locatorParameters) {
+		List<String> novosLocatorParameters = new ArrayList<String>();
+		
+		for (String locatorParameter : locatorParameters ) {
+			String novoLocatorParameter = dataProvider.containsKey(locatorParameter) ? (String) dataProvider.get(locatorParameter) : locatorParameter;
+			
+			novosLocatorParameters.add(novoLocatorParameter);
+		}
+		
 		Element element = runner.getElement(currentPageName, elementName);
-		element.setLocatorParameters(locatorParameters);
+		element.setLocatorParameters(novosLocatorParameters);
 
 		if (element instanceof Radio) {
 			((Radio) element).click();
