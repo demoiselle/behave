@@ -106,7 +106,8 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void navigateTo(String url) {
-		try {
+		try {			
+			setDefaultWindow();		
 			driver.navigate().to(url);
 		} catch (WebDriverException cause) {
 			throw new BehaveException(message.getString("exception-navigate-to", url), cause);
@@ -166,7 +167,8 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void close() {
-		if (browser.equals(WebBrowser.GoogleChrome)){
+		setDefaultWindow();
+		if (browser.equals(WebBrowser.GoogleChrome)) {
 			return;
 		}
 		driver.close();
@@ -193,14 +195,22 @@ public class WebDriverRunner implements Runner {
 		return screenshotFile;
 	}
 
-	public void setScreen(String screenName) {        
-        Set<String> lWindowHandles = driver.getWindowHandles();
-        for(String lWindowHandle : lWindowHandles){
-            WebDriver lWindow = driver.switchTo().window(lWindowHandle);            
-            if(lWindow.getTitle().toUpperCase().indexOf(screenName.toUpperCase())>=0){               
-                return;             
-            }
-        }        
+	public void setScreen(String screenName) {
+		Set<String> lWindowHandles = driver.getWindowHandles();
+		for (String lWindowHandle : lWindowHandles) {
+			WebDriver lWindow = driver.switchTo().window(lWindowHandle);
+			if (lWindow.getTitle().toUpperCase().indexOf(screenName.toUpperCase()) >= 0) {
+				return;
+			}
+		}
+	}
+	
+	private void setDefaultWindow(){
+		Set<String> lWindowHandles = driver.getWindowHandles();		
+		for (String lWindowHandle : lWindowHandles) {
+			driver.switchTo().window(lWindowHandle);			
+			return;			
+		}
 	}
 
 }
