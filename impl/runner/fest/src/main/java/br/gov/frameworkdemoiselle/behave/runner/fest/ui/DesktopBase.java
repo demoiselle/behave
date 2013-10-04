@@ -57,6 +57,7 @@ import org.fest.swing.core.ComponentFinder;
 import org.fest.swing.core.ComponentMatcher;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopMappedElement;
@@ -68,6 +69,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
+		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());		
 
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
