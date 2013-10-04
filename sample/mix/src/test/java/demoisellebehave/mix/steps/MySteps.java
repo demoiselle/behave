@@ -1,6 +1,9 @@
 package demoisellebehave.mix.steps;
 
+import org.jbehave.core.annotations.Then;
+
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 
 public class MySteps extends CommonSteps {
 	

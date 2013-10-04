@@ -1,6 +1,7 @@
 Funcionalidade: PrimeFaces Tree Checkbox
 
 Narrativa:
+Para obter ...
 Como um visitante
 Desejo manipular o componente Tree Checkbox do PrimeFaces
 
