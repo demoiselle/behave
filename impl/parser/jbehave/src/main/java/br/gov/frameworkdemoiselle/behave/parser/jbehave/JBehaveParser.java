@@ -66,6 +66,7 @@ import org.jbehave.core.steps.StepFinder;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.converter.MapConverter;
@@ -78,13 +79,16 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	private Logger logger = Logger.getLogger(JBehaveParser.class);
 	private Configuration configuration;
+	
+	public static String MESSAGEBUNDLE = "demoiselle-parser-jbehave-bundle";
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	private List<String> storyPaths = new ArrayList<String>();
 	private List<Step> steps = new ArrayList<Step>();
 
 	public JBehaveParser() {
 		try {
-			logger.info("Configurando o JBehave");
+			logger.info(message.getString("message-parser-config"));			
 
 			ParameterConverters parameterConverters = new ParameterConverters();
 			parameterConverters.addConverters(new ParameterConverter[] {
@@ -113,9 +117,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.doVerboseFailures(true);
 			embedderControls.useStoryTimeoutInSecs(60 * 60);
 			embedderControls.useThreads(1);
-		} catch (BehaveException e) {
-			logger.debug("Não foi possível iniciar o JBehaveParser", e);
-			throw e;
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
 	}
 
@@ -124,15 +127,15 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public void run() {
-		logger.info("Iniciando o parser JBehave");
+		logger.info(message.getString("message-parser-started"));		
 		Embedder embedder = configuredEmbedder();
-		try {
-			logger.info("Executando estorias: " + storyPaths.toString());
+		try {			
+			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
 		} finally {
 			embedder.generateCrossReference();
 		}
-		logger.info("Finalizando parser JBehave");
+		logger.info(message.getString("message-parser-end"));	
 	}
 
 	@Override

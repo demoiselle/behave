@@ -42,6 +42,7 @@ import org.jbehave.core.annotations.BeforeStories;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
@@ -49,11 +50,13 @@ public class BeforeAfterSteps implements Step {
 
 	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	private Logger logger = Logger.getLogger(BeforeAfterSteps.class);
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@BeforeStories
 	public void startStories() {
 		try {
-			logger.info(">>Iniciando Aplicação<<");
+			logger.info("\n\n");
+			logger.info(message.getString("message-app-started"));			
 			runner.start();
 		} catch (BehaveException e) {
 			e.printStackTrace();
@@ -66,7 +69,7 @@ public class BeforeAfterSteps implements Step {
 		try {
 			runner.close();
 			runner.quit();
-			logger.info(">>Finalizando Aplicação<<");
+			logger.info(message.getString("message-app-end"));
 		} catch (BehaveException e) {
 			e.printStackTrace();
 			throw e;

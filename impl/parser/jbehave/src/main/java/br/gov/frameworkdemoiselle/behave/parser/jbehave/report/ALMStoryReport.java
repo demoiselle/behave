@@ -50,12 +50,15 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 public class ALMStoryReport extends DefaultStoryReport {
 
-	Logger log = Logger.getLogger(ALMStoryReport.class);
-	Story story;
-	String currentScenarioTitle;
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private Logger log = Logger.getLogger(ALMStoryReport.class);
+	private Story story;
+	private String currentScenarioTitle;
 
 	// Datas para o calculo do tempo
 	Hashtable<String, Date> startDateScenario = new Hashtable<String, Date>();
@@ -95,7 +98,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 				}
 			}
 		} catch (BehaveException e) {
-			log.error("Erro no envio de dados para integração.", e);
+			log.error(message.getString("exception-send-integration"), e);
 		}
 	}
 
@@ -125,10 +128,8 @@ public class ALMStoryReport extends DefaultStoryReport {
 	public void failed(String step, Throwable cause) {
 		super.failed(step, cause);
 		Throwable detail = (cause.getCause() != null && cause.getCause() instanceof AssertionError) ? cause.getCause() : cause;
-		details.put(currentScenarioTitle, "Detalhes do Resultado:<br/>Passo [" + step + "] falha [" + detail.getMessage() + "]");
+		details.put(currentScenarioTitle, message.getString("message-detail-result", step, detail.getMessage()));
 		failedScenario.put(currentScenarioTitle, true);
-		// Adiciona o erro nos steps para aparecer na ALM
-		String newString = stepsScenario.get(currentScenarioTitle) + "<br/><br/><b>Erro:</b> <em>" + cause.getCause() + "</em>";
-		stepsScenario.put(currentScenarioTitle, newString);
+		stepsScenario.put(currentScenarioTitle, message.getString("message-error-result", stepsScenario.get(currentScenarioTitle), cause.getCause()));
 	}
 }

@@ -51,8 +51,12 @@ import org.jbehave.core.reporters.StoryReporter;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 public class DefaultStoryReport implements StoryReporter {
+	
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	public void storyNotAllowed(Story story, String filter) {
 		
@@ -122,7 +126,7 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void pending(String step) {
-		BehaveContext.getInstance().fail(step, new BehaveException("passo pendente"));	
+		BehaveContext.getInstance().fail(step, new BehaveException(message.getString("exception-pending-step")));	
 	}
 
 	public void notPerformed(String step) {		

@@ -44,6 +44,8 @@ import java.util.Map;
 import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 /**
  * Converte uma String numa coleção do tipo {@link Map}. O texto deverá seguir o
@@ -52,6 +54,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
  */
 public class MapConverter implements ParameterConverter {
 
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 	private static final String REGEX = "\\s*?(([\\w\\S]{1,}\\s*?=>\\s*?[\\w\\S]*|\".*?\")[\\s,]*?)*\\s*?";
 
 	public boolean accept(Type type) {
@@ -75,7 +78,7 @@ public class MapConverter implements ParameterConverter {
 
 	public Object convertValue(String value, Type type) {
 		if (!value.matches(REGEX)) {
-			throw new BehaveException(String.format("O parâmetro '%s' da Tabela de Exemplos não bate com a expressão %s", value, REGEX));
+			throw new BehaveException(message.getString("exception-invalid-parameter", value, REGEX));
 		}
 		return this.buildDataMap(value);
 	}

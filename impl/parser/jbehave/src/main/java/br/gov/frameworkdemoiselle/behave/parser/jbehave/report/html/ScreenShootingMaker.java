@@ -46,12 +46,15 @@ import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 public class ScreenShootingMaker {
 
 	private static final String DEFAULT_SCREENSHOT_PATH_PATTERN = "{0}/view/screenshots/failed-scenario-{1}.png";
 	private static final Logger logger = Logger.getLogger(ScreenShootingMaker.class);
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 	
 	protected final StoryReporterBuilder reporterBuilder;
 	protected final String screenshotPathPattern;
@@ -87,15 +90,12 @@ public class ScreenShootingMaker {
 		
 		try {
 			runner.saveScreenshotTo(screenshotPath);
-		} catch (Exception ex) {			
-			logger.warn("Erro ao salvar screenshot da tela '" + currentUrl + "'. Caminho: " + screenshotPath
-					+ ". Causa: " + ex.getMessage() + ".");
-			ex.printStackTrace();
+		} catch (Exception ex) {
+			logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
+			logger.error(ex);			
 			return;			
-		}
-
-		logger.info("Screenshot da tela '" + currentUrl + "' salvo em '" + screenshotPath + "' com "
-					+ new File(screenshotPath).length() + " bytes");
+		}		
+		logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
 	}
 
 	protected String screenshotPath(UUID uuid) {

@@ -52,6 +52,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
@@ -78,6 +79,7 @@ public class CommonSteps implements Step {
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
 	protected String currentPageName;
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
@@ -115,7 +117,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 	
@@ -135,8 +137,8 @@ public class CommonSteps implements Step {
 			((Menu) element).click();
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
-		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+		} else {			
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -157,7 +159,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Calendar) {
 			((Calendar) element).click();
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -175,7 +177,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Calendar) {
 			((Calendar) element).click();
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -186,7 +188,7 @@ public class CommonSteps implements Step {
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -197,7 +199,7 @@ public class CommonSteps implements Step {
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -216,7 +218,7 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
 		} else {
-			throw new BehaveException("Elemento não encontrado na tela");
+			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
 	
@@ -259,7 +261,7 @@ public class CommonSteps implements Step {
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		if (!element.getText().contains(text)) {
-			throw new BehaveException("O texto [" + text + "] não foi encontrado no elemento [" + elementName + "]");
+			throw new BehaveException(message.getString("exception-text-not-found", text,  elementName));
 		}
 	}
 
@@ -273,7 +275,7 @@ public class CommonSteps implements Step {
 			String value = textField.getText();
 			dataProvider.put(var, value);
 		} else {
-			throw new BehaveException("Operação não suporta para o elemento [" + fieldName + "]");
+			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
 		}
 	}
 
@@ -304,7 +306,7 @@ public class CommonSteps implements Step {
 		if (element instanceof Grid) {
 			((Grid) element).clickRow(reference);
 		} else {
-			throw new BehaveException("Tipo de elemento [" + element.getClass().getName() + "] inválido");
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
 

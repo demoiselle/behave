@@ -45,8 +45,12 @@ import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.HtmlOutput;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
+
 public class ScreenShootingHtmlOutput extends HtmlOutput {
 
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 	private ScreenShootingMaker maker;
 	private static final Logger logger = Logger.getLogger(ScreenShootingHtmlOutput.class);
 
@@ -73,16 +77,14 @@ public class ScreenShootingHtmlOutput extends HtmlOutput {
 	public void failed(String step, Throwable storyFailure) {
 		super.failed(step, storyFailure);
 		try {
-
 			if (storyFailure instanceof UUIDExceptionWrapper) {
 				UUIDExceptionWrapper uuidWrappedFailure = (UUIDExceptionWrapper) storyFailure;
 				this.maker.afterScenarioFailure(uuidWrappedFailure);
 			} else {
-				logger.warn("A tela de erro não foi salva.");
+				logger.warn(message.getString("exception-screen-not-save"));
 			}
-
 		} catch (Exception ex) {
-			logger.warn("Falha ao capturar tela de erro.");
+			logger.warn(message.getString("exception-screen-unexpected"));
 		}
 	}
 }

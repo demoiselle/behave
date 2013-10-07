@@ -43,17 +43,20 @@ import org.apache.log4j.Logger;
 import org.jbehave.core.reporters.PostStoryStatisticsCollector;
 import org.jbehave.core.reporters.TemplateProcessor;
 
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
+
 public class ALMTemplateProcessor implements TemplateProcessor {
 
-	Logger log = Logger.getLogger(ALMTemplateProcessor.class);
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private Logger log = Logger.getLogger(ALMTemplateProcessor.class);
 
 	public ALMTemplateProcessor() {
-		log.info(">> Carregou o processador da ALM");
+		log.info(message.getString("message-alm-processor-load"));
 	}
 
 	public void process(String resource, Map<String, Object> dataModel, Writer writer) {
-		log.info("-------------------- INICIO");
-
+		log.info(message.getString("message-alm-processor-started"));
 		for (String key : dataModel.keySet()) {
 			if (dataModel.get(key) instanceof PostStoryStatisticsCollector) {
 				PostStoryStatisticsCollector reportTable = (PostStoryStatisticsCollector) dataModel.get(key);
@@ -61,8 +64,7 @@ public class ALMTemplateProcessor implements TemplateProcessor {
 			}
 			log.info(">> " + key + " - " + dataModel.get(key));
 		}
-
-		log.info("-------------------- FIM");
+		log.info(message.getString("message-alm-processor-end"));
 	}
 
 }
