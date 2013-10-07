@@ -59,13 +59,16 @@ import org.fest.swing.core.ComponentMatcher;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopMappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
 public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
-	Logger log = Logger.getLogger(DesktopBase.class);
+	
+	private BehaveMessage message = new BehaveMessage(FestRunner.MESSAGEBUNDLE);
+	private Logger log = Logger.getLogger(DesktopBase.class);
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
@@ -81,11 +84,11 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 			}
 		});
 
-		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice
-		log.debug("Total de elementos encontrados: " + findedComponents.size() + " | Tela: " + runner.getTitle() + " | Locator: " + getElementMap().locator()[0]);
+		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice		
+		log.debug(message.getString("message-elements-found", findedComponents.size(), runner.getTitle(), getElementMap().locator()[0]));
 
 		if (findedComponents.size() == 0) {
-			throw new BehaveException("Elemento não encontrado. \rContainer: \r" + runner.currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + runner.getHierarchy() + "\r----------------------------------------------");
+			throw new BehaveException(message.getString("exception-elements-not-found", runner.currentContainer.toString(), runner.getHierarchy()));
 		} else if (findedComponents.size() > 1) {
 			// Pega pelo indice
 			return (Component) findedComponents.toArray()[getElementIndex().index()];
@@ -224,7 +227,6 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -232,7 +234,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
-			throw new BehaveException("Thread sleep interrompido", ex);
+			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
 	}
 

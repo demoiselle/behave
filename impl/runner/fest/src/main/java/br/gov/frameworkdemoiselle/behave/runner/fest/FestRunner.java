@@ -95,7 +95,7 @@ public class FestRunner implements Runner {
 				mainFrame =getInstance(false);
 			}
 			if (mainFrame == null){
-				throw new BehaveException("Propriedades behave.runner.app.mainClass e behave.runner.app.startupFrame não informadas no behave.properties");
+				throw new BehaveException(message.getString("exception-properties-not-informed"));
 			}
 			JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
 				protected JFrame executeInEDT() {
@@ -154,11 +154,8 @@ public class FestRunner implements Runner {
 					currentContainer.setFocusTraversalKeysEnabled(true);
 					currentContainer.setVisible(true);
 					currentContainer.setEnabled(true);
-
 					currentTitle = title;
-
-					logger.debug("Navigate To (Dialog): " + title);
-
+					logger.debug(message.getString("message-navigate-dialod", title));
 					return;
 				}
 			}
@@ -175,19 +172,16 @@ public class FestRunner implements Runner {
 					currentContainer.setFocusTraversalKeysEnabled(true);
 					currentContainer.setVisible(true);
 					currentContainer.setEnabled(true);
-
 					currentTitle = title;
-
-					logger.debug("Navigate To (Frame): " + title);
-
+					logger.debug(message.getString("message-navigate-dialod", title));
 					return;
 				}
 			}
 		}		
 		if (currentContainer == null){
-			throw new BehaveException("Aplicação não carregada. Verifique as configurações do projeto");
+			throw new BehaveException(message.getString("exception-app-not-loaded") );
 		}
-		throw new BehaveException("Tela não encontrada. \rContainer: \r" + currentContainer.toString() + "\r----------------------------------------------\rÁrvore de objetos: \r" + getHierarchy() + "\r----------------------------------------------");
+		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 
 	}
 
@@ -213,8 +207,9 @@ public class FestRunner implements Runner {
 
 	@Override
 	public Element getElement(String currentPageName, String elementName) {
-		if ((currentPageName == null) || (currentPageName.equals("")))
-			throw new RuntimeException("Não existe tela selecionada.");
+		if ((currentPageName == null) || (currentPageName.equals(""))){
+			throw new BehaveException(message.getString("exception-screen-not-selected"));
+		}
 
 		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
 		ElementIndex index = DesktopReflectionUtil.getElementIndex(currentPageName, elementName);
@@ -232,15 +227,14 @@ public class FestRunner implements Runner {
 			} catch (Exception e) {
 				element = null;
 			}
-		else
-			throw new RuntimeException("A class [" + clazz.getName() + "] no elemento [" + elementName + "] da tela [" + currentPageName + "] não é uma interface para 'Element'.");
-
-		if (element == null)
-			throw new RuntimeException("Não foi possível instanciar o elemento [" + elementName + "] da tela [" + currentPageName + "].");
-
+		else{
+			throw new BehaveException(message.getString("exception-class-not-element", clazz.getName(), elementName, currentPageName));
+		}
+		if (element == null){
+			throw new BehaveException(message.getString("exception-error-create-element", elementName, currentPageName));
+		}
 		element.setElementMap(map);
 		element.setElementIndex(index);
-
 		return element;
 	}
 

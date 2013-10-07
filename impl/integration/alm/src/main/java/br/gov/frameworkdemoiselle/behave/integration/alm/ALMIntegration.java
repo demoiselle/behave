@@ -67,14 +67,15 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.Autenticat
 import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 public class ALMIntegration implements Integration {
 
 	private static Logger log = Logger.getLogger(ALMIntegration.class);
 
-	/**
-	 * ERRO 400 - Posssivelmente o nome da área não esta correto
-	 */
+	public static String MESSAGEBUNDLE = "demoiselle-integration-alm-bundle";
+	
+	private BehaveMessage message = new BehaveMessage(MESSAGEBUNDLE);
 
 	public String urlServer = BehaveConfig.getIntegration_UrlServices();
 	public String urlServerAuth = BehaveConfig.getIntegration_UrlSecurity();
@@ -100,7 +101,7 @@ public class ALMIntegration implements Integration {
 				password = (String) result.get("password");
 			}else{			
 				// Pega os dados de autenticação
-				log.debug("Acessarr autenticador");
+				log.debug(message.getString("message-get-authenticator"));
 				AutenticatorClient autenticator = new AutenticatorClient(BehaveConfig.getIntegration_AuthenticatorPort(), BehaveConfig.getIntegration_AuthenticatorHost());
 				autenticator.open();
 				username = autenticator.getUser();
@@ -124,7 +125,7 @@ public class ALMIntegration implements Integration {
 				testCaseId = null;
 			}
 
-			log.debug("------------- Integração ALM Iniciada -------------\n");
+			log.debug(message.getString("message-integration-alm-started"));
 			long t0 = GregorianCalendar.getInstance().getTimeInMillis();
 
 			HttpClient client;
@@ -143,7 +144,7 @@ public class ALMIntegration implements Integration {
 				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
 				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
 				if (responseTestPlanGet.getStatusLine().getStatusCode() != 201 && responseTestPlanGet.getStatusLine().getStatusCode() != 200) {
-					throw new BehaveException("Plano de teste com id " + result.get("testPlanId").toString() + " não encontrada na área de projeto " + projectAreaAlias);
+					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
 				} else {
 					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
 				}
@@ -155,12 +156,12 @@ public class ALMIntegration implements Integration {
 				login(client);
 
 				// TestCase
-				log.debug("Enviar Caso de Teste:\n");
+				log.debug(message.getString("message-send-test-case"));
 				String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
 				testCaseName = "testcase" + testCaseIdentification;
 				HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
 				if (responseTestCase.getStatusLine().getStatusCode() != 201 && responseTestCase.getStatusLine().getStatusCode() != 200) {
-					throw new BehaveException("Erro ao criar caso de teste: " + responseTestCase.getStatusLine().toString());
+					throw new BehaveException(message.getString("exception-create-test-case", responseTestCase.getStatusLine().toString()));
 				}
 
 				// --------------------------- Test Plan (PUT)
@@ -170,10 +171,10 @@ public class ALMIntegration implements Integration {
 				login(client);
 
 				// TestPlan
-				log.debug("Enviar Plano de Teste:\n");
+				log.debug(message.getString("message-send-test-plan"));
 				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
 				if (responseTestPlan.getStatusLine().getStatusCode() != 200) {
-					throw new BehaveException("Erro ao result: " + responseTestPlan.getStatusLine().toString());
+					throw new BehaveException(message.getString("exception-send-test-plan",responseTestPlan.getStatusLine().toString()));
 				}
 			} else {
 				testCaseName = "urn:com.ibm.rqm:testcase:" + testCaseId;
@@ -186,15 +187,15 @@ public class ALMIntegration implements Integration {
 			login(client);
 
 			// WorkItem
-			log.debug("Enviar Registro de Execução:\n");
+			log.debug(message.getString("message-send-execution"));
 			String workItemName = "workitemExecucaoAutomatizada-" + convertToIdentificationString(testCaseName) + "-" + result.get("testPlanId").toString();
 			HttpResponse responseWorkItem = sendRequest(client, "executionworkitem", workItemName, GenerateXMLString.getExecutionworkitemString(urlServer, projectAreaAlias, ENCODING, testCaseName, result.get("testPlanId").toString()));
-			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {				
-				String message = "Erro ao criar work item: " + responseWorkItem.getStatusLine().toString();				
+			if (responseWorkItem.getStatusLine().getStatusCode() != 201 && responseWorkItem.getStatusLine().getStatusCode() != 200) {
+				String ms = message.getString("exception-create-execution", responseWorkItem.getStatusLine().toString());				
 				if (testCaseIdMeta) {
-					message = "Verifique se o work item com id " + testCaseId + " existe na ALM.\r" + message;
+					ms = message.getString("exception-verity-execution", testCaseId.toString(), message);
 				}				
-				throw new BehaveException(message);
+				throw new BehaveException(ms);
 			}
 
 			// --------------------------- Result (PUT)
@@ -204,21 +205,21 @@ public class ALMIntegration implements Integration {
 			login(client);
 
 			// WorkItem
-			log.debug("Enviar Resultado de Execução:\n");
+			log.debug(message.getString("message-send-result"));			
 			String resultName = "result" + System.nanoTime();
 			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, workItemName, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != 201) {
-				throw new BehaveException("Erro ao result: " + responseResult.getStatusLine().toString());
+				throw new BehaveException(message.getString("exception-send-result", responseResult.getStatusLine().toString()));
 			}
 
 			long t1 = GregorianCalendar.getInstance().getTimeInMillis();
 
 			DecimalFormat df = new DecimalFormat("0.0");
-			log.debug("------------- Integração finalizada em [" + df.format((t1 - t0) / 1000.00) + "s] -------------");
+			log.debug(message.getString("message-integration-alm-end", df.format((t1 - t0) / 1000.00)));
 
 		} catch (RuntimeException e) {
 			if (e.getCause() instanceof ConnectException) {
-				throw new BehaveException("Autenticador inacessível. Verifique se o processo foi iniciado", e);
+				throw new BehaveException(message.getString("exception-authenticator-inaccessible"), e);
 			} else {
 				throw new BehaveException(e);
 			}
@@ -229,10 +230,10 @@ public class ALMIntegration implements Integration {
 	}
 
 	public void login(HttpClient client) throws Exception {
-		log.debug("Autenticar usuario: " + username);
+		log.debug(message.getString("message-user-authentication", username));
 		HttpResponse responseLogin = login(client, username, password);
 		if (responseLogin.getStatusLine().getStatusCode() != 302 || !responseLogin.toString().contains("LtpaToken2")) {
-			throw new BehaveException("Erro na autenticação do usuário");
+			throw new BehaveException(message.getString("exception-user-authentication"));
 		}
 	}
 
