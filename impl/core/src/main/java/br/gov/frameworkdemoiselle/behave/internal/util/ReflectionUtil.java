@@ -43,19 +43,21 @@ import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.Embedded;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public class ReflectionUtil {
-	
+
 	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
-	
+
 	public static String getLocation(String name) {
 		Reflections reflections = new Reflections("");
 		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
@@ -65,63 +67,55 @@ public class ReflectionUtil {
 			ScreenMap annotation = clazz.getAnnotation(ScreenMap.class);
 			if (annotation.name().equals(name)) {
 				String base = "";
-				if (BehaveConfig.contains(annotation.base())){
+				if (BehaveConfig.contains(annotation.base())) {
 					base = BehaveConfig.getProperty(annotation.base());
-				}else{
+				} else {
 					base = annotation.base();
-				}				
+				}
 				urlFinal = (!base.equals("")) ? base + annotation.location() : annotation.location();
 				break;
 			}
 		}
 
-		if (urlFinal.equals("")){
+		if (urlFinal.equals("")) {
 			throw new BehaveException(bm.getString("exception-screen-not-found", name));
 		}
 
 		return urlFinal;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Class<?> getElementType(String pageName, String elementName) {
-		Reflections reflections = new Reflections("");
-		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
-
-		Class<?> clazz = null;
-
-		for (Class<?> clazzI : annotatedClasses) {
-			ScreenMap annotation = clazzI.getAnnotation(ScreenMap.class);
-			if (annotation.name().equals(pageName)) {
-				clazz = clazzI;
-				break;
-			}
+	public static Field getElementMap(String pageName, String elementName) {
+		Class<?> clazz = getScreenMapClass(pageName);
+		Field f = recursive(clazz, elementName);
+		if (f == null) {
+			throw new BehaveException(bm.getString("exception-element-not-found", elementName, pageName));
 		}
-
-		if (clazz == null){
-			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
-		}
-
-		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
-
-		Class<?> clazzF = null;
-
-		for (Field fieldI : fields) {
-			ElementMap annotation = fieldI.getAnnotation(ElementMap.class);
-			if (annotation.name().equals(elementName)) {
-				clazzF = fieldI.getType();
-				break;
-			}
-		}
-
-		if (clazzF == null){
-			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
-		}
-
-		return clazzF;
+		return f;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static ElementMap getElementMap(String pageName, String elementName) {
+	private static Field recursive(Class<?> clazz, String elementName) {
+		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
+		Field f = null;
+		for (Field fieldI : fields) {
+			ElementMap annotation = fieldI.getAnnotation(ElementMap.class);
+			if (annotation.name().equals(elementName)) {
+				f = fieldI;
+				return f;
+			}
+		}
+		// Se não encontrar, procura nas classes agregadas, recursivamente.
+		Set<Field> embeddeds = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(Embedded.class));
+		for (Field field : embeddeds) {
+			f = recursive(field.getType(), elementName);
+			if (f != null) {
+				return f;
+			}
+		}
+		return f;
+	}
+
+	public static Class<?> getScreenMapClass(String pageName) {
 		Reflections reflections = new Reflections("");
 		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
 
@@ -137,24 +131,7 @@ public class ReflectionUtil {
 
 		if (clazz == null)
 			throw new BehaveException(bm.getString("exception-screen-not-found", pageName));
-
-		Set<Field> fields = ReflectionUtils.getAllFields(clazz, ReflectionUtils.withAnnotation(ElementMap.class));
-
-		ElementMap map = null;
-
-		for (Field fieldI : fields) {
-			ElementMap annotation = fieldI.getAnnotation(ElementMap.class);
-			if (annotation.name().equals(elementName)) {
-				map = annotation;
-				break;
-			}
-		}
-
-		if (map == null){
-			throw new BehaveException(bm.getString("exception-element-not-found", elementName, pageName));
-		}
-
-		return map;
+		return clazz;
 	}
 
 }

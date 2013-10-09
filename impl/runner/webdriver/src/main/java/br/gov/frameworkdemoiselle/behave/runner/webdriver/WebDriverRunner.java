@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -106,8 +107,8 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void navigateTo(String url) {
-		try {			
-			setDefaultWindow();		
+		try {
+			setDefaultWindow();
 			driver.navigate().to(url);
 		} catch (WebDriverException cause) {
 			throw new BehaveException(message.getString("exception-navigate-to", url), cause);
@@ -132,17 +133,15 @@ public class WebDriverRunner implements Runner {
 			throw new BehaveException(message.getString("exception-page-not-selected"));
 		}
 
-		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
-
-		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
+		Field f = ReflectionUtil.getElementMap(currentPageName, elementName);
+		ElementMap map = f.getAnnotation(ElementMap.class);
+		Class<?> clazz = f.getType();// ReflectionUtil.getElementType(currentPageName, elementName);
 
 		Element element = null;
-		// Comportamento padrão usa o InjectionManager para resolver quem
-		// implementa a interface
+		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
 		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da
-		// interface Element
+			// Instancia a classe fornecida explicitamente como implementação da  interface Element
 		else if (Element.class.isAssignableFrom(clazz)) {
 			try {
 				element = (Element) clazz.newInstance();
@@ -153,7 +152,7 @@ public class WebDriverRunner implements Runner {
 			throw new BehaveException(message.getString("exception-class-not-element", clazz.getName(), elementName, currentPageName));
 		}
 
-		if (element == null){
+		if (element == null) {
 			throw new BehaveException(message.getString("exception-instance-element", elementName, currentPageName));
 		}
 
@@ -190,7 +189,7 @@ public class WebDriverRunner implements Runner {
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
 		} catch (IOException e) {
-			throw new BehaveException(message.getString("exception-save-screenshot"), e);			
+			throw new BehaveException(message.getString("exception-save-screenshot"), e);
 		}
 		return screenshotFile;
 	}
@@ -204,12 +203,12 @@ public class WebDriverRunner implements Runner {
 			}
 		}
 	}
-	
-	private void setDefaultWindow(){
-		Set<String> lWindowHandles = driver.getWindowHandles();		
+
+	private void setDefaultWindow() {
+		Set<String> lWindowHandles = driver.getWindowHandles();
 		for (String lWindowHandle : lWindowHandles) {
-			driver.switchTo().window(lWindowHandle);			
-			return;			
+			driver.switchTo().window(lWindowHandle);
+			return;
 		}
 	}
 

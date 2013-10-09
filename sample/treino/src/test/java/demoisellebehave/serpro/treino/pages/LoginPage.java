@@ -36,21 +36,19 @@
  */
 package demoisellebehave.serpro.treino.pages;
 
-import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.Embedded;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import demoisellebehave.serpro.treino.config.Config;
+import demoisellebehave.serpro.treino.pages.fields.LoginFields;
 
 @ScreenMap(name = "Tela de Login", base = Config.URLBASE, location = "/")
 public class LoginPage {
 
-	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
-	private TextField campoUsuario;
-
-	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
-	private TextField campoSenha;
+	@Embedded
+	private LoginFields fields;
 
 	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
 	private Button botaoEnviar;

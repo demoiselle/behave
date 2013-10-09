@@ -34,48 +34,15 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.util;
+package br.gov.frameworkdemoiselle.behave.annotation;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.util.Properties;
-
-import org.junit.Test;
-
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
-
-/**
- * 
- * @author SERPRO
- * 
- */
-public class PropertiesLoaderUtilTest {
-
-	@Test
-	public void testGetInstance() {
-		try {
-
-			PropertiesLoaderUtil properties = PropertiesLoaderUtil.getInstance();
-			assertNotNull(properties);
-		} catch (BehaveException e) {
-			fail(e.getMessage());
-		}
-
-	}
-
-	@Test
-	public void testGetProperties() {
-		PropertiesLoaderUtil propertiesUtil;
-		try {
-			propertiesUtil = PropertiesLoaderUtil.getInstance();
-			Properties properties = propertiesUtil.getProperties();
-			assertNotNull(properties);
-		} catch (BehaveException e) {
-			fail(e.getMessage());
-		}
-
-	}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(value = { ElementType.FIELD })
+public @interface Embedded {
 
 }

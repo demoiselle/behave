@@ -41,6 +41,7 @@ import java.awt.Window;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -70,10 +71,9 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class FestRunner implements Runner {
 
-	
 	public static String MESSAGEBUNDLE = "demoiselle-runner-fest-bundle";
 	private Logger logger = Logger.getLogger(this.toString());
-	
+
 	private BehaveMessage message = new BehaveMessage(MESSAGEBUNDLE);
 
 	public Robot robot;
@@ -86,20 +86,20 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void start() {
-		
+
 		logger.info(message.getString("message-fest-started"));
 
-		if (mainFrame == null) {			
+		if (mainFrame == null) {
 			mainFrame = getInstance(true);
-			if (mainFrame == null){
-				mainFrame =getInstance(false);
+			if (mainFrame == null) {
+				mainFrame = getInstance(false);
 			}
-			if (mainFrame == null){
+			if (mainFrame == null) {
 				throw new BehaveException(message.getString("exception-properties-not-informed"));
 			}
 			JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
 				protected JFrame executeInEDT() {
-					return mainFrame;			
+					return mainFrame;
 				}
 			});
 			mainContainer = frame;
@@ -110,34 +110,32 @@ public class FestRunner implements Runner {
 		}
 		currentContainer = mainContainer;
 	}
-	
+
 	private JFrame getInstance(boolean mainClass) {
 		String clazz = (mainClass) ? BehaveConfig.getProperty("behave.runner.app.mainClass") : BehaveConfig.getProperty("behave.runner.app.startupFrame");
 		logger.info(message.getString("message-fest-started"));
-		try {						
-			if (clazz == null || clazz.equals("")){
+		try {
+			if (clazz == null || clazz.equals("")) {
 				return null;
 			}
 			logger.info(message.getString("message-fest-class", clazz));
-			Object instance =  Class.forName(clazz).newInstance();
-			if (mainClass){
-				return (JFrame) instance;	
-			}else{
+			Object instance = Class.forName(clazz).newInstance();
+			if (mainClass) {
+				return (JFrame) instance;
+			} else {
 				return ((FestStartup) instance).getFrame();
-			}		
-		}  catch (InstantiationException e) {
+			}
+		} catch (InstantiationException e) {
 			throw new BehaveException(e);
 		} catch (IllegalAccessException e) {
 			throw new BehaveException(e);
 		} catch (ClassNotFoundException e) {
 			throw new BehaveException(message.getString("exception-main-class-not-found", clazz), e);
-		} catch (ClassCastException e) {			
+		} catch (ClassCastException e) {
 			throw new BehaveException(e);
-		} 
-		
-	}
+		}
 
-	
+	}
 
 	@Override
 	public void get(String url) {
@@ -177,9 +175,9 @@ public class FestRunner implements Runner {
 					return;
 				}
 			}
-		}		
-		if (currentContainer == null){
-			throw new BehaveException(message.getString("exception-app-not-loaded") );
+		}
+		if (currentContainer == null) {
+			throw new BehaveException(message.getString("exception-app-not-loaded"));
 		}
 		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 
@@ -207,14 +205,15 @@ public class FestRunner implements Runner {
 
 	@Override
 	public Element getElement(String currentPageName, String elementName) {
-		if ((currentPageName == null) || (currentPageName.equals(""))){
-			throw new BehaveException(message.getString("exception-screen-not-selected"));
-		}
+		if ((currentPageName == null) || (currentPageName.equals("")))
+			throw new RuntimeException("Não existe tela selecionada.");
 
-		ElementMap map = ReflectionUtil.getElementMap(currentPageName, elementName);
+		Field f = ReflectionUtil.getElementMap(currentPageName, elementName);
+		ElementMap map = f.getAnnotation(ElementMap.class);
+
 		ElementIndex index = DesktopReflectionUtil.getElementIndex(currentPageName, elementName);
 
-		Class<?> clazz = ReflectionUtil.getElementType(currentPageName, elementName);
+		Class<?> clazz = f.getType();
 
 		DesktopElement element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
@@ -227,14 +226,15 @@ public class FestRunner implements Runner {
 			} catch (Exception e) {
 				element = null;
 			}
-		else{
+		else
 			throw new BehaveException(message.getString("exception-class-not-element", clazz.getName(), elementName, currentPageName));
-		}
-		if (element == null){
+
+		if (element == null)
 			throw new BehaveException(message.getString("exception-error-create-element", elementName, currentPageName));
-		}
+
 		element.setElementMap(map);
 		element.setElementIndex(index);
+
 		return element;
 	}
 
