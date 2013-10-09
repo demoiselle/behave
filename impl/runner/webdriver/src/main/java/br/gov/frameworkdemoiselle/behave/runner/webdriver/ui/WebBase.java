@@ -80,8 +80,6 @@ public class WebBase extends MappedElement implements BaseUI {
 	private SwitchDriver frame;
 	private WebDriver driver;
 
-	// private Logger logger = Logger.getLogger(this.toString());
-
 	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
 	 * ele busca o elemento em todos os frames

@@ -34,28 +34,22 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+package br.gov.frameworkdemoiselle.behave.runner.ui;
 
-import org.openqa.selenium.interactions.Actions;
+/**
+ * UI para tratamento de caixas de dialogo.
+ * 
+ *  @author SERPRO
+ *
+ */
+public interface Dialog extends BaseUI {
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-
-public class WebButton extends WebBase implements Button {
-
-	public void click() {
-		waitElement(0);
-		
-		// Clica
-		getElements().get(0).click();
-	}
-
-	@Override
-	public void mouseOver() {
-		waitElement(0);
-		
-		// mouse over
-		Actions actions = new Actions(getDriver());
-		actions.moveToElement(getElements().get(0)).build().perform();
-	}
+	public void accept();
+	
+	public void cancel();
+	
+	public void sendKeys(String keys);
+	
+	public String getText();
 
 }

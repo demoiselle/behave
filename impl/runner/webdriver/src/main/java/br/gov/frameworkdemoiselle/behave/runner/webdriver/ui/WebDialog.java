@@ -36,26 +36,34 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.WebDriver;
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 
-public class WebButton extends WebBase implements Button {
+public class WebDialog extends WebBase implements Dialog {
 
-	public void click() {
-		waitElement(0);
-		
-		// Clica
-		getElements().get(0).click();
+	public void accept() {	
+		WebDriver driver =  (WebDriver) runner.getDriver();
+		driver.switchTo().alert().accept();
 	}
 
+	public void cancel() {
+		WebDriver driver =  (WebDriver) runner.getDriver();
+		driver.switchTo().alert().dismiss();
+	}
+
+	public void sendKeys(String keys) {
+		WebDriver driver =  (WebDriver) runner.getDriver();		
+		Alert alert = driver.switchTo().alert();
+		alert.sendKeys(keys);
+	}	
+	
 	@Override
-	public void mouseOver() {
-		waitElement(0);
-		
-		// mouse over
-		Actions actions = new Actions(getDriver());
-		actions.moveToElement(getElements().get(0)).build().perform();
+	public String getText() {
+		WebDriver driver =  (WebDriver) runner.getDriver();
+		Alert dialog = driver.switchTo().alert();
+		return dialog.getText();
 	}
 
 }
