@@ -44,9 +44,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -76,7 +78,8 @@ import com.google.common.base.Function;
 public class WebBase extends MappedElement implements BaseUI {
 
 	private List<String> locatorParameters;
-	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
+	private static BehaveMessage message = new BehaveMessage(
+			WebDriverRunner.MESSAGEBUNDLE);
 	private SwitchDriver frame;
 	private WebDriver driver;
 
@@ -94,16 +97,20 @@ public class WebBase extends MappedElement implements BaseUI {
 				boolean found = false;
 
 				locator = getLocatorWithParameters(locator);
-				By by = ByConverter.convert(getElementMap().locatorType(), locator);
+				By by = ByConverter.convert(getElementMap().locatorType(),
+						locator);
 				driver = (WebDriver) runner.getDriver();
 				frame = new SwitchDriver(driver);
-				long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+				long startedTime = GregorianCalendar.getInstance()
+						.getTimeInMillis();
 				while (true) {
 					frame.bind();
-					driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+					driver.manage().timeouts()
+							.implicitlyWait(0, TimeUnit.MILLISECONDS);
 					for (int i = 0; i < frame.countFrames(); i++) {
 						frame.switchNextFrame();
-						List<WebElement> elementsFound = driver.findElements(by);
+						List<WebElement> elementsFound = driver
+								.findElements(by);
 						if (elementsFound.size() > 0) {
 							for (WebElement element : elementsFound) {
 								elements.add(element);
@@ -112,13 +119,21 @@ public class WebBase extends MappedElement implements BaseUI {
 							break;
 						}
 					}
-					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+					driver.manage()
+							.timeouts()
+							.implicitlyWait(
+									BehaveConfig.getRunner_ScreenMaxWait(),
+									TimeUnit.MILLISECONDS);
 					if (found) {
 						break;
 					}
 					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
-					if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+					if (GregorianCalendar.getInstance().getTimeInMillis()
+							- startedTime > BehaveConfig
+								.getRunner_ScreenMaxWait()) {
+						throw new BehaveException(message.getString(
+								"exception-element-not-found", getElementMap()
+										.name()));
 					}
 				}
 			}
@@ -126,15 +141,18 @@ public class WebBase extends MappedElement implements BaseUI {
 		} catch (BehaveException be) {
 			throw be;
 		} catch (InterruptedException e) {
-			throw new BehaveException(message.getString("exception-thread-sleep"), e);
+			throw new BehaveException(
+					message.getString("exception-thread-sleep"), e);
 		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			throw new BehaveException(message.getString("exception-unexpected",
+					e.getMessage()), e);
 		}
 	}
 
 	private String getLocatorWithParameters(String locator) {
 
-		if (getLocatorParameter() != null && !getLocatorParameter().isEmpty() && locator.matches(".*%param[0-9]+%.*")) {
+		if (getLocatorParameter() != null && !getLocatorParameter().isEmpty()
+				&& locator.matches(".*%param[0-9]+%.*")) {
 			int n = 1;
 			for (String parameter : getLocatorParameter()) {
 				String tag = "%param" + n + "%";
@@ -157,7 +175,8 @@ public class WebBase extends MappedElement implements BaseUI {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
-			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
+			throw new BehaveException(
+					message.getString("exception-thread-sleep"), ex);
 		}
 	}
 
@@ -193,7 +212,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				break;
 
 			default:
-				throw new BehaveException(message.getString("exception-invalid-option", state, "verifyState"));
+				throw new BehaveException(message.getString(
+						"exception-invalid-option", state, "verifyState"));
 			}
 
 		}
@@ -207,15 +227,23 @@ public class WebBase extends MappedElement implements BaseUI {
 		verifyState(StateUI.ENABLE);
 		verifyState(StateUI.VISIBLE);
 
-		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
-		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		final String locator = getLocatorWithParameters(getElementMap()
+				.locator()[index].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(),
+				locator);
 
 		waitClickable(by);
 		waitVisibility(by);
 
 		// Getting around a WebDriver StaleElementReferenceException - issue
 		// #101 - https://github.com/demoiselle/behave/issues/101
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS).pollingEvery(BehaveConfig.getRunner_ScreenMinWait(), TimeUnit.MILLISECONDS).ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class);
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+				.withTimeout(BehaveConfig.getRunner_ScreenMaxWait(),
+						TimeUnit.MILLISECONDS)
+				.pollingEvery(BehaveConfig.getRunner_ScreenMinWait(),
+						TimeUnit.MILLISECONDS)
+				.ignoring(StaleElementReferenceException.class)
+				.ignoring(NoSuchElementException.class);
 
 		wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
@@ -232,52 +260,67 @@ public class WebBase extends MappedElement implements BaseUI {
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
 		driver = (WebDriver) runner.getDriver();
-		
+
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		
+
 		Reflections reflections = new Reflections("");
-		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
+		Set<Class<?>> annotatedClasses = reflections
+				.getTypesAnnotatedWith(ScreenMap.class);
 
 		for (Class<?> clazzI : annotatedClasses) {
-			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));
+			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils
+					.getAllFields(clazzI,
+							ReflectionUtils.withAnnotation(ElementMap.class),
+							ReflectionUtils.withTypeAssignableTo(Loading.class));
 			if (fields.size() == 1) {
 				for (Field field : fields) {
 					ElementMap map = field.getAnnotation(ElementMap.class);
-					
+
 					boolean existeLoading;
-					
+
 					try {
 						// Verifica se existe o LOADING
-						ExpectedConditions.presenceOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])).apply(driver);
-						
-						existeLoading = true;						
+						ExpectedConditions.presenceOfElementLocated(
+								ByConverter.convert(map.locatorType(),
+										map.locator()[0])).apply(driver);
+
+						existeLoading = true;
 					} catch (Exception e) {
 						existeLoading = false;
 					}
-					
-					if ( existeLoading ) {
+
+					if (existeLoading) {
 						// Aguardo o LOADING desaparecer!
-						WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-						
-						wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
+						WebDriverWait wait = new WebDriverWait(getDriver(),
+								(BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+
+						wait.until(ExpectedConditions
+								.invisibilityOfElementLocated(ByConverter
+										.convert(map.locatorType(),
+												map.locator()[0])));
 					}
-					
+
 					break;
 				}
 			}
 
 		}
-		
-		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+		driver.manage()
+				.timeouts()
+				.implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(),
+						TimeUnit.MILLISECONDS);
 	}
 
 	private void waitClickable(By by) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		WebDriverWait wait = new WebDriverWait(getDriver(),
+				(BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	private void waitVisibility(By by) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		WebDriverWait wait = new WebDriverWait(getDriver(),
+				(BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
@@ -301,8 +344,11 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * @return {@link JavascriptExecutor}
 	 */
 	public JavascriptExecutor getJavascirptExecutor() {
-		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass())) {
-			throw new BehaveException(message.getString("exception-javascript-driver", runner.getDriver().getClass()));
+		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver()
+				.getClass())) {
+			throw new BehaveException(message.getString(
+					"exception-javascript-driver", runner.getDriver()
+							.getClass()));
 		}
 		return (JavascriptExecutor) this.runner.getDriver();
 	}
@@ -315,9 +361,77 @@ public class WebBase extends MappedElement implements BaseUI {
 	public String getId() {
 		String id = getElements().get(0).getAttribute("id");
 		if (id == null || id.isEmpty()) {
-			throw new BehaveException(message.getString("exception-id-not-found", this.getElementMap().name()));
+			throw new BehaveException(message.getString(
+					"exception-id-not-found", this.getElementMap().name()));
 		}
 		return id;
+	}
+
+	public void waitText(String text) {
+		waitText(text, BehaveConfig.getRunner_ScreenMaxWait());
+	}
+
+	/**
+	 * Neste método waitText estamos forçando que seja verificado dentro do body
+	 * através de um loop controlado por nós e não pelo implicityWait do
+	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
+	 * valor padrão das propriedades.
+	 */
+	public void waitText(String text, Long timeout) {
+		try {
+			boolean found = false;
+
+			driver = (WebDriver) runner.getDriver();
+			frame = new SwitchDriver(driver);
+			long startedTime = GregorianCalendar.getInstance()
+					.getTimeInMillis();
+
+			while (true) {
+				frame.bind();
+				driver.manage().timeouts()
+						.implicitlyWait(0, TimeUnit.MILLISECONDS);
+				for (int i = 0; i < frame.countFrames(); i++) {
+					frame.switchNextFrame();
+					List<WebElement> elements = driver.findElements(By
+							.tagName("body"));
+					if (elements.size() > 0) {
+						if (elements.get(0).getText().contains(text)) {
+							found = true;
+							break;
+						}
+					} else {
+						if (driver.getPageSource().contains(text)) {
+							found = true;
+							break;
+						}
+					}
+				}
+				driver.manage()
+						.timeouts()
+						.implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(),
+								TimeUnit.MILLISECONDS);
+				if (found) {
+					break;
+				}
+				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+				if (GregorianCalendar.getInstance().getTimeInMillis()
+						- startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-not-found",
+							text));
+				}
+			}
+		} catch (BehaveException be) {
+			throw be;
+		} catch (NoSuchFrameException ex) {
+			throw new BehaveException(message.getString(
+					"exception-no-such-frame", frame.currentFrame(), ex));
+		} catch (InterruptedException e) {
+			throw new BehaveException(
+					message.getString("exception-thread-sleep"), e);
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected",
+					e.getMessage()), e);
+		}
 	}
 
 }

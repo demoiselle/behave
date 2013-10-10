@@ -67,7 +67,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
@@ -78,11 +77,14 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
  */
 public class CommonSteps implements Step {
 
-	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
+	protected Runner runner = (Runner) InjectionManager.getInstance()
+			.getInstanceDependecy(Runner.class);
+	protected DataProvider dataProvider = (DataProvider) InjectionManager
+			.getInstance().getInstanceDependecy(DataProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
 	protected String currentPageName;
-	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private static BehaveMessage message = new BehaveMessage(
+			JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
@@ -105,8 +107,10 @@ public class CommonSteps implements Step {
 
 	@When(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
-	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
-		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
+	public void clickButtonWithParameters(String elementName,
+			List<String> locatorParameters) {
+		locatorParameters = DataProviderUtil
+				.replaceDataProvider(locatorParameters);
 		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Button) {
@@ -118,7 +122,8 @@ public class CommonSteps implements Step {
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -134,15 +139,18 @@ public class CommonSteps implements Step {
 			((Menu) element).click();
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
-		} else {			
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+		} else {
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
 	@When(value = "seleciono a op\u00E7\u00E3o \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	@Then(value = "seleciono a op\u00E7\u00E3o \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
-	public void informWithParameters(String elementName, List<String> locatorParameters) {
-		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
+	public void informWithParameters(String elementName,
+			List<String> locatorParameters) {
+		locatorParameters = DataProviderUtil
+				.replaceDataProvider(locatorParameters);
 		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Radio) {
@@ -154,7 +162,8 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Calendar) {
 			((Calendar) element).click();
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -171,7 +180,8 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Calendar) {
 			((Calendar) element).click();
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -182,7 +192,8 @@ public class CommonSteps implements Step {
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -193,7 +204,8 @@ public class CommonSteps implements Step {
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
 
@@ -201,7 +213,8 @@ public class CommonSteps implements Step {
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void inform(String value, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = (Element) runner.getElement(currentPageName,
+				fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			textField.clear();
@@ -209,10 +222,11 @@ public class CommonSteps implements Step {
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
 		} else {
-			throw new BehaveException(message.getString("exception-element-not-found"));
+			throw new BehaveException(
+					message.getString("exception-element-not-found"));
 		}
 	}
-	
+
 	@When("informo: $table")
 	@Given("informo: $table")
 	public void setDataProvideTable(ExamplesTable table) {
@@ -220,12 +234,12 @@ public class CommonSteps implements Step {
 			Iterator<String> it = row.keySet().iterator();
 			while (it.hasNext()) {
 				String key = (String) it.next();
-				
+
 				setDataProvider(key, row.get(key));
 			}
 		}
 	}
-	
+
 	@When("informo o campo: $table")
 	@Alias("informo os campos: $table")
 	public void informFields(ExamplesTable table) {
@@ -240,16 +254,19 @@ public class CommonSteps implements Step {
 
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
-		Screen element = (Screen) runner.getScreen();
+		Element element = (Element) runner.getScreen();
 		element.waitText(text);
 	}
 
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = (Element) runner.getElement(currentPageName,
+				elementName);
+		element.waitText(text);
 		if (!element.getText().contains(text)) {
-			throw new BehaveException(message.getString("exception-text-not-found", text,  elementName));
+			throw new BehaveException(message.getString(
+					"exception-text-not-found", text, elementName));
 		}
 	}
 
@@ -257,13 +274,15 @@ public class CommonSteps implements Step {
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = (Element) runner.getElement(currentPageName,
+				fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			String value = textField.getText();
 			dataProvider.put(var, value);
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
+			throw new BehaveException(message.getString(
+					"exception-invalid-operation", fieldName));
 		}
 	}
 
@@ -292,39 +311,43 @@ public class CommonSteps implements Step {
 		if (element instanceof Grid) {
 			((Grid) element).clickRow(reference);
 		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+			throw new BehaveException(message.getString(
+					"exception-invalid-type", element.getClass().getName()));
 		}
 	}
-	
-	
+
 	@When("confirmo a caixa de di\u00E1logo")
 	@Given("confirmo a caixa de di\u00E1logo")
 	@Then("confirmo a caixa de di\u00E1logo")
 	public void acceptDialog() {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		dialog.accept();		
+		Dialog dialog = (Dialog) InjectionManager.getInstance()
+				.getInstanceDependecy(Dialog.class);
+		dialog.accept();
 	}
-	
+
 	@When("cancelo a caixa de di\u00E1logo")
 	@Given("cancelo a caixa de di\u00E1logo")
 	@Then("cancelo a caixa de di\u00E1logo")
 	public void cancelDialog() {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
+		Dialog dialog = (Dialog) InjectionManager.getInstance()
+				.getInstanceDependecy(Dialog.class);
 		dialog.cancel();
 	}
-	
+
 	@When("informo na caixa de di\u00E1logo \"$value\"")
 	@Given("informo na caixa de di\u00E1logo \"$value\"")
 	@Then("informo na caixa de di\u00E1logo \"$value\"")
 	public void sendKeysDialog(String value) {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
+		Dialog dialog = (Dialog) InjectionManager.getInstance()
+				.getInstanceDependecy(Dialog.class);
 		dialog.sendKeys(value);
 	}
 
 	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
 	public void getTextDialog(String value) {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		Assert.assertEquals(value, dialog.getText());		
+		Dialog dialog = (Dialog) InjectionManager.getInstance()
+				.getInstanceDependecy(Dialog.class);
+		Assert.assertEquals(value, dialog.getText());
 	}
 
 }
