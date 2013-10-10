@@ -3,11 +3,11 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <bookinfo>
 
-	<title>Demoiselle Behave Guide</title>
+	<title>Guia do Demoiselle Behave</title>
 	<subtitle>Demoiselle Behave</subtitle>
 
-	<abstract>Guide to Demoiselle Behave component</abstract>
-	<titleabbrev>Demoiselle Behave Guide</titleabbrev>
+	<abstract>Guia do Demoiselle Behave</abstract>
+	<titleabbrev>Guia do Demoiselle Behave</titleabbrev>
 
 	<xi:include href="revhistory.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </bookinfo>

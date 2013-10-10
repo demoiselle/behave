@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-colaboracao">
+
+	<title>Colaboração</title>
+	<para>
+		Este capítulo apresenta algumas orientação ao colaboradores do
+		projeto
+		como convenções e padrão de codificação.
+	</para>
+	<section>
+		<title>Templates de Codificação</title>
+		<para>
+			Os templates de codificação ajudam a manter os mesmos padrãoes
+			de escrita de código entre os colaboradores do projeto. o padrão ajuda na 
+			leitura e entendimento das implementações, principalmente quando há
+			comparação entre versões de código nos pull requests.
+		</para>
+		<para>			
+			Segue o template para codificação na IDE eclipse:
+			<ulink url="docs/formatter-profile-demoiselle-behave.xml">Download.</ulink>
+		</para>
+	</section>
+</chapter>
