@@ -26,4 +26,10 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 		throw new BehaveException("Método não implementado.");
 	}
 
+	@Override
+	public void waitText(String text) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

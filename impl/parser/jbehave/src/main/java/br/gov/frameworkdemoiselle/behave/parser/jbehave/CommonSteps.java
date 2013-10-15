@@ -67,7 +67,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
@@ -134,7 +133,7 @@ public class CommonSteps implements Step {
 			((Menu) element).click();
 		} else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
-		} else {			
+		} else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -212,7 +211,7 @@ public class CommonSteps implements Step {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
-	
+
 	@When("informo: $table")
 	@Given("informo: $table")
 	public void setDataProvideTable(ExamplesTable table) {
@@ -220,12 +219,12 @@ public class CommonSteps implements Step {
 			Iterator<String> it = row.keySet().iterator();
 			while (it.hasNext()) {
 				String key = (String) it.next();
-				
+
 				setDataProvider(key, row.get(key));
 			}
 		}
 	}
-	
+
 	@When("informo o campo: $table")
 	@Alias("informo os campos: $table")
 	public void informFields(ExamplesTable table) {
@@ -240,7 +239,7 @@ public class CommonSteps implements Step {
 
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
-		Screen element = (Screen) runner.getScreen();
+		Element element = (Element) runner.getScreen();
 		element.waitText(text);
 	}
 
@@ -248,8 +247,9 @@ public class CommonSteps implements Step {
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
+		element.waitText(text);
 		if (!element.getText().contains(text)) {
-			throw new BehaveException(message.getString("exception-text-not-found", text,  elementName));
+			throw new BehaveException(message.getString("exception-text-not-found", text, elementName));
 		}
 	}
 
@@ -295,16 +295,15 @@ public class CommonSteps implements Step {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
-	
-	
+
 	@When("confirmo a caixa de di\u00E1logo")
 	@Given("confirmo a caixa de di\u00E1logo")
 	@Then("confirmo a caixa de di\u00E1logo")
 	public void acceptDialog() {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		dialog.accept();		
+		dialog.accept();
 	}
-	
+
 	@When("cancelo a caixa de di\u00E1logo")
 	@Given("cancelo a caixa de di\u00E1logo")
 	@Then("cancelo a caixa de di\u00E1logo")
@@ -312,7 +311,7 @@ public class CommonSteps implements Step {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		dialog.cancel();
 	}
-	
+
 	@When("informo na caixa de di\u00E1logo \"$value\"")
 	@Given("informo na caixa de di\u00E1logo \"$value\"")
 	@Then("informo na caixa de di\u00E1logo \"$value\"")
@@ -324,7 +323,7 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
 	public void getTextDialog(String value) {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		Assert.assertEquals(value, dialog.getText());		
+		Assert.assertEquals(value, dialog.getText());
 	}
 
 }
