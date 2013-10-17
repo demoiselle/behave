@@ -208,5 +208,75 @@ public class WebRadio extends WebBase implements Radio {
 			</mediaobject>
 		</para>
 	</section>
+	
+	<section>
+		<title>Mapeamento Parametrizável</title>
+		<para>
+			É possível por meio de frases pré definidas parametrizar o locator.
+		</para>
+		<para>
+			Em uma determinada situação é necessário que seja selecionado um botão que esta presente em uma linha que possue na sua primeira coluna a palavra "Brasil", para facilitar esta tarefa foram criados os locators parametrizáveis.
+			O primeiro passo é criar o mapeamento na classe como mostra o exemplo a abaixo.
+		</para>
+		<programlisting>@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'tr-identification')][.//text()='<citetitle>%param1%</citetitle>']//button)[1]")
+private Button botao;</programlisting>
+		<para>
+			Perceba que no locator existe o trecho <citetitle>%param1%</citetitle>, esse é o identificador para que na história seja passada algum texto para ser inserido neste local, como por exemplo:
+			
+			
+		</para>
+		<programlisting>Quando clico em "Excluir" referente a "<citetitle>Brasil</citetitle>"</programlisting>
+		<para>
+			Também é possível passar mais de um parâmetro para a frase como no exemplo abaixo (os valores devem ser separados por vírgula):			
+		</para>
+		<programlisting>// Mapeamento do Campo
+@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, '<citetitle>%param1%</citetitle>')][.//text()='<citetitle>%param2%</citetitle>']//button)[1]")
+private Button botao;
 
+// Frase na história
+Quando clico em "Excluir" referente a "<citetitle>obra, valor</citetitle>"</programlisting>
+		<para>
+			As seguintes frases permitem a parametrização do texto do locator:
+			<itemizedlist>
+				<listitem>
+					Quando clico em "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando seleciono a opção "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando clico na linha da tabela "Name" referente a "Param1,Param2..."
+				</listitem>				
+			</itemizedlist>
+		</para>
+	</section>
+	
+	<section>
+		<title>Composição de Telas (Embedded Screens)</title>
+		<para>
+			O framework fornece uma anotação (@Embedded) que permite que sejam reutilizadas telas dentro de outras telas.
+			Como exemplo vamos utilizar uma tela de login abaixo:
+		</para>
+		<programlisting>@ScreenMap(name = "Tela de Login", location = "/")
+public class LoginPage {
+
+	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
+	private TextField campoUsuario;
+
+	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
+	private TextField campoSenha;
+
+	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
+	private Button botaoEnviar;
+
+}</programlisting>
+		<para>
+			Se a tela de login fosse utilizada em várias partes públicas do sistema bastaria que em qualquer <citetitle>ScreenMap</citetitle> criassemos um atributo da seguinte maneira: 
+		</para>
+		<programlisting><citetitle>@Embedded</citetitle>
+private LoginPage loginPage;</programlisting>
+		<para>
+			Isso fará com que a tela de login seja incorporada na tela que possuir o atributo com a anotação.
+		</para>		
+	</section>
 </chapter>

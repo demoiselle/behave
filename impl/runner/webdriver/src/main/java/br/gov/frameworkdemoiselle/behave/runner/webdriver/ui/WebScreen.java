@@ -39,6 +39,5 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class WebScreen extends WebBase implements Screen {
-	// Removido waitText()
 
 }

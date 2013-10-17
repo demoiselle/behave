@@ -19,25 +19,86 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.3</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/40">
+					<emphasis>[Nova Funcionalidade]</emphasis>
+					Implementação para locator com parâmetros usando a notação: %paramN%
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/125">
+					<emphasis>[Nova Funcionalidade]</emphasis>
+					Implementação de composição de telas a partir da anotação @Embedded
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/124">
+					<emphasis>[Melhoria]</emphasis>
+					Novas frases para tratamento de alertas em javascript
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/74">
+					<emphasis>[Melhoria]</emphasis>
+					Tratamento de frames na busca por objetos de tela
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/121">
+					<emphasis>[Melhoria]</emphasis>
+					Implementação do componente PrimeFaces Tree
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/71">
+					<emphasis>[Melhoria]</emphasis>
+					Internacionalização de mensagens do Framework
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/118">
+					<emphasis>[Melhoria]</emphasis>
+					Incorporando a utilização de chaves nas ações de referência
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/75">
+					<emphasis>[Bug]</emphasis>
+					Problema com o common steps: Correção na frase "então será exibido"
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/115">
+					<emphasis>[Bug]</emphasis>
+					Problema com o common steps: Correção na frase "seleciono a opção"
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
 		<citetitle>Versão 1.2.0</citetitle>
 
 		<itemizedlist>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/11">
 					<emphasis>[R09]</emphasis>
-					- Permitir execução para interface Desktop - (Java Swing)
+					Permitir execução para interface Desktop - (Java Swing)
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/14">
 					<emphasis>[R12]</emphasis>
-					- Execução dos testes em modo background
+					Execução dos testes em modo background
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/16">
 					<emphasis>[R14]</emphasis>
-					- Controle de execuções em paralelo
+					Controle de execuções em paralelo
 				</ulink>
 			</listitem>
 			<listitem>
@@ -70,7 +131,7 @@
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/20">
 					<emphasis>[Melhoria]</emphasis>
-					- Melhoria no relatório do JBehave com Screenshot de erros
+					Melhoria no relatório do JBehave com Screenshot de erros
 				</ulink>
 			</listitem>
 		</itemizedlist>
@@ -83,37 +144,37 @@
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/4">
 					<emphasis>[R01]</emphasis>
-					- Reuso de dados entre histórias
+					Reuso de dados entre histórias
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/5">
 					<emphasis>[R03]</emphasis>
-					- Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
+					Integração com o ALM – (RQM, SCM, RTC, Agent Builder)
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/8">
 					<emphasis>[R06]</emphasis>
-					- Execução parametrizável
+					Execução parametrizável
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/9">
 					<emphasis>[R07]</emphasis>
-					- Reuso de componentes para interação com a tela
+					Reuso de componentes para interação com a tela
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/12">
 					<emphasis>[R10]</emphasis>
-					- Permitir a execução de testes além de interface gráfica
+					Permitir a execução de testes além de interface gráfica
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/17">
 					<emphasis>[Melhoria]</emphasis>
-					- Documentação de Referência
+					Documentação de Referência
 				</ulink>
 			</listitem>
 		</itemizedlist>
