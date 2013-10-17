@@ -51,12 +51,12 @@ public class BehaveMessageTest {
 	public void testGetStringByLocale() {
 		System.setProperty("behave.message.locale", "pt");
 
-		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		BehaveMessage message = new BehaveMessage("demoiselle-behave-core-bundle");
 		assertEquals("message-exception-001-pt", message.getString("exception-001"));
 
 		System.setProperty("behave.message.locale", "en");
 
-		message = new BehaveMessage("demoiselle-core-bundle");
+		message = new BehaveMessage("demoiselle-behave-core-bundle");
 		assertEquals("message-exception-001-en", message.getString("exception-001"));
 	}
 
@@ -64,18 +64,18 @@ public class BehaveMessageTest {
 	public void testGetStringParans() {
 		System.setProperty("behave.message.locale", "pt");
 
-		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		BehaveMessage message = new BehaveMessage("demoiselle-behave-core-bundle");
 		assertEquals("message pt: [demoiselle behave]", message.getString("message-param", "demoiselle", "behave"));
 
 		System.setProperty("behave.message.locale", "en");
 
-		message = new BehaveMessage("demoiselle-core-bundle");
+		message = new BehaveMessage("demoiselle-behave-core-bundle");
 		assertEquals("message en: [demoiselle behave]", message.getString("message-param", "demoiselle", "behave"));
 	}
 	
 	@Test
 	public void testGetStringNotFound() {
-		BehaveMessage message = new BehaveMessage("demoiselle-core-bundle");
+		BehaveMessage message = new BehaveMessage("demoiselle-behave-core-bundle");
 		assertEquals("??{mykey}??", message.getString("mykey"));
 	}
 
