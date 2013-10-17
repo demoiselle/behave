@@ -62,7 +62,7 @@ public class BehaveConfig {
 
 	private static Logger log = Logger.getLogger(BehaveConfig.class);
 	
-	public static String MESSAGEBUNDLE = "demoiselle-core-bundle";
+	public static String MESSAGEBUNDLE = "demoiselle-behave-core-bundle";
 
 	/**
 	 * Carrega o behave.properties quando a classe é inicializada
