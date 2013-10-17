@@ -19,7 +19,7 @@
 	</para>
 
 	<para>
-		<citetitle>Versão 1.3</citetitle>
+		<citetitle>Versão 1.3.0</citetitle>
 
 		<itemizedlist>
 			<listitem>
@@ -186,43 +186,43 @@
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/2">
 					<emphasis>[R02]</emphasis>
-					- Reuso de histórias
+					Reuso de histórias
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/6">
 					<emphasis>[R04]</emphasis>
-					- Execução dos testes na Integração continua
+					Execução dos testes na Integração continua
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/7">
 					<emphasis>[R05]</emphasis>
-					- Integração com IDEs de desenvolvimento homologadas
+					Integração com IDEs de desenvolvimento homologadas
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/10">
 					<emphasis>[R08]</emphasis>
-					- Desacoplamento com as tecnologias de referência
+					Desacoplamento com as tecnologias de referência
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/13">
 					<emphasis>[R11]</emphasis>
-					- Permitir debug da execução
+					Permitir debug da execução
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/15">
 					<emphasis>[R13]</emphasis>
-					- Simplicidade de montagem de ambiente
+					Simplicidade de montagem de ambiente
 				</ulink>
 			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/3">
 					<emphasis>[Melhoria]</emphasis>
-					- Estrutura do Projeto - Padrão Demoiselle
+					Estrutura do Projeto - Padrão Demoiselle
 				</ulink>
 			</listitem>
 		</itemizedlist>

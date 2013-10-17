@@ -3,11 +3,19 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
-                <revnumber>1.2.0</revnumber>
-                <date>22/08/2013</date>
-                <authorinitials>jcs</authorinitials>
-                <revremark>Alteração de repositório maven, adicionados novos capítulos relacionados aos testes Desktop (FEST) e configurações adicionais do framework.</revremark>
-        </revision>
+		<revnumber>1.3.0</revnumber>
+		<date>31/10/2013</date>
+		<authorinitials>jcs</authorinitials>
+		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.2.0</revnumber>
+		<date>22/08/2013</date>
+		<authorinitials>jcs</authorinitials>
+		<revremark>Alteração de repositório maven, adicionados novos capítulos
+			relacionados aos testes Desktop (FEST) e configurações adicionais do
+			framework.</revremark>
+	</revision>
 	<revision>
 		<revnumber>1.1.0</revnumber>
 		<date>30/06/2013</date>
