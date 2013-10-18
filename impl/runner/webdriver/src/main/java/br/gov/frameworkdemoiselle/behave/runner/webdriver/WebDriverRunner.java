@@ -38,7 +38,6 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -201,27 +200,15 @@ public class WebDriverRunner implements Runner {
 	}
 
 	private void writeHtmlFile(String path) {
-		// Salva o html na mesma pasta
-		String pathHtml = path + ".html";
-		logger.info("Arquivo do HTML gravado em: " + pathHtml);
-
 		try {
-			File statText = new File(pathHtml);
-			FileOutputStream is;
-
-			is = new FileOutputStream(statText);
-			OutputStreamWriter osw = new OutputStreamWriter(is);
+			File file = new File(path + ".html");
+			OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file));
 			Writer w = new BufferedWriter(osw);
 			w.write(this.driver.getPageSource());
 			w.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-save-screenshot"), e);
 		}
-
 	}
 
 	public void setScreen(String screenName) {

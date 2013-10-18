@@ -83,8 +83,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	private WebDriver driver;
 
 	/**
-	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
-	 * ele busca o elemento em todos os frames
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
 	 * 
 	 * @return Lista de elementos encontrados
 	 */
@@ -227,9 +226,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading,
-	 * e se existir, ele sempre espera que este elemento desapareça antes de
-	 * continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
@@ -297,8 +294,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em
-	 * uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
@@ -327,10 +323,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Neste método waitText estamos forçando que seja verificado dentro do body
-	 * através de um loop controlado por nós e não pelo implicityWait do
-	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
-	 * valor padrão das propriedades.
+	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
 	 */
 	public void waitText(String text, Long timeout) {
 		try {
@@ -347,9 +340,12 @@ public class WebBase extends MappedElement implements BaseUI {
 					frame.switchNextFrame();
 					List<WebElement> elements = driver.findElements(By.tagName("body"));
 					if (elements.size() > 0) {
-						if (elements.get(0).getText().contains(text)) {
-							found = true;
-							break;
+						// Tem que percorrer todas as tags body, pode ter mais de uma!
+						for (WebElement element : elements) {
+							if (element.getText().contains(text)) {
+								found = true;
+								break;
+							}
 						}
 					} else {
 						if (driver.getPageSource().contains(text)) {
