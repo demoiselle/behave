@@ -58,7 +58,7 @@ public class ScreenShootingHtmlOutput extends HtmlOutput {
 			Keywords keywords) {
 		super(output, keywords);
 		this.maker = new ScreenShootingMaker(reporterBuilder);
-		super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" + "<br/><img src=\"screenshots/failed-scenario-{3}.png\" alt=\"failing screenshot\"/></div>\n");
+		super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" + "<br/><img src=\"screenshots/failed-scenario-{3}.png\" alt=\"failing screenshot\"/><br/><a href=\"screenshots/failed-scenario-{3}.png.html\" alt=\"failing screenshot html\" target=\"_blank\">View Html</a></div>\n");
 	}
 
 	@Override

@@ -36,8 +36,13 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -141,7 +146,7 @@ public class WebDriverRunner implements Runner {
 		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
 		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-			// Instancia a classe fornecida explicitamente como implementação da  interface Element
+		// Instancia a classe fornecida explicitamente como implementação da interface Element
 		else if (Element.class.isAssignableFrom(clazz)) {
 			try {
 				element = (Element) clazz.newInstance();
@@ -188,10 +193,35 @@ public class WebDriverRunner implements Runner {
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
+			writeHtmlFile(screenshotFile.getAbsolutePath());
 		} catch (IOException e) {
 			throw new BehaveException(message.getString("exception-save-screenshot"), e);
 		}
 		return screenshotFile;
+	}
+
+	private void writeHtmlFile(String path) {
+		// Salva o html na mesma pasta
+		String pathHtml = path + ".html";
+		logger.info("Arquivo do HTML gravado em: " + pathHtml);
+
+		try {
+			File statText = new File(pathHtml);
+			FileOutputStream is;
+
+			is = new FileOutputStream(statText);
+			OutputStreamWriter osw = new OutputStreamWriter(is);
+			Writer w = new BufferedWriter(osw);
+			w.write(this.driver.getPageSource());
+			w.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public void setScreen(String screenName) {
