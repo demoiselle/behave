@@ -38,7 +38,9 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -52,58 +54,114 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 public class WebSelect extends WebBase implements Select {
 
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
+	Logger log = Logger.getLogger(WebSelect.class);
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public void selectByVisibleText(String value) {
-		if (getElements().get(0).getTagName().equals("select")) {
-			// Select comum e usa um helper do selenium
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
-			lSelect.selectByVisibleText(value);
-		} else {
-
-			// Aguarda o primeiro elemento ser clicável
-			waitElement(0);
-
-			// Outros tipos de select como a do primefaces
-			WebElement elementMain = getElements().get(0);
-			elementMain.click();
-
-			List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
-			for (WebElement item : elementValue) {
-				if (item.getText().equals(value)) {
-					// Aguarda o segundo elemento ser clicável
-					waitElement(1);
-					item.click();
-					break;
-				}
-			}
-		}
-
+		select(value, WebSelectType.TEXT);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void selectByIndex(int index) {
-		if (getElements().get(0).getTagName().equals("select")) {
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
-			lSelect.selectByIndex(index);
-		} else {
-			throw new BehaveException(message.getString("exception-invalid-step"));
-		}
+		select(index + "", WebSelectType.INDEX);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void selectByValue(String value) {
-		if (getElements().get(0).getTagName().equals("select")) {
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
-			lSelect.selectByValue(value);
-		} else {
-			throw new BehaveException(message.getString("exception-invalid-step"));
+		select(value, WebSelectType.VALUE);
+	}
+
+	/**
+	 * Método generalizado para selecionar o valor do select (DropDown)
+	 * 
+	 * Atenção para a implementação: ele tenta 3 vezes selecionar o valor do select, isso é feito pois existem casos em que o select é populado por um ajax e ele pode demorar a acontecer, por isso precisamos que sejam feitas tentativas para não dar erro falso.
+	 * 
+	 * @param value
+	 * @param type
+	 */
+	private void select(String value, WebSelectType type) {
+		boolean valueSelected = false;
+		int numberMaxTries = 3;
+		int currentTries = 1;
+
+		while (!valueSelected) {
+
+			// Número máximo de tentativas excedido
+			if (currentTries > numberMaxTries)
+				break;
+
+			try {
+
+				// Tenta esperar que o texto do valo esteja na tela, mas somente isso não garante que o valor seja do campo, por isso fazemos 3 tentativas
+				waitText(value);
+
+				// // log.debug("Tentando selecionar o valor do drop down (" + value + ") - waitElement");
+
+				// Aguarda o primeiro elemento ser clicável
+				waitElement(0);
+
+				if (getElements().get(0).getTagName().equals("select")) {
+
+					// log.debug("Entrou para selecionar (" + value + ") - Depois waitElement");
+
+					// Select comum e usa um helper do selenium
+					org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+
+					// log.debug("Pegou o objeto do select (" + value + ")");
+
+					// Verifica o tipo valor do select
+					if (type == WebSelectType.TEXT) {
+						lSelect.selectByVisibleText(value);
+					} else if (type == WebSelectType.INDEX) {
+						lSelect.selectByIndex(Integer.parseInt(value));
+					} else if (type == WebSelectType.VALUE) {
+						lSelect.selectByValue(value);
+					}
+
+					valueSelected = true;
+
+					// log.debug("Selecionou o valor (" + value + ")");
+
+				} else {
+
+					// Outros tipos de select como a do primefaces
+					WebElement elementMain = getElements().get(0);
+					elementMain.click();
+
+					List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
+					for (WebElement item : elementValue) {
+						if (item.getText().equals(value)) {
+							// Aguarda o segundo elemento ser clicável
+							waitElement(1);
+							item.click();
+							break;
+						}
+					}
+
+					valueSelected = true;
+
+				}
+
+			} catch (StaleElementReferenceException ex) {
+				log.error("Erro no dropwdown (StaleElementReferenceException): ", ex);
+			} finally {
+				currentTries++;
+			}
 		}
+
+		// Se nenhum valor selecionado for encontrado tem que dar erro
+		if (!valueSelected)
+			throw new BehaveException(message.getString("exception-value-dont-selected"));
+	}
+
+	public enum WebSelectType {
+		TEXT, INDEX, VALUE
 	}
 
 }
