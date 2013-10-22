@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -43,6 +44,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
@@ -86,34 +88,27 @@ public class WebSelect extends WebBase implements Select {
 	 * @param type
 	 */
 	private void select(String value, WebSelectType type) {
-		boolean valueSelected = false;
-		int numberMaxTries = 3;
-		int currentTries = 1;
+		
+		// Esperar que o texto do valo esteja na tela
+		waitText(value);
 
-		while (!valueSelected) {
+		// Aguarda o primeiro elemento ser clicável
+		waitElement(0);
 
-			// Número máximo de tentativas excedido
-			if (currentTries > numberMaxTries)
-				break;
+		if (getElements().get(0).getTagName().equals("select")) {
 
-			try {
+			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
-				// Tenta esperar que o texto do valo esteja na tela, mas somente isso não garante que o valor seja do campo, por isso fazemos 3 tentativas
-				waitText(value);
+			// Faz um loop de tentativas para selecionar o valor do select
+			while (true) {
 
-				// // log.debug("Tentando selecionar o valor do drop down (" + value + ") - waitElement");
+				try {
 
-				// Aguarda o primeiro elemento ser clicável
-				waitElement(0);
-
-				if (getElements().get(0).getTagName().equals("select")) {
-
-					// log.debug("Entrou para selecionar (" + value + ") - Depois waitElement");
+					// Espera entre cada tentativa
+					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 
 					// Select comum e usa um helper do selenium
 					org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
-
-					// log.debug("Pegou o objeto do select (" + value + ")");
 
 					// Verifica o tipo valor do select
 					if (type == WebSelectType.TEXT) {
@@ -124,40 +119,41 @@ public class WebSelect extends WebBase implements Select {
 						lSelect.selectByValue(value);
 					}
 
-					valueSelected = true;
+					// Se deu tudo certo pode sair do while
+					break;
 
-					// log.debug("Selecionou o valor (" + value + ")");
-
-				} else {
-
-					// Outros tipos de select como a do primefaces
-					WebElement elementMain = getElements().get(0);
-					elementMain.click();
-
-					List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
-					for (WebElement item : elementValue) {
-						if (item.getText().equals(value)) {
-							// Aguarda o segundo elemento ser clicável
-							waitElement(1);
-							item.click();
-							break;
-						}
-					}
-
-					valueSelected = true;
-
+				} catch (StaleElementReferenceException ex) {
+					// Somente armazena o erro do valor não encontrado, e tenta novamente
+					log.info(message.getString("exception-value-dont-selected"), ex);
+				} catch (InterruptedException e) {
+					throw new BehaveException(message.getString("exception-thread-sleep"), e);
 				}
 
-			} catch (StaleElementReferenceException ex) {
-				log.error("Erro no dropwdown (StaleElementReferenceException): ", ex);
-			} finally {
-				currentTries++;
+				// Se nenhum valor selecionado for encontrado tem que dar erro depois do timeout
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					throw new BehaveException(message.getString("exception-value-dont-selected"));
+				}
+
 			}
+
+		} else {
+
+			// Outros tipos de select como a do primefaces
+			WebElement elementMain = getElements().get(0);
+			elementMain.click();
+
+			List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
+			for (WebElement item : elementValue) {
+				if (item.getText().equals(value)) {
+					// Aguarda o segundo elemento ser clicável
+					waitElement(1);
+					item.click();
+					break;
+				}
+			}
+
 		}
 
-		// Se nenhum valor selecionado for encontrado tem que dar erro
-		if (!valueSelected)
-			throw new BehaveException(message.getString("exception-value-dont-selected"));
 	}
 
 	public enum WebSelectType {
