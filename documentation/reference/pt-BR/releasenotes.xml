@@ -25,7 +25,8 @@
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/pull/40">
 					<emphasis>[Nova Funcionalidade]</emphasis>
-					Implementação para locator com parâmetros usando a notação: %paramN%
+					Implementação para locator com parâmetros usando a notação:
+					%paramN%
 				</ulink>
 			</listitem>
 			<listitem>
@@ -63,7 +64,13 @@
 					<emphasis>[Melhoria]</emphasis>
 					Incorporando a utilização de chaves nas ações de referência
 				</ulink>
-			</listitem>			
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/101">
+					<emphasis>[Melhoria]</emphasis>
+					Tratamento da exceção StaleElementReferenceException no WebSelect
+				</ulink>
+			</listitem>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/75">
 					<emphasis>[Bug]</emphasis>
