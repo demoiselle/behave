@@ -57,19 +57,19 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			if ( BehaveConfig.getRunner_ProfileEnabled() ) {
+			if (BehaveConfig.getRunner_ProfileEnabled()) {
 				File profileDir = new File(BehaveConfig.getRunner_ProfilePath());
-	            FirefoxProfile profile = new FirefoxProfile(profileDir);
-	            return new FirefoxDriver(profile);
+				FirefoxProfile profile = new FirefoxProfile(profileDir);
+				return new FirefoxDriver(profile);
 			}
-			
+
 			return new FirefoxDriver();
 		}
 	},
-	Safari{
-		
+	Safari {
+
 		// Só para windows ou mac
-		
+
 		@Override
 		public String toString() {
 			return "Safari";
@@ -84,9 +84,9 @@ public enum WebBrowser {
 		}
 	},
 	InternetExplorer {
-		
+
 		// https://code.google.com/p/selenium/wiki/InternetExplorerDriver
-		
+
 		@Override
 		public String toString() {
 			return "Internet Explorer";
@@ -99,15 +99,17 @@ public enum WebBrowser {
 		}
 	},
 	GoogleChrome {
-		
+
 		/*
-		 *  instalar: /usr/lib/libstdc++.so.6 e /lib/tls/i686/cmov/libc.so.6(non-Javadoc)
-		 *  http://askubuntu.com/questions/161284/why-does-running-this-program-on-11-10-give-a-glibc-2-15-not-found-error
-		 *  Comando: ldd -v /bin/sh
-		 * @see java.lang.Enum#toString()
+		 * instalar: /usr/lib/libstdc++.so.6 e
+		 * /lib/tls/i686/cmov/libc.so.6(non-Javadoc)
+		 * http://askubuntu.com/questions
+		 * /161284/why-does-running-this-program-on
+		 * -11-10-give-a-glibc-2-15-not-found-error Comando: ldd -v /bin/sh
 		 * 
+		 * @see java.lang.Enum#toString()
 		 */
-	
+
 		@Override
 		public String toString() {
 			return "Google Chrome";

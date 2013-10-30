@@ -139,13 +139,16 @@ public class WebDriverRunner implements Runner {
 
 		Field f = ReflectionUtil.getElementMap(currentPageName, elementName);
 		ElementMap map = f.getAnnotation(ElementMap.class);
-		Class<?> clazz = f.getType();// ReflectionUtil.getElementType(currentPageName, elementName);
+		Class<?> clazz = f.getType();// ReflectionUtil.getElementType(currentPageName,
+										// elementName);
 
 		Element element = null;
-		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
+		// Comportamento padrão usa o InjectionManager para resolver quem
+		// implementa a interface
 		if (clazz.isInterface())
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da interface Element
+		// Instancia a classe fornecida explicitamente como implementação da
+		// interface Element
 		else if (Element.class.isAssignableFrom(clazz)) {
 			try {
 				element = (Element) clazz.newInstance();

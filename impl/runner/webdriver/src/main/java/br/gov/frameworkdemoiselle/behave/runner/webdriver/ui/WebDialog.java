@@ -43,25 +43,25 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 
 public class WebDialog extends WebBase implements Dialog {
 
-	public void accept() {	
-		WebDriver driver =  (WebDriver) runner.getDriver();
+	public void accept() {
+		WebDriver driver = (WebDriver) runner.getDriver();
 		driver.switchTo().alert().accept();
 	}
 
 	public void cancel() {
-		WebDriver driver =  (WebDriver) runner.getDriver();
+		WebDriver driver = (WebDriver) runner.getDriver();
 		driver.switchTo().alert().dismiss();
 	}
 
 	public void sendKeys(String keys) {
-		WebDriver driver =  (WebDriver) runner.getDriver();		
+		WebDriver driver = (WebDriver) runner.getDriver();
 		Alert alert = driver.switchTo().alert();
 		alert.sendKeys(keys);
-	}	
-	
+	}
+
 	@Override
 	public String getText() {
-		WebDriver driver =  (WebDriver) runner.getDriver();
+		WebDriver driver = (WebDriver) runner.getDriver();
 		Alert dialog = driver.switchTo().alert();
 		return dialog.getText();
 	}

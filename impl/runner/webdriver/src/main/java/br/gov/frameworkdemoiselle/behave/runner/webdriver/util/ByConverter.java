@@ -44,9 +44,9 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public class ByConverter {
-	
+
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
-	
+
 	public static By convert(ElementLocatorType type, String locator) {
 		By by = null;
 
@@ -66,7 +66,7 @@ public class ByConverter {
 			by = By.xpath(locator);
 		} else if (type == ElementLocatorType.Value) {
 			by = By.xpath("//*[@value='" + locator + "']");
-		}else {
+		} else {
 			throw new BehaveException(message.getString("exception-invalid-option", type, "convert"));
 		}
 

@@ -66,17 +66,16 @@
 			Segue abaixo o exemplo para configuração do plugin no arquivo
 			pom.xml do projeto:
 		</para>
-		<programlisting>
-&lt;build&gt;
+		<programlisting>&lt;build&gt;
 	&lt;plugins&gt;
 		&lt;plugin&gt;
 			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
 			&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
 			&lt;version&gt;2.16&lt;/version&gt;
-			&lt;configuration&gt;			
-				&lt;forkCount&gt;3&lt;/forkCount&gt; 				
+			&lt;configuration&gt;
+				&lt;forkCount&gt;3&lt;/forkCount&gt;
 				&lt;threadCount&gt;1&lt;/threadCount&gt;
-				&lt;reuseForks&gt;false&lt;/reuseForks&gt; 
+				&lt;reuseForks&gt;false&lt;/reuseForks&gt;
 				&lt;parallel&gt;classes&lt;/parallel&gt;
 			&lt;/configuration&gt;
 		&lt;/plugin&gt;
@@ -256,6 +255,66 @@
 			pasta
 			<citetitle>target/jbehave/view</citetitle>
 			.
+			O arquivo principal é o index.html e pode ser aberto em qualquer
+			navegador. Ao abrir o arquivo clique em "Story Reports" para acessar
+			o relatório da execução.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-1.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Relatório Geral da Execução</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Para acessar os detalhes de cada história existe um link na
+			última coluna (view) na direta da tabela como mostra a imagem abaixo.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-2.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Link para detalhes da hitória</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Após clicar no link "html" da tela de visão geral, a seguinte tela será exibida.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-3.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Detalhamento da História</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		 	Ela contém os detalhamentos dos cenários contidos na história.
+		</para>
+				<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-4.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Cenário com Erro (Desktop)</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		 	No caso de algum erro ocorrer a tela acima será exibida, ela contém o erro e um print screen da tela (Desktop e Web).
 		</para>
 	</section>
 

@@ -82,13 +82,16 @@ public class WebSelect extends WebBase implements Select {
 	/**
 	 * Método generalizado para selecionar o valor do select (DropDown)
 	 * 
-	 * Atenção para a implementação: ele tenta 3 vezes selecionar o valor do select, isso é feito pois existem casos em que o select é populado por um ajax e ele pode demorar a acontecer, por isso precisamos que sejam feitas tentativas para não dar erro falso.
+	 * Atenção para a implementação: ele tenta 3 vezes selecionar o valor do
+	 * select, isso é feito pois existem casos em que o select é populado por um
+	 * ajax e ele pode demorar a acontecer, por isso precisamos que sejam feitas
+	 * tentativas para não dar erro falso.
 	 * 
 	 * @param value
 	 * @param type
 	 */
 	private void select(String value, WebSelectType type) {
-		
+
 		// Esperar que o texto do valo esteja na tela
 		waitText(value);
 
@@ -123,13 +126,15 @@ public class WebSelect extends WebBase implements Select {
 					break;
 
 				} catch (StaleElementReferenceException ex) {
-					// Somente armazena o erro do valor não encontrado, e tenta novamente
+					// Somente armazena o erro do valor não encontrado, e tenta
+					// novamente
 					log.info(message.getString("exception-value-dont-selected"), ex);
 				} catch (InterruptedException e) {
 					throw new BehaveException(message.getString("exception-thread-sleep"), e);
 				}
 
-				// Se nenhum valor selecionado for encontrado tem que dar erro depois do timeout
+				// Se nenhum valor selecionado for encontrado tem que dar erro
+				// depois do timeout
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					throw new BehaveException(message.getString("exception-value-dont-selected"));
 				}

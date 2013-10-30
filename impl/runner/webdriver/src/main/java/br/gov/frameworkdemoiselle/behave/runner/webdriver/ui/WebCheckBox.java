@@ -42,7 +42,7 @@ public class WebCheckBox extends WebBase implements CheckBox {
 
 	public void click() {
 		waitElement(0);
-		
+
 		getElements().get(0).click();
 	}
 

@@ -50,7 +50,7 @@ public class SwitchDriver {
 	private int nextFrame = 0;
 
 	public SwitchDriver(WebDriver driver) {
-		this.driver = driver;		
+		this.driver = driver;
 	}
 
 	public void bind() {
@@ -64,7 +64,7 @@ public class SwitchDriver {
 	/**
 	 * Move o driver para seus diversos frames
 	 */
-	public void switchNextFrame() {		
+	public void switchNextFrame() {
 		Node node = nodes.get(nextFrame);
 		node.switchDriver();
 		nextFrame = (nextFrame == nodes.size() - 1) ? 0 : (nextFrame + 1);
@@ -78,17 +78,17 @@ public class SwitchDriver {
 		bindNodes(_parent, "(<frame(.*?)src=\"(.*?)\"(.*?)\\>)");
 		bindNodes(_parent, "(<iframe(.*?)src=\"(.*?)\"(.*?)\\>)");
 	}
-	
+
 	private void bindNodes(Node _parent, String regex) {
 		_parent.switchDriver();
-		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);	
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 		String pageSource = driver.getPageSource();
 		Matcher matcher = pattern.matcher(pageSource);
 		int index = -1;
 		while (matcher.find()) {
 			Node frame = new Node(_parent, ++index, matcher.group(3));
 			nodes.add(frame);
-			bindNodes(frame);			
+			bindNodes(frame);
 		}
 	}
 

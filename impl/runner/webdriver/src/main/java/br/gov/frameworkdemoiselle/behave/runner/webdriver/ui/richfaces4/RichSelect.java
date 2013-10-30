@@ -45,19 +45,26 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
 /**
  * Componente para mapear elementos de tela referentes ao componente rich:select
  * 
- * Utiliza a API Javascript do Richfaces para a correta manipulação do componente. O locator do mapeamento de tela deve retornar o primeiro div gerado pelo componente rich:select, aquele div que possui 'class="rf-sel"' ou ainda que possui o mesmo ID informado no arquivo XHTML, porém, o ID não é obrigatório, basta selecionar o primeiro div gerado pelo componente.
+ * Utiliza a API Javascript do Richfaces para a correta manipulação do
+ * componente. O locator do mapeamento de tela deve retornar o primeiro div
+ * gerado pelo componente rich:select, aquele div que possui 'class="rf-sel"' ou
+ * ainda que possui o mesmo ID informado no arquivo XHTML, porém, o ID não é
+ * obrigatório, basta selecionar o primeiro div gerado pelo componente.
  * 
  * @author lmveloso
  * 
  */
 public class RichSelect extends WebBase implements Select {
-	
+
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
-	
+
 	/**
-	 * Clica no campo do rich:select, provocando a abertura ou o fechamento do menu popup.
+	 * Clica no campo do rich:select, provocando a abertura ou o fechamento do
+	 * menu popup.
 	 * 
-	 * Se após o click o popup estiver aberto e foi informado algum parâmetro para o localizador, então busca o item com label igual ao parâmetro e clica neste campo.
+	 * Se após o click o popup estiver aberto e foi informado algum parâmetro
+	 * para o localizador, então busca o item com label igual ao parâmetro e
+	 * clica neste campo.
 	 * 
 	 */
 	public void click() {
@@ -68,9 +75,12 @@ public class RichSelect extends WebBase implements Select {
 	}
 
 	/**
-	 * Clica no campo do rich:select, provocando a abertura ou o fechamento do menu popup.
+	 * Clica no campo do rich:select, provocando a abertura ou o fechamento do
+	 * menu popup.
 	 * 
-	 * Se após o click o popup estiver aberto e foi informado algum parâmetro para o localizador, então busca o item com label igual ao parâmetro e clica neste campo.
+	 * Se após o click o popup estiver aberto e foi informado algum parâmetro
+	 * para o localizador, então busca o item com label igual ao parâmetro e
+	 * clica neste campo.
 	 * 
 	 * @param txtMenuItem
 	 */
@@ -89,7 +99,8 @@ public class RichSelect extends WebBase implements Select {
 	}
 
 	/**
-	 * Procura no componente rich:select um item com o mesmo label informado e se encontrado envia um evento de click() para o elemento correspondente.
+	 * Procura no componente rich:select um item com o mesmo label informado e
+	 * se encontrado envia um evento de click() para o elemento correspondente.
 	 * 
 	 * @param txtMenuItem
 	 */
@@ -97,19 +108,21 @@ public class RichSelect extends WebBase implements Select {
 
 		checkRichfacesComponent();
 
-		// Se o label do item de menu foi informado, seleciona o elemento da popupList
+		// Se o label do item de menu foi informado, seleciona o elemento da
+		// popupList
 		if (txtMenuItem != null && !txtMenuItem.isEmpty()) {
 			String jsClickItemCode = "return (function(val, id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == val ) { rfs.originalItems[ n ].click(); return true; } } return false; })('" + txtMenuItem + "','" + getId() + "');";
 
 			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
-			if (!clicked){
+			if (!clicked) {
 				throw new BehaveException(message.getString("exception-error-click", txtMenuItem, this.getElementMap().name()));
 			}
 		}
 	}
-	
+
 	/**
-	 * Utiliza a API Javascritp do Richfaces para mostrar o popup com itens do rich:select
+	 * Utiliza a API Javascritp do Richfaces para mostrar o popup com itens do
+	 * rich:select
 	 */
 	public void showPopup() {
 		checkRichfacesComponent();
@@ -117,7 +130,8 @@ public class RichSelect extends WebBase implements Select {
 	}
 
 	/**
-	 * Utiliza a API Javascritp do Richfaces para ocultar o popup com itens do rich:select
+	 * Utiliza a API Javascritp do Richfaces para ocultar o popup com itens do
+	 * rich:select
 	 */
 	public void hidePopup() {
 		checkRichfacesComponent();
@@ -138,7 +152,7 @@ public class RichSelect extends WebBase implements Select {
 	 * Método para garantir que o componente correto foi selecionado
 	 */
 	private void checkRichfacesComponent() {
-		if (!isRichSelect()){
+		if (!isRichSelect()) {
 			throw new BehaveException(message.getString("exception-not-rich-type", this.getElementMap().name(), getId(), "rich:select"));
 		}
 
@@ -158,13 +172,13 @@ public class RichSelect extends WebBase implements Select {
 
 		checkRichfacesComponent();
 
-		String jsClickItemCode = "return (function(index,id){ var rfs = RichFaces.$(id); if( index >= 0 && index < rfs.originalItems.length ) { rfs.originalItems.get( index ).click(); return true; } return false; })("+index+",'" + getId() + "');";
+		String jsClickItemCode = "return (function(index,id){ var rfs = RichFaces.$(id); if( index >= 0 && index < rfs.originalItems.length ) { rfs.originalItems.get( index ).click(); return true; } return false; })(" + index + ",'" + getId() + "');";
 
 		Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
-		if (!clicked){
+		if (!clicked) {
 			throw new BehaveException(message.getString("exception-error-click", index, this.getElementMap().name()));
 		}
-		
+
 	}
 
 	/**
@@ -173,12 +187,13 @@ public class RichSelect extends WebBase implements Select {
 	public void selectByValue(String value) {
 		checkRichfacesComponent();
 
-		// Se o label do item de menu foi informado, seleciona o elemento da popupList
+		// Se o label do item de menu foi informado, seleciona o elemento da
+		// popupList
 		if (value != null && !value.isEmpty()) {
-			String jsClickItemCode = "return (function(value,id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == value ) { rfs.originalItems[ n ].click(); return true; } } return false; })('"+value+"','" + getId() + "');";
+			String jsClickItemCode = "return (function(value,id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == value ) { rfs.originalItems[ n ].click(); return true; } } return false; })('" + value + "','" + getId() + "');";
 
 			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
-			if (!clicked){
+			if (!clicked) {
 				throw new BehaveException(message.getString("exception-error-click", value, this.getElementMap().name()));
 			}
 		}

@@ -54,7 +54,8 @@ public class WebTextField extends WebBase implements TextField {
 	}
 
 	/**
-	 * Função que tenta preencher mais de uma vez o campo. Ela verifica se o conteúdo enviado é o mesmo que esta atualmente no campo.
+	 * Função que tenta preencher mais de uma vez o campo. Ela verifica se o
+	 * conteúdo enviado é o mesmo que esta atualmente no campo.
 	 */
 	public void sendKeysWithTries(CharSequence... keysToSend) {
 		int totalMilliseconds = 0;

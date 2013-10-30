@@ -43,21 +43,28 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
 
 /**
- * Componente para mapear elementos de tela referentes ao componente rich:calendar
+ * Componente para mapear elementos de tela referentes ao componente
+ * rich:calendar
  * 
- * Utiliza a API Javascript do Richfaces para a correta manipulação do componente. O locator do mapeamento de tela deve retornar o primeiro div gerado pelo componente rich:calendar, aquele div que possui 'class="rf-cal"' ou ainda que possui o mesmo ID informado no arquivo XHTML, porém, o ID não é obrigatório, basta selecionar o primeiro div gerado pelo componente.
+ * Utiliza a API Javascript do Richfaces para a correta manipulação do
+ * componente. O locator do mapeamento de tela deve retornar o primeiro div
+ * gerado pelo componente rich:calendar, aquele div que possui 'class="rf-cal"'
+ * ou ainda que possui o mesmo ID informado no arquivo XHTML, porém, o ID não é
+ * obrigatório, basta selecionar o primeiro div gerado pelo componente.
  * 
  * @author lmveloso
  * 
  */
 public class RichCalendar extends WebBase implements Calendar {
-	
+
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#click()
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #click()
 	 */
 	@Override
 	public void click() {
@@ -76,7 +83,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#setValue(java.lang.String)
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #setValue(java.lang.String)
 	 */
 	@Override
 	public void setValue(String value) {
@@ -88,7 +97,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#clear()
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #clear()
 	 */
 	public void clear() {
 		checkRichfacesComponent();
@@ -98,7 +109,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#sendKeys(java.lang.CharSequence)
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #sendKeys(java.lang.CharSequence)
 	 */
 	public void sendKeys(CharSequence... keysToSend) {
 		checkRichfacesComponent();
@@ -108,7 +121,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#showCalendar()
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #showCalendar()
 	 */
 	public void showCalendar() {
 		checkRichfacesComponent();
@@ -118,7 +133,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#hideCalendar()
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #hideCalendar()
 	 */
 	public void hideCalendar() {
 		checkRichfacesComponent();
@@ -128,7 +145,9 @@ public class RichCalendar extends WebBase implements Calendar {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar#today()
+	 * @see
+	 * br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.Calendar
+	 * #today()
 	 */
 	public void today() {
 		checkRichfacesComponent();
@@ -136,7 +155,8 @@ public class RichCalendar extends WebBase implements Calendar {
 	}
 
 	/**
-	 * Verifica se o componente selecionado é realmente um coponente rich:calendar
+	 * Verifica se o componente selecionado é realmente um coponente
+	 * rich:calendar
 	 * 
 	 * @return
 	 */
@@ -149,7 +169,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	 * Método para garantir que o componente correto foi selecionado
 	 */
 	private void checkRichfacesComponent() {
-		if (!isRichCalendar()){
+		if (!isRichCalendar()) {
 			throw new BehaveException(message.getString("exception-not-rich-type", this.getElementMap().name(), getId(), "rich:calendar"));
 		}
 
