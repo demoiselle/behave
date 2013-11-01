@@ -40,18 +40,18 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class CalculadoraTest {
+public class RegressivaCalculadoraTest {
 
 	private BehaveContext eng = null;
 
-	public CalculadoraTest() {
+	public RegressivaCalculadoraTest() {
 		eng = BehaveContext.getInstance();
-		eng.addSteps(new MeusPassos());
+		eng.addSteps(new RegressivaMeusPassos());
 	}
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run("/stories/calculadora.story");
+		eng.run("/stories/regressiva.story");
 	}
 
 }

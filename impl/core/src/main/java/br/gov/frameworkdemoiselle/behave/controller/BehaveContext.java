@@ -89,7 +89,7 @@ public class BehaveContext {
 	@SuppressWarnings("unchecked")
 	public void run(List<String> storiesPath) {
 		try {
-			log.info("--------------------------------");
+			log.info("------------ZCLH FI--------------------");
 			log.info(bm.getString("message-behave-start"));
 			log.info("--------------------------------");
 
@@ -133,6 +133,7 @@ public class BehaveContext {
 		} finally {
 			fail = null;
 			storiesPath.clear();
+			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
