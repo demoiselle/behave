@@ -56,5 +56,7 @@ public interface Element {
 	public void setLocatorParameters(List<String> Parameters);
 
 	public void waitText(String text);
+	
+	public void waitTextInElement(String text);
 
 }

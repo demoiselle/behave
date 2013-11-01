@@ -44,17 +44,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
@@ -73,14 +70,13 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
-import com.google.common.base.Function;
-
 public class WebBase extends MappedElement implements BaseUI {
 
 	private List<String> locatorParameters;
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 	private SwitchDriver frame;
 	private WebDriver driver;
+	Logger log = Logger.getLogger(WebBase.class);
 
 	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
@@ -214,16 +210,6 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		waitClickable(by);
 		waitVisibility(by);
-
-		// Getting around a WebDriver StaleElementReferenceException - issue
-		// #101 - https://github.com/demoiselle/behave/issues/101
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS).pollingEvery(BehaveConfig.getRunner_ScreenMinWait(), TimeUnit.MILLISECONDS).ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class);
-
-		wait.until(new Function<WebDriver, WebElement>() {
-			public WebElement apply(WebDriver driver) {
-				return driver.findElement(by);
-			}
-		});
 	}
 
 	/**
@@ -345,22 +331,13 @@ public class WebBase extends MappedElement implements BaseUI {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 				for (int i = 0; i < frame.countFrames(); i++) {
 					frame.switchNextFrame();
-					List<WebElement> elements = driver.findElements(By.tagName("body"));
-					if (elements.size() > 0) {
-						// Tem que percorrer todas as tags body, pode ter mais
-						// de uma!
-						for (WebElement element : elements) {
-							if (element.getText().contains(text)) {
-								found = true;
-								break;
-							}
-						}
-					} else {
-						if (driver.getPageSource().contains(text)) {
-							found = true;
-							break;
-						}
+
+					// Busca em todo o texto da página, independente do local
+					if (driver.getPageSource().contains(text)) {
+						found = true;
+						break;
 					}
+
 				}
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				if (found) {
@@ -377,6 +354,49 @@ public class WebBase extends MappedElement implements BaseUI {
 			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
 		} catch (InterruptedException e) {
 			throw new BehaveException(message.getString("exception-thread-sleep"), e);
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+		}
+	}
+
+	/**
+	 * Método que busca o texto dentro de um elemento.
+	 */
+	public void waitTextInElement(String text) {
+		try {
+			boolean found = false;
+
+			driver = (WebDriver) runner.getDriver();
+			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+
+			while (true) {
+
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				/*
+				 * Busca o texto dentro do elemento, atentar para o método
+				 * getText, ele não é o getText do WebDriver e sim do Element
+				 * (WebTextField, WebSelect...)
+				 */
+				if (getText().contains(text)) {
+					found = true;
+					break;
+				}
+
+				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				if (found) {
+					break;
+				}
+
+				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-not-found", text));
+				}
+
+			}
+		} catch (BehaveException be) {
+			throw be;
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}

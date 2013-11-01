@@ -37,7 +37,10 @@ Sair do "{sistema}"
 Cenário: Seleção de Valores de Componentes com "{valor1}" e "{valor2}"
 
 Quando informo "{valor1}" no campo "Seleção de Opção 1"
-E informo "{valor2}" no campo "Seleção de Opção 2"
+Então será exibido na "Seleção de Opção 1" o valor "{valor1}"
+Quando informo "{valor2}" no campo "Seleção de Opção 2"
+Então será exibido na "Seleção de Opção 2" o valor "{valor2}"
+
 Quando clico em "Botão Exibir"
 Então será exibido na "Opção Selecionada" o valor "{valor2}"
 E clico em "Botão Fechar"

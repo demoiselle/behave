@@ -61,7 +61,7 @@ public class BehaveConfig {
 	private static Properties properties;
 
 	private static Logger log = Logger.getLogger(BehaveConfig.class);
-	
+
 	public static String MESSAGEBUNDLE = "demoiselle-behave-core-bundle";
 
 	/**
@@ -213,12 +213,12 @@ public class BehaveConfig {
 	public static String getRunner_ScreenDriverPath() {
 		return getProperty("behave.runner.screen.driverPath");
 	}
-	
+
 	// Ativa o uso de profile no navegador
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
-	
+
 	// Localização do profile
 	public static String getRunner_ProfilePath() {
 		return getProperty("behave.runner.screen.profilePath");
@@ -227,7 +227,11 @@ public class BehaveConfig {
 	public static String getRunner_ScreenType() {
 		return getProperty("behave.runner.screen.type");
 	}
-	
+
+	public static String getRunner_CatchUIException() {
+		return getProperty("behave.runner.catchUIException");
+	}
+
 	/*
 	 * Configurações especificas para testes Desktop
 	 */
@@ -239,7 +243,7 @@ public class BehaveConfig {
 		if (log.isDebugEnabled()) {
 			BehaveMessage bm = new BehaveMessage(MESSAGEBUNDLE);
 			ArrayList<String> propertieList = new ArrayList<String>();
-			log.debug("------- " + bm.getString("properties")+ " ----------");
+			log.debug("------- " + bm.getString("properties") + " ----------");
 			Enumeration<Object> keys = properties.keys();
 			while (keys.hasMoreElements()) {
 				String key = (String) keys.nextElement();

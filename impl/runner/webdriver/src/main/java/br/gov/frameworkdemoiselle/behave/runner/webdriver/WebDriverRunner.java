@@ -139,8 +139,7 @@ public class WebDriverRunner implements Runner {
 
 		Field f = ReflectionUtil.getElementMap(currentPageName, elementName);
 		ElementMap map = f.getAnnotation(ElementMap.class);
-		Class<?> clazz = f.getType();// ReflectionUtil.getElementType(currentPageName,
-										// elementName);
+		Class<?> clazz = f.getType();
 
 		Element element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem

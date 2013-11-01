@@ -43,7 +43,9 @@ import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.ui.UIProxy;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 
 /**
  * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS
@@ -81,10 +83,15 @@ public class InjectionManager {
 		} else {
 			ServiceLoader<Object> service = ServiceLoader.load(clazz);
 			for (Object object : service) {
-				singletons.put(clazz.toString(), object);
+				// Coloca um proxy (UIProxy) no caso de ser um elemento de UI
+				if (object instanceof Element) {
+					singletons.put(clazz.toString(), UIProxy.newInstance(object));
+				} else {
+					singletons.put(clazz.toString(), object);
+				}
 				break;
 			}
-			if (!singletons.containsKey(clazz.toString())){
+			if (!singletons.containsKey(clazz.toString())) {
 				throw new BehaveException(bm.getString("exception-injection-class-not-found", clazz.toString()));
 			}
 			return singletons.get(clazz.toString());

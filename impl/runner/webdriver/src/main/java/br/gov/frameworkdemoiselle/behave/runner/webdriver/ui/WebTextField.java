@@ -50,7 +50,7 @@ public class WebTextField extends WebBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
 		waitElement(0);
-		getElements().get(0).sendKeys(keysToSend);
+		sendKeysWithTries(keysToSend);
 	}
 
 	/**
@@ -58,21 +58,29 @@ public class WebTextField extends WebBase implements TextField {
 	 * conteúdo enviado é o mesmo que esta atualmente no campo.
 	 */
 	public void sendKeysWithTries(CharSequence... keysToSend) {
+		String value = "";
+		for (int i = 0; i < keysToSend.length; i++)
+			value += keysToSend[i];
+
 		int totalMilliseconds = 0;
-		while (!getElements().get(0).getAttribute("value").equals(keysToSend)) {
+		while (!getElements().get(0).getAttribute("value").equals(value)) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			Keys[] keys = new Keys[getElements().get(0).getAttribute("value").length()];
-			for (int i = 0; i < keys.length; i++)
+			Keys[] keys = new Keys[getElements().get(0).getAttribute("value").length() + 1];
+			keys[0] = Keys.END; // Final da Linha
+			for (int i = 1; i < keys.length; i++)
 				keys[i] = Keys.BACK_SPACE;
 
-			sendKeys(Keys.chord(keys), keysToSend.toString());
+			String finalValue = Keys.chord(keys) + value;
 
-			totalMilliseconds += 1000;
+			// Envia para o elemento
+			getElements().get(0).sendKeys(finalValue);
+
+			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
 			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()) {
 				throw new BehaveException(message.getString("exception-not-clean"));
@@ -80,9 +88,29 @@ public class WebTextField extends WebBase implements TextField {
 		}
 	}
 
+	/**
+	 * O método de limpar o campo do WebDriver não funciona corretamente com
+	 * campos com máscara. Segue abaixo o que esta escrito no javadoc do
+	 * Webdriver.
+	 * 
+	 * ------------------------------------------------------------------------
+	 * If this element is a text entry element, this will clear the value. Has
+	 * no effect on other elements. Text entry elements are INPUT and TEXTAREA
+	 * elements.
+	 * 
+	 * Note that the events fired by this event may not be as you'd expect. In
+	 * particular, we don't fire any keyboard or mouse events. If you want to
+	 * ensure keyboard events are fired, consider using something like
+	 * {@link #sendKeys(CharSequence...)} with the backspace key. To ensure you
+	 * get a change event, consider following with a call to
+	 * {@link #sendKeys(CharSequence...)} with the tab key.
+	 * ------------------------------------------------------------------------
+	 */
 	public void clear() {
 		waitElement(0);
-		getElements().get(0).clear();
+
+		// Limpa o campo enviando BACKSPACE
+		sendKeysWithTries();
 	}
 
 	@Override

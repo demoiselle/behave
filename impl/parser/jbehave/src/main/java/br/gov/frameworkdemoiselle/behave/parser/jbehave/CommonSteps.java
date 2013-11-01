@@ -247,10 +247,7 @@ public class CommonSteps implements Step {
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
-		element.waitText(text);
-		if (!element.getText().contains(text)) {
-			throw new BehaveException(message.getString("exception-text-not-found", text, elementName));
-		}
+		element.waitTextInElement(text);		
 	}
 
 	@When("obtenho \"$var\" do campo \"$fieldName\"")

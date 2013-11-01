@@ -36,26 +36,19 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
-import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
-import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 /**
  * @author SERPRO
  */
 public class WebSelect extends WebBase implements Select {
 
-	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 	Logger log = Logger.getLogger(WebSelect.class);
 
 	/**
@@ -80,12 +73,20 @@ public class WebSelect extends WebBase implements Select {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public String getText() {
+		// Fazer tratamento para SELECT normal e PrimeFaces
+		if (getElements().get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			return lSelect.getFirstSelectedOption().getText();
+		} else {
+			return getElements().get(0).getText();
+		}
+	}
+
+	/**
 	 * Método generalizado para selecionar o valor do select (DropDown)
-	 * 
-	 * Atenção para a implementação: ele tenta 3 vezes selecionar o valor do
-	 * select, isso é feito pois existem casos em que o select é populado por um
-	 * ajax e ele pode demorar a acontecer, por isso precisamos que sejam feitas
-	 * tentativas para não dar erro falso.
 	 * 
 	 * @param value
 	 * @param type
@@ -100,45 +101,16 @@ public class WebSelect extends WebBase implements Select {
 
 		if (getElements().get(0).getTagName().equals("select")) {
 
-			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+			// Select comum e usa um helper do selenium
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
 
-			// Faz um loop de tentativas para selecionar o valor do select
-			while (true) {
-
-				try {
-
-					// Espera entre cada tentativa
-					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
-
-					// Select comum e usa um helper do selenium
-					org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
-
-					// Verifica o tipo valor do select
-					if (type == WebSelectType.TEXT) {
-						lSelect.selectByVisibleText(value);
-					} else if (type == WebSelectType.INDEX) {
-						lSelect.selectByIndex(Integer.parseInt(value));
-					} else if (type == WebSelectType.VALUE) {
-						lSelect.selectByValue(value);
-					}
-
-					// Se deu tudo certo pode sair do while
-					break;
-
-				} catch (StaleElementReferenceException ex) {
-					// Somente armazena o erro do valor não encontrado, e tenta
-					// novamente
-					log.info(message.getString("exception-value-dont-selected"), ex);
-				} catch (InterruptedException e) {
-					throw new BehaveException(message.getString("exception-thread-sleep"), e);
-				}
-
-				// Se nenhum valor selecionado for encontrado tem que dar erro
-				// depois do timeout
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					throw new BehaveException(message.getString("exception-value-dont-selected"));
-				}
-
+			// Verifica o tipo valor do select
+			if (type == WebSelectType.TEXT) {
+				lSelect.selectByVisibleText(value);
+			} else if (type == WebSelectType.INDEX) {
+				lSelect.selectByIndex(Integer.parseInt(value));
+			} else if (type == WebSelectType.VALUE) {
+				lSelect.selectByValue(value);
 			}
 
 		} else {
