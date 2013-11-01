@@ -38,10 +38,6 @@ package demoisellebehave.calculadora;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
-import junit.framework.Assert;
-
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
@@ -61,44 +57,10 @@ public class RegressivaMeusPassos implements Step {
 		calculadora.soma(999);
 	}
 	
-	
 	@Then("seu valor ser\u00E1 \"$valor\"")
 	public void thenSeuValorSera(double valor) {
 	  assertEquals(valor, calculadora.resultado(), 0.0);
 	}
 	
-	@When("adiciono \"$valor\"")
-	public void whenAdiciono(double valor) {
-	  calculadora.soma(valor);
-	}
 	
-	@When("subtraio \"$valor\"")
-	public void whenSubtraio(double valor) {
-		calculadora.subtracao(valor);
-	}
-	
-	@When("multiploco \"$valor\"")
-	public void whenMultiploco(double valor) {
-		calculadora.multiplicao(valor);
-	}
-	
-	@When("divido \"$valor\"")
-	public void whenMDivido(double valor) {
-		calculadora.divisao(valor);
-	}
-
-	
-	@When("limpo")
-	public void whenLimpo() {
-		calculadora.limpar();
-	}
-	
-	@Then("realizo v\u00E1rias somas da $lista")
-	public void variasSomas(Map<String, String> lista) {
-		calculadora.soma(Double.parseDouble(lista.get("valor01")));
-		calculadora.soma(Double.parseDouble(lista.get("valor02")));
-		Assert.assertEquals(calculadora.resultado(), Double.parseDouble(lista.get("resultado")));
-	}
-
-
 }
