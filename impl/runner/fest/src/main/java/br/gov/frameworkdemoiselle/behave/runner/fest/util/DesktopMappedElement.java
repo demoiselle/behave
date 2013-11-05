@@ -32,4 +32,10 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	}
 
+	@Override
+	public void waitTextInElement(String text) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
