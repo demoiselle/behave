@@ -36,22 +36,31 @@
  */
 package demoisellebehave.calculadora;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 
-public class CalculadoraTest {
+import br.gov.frameworkdemoiselle.behave.parser.Step;
 
-	private BehaveContext eng = null;
-
-	public CalculadoraTest() {
-		eng = BehaveContext.getInstance();
-		eng.addSteps(new MeusPassos());
+public class RegressivaMeusPassos implements Step {
+	
+	private Calculadora calculadora;
+	
+	@When("Quando inicio a Calculadora")
+	public void goToWithName(String local) {
 	}
-
-	@Test
-	public void testAllStories() throws Throwable {
-		eng.run("/stories/calculadora.story");
+	
+	@When("inicio a Calculadora")
+	public void whenInicioACalculadora() {
+		calculadora = new Calculadora();
+		calculadora.soma(999);
 	}
-
+	
+	@Then("seu valor ser\u00E1 \"$valor\"")
+	public void thenSeuValorSera(double valor) {
+	  assertEquals(valor, calculadora.resultado(), 0.0);
+	}
+	
+	
 }

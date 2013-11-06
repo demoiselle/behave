@@ -133,6 +133,7 @@ public class BehaveContext {
 		} finally {
 			fail = null;
 			storiesPath.clear();
+			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
