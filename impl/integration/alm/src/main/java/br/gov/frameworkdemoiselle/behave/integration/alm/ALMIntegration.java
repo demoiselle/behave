@@ -239,7 +239,7 @@ public class ALMIntegration implements Integration {
 
 	public String convertToIdentificationString(String str) {
 		String ret = Normalizer.normalize(str, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-		ret = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "");
+		ret = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
 		return ret;
 	}
 
