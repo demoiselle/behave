@@ -49,14 +49,10 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -84,16 +80,7 @@ public class WebDriverRunner implements Runner {
 	public Object getDriver() {
 		if (driver == null) {
 			browser = Enum.valueOf(WebBrowser.class, BehaveConfig.getRunner_ScreenType());
-			if (!BehaveConfig.getRunner_ProxyEnabled()) {
-				driver = browser.getWebDriver();
-			} else {
-				Proxy proxy = new Proxy();
-				proxy.setProxyType(Proxy.ProxyType.PAC);
-				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunner_ProxyURL());
-				DesiredCapabilities capabilities = new DesiredCapabilities();
-				capabilities.setCapability(CapabilityType.PROXY, proxy);
-				driver = new FirefoxDriver(capabilities);
-			}
+			driver = browser.getWebDriver();
 			logger.debug(message.getString("message-webdriver-started", browser.toString()));
 			try {
 				driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);

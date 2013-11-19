@@ -218,6 +218,15 @@ public class BehaveConfig {
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
+	
+	// Para execução remota
+	public static String getRunner_RemoteUrl() {
+		return getProperty("behave.runner.screen.remote.url", "");
+	}
+
+	public static String getRunner_RemoteName() {
+		return getProperty("behave.runner.screen.remote.name", "");
+	}
 
 	// Localização do profile
 	public static String getRunner_ProfilePath() {

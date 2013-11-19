@@ -37,18 +37,52 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.util;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public enum WebBrowser {
+	
+	RemoteWeb {
+		@Override
+		public String toString() {
+			return "Remote Web Driver";
+		}
+
+		@Override
+		public WebDriver getWebDriver() {
+			BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
+			try {				
+				if (BehaveConfig.getRunner_RemoteName().equals("")){
+					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.name"));
+				}
+				if (BehaveConfig.getRunner_RemoteUrl().equals("")){
+					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
+				}	
+				DesiredCapabilities capability = new DesiredCapabilities();
+				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
+				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
+			} catch (MalformedURLException e) {
+				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()), e);
+			}
+		}
+	},	
 	MozillaFirefox {
 		@Override
 		public String toString() {
@@ -57,12 +91,19 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
+			if (!BehaveConfig.getRunner_ProxyURL().equals("")) {			
+				Proxy proxy = new Proxy();
+				proxy.setProxyType(Proxy.ProxyType.PAC);
+				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunner_ProxyURL());
+				DesiredCapabilities capabilities = new DesiredCapabilities();
+				capabilities.setCapability(CapabilityType.PROXY, proxy);
+				return new FirefoxDriver(capabilities);
+			}
 			if (BehaveConfig.getRunner_ProfileEnabled()) {
 				File profileDir = new File(BehaveConfig.getRunner_ProfilePath());
 				FirefoxProfile profile = new FirefoxProfile(profileDir);
 				return new FirefoxDriver(profile);
 			}
-
 			return new FirefoxDriver();
 		}
 	},
