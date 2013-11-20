@@ -109,17 +109,9 @@
 					.
 				</listitem>
 				<listitem>
-					<citetitle>behave.runner.proxy.enabled</citetitle>
-					: propriedade que ativa ou desativa o uso de
-					proxy no navegador,
-					O valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
-				</listitem>
-				<listitem>
 					<citetitle>behave.runner.proxy.url</citetitle>
-					: URL do proxy,
-					O valor padrão é
+					: propriedade, quando informada, ativa o uso de proxy no navegador.
+					O valor padrão da url do proxy é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
@@ -135,8 +127,24 @@
 					.
 				</listitem>
 				<listitem>
+					<citetitle>behave.runner.screen.remote.name</citetitle>
+					: Para testes remotos, esta propriedade informa
+					qual navegadore será utilizada,
+					O valor padrão é
+					<emphasis>vazio</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.remote.url</citetitle>
+					: Para testes remotos, esta propriedade informa
+					a URL na qual o Selenium Server encontra-se,
+					O valor padrão é
+					<emphasis>vazio</emphasis>
+					.
+				</listitem>
+				<listitem>
 					<citetitle>behave.runner.screen.driverPath</citetitle>
-					: Localização do driver que faz	ligação 
+					: Localização do driver que faz ligação
 					entre o navegador e o webdriver,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
@@ -146,7 +154,8 @@
 					<citetitle>behave.runner.profile.enabled</citetitle>
 					: propriedade que ativa ou desativa o uso de
 					profile no navegador,
-					O valor padrão é
+					O
+					valor padrão é
 					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
@@ -159,12 +168,12 @@
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.app.mainClass</citetitle>
-					: Nome de domínio totalmente qualificado da 
+					: Nome de domínio totalmente qualificado da
 					classe principal da aplicação sobre testes,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
-				</listitem>			
+				</listitem>
 			</itemizedlist>
 		</para>
 	</section>
@@ -279,20 +288,25 @@
 				<para>
 					<itemizedlist>
 						<listitem>
-							Todas as chamadas Rest ao RQM necessitam de um usuário e senha
+							Todas as chamadas Rest ao RQM necessitam de um usuário e
+							senha
 							válidos para a plataforma Jazz.
 						</listitem>
 						<listitem>
-							Por segurança não recomendamos armazenar de forma persistente
+							Por segurança não recomendamos armazenar de forma
+							persistente
 							estas informações.
 						</listitem>
 						<listitem>
-							O componente “demoiselle-behave-integration-alm” provê uma forma
+							O componente “demoiselle-behave-integration-alm” provê
+							uma forma
 							segura de armazenar o usuário e senha do testador.
 						</listitem>
 						<listitem>
-							O armazenamento é realizado em memória de forma criptografada e
-							podendo ser acessado apenas localmente na estação do testador
+							O armazenamento é realizado em memória de forma
+							criptografada e
+							podendo ser acessado apenas localmente na estação
+							do testador
 							durante a execução dos testes.
 						</listitem>
 					</itemizedlist>
@@ -305,7 +319,8 @@
 						<listitem>
 							Chama via linha de comando:
 
-							<programlisting>java -jar demoiselle-behave-integrtion-alm-[versao].java</programlisting>
+							<programlisting>java -jar
+								demoiselle-behave-integrtion-alm-[versao].java</programlisting>
 						</listitem>
 						<listitem>
 							Parâmetros:

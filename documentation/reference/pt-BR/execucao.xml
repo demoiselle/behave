@@ -246,6 +246,57 @@
 			</mediaobject>
 		</para>
 	</section>
+	
+	
+	<section>
+		<title>Testes Remotos</title>
+		<para>
+			A execução de testes remotos, na qual o navegador rodará numa estação diferente da 
+			estação originadora dos testes, é realizada meio do Selenium Server. Este roteiro 
+			auxiliar a criação rápida deste ambiente.
+		</para>
+
+		<para>
+			<citetitle>Instalação do Selenium Server</citetitle>
+			<itemizedlist>
+				<listitem>
+					<citetitle>Download</citetitle>: Obtenha o Selenium Server no site <ulink url="http://code.google.com/p/selenium/">
+					http://code.google.com/p/selenium/
+					</ulink> ou direto na área de donwload do DBehave <ulink url="https://www.dropbox.com/s/o1bo9gb8b6dqv1e/selenium-server-standalone-2.37.0.jar">selenium-server-standalone-2.37.0.jar</ulink>.
+					Recomendamos a versão 2.37.0 ou superior.
+				</listitem>
+				<listitem>
+					<citetitle>Iniciar Serviço</citetitle>: Rode o Selenium Server na estação que executará o navegador:
+					<programlisting>java -jar selenium-server-standalone-2.37.0.jar</programlisting> 
+				</listitem>				
+			</itemizedlist>						
+		</para>
+		<para>
+			<citetitle>Configuração do Projeto</citetitle>
+			<itemizedlist>
+				<listitem>
+					<citetitle>demoiselle.properties</citetitle>: Abra o arquivo demoiselle.properties do seu projeto
+					e configure as seguintes propriedades:					
+<programlisting>
+//Altera o driver para o modo remoto
+behave.runner.screen.type=RemoteWeb
+
+//informa o navegador. Opções disponíveis: firefox, chrome, internetExplorer, safari, htmlUnit
+behave.runner.screen.remote.name=firefox
+
+//informa a url na qual encontra-se o Selenium Server
+behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
+</programlisting>
+				</listitem>	
+				<listitem>
+					<citetitle>Navegadores</citetitle>: Caso necessite executar seu teste em um navegador diferente do Firefox, além de
+					configurar a propriedade “behave.runner.screen.remote.name”, inicie o Selenium Server
+					informando o caminho do driver específico ao seu navegador:					
+					<programlisting>java -jar selenium-server-standalone-2.37.0.jar -Dwebdriver.chrome.driver=/path/chromedriver</programlisting> 
+				</listitem>								
+			</itemizedlist>						
+		</para>
+	</section>
 
 	<section>
 		<title>Relatórios JBehave</title>
@@ -253,8 +304,7 @@
 			A final da execução dos testes automatizados são gerados
 			relatórios na
 			pasta
-			<citetitle>target/jbehave/view</citetitle>
-			.
+			<citetitle>target/jbehave/view</citetitle>.
 			O arquivo principal é o index.html e pode ser aberto em qualquer
 			navegador. Ao abrir o arquivo clique em "Story Reports" para acessar
 			o relatório da execução.

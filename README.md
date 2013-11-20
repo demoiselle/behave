@@ -9,7 +9,7 @@
 * [Bugs e Sugestões](https://github.com/demoiselle/behave/issues): Abra um issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades
 * [Catálogo de Arquétipos Releases](http://demoiselle.sourceforge.net/repository/archetype-catalog.xml): Para versões estáveis
 * [Catálogo de Arquétipos Snapshot](http://demoiselle.sourceforge.net/repository/archetype-catalog-snapshot.xml): Para versões de desenvolvimento (snapshot)
-* [Aplicação de Treinamento] (https://www.dropbox.com/sh/1sr7k89bnjzhtqc/vLJ6VqXLDO)
+* [Aplicação de Treinamento] (https://www.dropbox.com/sh/1sr7k89bnjzhtqc/mqzHHey3kR/treino-bundle.zip)
 
 ## Repositório Maven
 
