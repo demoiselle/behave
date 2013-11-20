@@ -129,7 +129,8 @@
 				<listitem>
 					<citetitle>behave.runner.screen.remote.name</citetitle>
 					: Para testes remotos, esta propriedade informa
-					qual navegadore será utilizada,
+					qual navegadore será
+					utilizada,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -137,7 +138,8 @@
 				<listitem>
 					<citetitle>behave.runner.screen.remote.url</citetitle>
 					: Para testes remotos, esta propriedade informa
-					a URL na qual o Selenium Server encontra-se,
+					a URL na qual o
+					Selenium Server encontra-se,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -145,7 +147,8 @@
 				<listitem>
 					<citetitle>behave.runner.screen.driverPath</citetitle>
 					: Localização do driver que faz ligação
-					entre o navegador e o webdriver,
+					entre o navegador e o
+					webdriver,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -169,7 +172,8 @@
 				<listitem>
 					<citetitle>behave.runner.app.mainClass</citetitle>
 					: Nome de domínio totalmente qualificado da
-					classe principal da aplicação sobre testes,
+					classe principal da
+					aplicação sobre testes,
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -274,8 +278,8 @@
 				<para>
 					Para fazer uso do módulo de integração basta acrescentar a
 					dependência no pom.xml do projeto.
-
-					<programlisting><![CDATA[<dependency>
+					<programlisting><![CDATA[
+<dependency>
 	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-integration-alm</artifactId>
 	<version>1.x.x</version>
@@ -317,10 +321,11 @@
 				<para>
 					<itemizedlist>
 						<listitem>
-							Chama via linha de comando:
-
-							<programlisting>java -jar
-								demoiselle-behave-integrtion-alm-[versao].java</programlisting>
+							Para iniciar o serviço, obtenha o autenticador
+							<ulink
+								url="http://demoiselle.sourceforge.net/repository/release/br/gov/frameworkdemoiselle/component/behave/demoiselle-behave-integration-alm/1.3.0/demoiselle-behave-integration-alm-1.3.0.jar">demoiselle-behave-integration-alm-1.3.0.jar</ulink>
+							e execute-o com o seguinte comando:
+							<programlisting>java -jar demoiselle-behave-integrtion-alm-[versao].java</programlisting>
 						</listitem>
 						<listitem>
 							Parâmetros:
