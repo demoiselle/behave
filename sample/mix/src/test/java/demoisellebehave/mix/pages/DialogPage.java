@@ -16,4 +16,7 @@ public class DialogPage {
 
 		@ElementMap(name = "Confirm", locatorType = ElementLocatorType.XPath, locator = "//input[@value='Confirm']")
 		private Button confirm;	
+		
+		@ElementMap(name = "Botao Sair", locatorType = ElementLocatorType.XPath, locator = "(//input[@value='Sair'][contains(@style, '%param1%')])")		
+		private Button botaoSair;
 }

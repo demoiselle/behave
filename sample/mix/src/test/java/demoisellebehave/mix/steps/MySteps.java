@@ -1,8 +1,21 @@
 package demoisellebehave.mix.steps;
 
-import org.jbehave.core.annotations.Then;
+import java.util.List;
 
+import junit.framework.Assert;
+
+import org.jbehave.core.annotations.Then;
+import org.openqa.selenium.WebElement;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
+import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 
 public class MySteps extends CommonSteps {
@@ -65,6 +78,19 @@ public class MySteps extends CommonSteps {
 	public void thenToggleNodeByPath(String path, String elementName) {
 		Tree element = (Tree) runner.getElement(currentPageName, elementName);
 		element.toggleByPath(path);
+	}
+
+	
+	@Then("ser\u00E1 exibido o \"$elementName\" com estilo \"$params\"")	
+	public void thenSeráExibidoOBotaoComCorVermelha(String elementName, List<String> params) {
+		try {			
+			WebButton element = (WebButton) runner.getElement(currentPageName, elementName);
+			element.setLocatorParameters(params);
+			List<WebElement> list = element.getElements();
+			Assert.assertEquals(1, list.size());
+		} catch (BehaveException e) {
+			Assert.fail("elemento não encontrado");
+		}
 	}
 
 

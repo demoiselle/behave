@@ -38,5 +38,11 @@ public class AllTest {
 	public void testEmbedded(){
 		eng.run("/stories/embedded/embedded.story");
 	}
+	
+	
+	@Test
+	public void testColor(){
+		eng.run("/stories/color/color.story");
+	}
 
 }
