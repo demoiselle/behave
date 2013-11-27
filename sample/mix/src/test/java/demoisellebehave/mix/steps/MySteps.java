@@ -8,13 +8,7 @@ import org.jbehave.core.annotations.Then;
 import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
-import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 
@@ -82,7 +76,7 @@ public class MySteps extends CommonSteps {
 
 	
 	@Then("ser\u00E1 exibido o \"$elementName\" com estilo \"$params\"")	
-	public void thenSeráExibidoOBotaoComCorVermelha(String elementName, List<String> params) {
+	public void thenSeraExibidoComEstilo(String elementName, List<String> params) {
 		try {			
 			WebButton element = (WebButton) runner.getElement(currentPageName, elementName);
 			element.setLocatorParameters(params);
