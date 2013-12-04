@@ -104,7 +104,9 @@ public enum WebBrowser {
 				FirefoxProfile profile = new FirefoxProfile(profileDir);
 				return new FirefoxDriver(profile);
 			}
-			return new FirefoxDriver();
+			FirefoxProfile profile = new FirefoxProfile();
+			profile.setEnableNativeEvents(true);
+			return new FirefoxDriver(profile);
 		}
 	},
 	Safari {

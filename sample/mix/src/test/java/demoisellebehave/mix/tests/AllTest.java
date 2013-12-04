@@ -33,6 +33,11 @@ public class AllTest {
 	public void testDialog() {
 		eng.run("/stories/dialog/dialog.story");
 	}
+
+	@Test
+	public void testMoveMouse() {
+		eng.run("/stories/movemouse/movemouse.story");
+	}	
 	
 	@Test
 	public void testEmbedded(){
