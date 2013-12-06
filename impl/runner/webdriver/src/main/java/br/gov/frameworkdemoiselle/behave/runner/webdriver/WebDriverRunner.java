@@ -118,8 +118,8 @@ public class WebDriverRunner implements Runner {
 		return driver.getTitle();
 	}
 
-	public Element getElement(String currentPageName, String elementName) {
-
+	public Element getElement(String currentPageName, String elementName) {		
+		
 		if ((currentPageName == null) || (currentPageName.equals(""))) {
 			throw new BehaveException(message.getString("exception-page-not-selected"));
 		}
@@ -131,11 +131,11 @@ public class WebDriverRunner implements Runner {
 		Element element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem
 		// implementa a interface
-		if (clazz.isInterface())
+		if (clazz.isInterface()) {
 			element = (Element) InjectionManager.getInstance().getInstanceDependecy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da
-		// interface Element
-		else if (Element.class.isAssignableFrom(clazz)) {
+			// Instancia a classe fornecida explicitamente como implementação da
+			// interface Element
+		} else if (Element.class.isAssignableFrom(clazz)) {
 			try {
 				element = (Element) clazz.newInstance();
 			} catch (Exception e) {

@@ -114,7 +114,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					if (found) {
 						break;
 					}
-					Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+					waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 					if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 					}
@@ -123,8 +123,6 @@ public class WebBase extends MappedElement implements BaseUI {
 			return elements;
 		} catch (BehaveException be) {
 			throw be;
-		} catch (InterruptedException e) {
-			throw new BehaveException(message.getString("exception-thread-sleep"), e);
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
@@ -162,7 +160,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	public boolean verifyState(StateUI state) {
 		boolean retorno = false;
 
-		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+		// waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 		final Timer operationTimer = new Timer();
 		operationTimer.start();
@@ -200,16 +198,33 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	protected void waitElement(Integer index) {
+
+		Long timeInicial = GregorianCalendar.getInstance().getTimeInMillis();
+
 		waitLoading();
 
-		verifyState(StateUI.ENABLE);
-		verifyState(StateUI.VISIBLE);
+		Long timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
+		Long diff = timeFinal - timeInicial;
+		log.debug("Tempo de waitElement (Loading): " + diff.toString() + "ms");
+
+//		 verifyState(StateUI.ENABLE);
+//		 verifyState(StateUI.VISIBLE);
+//
+//		timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
+//		diff = timeFinal - timeInicial;
+//		log.debug("Tempo de waitElement (State): " + diff.toString() + "ms");
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
 		waitVisibility(by);
+
+		timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
+		diff = timeFinal - timeInicial;
+		log.debug("Tempo de waitElement (Total): " + diff.toString() + "ms");
+		log.debug("------------------------------------------------------------------------");
+
 	}
 
 	/**
@@ -219,15 +234,17 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
+				
 		driver = (WebDriver) runner.getDriver();
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		Reflections reflections = new Reflections("");
 		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
-
+		
 		for (Class<?> clazzI : annotatedClasses) {
-			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));
+			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));			
+			
 			if (fields.size() == 1) {
 				for (Field field : fields) {
 					ElementMap map = field.getAnnotation(ElementMap.class);
@@ -343,7 +360,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (found) {
 					break;
 				}
-				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					Assert.fail(message.getString("message-text-not-found", text));
 				}
@@ -352,8 +369,6 @@ public class WebBase extends MappedElement implements BaseUI {
 			throw be;
 		} catch (NoSuchFrameException ex) {
 			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
-		} catch (InterruptedException e) {
-			throw new BehaveException(message.getString("exception-thread-sleep"), e);
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
@@ -388,7 +403,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					break;
 				}
 
-				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					Assert.fail(message.getString("message-text-not-found", text));
