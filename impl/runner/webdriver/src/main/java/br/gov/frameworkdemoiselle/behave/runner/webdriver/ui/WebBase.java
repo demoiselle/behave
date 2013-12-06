@@ -78,6 +78,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	private WebDriver driver;
 	Logger log = Logger.getLogger(WebBase.class);
 
+	static ElementMap loadingMap = null;
+
 	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
 	 * ele busca o elemento em todos os frames
@@ -198,33 +200,16 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	protected void waitElement(Integer index) {
-
-		Long timeInicial = GregorianCalendar.getInstance().getTimeInMillis();
-
 		waitLoading();
 
-		Long timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
-		Long diff = timeFinal - timeInicial;
-		log.debug("Tempo de waitElement (Loading): " + diff.toString() + "ms");
-
-//		 verifyState(StateUI.ENABLE);
-//		 verifyState(StateUI.VISIBLE);
-//
-//		timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
-//		diff = timeFinal - timeInicial;
-//		log.debug("Tempo de waitElement (State): " + diff.toString() + "ms");
+		// verifyState(StateUI.ENABLE);
+		// verifyState(StateUI.VISIBLE);
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
 		waitVisibility(by);
-
-		timeFinal = GregorianCalendar.getInstance().getTimeInMillis();
-		diff = timeFinal - timeInicial;
-		log.debug("Tempo de waitElement (Total): " + diff.toString() + "ms");
-		log.debug("------------------------------------------------------------------------");
-
 	}
 
 	/**
@@ -234,43 +219,53 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
-				
+
 		driver = (WebDriver) runner.getDriver();
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-		Reflections reflections = new Reflections("");
-		Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
-		
-		for (Class<?> clazzI : annotatedClasses) {
-			HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));			
-			
-			if (fields.size() == 1) {
-				for (Field field : fields) {
-					ElementMap map = field.getAnnotation(ElementMap.class);
+		if (loadingMap == null) {
 
-					boolean existeLoading;
+			Reflections reflections = new Reflections("");
+			Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
 
-					try {
-						// Verifica se existe o LOADING
-						ExpectedConditions.presenceOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])).apply(driver);
+			for (Class<?> clazzI : annotatedClasses) {
+				HashSet<Field> fields = (HashSet<Field>) ReflectionUtils.getAllFields(clazzI, ReflectionUtils.withAnnotation(ElementMap.class), ReflectionUtils.withTypeAssignableTo(Loading.class));
 
-						existeLoading = true;
-					} catch (Exception e) {
-						existeLoading = false;
+				if (fields.size() == 1) {
+					for (Field field : fields) {
+						ElementMap map = field.getAnnotation(ElementMap.class);
+
+						boolean existeLoading;
+
+						try {
+							// Verifica se existe o LOADING
+							ExpectedConditions.presenceOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])).apply(driver);
+
+							existeLoading = true;
+
+							loadingMap = map;
+
+						} catch (Exception e) {
+							existeLoading = false;
+						}
+
+						if (existeLoading) {
+							// Aguardo o LOADING desaparecer!
+							WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+
+							wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
+						}
+
+						break;
 					}
-
-					if (existeLoading) {
-						// Aguardo o LOADING desaparecer!
-						WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-
-						wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
-					}
-
-					break;
 				}
 			}
-
+		} else {
+			
+			// Cache do elementMap
+			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
 		}
 
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
