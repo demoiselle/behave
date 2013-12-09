@@ -86,7 +86,6 @@ public class BehaveContext {
 		steps.add(step);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void run(List<String> storiesPath) {
 		try {
 			log.info("--------------------------------");
@@ -99,35 +98,22 @@ public class BehaveContext {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 
-			// Armazena o array antigo para retirar as histórias depois
-			List<String> oldsStories = StoryFileConverter.convertReusedScenarios((List<String>) allOriginalStoriesPath.clone(), BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
-
-			// Cria a lista de histórias para serem executadas (Somente para validação, não utilizar esta lista para no final Array)
-			List<String> storiesConvertedAr = StoryFileConverter.convertReusedScenarios(storiesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
-
 			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
 			allOriginalStoriesPath.addAll(storiesPath);
 
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
-			// Cria um novo array contendo somente as histórias atuais, sem as antigas
+			// Cria um novo array contendo somente as histórias atuais
 			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
 			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
-			// List<String> finalArray = new ArrayList<String>();
-			// for (String storyFile : allStoriesConverted) {
-			// if (!oldsStories.contains(storyFile) || storiesConvertedAr.contains(storyFile)) {
-			// finalArray.add(storyFile);
-			// }
-			// }
-
 			List<String> finalArray = new ArrayList<String>();
 			for (String storyFile : storiesPath) {
 				for (String storyFileC : allStoriesConverted) {
 					if (storyFileC.contains(storyFile)) {
 						finalArray.add(storyFileC);
 					}
-				}				
+				}
 			}
 
 			// Roda o runner com as histórias convertidas
