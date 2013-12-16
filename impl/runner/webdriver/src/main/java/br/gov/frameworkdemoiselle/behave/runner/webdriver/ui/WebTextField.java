@@ -115,7 +115,7 @@ public class WebTextField extends WebBase implements TextField {
 
 	@Override
 	public String getText() {
-		waitElement(0);
+		waitElementOnlyVisible(0);
 		return getElements().get(0).getAttribute("value");
 	}
 

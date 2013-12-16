@@ -64,11 +64,9 @@ import br.gov.frameworkdemoiselle.behave.internal.ui.MappedElement;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Loading;
-import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.ByConverter;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.SwitchDriver;
-import br.gov.frameworkdemoiselle.behave.runner.webdriver.util.Timer;
 
 public class WebBase extends MappedElement implements BaseUI {
 
@@ -81,8 +79,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	static ElementMap loadingMap = null;
 
 	/**
-	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
-	 * ele busca o elemento em todos os frames
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
 	 * 
 	 * @return Lista de elementos encontrados
 	 */
@@ -159,51 +156,11 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
-	public boolean verifyState(StateUI state) {
-		boolean retorno = false;
-
-		// waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-
-		final Timer operationTimer = new Timer();
-		operationTimer.start();
-
-		Long maxWait = BehaveConfig.getRunner_ScreenMaxWait();
-
-		while (!retorno && (maxWait > operationTimer.getTimeElapsed())) {
-
-			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-
-			switch (state) {
-			case VISIBLE:
-				retorno = getElements().get(0).isDisplayed();
-				break;
-
-			case INVISIBLE:
-				retorno = !getElements().get(0).isDisplayed();
-				break;
-
-			case ENABLE:
-				retorno = getElements().get(0).isEnabled();
-				break;
-
-			case DISABLE:
-				retorno = !getElements().get(0).isEnabled();
-				break;
-
-			default:
-				throw new BehaveException(message.getString("exception-invalid-option", state, "verifyState"));
-			}
-
-		}
-
-		return retorno;
-	}
-
+	/**
+	 * TODO: Refactoring dos métodos de verificação de elementos na tela
+	 */
 	protected void waitElement(Integer index) {
 		waitLoading();
-
-		// verifyState(StateUI.ENABLE);
-		// verifyState(StateUI.VISIBLE);
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
@@ -212,10 +169,17 @@ public class WebBase extends MappedElement implements BaseUI {
 		waitVisibility(by);
 	}
 
+	protected void waitElementOnlyVisible(Integer index) {
+		waitLoading();
+
+		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+		waitVisibility(by);
+	}
+
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading,
-	 * e se existir, ele sempre espera que este elemento desapareça antes de
-	 * continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
 	 */
 	@SuppressWarnings("unchecked")
 	private void waitLoading() {
@@ -262,7 +226,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				}
 			}
 		} else {
-			
+
 			// Cache do elementMap
 			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
@@ -295,8 +259,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em
-	 * uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
@@ -325,10 +288,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Neste método waitText estamos forçando que seja verificado dentro do body
-	 * através de um loop controlado por nós e não pelo implicityWait do
-	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
-	 * valor padrão das propriedades.
+	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
 	 */
 	public void waitText(String text, Long timeout) {
 		try {
@@ -384,9 +344,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 				/*
-				 * Busca o texto dentro do elemento, atentar para o método
-				 * getText, ele não é o getText do WebDriver e sim do Element
-				 * (WebTextField, WebSelect...)
+				 * Busca o texto dentro do elemento, atentar para o método getText, ele não é o getText do WebDriver e sim do Element do framework (WebTextField, WebSelect...)
 				 */
 				if (getText().contains(text)) {
 					found = true;

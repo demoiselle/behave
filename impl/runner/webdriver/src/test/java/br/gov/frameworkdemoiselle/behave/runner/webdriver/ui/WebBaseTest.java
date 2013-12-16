@@ -52,7 +52,6 @@ import org.openqa.selenium.WebElement;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
-import br.gov.frameworkdemoiselle.behave.runner.ui.StateUI;
 
 public class WebBaseTest {
 
@@ -91,8 +90,6 @@ public class WebBaseTest {
 
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
-		// String text = webBase.getText();
-
 	}
 
 	@Test
@@ -111,8 +108,6 @@ public class WebBaseTest {
 
 		webBase.setRunner(runner);
 		webBase.setElementMap(mapa);
-		webBase.verifyState(StateUI.VISIBLE);
-
 	}
 
 	@Test
