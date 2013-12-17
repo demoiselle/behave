@@ -81,7 +81,6 @@ public class FestRunner implements Runner {
 	public Container mainContainer;
 	public Container currentContainer;
 	public FrameFixture mainFixture;
-	// public JComponentFixture currentFixture;
 	public String currentTitle;
 
 	@Override
@@ -218,7 +217,7 @@ public class FestRunner implements Runner {
 		DesktopElement element = null;
 		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
 		if (clazz.isInterface())
-			element = (DesktopElement) InjectionManager.getInstance().getInstanceDependecy(clazz);
+			element = (DesktopElement) InjectionManager.getInstance().getInstanceDependecyWithoutProxy(clazz);
 		// Instancia a classe fornecida explicitamente como implementação da interface Element
 		else if (Element.class.isAssignableFrom(clazz))
 			try {

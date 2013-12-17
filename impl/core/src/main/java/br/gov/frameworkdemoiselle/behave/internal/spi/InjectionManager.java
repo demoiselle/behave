@@ -48,9 +48,7 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 
 /**
- * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS
- * e RUNNERS disponíveis. Ele guarda os objetos em um hashtable para que o
- * objeto não seja instânciado em toda da a chamada.
+ * Classe respónsável por utilizer a especificação SPI para encontrar os PARSERS e RUNNERS disponíveis. Ele guarda os objetos em um hashtable para que o objeto não seja instânciado em toda da a chamada.
  * 
  * @author SERPRO
  * 
@@ -76,8 +74,18 @@ public class InjectionManager {
 		return instance;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	public Object getInstanceDependecy(Class clazz) {
+		return getInstanceDependecyC(clazz, true);
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	public Object getInstanceDependecyWithoutProxy(Class clazz) {
+		return getInstanceDependecyC(clazz, false);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected Object getInstanceDependecyC(Class clazz, boolean proxy) {
 		if (singletons.containsKey(clazz.toString())) {
 			return singletons.get(clazz.toString());
 		} else {
@@ -85,7 +93,11 @@ public class InjectionManager {
 			for (Object object : service) {
 				// Coloca um proxy (UIProxy) no caso de ser um elemento de UI
 				if (object instanceof Element) {
-					singletons.put(clazz.toString(), UIProxy.newInstance(object));
+					if (proxy) {
+						singletons.put(clazz.toString(), UIProxy.newInstance(object));
+					} else {
+						singletons.put(clazz.toString(), object);
+					}
 				} else {
 					singletons.put(clazz.toString(), object);
 				}
