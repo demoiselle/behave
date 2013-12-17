@@ -67,7 +67,7 @@
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
 		<module>impl/integration/alm</module>
-		<!-- <module>documentation/reference</module> -->
+		<module>documentation/reference</module>
 	</modules>
 
 	<build>

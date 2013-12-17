@@ -19,6 +19,58 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.3.1</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/101">
+					<emphasis>[Melhoria]</emphasis>
+					Tratamento da exceção StaleElementReferenceException por meio de um
+					proxy
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/119">
+					<emphasis>[Nova Funcionalidade]</emphasis>
+					Possibilitar a configuração do framework para execução de testes
+					remotos
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/145">
+					<emphasis>[Melhoria]</emphasis>
+					Tratamento do caracter # no envio dos dados para a ALM
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/147">
+					<emphasis>[Melhoria]</emphasis>
+					Tratamento de elementos visíveis mais não clicáveis
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/148">
+					<emphasis>[Novo Componente]</emphasis>
+					Novo componente Web de tela RichTextEditor (CKEditor)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/151">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização das dependências do framework
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/152">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na velocidade de execução e estabilidade dos testes
+				</ulink>
+			</listitem>
+
+		</itemizedlist>
+	</para>
+
+	<para>
 		<citetitle>Versão 1.3.0</citetitle>
 
 		<itemizedlist>
