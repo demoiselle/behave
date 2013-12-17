@@ -85,7 +85,7 @@ public class InjectionManager {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected Object getInstanceDependecyC(Class clazz, boolean proxy) {
+	private Object getInstanceDependecyC(Class clazz, boolean proxy) {
 		if (singletons.containsKey(clazz.toString())) {
 			return singletons.get(clazz.toString());
 		} else {
