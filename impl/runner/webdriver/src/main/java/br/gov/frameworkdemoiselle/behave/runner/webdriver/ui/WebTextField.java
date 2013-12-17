@@ -70,12 +70,16 @@ public class WebTextField extends WebBase implements TextField {
 				e.printStackTrace();
 			}
 
+			// Tenta limpar utilizando o WebDriver
+			getElements().get(0).clear();
+			
+			// Tenta limpar com força bruta
 			Keys[] keys = new Keys[getElements().get(0).getAttribute("value").length() + 1];
 			keys[0] = Keys.END; // Final da Linha
 			for (int i = 1; i < keys.length; i++)
-				keys[i] = Keys.BACK_SPACE;
+				keys[i] = Keys.BACK_SPACE;			
 
-			String finalValue = Keys.chord(keys) + value;
+			String finalValue = Keys.chord(keys) + value + Keys.chord(Keys.CANCEL);
 
 			// Envia para o elemento
 			getElements().get(0).sendKeys(finalValue);
@@ -108,7 +112,7 @@ public class WebTextField extends WebBase implements TextField {
 	 */
 	public void clear() {
 		waitElement(0);
-
+		
 		// Limpa o campo enviando BACKSPACE
 		sendKeysWithTries();
 	}
