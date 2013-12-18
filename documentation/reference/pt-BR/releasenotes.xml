@@ -66,7 +66,12 @@
 					Melhoria na velocidade de execução e estabilidade dos testes
 				</ulink>
 			</listitem>
-
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/161">
+					<emphasis>[Bug]</emphasis>
+					Tratamento de campos com máscara no primefaces
+				</ulink>
+			</listitem>
 		</itemizedlist>
 	</para>
 
