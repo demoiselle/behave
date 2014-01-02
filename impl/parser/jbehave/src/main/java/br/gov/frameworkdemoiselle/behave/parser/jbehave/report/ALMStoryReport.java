@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave.report;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
@@ -66,6 +67,8 @@ public class ALMStoryReport extends DefaultStoryReport {
 	Hashtable<String, Boolean> failedScenario = new Hashtable<String, Boolean>();
 	Hashtable<String, String> stepsScenario = new Hashtable<String, String>();
 	Hashtable<String, String> details = new Hashtable<String, String>();
+	
+	Map<String, String> examples;
 
 	protected Integration integration = (Integration) InjectionManager.getInstance().getInstanceDependecy(Integration.class);
 
@@ -120,7 +123,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 
 	@Override
 	public void beforeStep(String step) {
-		String newString = stepsScenario.get(currentScenarioTitle) + "<br/>" + step;
+		String newString = stepsScenario.get(currentScenarioTitle) + "<br/>" + getNewStep(step);
 		stepsScenario.put(currentScenarioTitle, newString);
 	}
 
@@ -131,5 +134,23 @@ public class ALMStoryReport extends DefaultStoryReport {
 		details.put(currentScenarioTitle, message.getString("message-detail-result", step, detail.getMessage()));
 		failedScenario.put(currentScenarioTitle, true);
 		stepsScenario.put(currentScenarioTitle, message.getString("message-error-result", stepsScenario.get(currentScenarioTitle), cause.getCause()));
+	}
+
+	@Override
+	public void example(Map<String, String> tableRow) {
+		super.example(tableRow);
+		
+		examples = new Hashtable<String, String>();
+		examples.putAll(tableRow);
+	}
+	
+	private String getNewStep(String step) {
+		String newStep = step;
+		
+		for ( String key : examples.keySet() ) {
+			newStep = newStep.replaceAll("<"+key+">", examples.get(key));
+		}
+		
+		return newStep;
 	}
 }
