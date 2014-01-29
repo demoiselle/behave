@@ -37,6 +37,7 @@
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
 import java.awt.Component;
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 import javax.swing.JButton;
@@ -110,7 +111,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (button.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && button.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && button.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (button.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && button.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JButton")) {
 				return true;
@@ -122,7 +123,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (textField.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && textField.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && textField.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (textField.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && textField.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTextField")) {
 				return true;
@@ -156,7 +157,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (menu.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && menu.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menu.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (menu.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && menu.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JMenu")) {
 				return true;
@@ -168,7 +169,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (menuItem.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && menuItem.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && menuItem.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (menuItem.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && menuItem.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JMenuItem")) {
 				return true;
@@ -180,7 +181,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (checkBox.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && checkBox.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && checkBox.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (checkBox.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && checkBox.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JCheckBox")) {
 				return true;
@@ -192,7 +193,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			if (radio.getName() != null && getElementMap().locatorType() == ElementLocatorType.Name && radio.getName().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
-			} else if (getElementMap().locatorType() == ElementLocatorType.Label && radio.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
+			} else if (radio.getText() != null && getElementMap().locatorType() == ElementLocatorType.Label && radio.getText().equalsIgnoreCase(getElementMap().locator()[0])) {
 				return true;
 			} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JRadioButton")) {
 				return true;
@@ -214,7 +215,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 			for (int i = 0; i < tabbedPane.getComponentCount(); i++) {
 				// Busca no título, mas o locator esta como LABEL!
-				if (getElementMap().locatorType() == ElementLocatorType.Label && tabbedPane.getTitleAt(i).equalsIgnoreCase(getElementMap().locator()[0])) {
+				if (tabbedPane.getTitleAt(i) != null && getElementMap().locatorType() == ElementLocatorType.Label && tabbedPane.getTitleAt(i).equalsIgnoreCase(getElementMap().locator()[0])) {
 					return true;
 				} else if (getElementMap().locatorType() == ElementLocatorType.ClassName && getElementMap().locator()[0].equals("JTabbedPane")) {
 					return true;
@@ -227,6 +228,23 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				return true;
 			}
 		}
+		
+		if ( getElementMap().locatorType() == ElementLocatorType.ClassName && component.getClass().getCanonicalName().equalsIgnoreCase(getElementMap().locator()[0]) ) {
+			if ( getElementMap().locator().length > 1 ) {
+				try {
+					Method getInformacaoMethod = component.getClass().getMethod("getText");
+					
+					String resultado = (String) getInformacaoMethod.invoke(component);
+					
+					return resultado.equalsIgnoreCase(getElementMap().locator()[1]);
+				} catch (Exception e) {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
