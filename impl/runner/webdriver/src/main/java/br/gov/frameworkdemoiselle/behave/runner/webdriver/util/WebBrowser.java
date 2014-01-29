@@ -43,6 +43,7 @@ import java.net.URL;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -102,10 +103,20 @@ public enum WebBrowser {
 			if (BehaveConfig.getRunner_ProfileEnabled()) {
 				File profileDir = new File(BehaveConfig.getRunner_ProfilePath());
 				FirefoxProfile profile = new FirefoxProfile(profileDir);
+				if (!BehaveConfig.getRunner_BinaryPath().equals("")) {
+					File binaryDir = new File(BehaveConfig.getRunner_BinaryPath());
+					FirefoxBinary binary = new FirefoxBinary(binaryDir);
+					return new FirefoxDriver(binary, profile);
+				}
 				return new FirefoxDriver(profile);
 			}
 			FirefoxProfile profile = new FirefoxProfile();
 			profile.setEnableNativeEvents(true);
+			if (!BehaveConfig.getRunner_BinaryPath().equals("")) {
+				File binaryDir = new File(BehaveConfig.getRunner_BinaryPath());
+				FirefoxBinary binary = new FirefoxBinary(binaryDir);
+				return new FirefoxDriver(binary, profile);
+			}
 			return new FirefoxDriver(profile);
 		}
 	},

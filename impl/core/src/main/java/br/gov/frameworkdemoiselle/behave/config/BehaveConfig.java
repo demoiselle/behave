@@ -232,6 +232,11 @@ public class BehaveConfig {
 	public static String getRunner_ProfilePath() {
 		return getProperty("behave.runner.screen.profilePath");
 	}
+	
+	// Localização do binário do navegador
+	public static String getRunner_BinaryPath() {
+		return getProperty("behave.runner.screen.binaryPath", "");
+	}
 
 	public static String getRunner_ScreenType() {
 		return getProperty("behave.runner.screen.type");
