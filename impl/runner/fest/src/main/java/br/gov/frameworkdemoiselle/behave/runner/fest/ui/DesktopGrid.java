@@ -36,8 +36,13 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
+import java.awt.Component;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import org.apache.log4j.Logger;
 import org.fest.swing.core.MouseButton;
 import org.fest.swing.data.TableCell;
 import org.fest.swing.fixture.JTableFixture;
@@ -46,16 +51,38 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
 public class DesktopGrid extends DesktopBase implements Grid {
 
+	private Logger logger = Logger.getLogger(this.toString());
+
 	@Override
 	public void clickRow(String reference) {
 
 		// Pegar a linha que tenha o texto do parâmetro referente a
+		try {
+			JTable table = (JTable) getElement();
+			JTableFixture tFix = new JTableFixture(runner.robot, table);
+			TableCell cell = tFix.cell(reference);
+			tFix.click(cell, MouseButton.LEFT_BUTTON);
 
-		JTable table = (JTable) getElement();
-		JTableFixture tFix = new JTableFixture(runner.robot, table);
-		TableCell cell = tFix.cell(reference);
-		tFix.click(cell, MouseButton.LEFT_BUTTON);
+		} catch (Exception ex) {
+
+			JTable table = (JTable) getElement();
+			JTableFixture tFix = new JTableFixture(runner.robot, table);
+
+			for (int i = 0; i < tFix.target.getModel().getRowCount(); i++) {
+				for (int j = 0; j < tFix.target.getModel().getColumnCount(); j++) {
+					JPanel panel = (JPanel) tFix.target.getModel().getValueAt(i, j);
+
+					for (Component c : panel.getComponents()) {
+						if (c instanceof JLabel && ((JLabel) c).getText().equals(reference)) {
+							// Seleciona a linha
+							tFix.selectRows(i);
+							logger.debug("Linha com valor [" + reference + "] encontada na posição [" + i + "] na coluna [" + j + "].");
+						}
+					}
+				}
+			}
+
+		}
 
 	}
-
 }

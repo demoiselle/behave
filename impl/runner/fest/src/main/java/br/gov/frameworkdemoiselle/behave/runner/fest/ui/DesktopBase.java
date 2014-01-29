@@ -67,13 +67,12 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
 public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
-	
 	private BehaveMessage message = new BehaveMessage(FestRunner.MESSAGEBUNDLE);
 	private Logger log = Logger.getLogger(DesktopBase.class);
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
-		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());		
+		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
@@ -85,7 +84,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 			}
 		});
 
-		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice		
+		// Se encontrar mais de um elemento com o finder utiliza a anotação do índice
 		log.debug(message.getString("message-elements-found", findedComponents.size(), runner.getTitle(), getElementMap().locator()[0]));
 
 		if (findedComponents.size() == 0) {
@@ -228,14 +227,12 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				return true;
 			}
 		}
-		
-		if ( getElementMap().locatorType() == ElementLocatorType.ClassName && component.getClass().getCanonicalName().equalsIgnoreCase(getElementMap().locator()[0]) ) {
-			if ( getElementMap().locator().length > 1 ) {
+
+		if (getElementMap().locatorType() == ElementLocatorType.ClassName && component.getClass().getCanonicalName().equalsIgnoreCase(getElementMap().locator()[0])) {
+			if (getElementMap().locator().length > 1) {
 				try {
 					Method getInformacaoMethod = component.getClass().getMethod("getText");
-					
 					String resultado = (String) getInformacaoMethod.invoke(component);
-					
 					return resultado.equalsIgnoreCase(getElementMap().locator()[1]);
 				} catch (Exception e) {
 					return false;
@@ -244,7 +241,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
