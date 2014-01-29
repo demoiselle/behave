@@ -45,6 +45,7 @@ import javax.swing.JTable;
 import org.apache.log4j.Logger;
 import org.fest.swing.core.MouseButton;
 import org.fest.swing.data.TableCell;
+import org.fest.swing.exception.ActionFailedException;
 import org.fest.swing.fixture.JTableFixture;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
@@ -62,8 +63,7 @@ public class DesktopGrid extends DesktopBase implements Grid {
 			JTableFixture tFix = new JTableFixture(runner.robot, table);
 			TableCell cell = tFix.cell(reference);
 			tFix.click(cell, MouseButton.LEFT_BUTTON);
-
-		} catch (Exception ex) {
+		} catch (ActionFailedException ex) {
 
 			JTable table = (JTable) getElement();
 			JTableFixture tFix = new JTableFixture(runner.robot, table);
