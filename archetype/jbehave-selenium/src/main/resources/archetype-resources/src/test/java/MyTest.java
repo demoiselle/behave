@@ -1,5 +1,7 @@
 package ${packageName};
 
+import java.io.File;
+
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
@@ -15,7 +17,7 @@ public class MyTest {
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run("/stories");
+		eng.run(File.separator + "stories");
 	}
 
 }
