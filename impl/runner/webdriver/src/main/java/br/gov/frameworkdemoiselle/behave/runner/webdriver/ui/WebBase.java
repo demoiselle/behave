@@ -263,7 +263,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
-	public JavascriptExecutor getJavascirptExecutor() {
+	public JavascriptExecutor getJavascriptExecutor() {
 		if (!JavascriptExecutor.class.isAssignableFrom(this.runner.getDriver().getClass())) {
 			throw new BehaveException(message.getString("exception-javascript-driver", runner.getDriver().getClass()));
 		}

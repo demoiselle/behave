@@ -73,7 +73,7 @@ public class RichCalendar extends WebBase implements Calendar {
 		checkRichfacesComponent();
 
 		// Abre ou fecha o menu de acordo com o estado do componente
-		if ((Boolean) getJavascirptExecutor().executeScript("return RichFaces.$('" + getId() + "').isVisible;"))
+		if ((Boolean) getJavascriptExecutor().executeScript("return RichFaces.$('" + getId() + "').isVisible;"))
 			hideCalendar();
 		else {
 			showCalendar();
@@ -90,7 +90,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	@Override
 	public void setValue(String value) {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').setValue('" + value + "');");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').setValue('" + value + "');");
 
 	}
 
@@ -127,7 +127,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	 */
 	public void showCalendar() {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').showPopup();");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').showPopup();");
 	}
 
 	/*
@@ -139,7 +139,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	 */
 	public void hideCalendar() {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').hidePopup();");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').hidePopup();");
 	}
 
 	/*
@@ -151,7 +151,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	 */
 	public void today() {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').today();");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').today();");
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class RichCalendar extends WebBase implements Calendar {
 	 */
 	public boolean isRichCalendar() {
 		String jsCodeCheckComponent = "return (function(tipo, id) { var rf = RichFaces.$(id); return (typeof(rf) == \"object\" && typeof(rf.name) == \"string\" && rf.name == tipo);})('Calendar','" + getId() + "');";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeCheckComponent);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 
 	/**

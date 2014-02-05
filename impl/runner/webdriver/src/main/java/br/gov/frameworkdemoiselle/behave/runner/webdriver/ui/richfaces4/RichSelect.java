@@ -90,7 +90,7 @@ public class RichSelect extends WebBase implements Select {
 		checkRichfacesComponent();
 
 		// Abre ou fecha o menu de acordo com o estado do componente
-		if ((Boolean) getJavascirptExecutor().executeScript("return RichFaces.$('" + getId() + "').popupList.isVisible();"))
+		if ((Boolean) getJavascriptExecutor().executeScript("return RichFaces.$('" + getId() + "').popupList.isVisible();"))
 			hidePopup();
 		else {
 			showPopup();
@@ -113,7 +113,7 @@ public class RichSelect extends WebBase implements Select {
 		if (txtMenuItem != null && !txtMenuItem.isEmpty()) {
 			String jsClickItemCode = "return (function(val, id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == val ) { rfs.originalItems[ n ].click(); return true; } } return false; })('" + txtMenuItem + "','" + getId() + "');";
 
-			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
+			Boolean clicked = (Boolean) getJavascriptExecutor().executeScript(jsClickItemCode);
 			if (!clicked) {
 				throw new BehaveException(message.getString("exception-error-click", txtMenuItem, this.getElementMap().name()));
 			}
@@ -126,7 +126,7 @@ public class RichSelect extends WebBase implements Select {
 	 */
 	public void showPopup() {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').showPopup();");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').showPopup();");
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class RichSelect extends WebBase implements Select {
 	 */
 	public void hidePopup() {
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('" + getId() + "').hidePopup();");
+		getJavascriptExecutor().executeScript("RichFaces.$('" + getId() + "').hidePopup();");
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class RichSelect extends WebBase implements Select {
 	 */
 	public boolean isRichSelect() {
 		String jsCodeCheckComponent = "return (function(tipo, id) { var rf = RichFaces.$(id); return (typeof(rf) == \"object\" && typeof(rf.name) == \"string\" && rf.name == tipo);})('select','" + getId() + "');";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeCheckComponent);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class RichSelect extends WebBase implements Select {
 
 		String jsClickItemCode = "return (function(index,id){ var rfs = RichFaces.$(id); if( index >= 0 && index < rfs.originalItems.length ) { rfs.originalItems.get( index ).click(); return true; } return false; })(" + index + ",'" + getId() + "');";
 
-		Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
+		Boolean clicked = (Boolean) getJavascriptExecutor().executeScript(jsClickItemCode);
 		if (!clicked) {
 			throw new BehaveException(message.getString("exception-error-click", index, this.getElementMap().name()));
 		}
@@ -192,7 +192,7 @@ public class RichSelect extends WebBase implements Select {
 		if (value != null && !value.isEmpty()) {
 			String jsClickItemCode = "return (function(value,id){ var rfs = RichFaces.$(id); for( var n=0; n < rfs.popupList.options.clientSelectItems.length; n++ ) { if( rfs.popupList.options.clientSelectItems[n].label == value ) { rfs.originalItems[ n ].click(); return true; } } return false; })('" + value + "','" + getId() + "');";
 
-			Boolean clicked = (Boolean) getJavascirptExecutor().executeScript(jsClickItemCode);
+			Boolean clicked = (Boolean) getJavascriptExecutor().executeScript(jsClickItemCode);
 			if (!clicked) {
 				throw new BehaveException(message.getString("exception-error-click", value, this.getElementMap().name()));
 			}

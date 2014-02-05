@@ -47,7 +47,7 @@ public class RichTextEditor extends WebBase implements TextField {
 	}
 
 	public void setText(String id, String data) {
-		super.getJavascirptExecutor().executeScript("CKEDITOR.instances['" + id + "'].setData('" + data + "');");
+		super.getJavascriptExecutor().executeScript("CKEDITOR.instances['" + id + "'].setData('" + data + "');");
 	}
 
 	public void sendKeysWithTries(CharSequence... keysToSend) {

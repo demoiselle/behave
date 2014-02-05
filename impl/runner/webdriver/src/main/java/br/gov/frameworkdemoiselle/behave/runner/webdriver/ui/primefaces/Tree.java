@@ -59,7 +59,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,label) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && collapseByLabel(w,label)  );})('" + getId() + "','" + label + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível colapsar o nó com label [" + label + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -67,7 +67,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,path) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && collapseByPath(w,path)  );})('" + getId() + "','" + path + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível colapsar o nó com caminho [" + path + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -75,7 +75,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,label) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && expandByLabel(w,label)  );})('" + getId() + "','" + label + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível expandir o nó com label [" + label + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -83,7 +83,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,path) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && expandByPath(w,path)  );})('" + getId() + "','" + path + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível expandir o nó com caminho [" + path + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -91,7 +91,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,label) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && selectByLabel(w,label)  );})('" + getId() + "','" + label + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível selecionar o nó com label [" + label + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -99,7 +99,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,path) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && selectByPath(w,path)  );})('" + getId() + "','" + path + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível selecionar o nó com caminho [" + path + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -107,7 +107,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,label) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && unselectByLabel(w,label)  );})('" + getId() + "','" + label + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível deselecionar o nó com label [" + label + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -115,7 +115,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,path) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && unselectByPath(w,path)  );})('" + getId() + "','" + path + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível deselecionar o nó com caminho [" + path + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -123,7 +123,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,label) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && toggleByLabel(w,label)  );})('" + getId() + "','" + label + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível alternar o checkbox do nó com label [" + label + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -131,7 +131,7 @@ public class Tree extends WebBase {
 		waitElement(0);
 		checkPrimeFacesComponent();
 		String jsCode = "return (function(id,path) { " + JSTREECODE + "var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && toggleByPath(w,path)  );})('" + getId() + "','" + path + "');";
-		if (!(Boolean) getJavascirptExecutor().executeScript(jsCode))
+		if (!(Boolean) getJavascriptExecutor().executeScript(jsCode))
 			throw new BehaveException("Não foi possível alternar o checkbox do nó com caminho [" + path + "] do compoente [" + this.getElementMap().name() + "] ID [" + getId() + "].");
 	}
 
@@ -145,7 +145,7 @@ public class Tree extends WebBase {
 		// Deve ser uma ui-tree e não ui-tree-horizontal
 		String jsCodeCheckComponent = "return (function(id) { " + JSTREECODE + " var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && w.jq.hasClass('ui-tree') && !w.jq.hasClass('ui-tree-horizontal'));})('" + getId() + "');";
 		System.out.println(jsCodeCheckComponent);
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeCheckComponent);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 
 	/**
