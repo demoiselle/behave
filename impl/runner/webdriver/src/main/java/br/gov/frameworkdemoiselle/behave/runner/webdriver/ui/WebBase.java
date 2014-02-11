@@ -148,7 +148,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		return getElements().get(0).getText();
 	}
 
-	private static void waitThreadSleep(Long delay) {
+	protected static void waitThreadSleep(Long delay) {
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException ex) {
