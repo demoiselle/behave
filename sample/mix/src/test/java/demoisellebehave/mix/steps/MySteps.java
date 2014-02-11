@@ -13,6 +13,7 @@ import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichFileUpload;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichInputNumberSpinner;
 
 public class MySteps extends CommonSteps {
 	
@@ -114,5 +115,32 @@ public class MySteps extends CommonSteps {
 		Assert.assertEquals(state, estado);
 	}	
 	
+	
+	@When("defino o valor \"$value\" para o campo \"$element\"")
+	public void whenDefionoOValorParaOCampoInputNumberSpinner(String value, String element) {
+		RichInputNumberSpinner is = (RichInputNumberSpinner)runner.getElement(currentPageName, element);
+		is.setValue( Long.valueOf(value) );
+	}
+	
+	@Then("o valor do campo \"$element\" ser\u00E1 \"$value\"")
+	public void thenOValorDoCampoinputNumberSpinnerSerá(String element, String value) {
+		RichInputNumberSpinner is = (RichInputNumberSpinner)runner.getElement(currentPageName, element);
+		Long isValue = is.getValue();
+		Assert.assertNotNull(isValue);
+		Assert.assertEquals(isValue.longValue(), Long.parseLong(value));
+	}
+
+	@When("aumento o valor do campo \"$element\"")
+	public void whenAumentoOValorDoCampoinputNumberSpinner(String element) {
+		RichInputNumberSpinner is = (RichInputNumberSpinner)runner.getElement(currentPageName, element);
+		is.increase();
+	}
+
+	@When("diminuo o valor do campo \"$element\"")
+	public void whenDiminuoOValorDoCampoinputNumberSpinner(String element) {
+		RichInputNumberSpinner is = (RichInputNumberSpinner)runner.getElement(currentPageName, element);
+		is.decrease();
+	}
+
 	
 }
