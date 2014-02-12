@@ -2,9 +2,8 @@ package demoisellebehave.mix.tests;
 
 import org.junit.Test;
 
-import demoisellebehave.mix.steps.MySteps;
-
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import demoisellebehave.mix.steps.MySteps;
 
 public class TestRichInputNumberSpinner {
 
@@ -18,6 +17,6 @@ public class TestRichInputNumberSpinner {
 	@Test
 	public void testAllStories() throws Throwable {
 		eng.run("/stories/richfaces4/inputNumberSpinner.story");
-}
+	}
 
 }

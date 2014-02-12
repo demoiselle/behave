@@ -50,7 +50,7 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
  * Utiliza a API Javascript do Richfaces para a correta manipulação do componente.
  * O locator do mapeamento de tela deve retornar o primeiro div gerado pelo componente rich:inputNumberSpinner,
  * aquele span que possui 'class="rf-insp"' ou ainda que possui o mesmo ID informado no arquivo XHTML,
- * porém, o ID não é obrigatório, basta selecionar o primeiro span gerado pelo componente.
+ * porém, o ID não é obrigatório, basta selecionar o primeiro span gerado pelo componente. 
  * 
  * @author lmveloso
  *

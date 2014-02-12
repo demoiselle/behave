@@ -1,4 +1,4 @@
-Funcionalidade: Usar Componente inputNumberSpinner
+Funcionalidade: Usar Componente inputNumberSpinner 
 
 !--Como um: visitante
 Eu quero: usar o componente inputNumberSpinner
