@@ -286,10 +286,10 @@ private LoginPage loginPage;</programlisting>
 			O framework fornece um componente de tela chamado Loading, que auxilia no tratamento das ações AJAX que normalmente tem como comportamento padrão abrir em cima do conteúdo uma imagem/texto de carregando, impedindo o acesso aos outros elementos de tela enquanto a imagem/texto é exibida. 
 			O componente tem como objetivo aguardar que a imagem desapareça para ir para o próximo passo.
 			
-			Para utilziar o componente, adicione em qualquer ScreenMap um ElementeMap com tipo <citetitle>Loading</citetitle> como mostra abaixo:
+			Para utilizar o componente, adicione em qualquer ScreenMap um ElementeMap com tipo <citetitle>Loading</citetitle> como mostra abaixo:
 		</para>
 		<programlisting>@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
-	private <citetitle>Loading</citetitle> loading;</programlisting>
+private <citetitle>Loading</citetitle> loading;</programlisting>
 		<para>
 			Basta adicionar o Loading em um ScreenMap para que funcione para todas as telas.			
 		</para>		
