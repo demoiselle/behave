@@ -279,4 +279,25 @@ private LoginPage loginPage;</programlisting>
 			Isso fará com que a tela de login seja incorporada na tela que possuir o atributo com a anotação.
 		</para>		
 	</section>
+	
+	<section>
+		<title>Sistemas com AJAX (Componente Loading)</title>
+		<para>
+			O framework fornece um componente de tela chamado Loading, que auxilia no tratamento das ações AJAX que normalmente tem como comportamento padrão abrir em cima do conteúdo uma imagem/texto de carregando, impedindo o acesso aos outros elementos de tela enquanto a imagem/texto é exibida. 
+			O componente tem como objetivo aguardar que a imagem desapareça para ir para o próximo passo.
+			
+			Para utilziar o componente, adicione em qualquer ScreenMap um ElementeMap com tipo <citetitle>Loading</citetitle> como mostra abaixo:
+		</para>
+		<programlisting>@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
+	private <citetitle>Loading</citetitle> loading;</programlisting>
+		<para>
+			Basta adicionar o Loading em um ScreenMap para que funcione para todas as telas.			
+		</para>		
+		<tip>
+			<para>
+				O problema que este componente resolve são percebidos aleatóriamente em sistemas com AJAX e que possua a image/texto de Carregando nas ações. 
+				Quando ocorre uma lentidão no sistema a imagem/texto fica mais tempo que o normal impedindo que o próximo passo seja executado.
+			</para>
+		</tip>
+	</section>
 </chapter>
