@@ -1,23 +1,23 @@
-package ${packageName};
-
-import java.io.File;
+package demoisellebehave.mix.tests;
 
 import org.junit.Test;
 
+import demoisellebehave.mix.steps.MySteps;
+
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class MyTest {
+public class TestRichFileUpload {
 
 	private BehaveContext eng = null;
 
-	public MyTest() {
+	public TestRichFileUpload() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
 	}
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run(File.separator + "stories");
+		eng.run("/stories/richfaces4/fileupload.story");
 	}
 
 }

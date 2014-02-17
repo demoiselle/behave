@@ -1,23 +1,22 @@
-package ${packageName};
-
-import java.io.File;
+package demoisellebehave.mix.tests;
 
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import demoisellebehave.mix.steps.MySteps;
 
-public class MyTest {
+public class TestRichInputNumberSpinner {
 
 	private BehaveContext eng = null;
 
-	public MyTest() {
+	public TestRichInputNumberSpinner() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
 	}
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run(File.separator + "stories");
+		eng.run("/stories/richfaces4/inputNumberSpinner.story");
 	}
 
 }
