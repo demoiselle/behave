@@ -249,6 +249,17 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.waitTextInElement(text);		
 	}
+	
+	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
+	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
+		Element element = (Element) runner.getElement(currentPageName, elementName);
+		element.setLocatorParameters(locatorParameters);
+
+		if (!element.getText().contains(text)) {
+			throw new BehaveException(message.getString("exception-text-not-found", elementName));
+		}
+		
+	}
 
 	@When("obtenho \"$var\" do campo \"$fieldName\"")
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
