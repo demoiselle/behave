@@ -62,7 +62,7 @@ public class RichFileUpload extends WebBase {
 	public void sendKeys(CharSequence... keysToSend) {
 		checkRichfacesComponent();
 		String jsCodeGetInput = "return (function(id){ return RichFaces.$(id).input[0]; })('"+getId()+"');";
-		WebElement input = (WebElement) getJavascirptExecutor().executeScript(jsCodeGetInput);
+		WebElement input = (WebElement) getJavascriptExecutor().executeScript(jsCodeGetInput);
 		input.sendKeys(keysToSend);
 	}
 
@@ -79,24 +79,24 @@ public class RichFileUpload extends WebBase {
 	public boolean canAdd() {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id) { var rf = RichFaces.$(id); return (rf.addButton.prop('style').display != \"none\");})('"+getId()+"');";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCode);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCode);
 	}
 	
 	public void clearAll(){
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('"+getId()+"').clearButton.click();");
+		getJavascriptExecutor().executeScript("RichFaces.$('"+getId()+"').clearButton.click();");
 		
 	}
 
 	public void upload(){
 		checkRichfacesComponent();
-		getJavascirptExecutor().executeScript("RichFaces.$('"+getId()+"').uploadButton.click();");
+		getJavascriptExecutor().executeScript("RichFaces.$('"+getId()+"').uploadButton.click();");
 	}
 	
 	public String getSubmitedItemState(String label) {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id,label) { var rf = RichFaces.$(id); var l = rf.list.find('.rf-fu-itm:contains('+label+') .rf-fu-itm-st'); if( rf.list.find('.rf-fu-itm:contains('+label+') .rf-pb').length == 0 && l.length == 1 ) return l.text(); return null;  })('"+getId()+"', '"+label+"' );";
-		return (String) getJavascirptExecutor().executeScript(jsCode);
+		return (String) getJavascriptExecutor().executeScript(jsCode);
 	}
 
 	public Boolean waitUntilSubmitItAll() {
@@ -104,27 +104,27 @@ public class RichFileUpload extends WebBase {
 
 		// Condições verificadas: não haver nenhuma progress bar; não haver nenhum item pendente de envio; haver algum item na lista de itens enviados
 		String jsCodeAllSent = "return (function(id) { var rf = RichFaces.$(id); return (rf.list.find('.rf-pb').length == 0 && rf.items.length == 0 && rf.submitedItems.length > 0); })('"+getId()+"' );";
-		Boolean allSent = (Boolean) getJavascirptExecutor().executeScript(jsCodeAllSent);
+		Boolean allSent = (Boolean) getJavascriptExecutor().executeScript(jsCodeAllSent);
 		
 		if(! allSent ) {
 			// Verifica se há alguma progress bar, indicando o progresso do envio de arquivo
 			String jsCodeIsUploading = "return (function(id) { var rf = RichFaces.$(id); return rf.list.find('.rf-pb').length != 0; })('"+getId()+"' );";
-			Boolean isSending = (Boolean) getJavascirptExecutor().executeScript(jsCodeIsUploading);
+			Boolean isSending = (Boolean) getJavascriptExecutor().executeScript(jsCodeIsUploading);
 			int waitTime = 0;
 			while( isSending && waitTime < BehaveConfig.getRunner_ScreenMaxWait() ) {
 				// aguarda o termino do envio
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 				waitTime += BehaveConfig.getRunner_ScreenMinWait();
-				isSending = (Boolean) getJavascirptExecutor().executeScript(jsCodeIsUploading);
+				isSending = (Boolean) getJavascriptExecutor().executeScript(jsCodeIsUploading);
 			}
 			if( isSending )
 				return false; // timeout
 			// Verifica se todos os itens foram enviados 
-			return (Boolean) getJavascirptExecutor().executeScript(jsCodeAllSent);
+			return (Boolean) getJavascriptExecutor().executeScript(jsCodeAllSent);
 		}
 		
 		String jsCodeIsUploading = "return (function(id) { var rf = RichFaces.$(id); return (rf.list.find('.rf-pb').length == 0 && rf.items.length == 0 && rf.submitedItems.length > 0); })('"+getId()+"' );";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeIsUploading);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeIsUploading);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ public class RichFileUpload extends WebBase {
 	 */
 	public boolean isRichFileUpload(){
 		String jsCodeCheckComponent = "return (function(tipo, id) { var rf = RichFaces.$(id); return (typeof(rf) == \"object\" && typeof(rf.name) == \"string\" && rf.name == tipo);})('FileUpload','"+getId()+"');";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeCheckComponent);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 	
 	/**

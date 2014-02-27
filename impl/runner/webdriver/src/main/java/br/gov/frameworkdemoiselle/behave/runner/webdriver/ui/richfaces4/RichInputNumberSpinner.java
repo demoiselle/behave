@@ -38,7 +38,6 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4;
 
 import org.openqa.selenium.WebElement;
 
-import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
@@ -62,32 +61,32 @@ public class RichInputNumberSpinner extends WebBase {
 	public void sendKeys(CharSequence... keysToSend) {
 		checkRichfacesComponent();
 		String jsCodeGetInput = "return (function(id){ return RichFaces.$(id).input[0]; })('"+getId()+"');";
-		WebElement input = (WebElement) getJavascirptExecutor().executeScript(jsCodeGetInput);
+		WebElement input = (WebElement) getJavascriptExecutor().executeScript(jsCodeGetInput);
 		input.sendKeys(keysToSend);
 	}
 	
 	public void setValue(Long value) {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id,value){ return RichFaces.$(id).setValue(value); })('"+getId()+"', "+value+");";
-		getJavascirptExecutor().executeScript(jsCode);
+		getJavascriptExecutor().executeScript(jsCode);
 	}
 	
 	public Long getValue() {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id,value){ return RichFaces.$(id).getValue(); })('"+getId()+"');";
-		return (Long) getJavascirptExecutor().executeScript(jsCode);
+		return (Long) getJavascriptExecutor().executeScript(jsCode);
 	}
 	
 	public void increase() {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id,value){ return RichFaces.$(id).increase(); })('"+getId()+"');";
-		getJavascirptExecutor().executeScript(jsCode);
+		getJavascriptExecutor().executeScript(jsCode);
 	}
 	
 	public void decrease() {
 		checkRichfacesComponent();
 		String jsCode = "return (function(id,value){ return RichFaces.$(id).decrease(); })('"+getId()+"');";
-		getJavascirptExecutor().executeScript(jsCode);
+		getJavascriptExecutor().executeScript(jsCode);
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class RichInputNumberSpinner extends WebBase {
 	 */
 	public boolean isRichNumberSpin(){
 		String jsCodeCheckComponent = "return (function(tipo, id) { var rf = RichFaces.$(id); return (typeof(rf) == \"object\" && typeof(rf.name) == \"string\" && rf.name == tipo);})('InputNumberSpinner','"+getId()+"');";
-		return (Boolean) getJavascirptExecutor().executeScript(jsCodeCheckComponent);
+		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 	
 	/**
