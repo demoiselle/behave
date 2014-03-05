@@ -10,6 +10,7 @@
 * [Catálogo de Arquétipos Releases](http://demoiselle.sourceforge.net/repository/archetype-catalog.xml): Para versões estáveis
 * [Catálogo de Arquétipos Snapshot](http://demoiselle.sourceforge.net/repository/archetype-catalog-snapshot.xml): Para versões de desenvolvimento (snapshot)
 * [Aplicação de Treinamento] (https://www.dropbox.com/sh/1sr7k89bnjzhtqc/mqzHHey3kR/treino-bundle.zip)
+* [Compatibilidade de Navegadores] (https://github.com/demoiselle/behave/wiki/Compatibilidade-de-Navegadores)
 
 ## Repositório Maven
 
