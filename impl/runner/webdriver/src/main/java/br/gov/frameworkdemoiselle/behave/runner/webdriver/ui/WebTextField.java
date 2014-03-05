@@ -79,7 +79,8 @@ public class WebTextField extends WebBase implements TextField {
 			for (int i = 1; i < keys.length; i++)
 				keys[i] = Keys.BACK_SPACE;			
 
-			String finalValue = Keys.chord(keys) + value + Keys.chord(Keys.CANCEL);
+			// Correção de Bug no Chrome: Ele não aceita Key.CANCEL, por isoso foi modificado para Keys.ESCAPE
+			String finalValue = Keys.chord(keys) + value + Keys.chord(Keys.ESCAPE);
 
 			// Envia para o elemento
 			getElements().get(0).sendKeys(finalValue);
