@@ -17,7 +17,7 @@ public class MyTest {
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run(File.separator + "stories");
+		eng.run("/stories");
 	}
 
 }

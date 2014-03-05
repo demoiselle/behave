@@ -12,7 +12,7 @@ public class MyTest {
 
 	@Test
 	public void testAllObras() throws Throwable {
-		eng.addStories(File.separator + "stories");
+		eng.addStories("/stories");
 		eng.run();
 	}
 
