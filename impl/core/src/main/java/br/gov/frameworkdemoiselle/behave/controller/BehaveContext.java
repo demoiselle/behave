@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,6 +99,13 @@ public class BehaveContext {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 
+			// Correção de bug: Substitui as barras por File.separator para funcionar de acordo com o SO
+			ArrayList<String> listNewPaths = new ArrayList<String>();
+			for (String s : storiesPath) {
+				listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
+			}
+			storiesPath = listNewPaths;
+			
 			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
 			allOriginalStoriesPath.addAll(storiesPath);
 
