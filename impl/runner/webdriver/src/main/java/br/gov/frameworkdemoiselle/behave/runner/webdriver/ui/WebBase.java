@@ -155,12 +155,16 @@ public class WebBase extends MappedElement implements BaseUI {
 			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
 	}
+	
 
 	/**
 	 * TODO: Refactoring dos métodos de verificação de elementos na tela
 	 */
 	protected void waitElement(Integer index) {
 		waitLoading();
+
+		//procura o elemento em qualquer frame
+		getElements();		
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
