@@ -93,7 +93,11 @@ public class MySteps extends CommonSteps {
 	@When("informo no \"$element\" o arquivo \"$arquivo\"")
 	public void adicionarArquivo(String element, String arquivo){
 		RichFileUpload fu = (RichFileUpload)runner.getElement(currentPageName, element);
-		fu.add(arquivo);
+		
+		//String pathFile = MySteps.class.getResource(arquivo.replace("%20", " ")).getPath();		
+		String pathFile = MySteps.class.getResource(arquivo).getPath();
+		
+		fu.add(pathFile);
 	}
 
 	@When("aciono \"$funcionalidade\" no campo \"$element\"")
