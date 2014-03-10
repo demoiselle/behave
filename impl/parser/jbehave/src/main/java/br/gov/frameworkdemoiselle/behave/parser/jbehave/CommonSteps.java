@@ -331,7 +331,9 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
 	public void getTextDialog(String value) {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		Assert.assertEquals(value, dialog.getText());
+		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
 	}
+	
+	
 
 }
