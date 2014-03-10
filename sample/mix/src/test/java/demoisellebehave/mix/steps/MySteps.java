@@ -1,5 +1,7 @@
 package demoisellebehave.mix.steps;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -91,13 +93,19 @@ public class MySteps extends CommonSteps {
 	}
 
 	@When("informo no \"$element\" o arquivo \"$arquivo\"")
-	public void adicionarArquivo(String element, String arquivo){
-		RichFileUpload fu = (RichFileUpload)runner.getElement(currentPageName, element);
+	public void adicionarArquivo(String element, String arquivo) throws UnsupportedEncodingException{
+		RichFileUpload fu = (RichFileUpload)runner.getElement(currentPageName, element);		
 		
-		//String pathFile = MySteps.class.getResource(arquivo.replace("%20", " ")).getPath();		
 		String pathFile = MySteps.class.getResource(arquivo).getPath();
+		pathFile = java.net.URLDecoder.decode(pathFile, "UTF-8");
 		
-		fu.add(pathFile);
+		// Testa se o arquivo existe		
+		File f = new File(pathFile); 		
+		if (!f.exists()) {
+			throw new BehaveException("O arquivo informado não existe!");
+		}
+		
+		fu.add(f.getPath());
 	}
 
 	@When("aciono \"$funcionalidade\" no campo \"$element\"")
