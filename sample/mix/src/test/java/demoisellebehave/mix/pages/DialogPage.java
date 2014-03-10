@@ -4,6 +4,7 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
 
 @ScreenMap(name = "Alertas", location = "http://demoiselle.sourceforge.net/docs/components/behave/samples/alert.html")
 public class DialogPage {
@@ -18,5 +19,5 @@ public class DialogPage {
 		private Button confirm;	
 		
 		@ElementMap(name = "Botao Sair", locatorType = ElementLocatorType.XPath, locator = "(//input[@value='Sair'][contains(@style, '%param1%')])")		
-		private Button botaoSair;
+		private WebButton botaoSair;
 }
