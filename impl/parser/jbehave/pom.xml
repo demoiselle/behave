@@ -45,7 +45,7 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
-		<version>1.3.2-SNAPSHOT</version>
+		<version>1.3.2-BETA1</version>
 	</parent>
 
 	<name>Demoiselle Behave Parser JBehave</name>
