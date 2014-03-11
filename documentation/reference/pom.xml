@@ -68,7 +68,19 @@
 							<include>images/*.png</include>
 							<include>docs/*.xml</include>
 						</includes>
-					</imageResource>					
+					</imageResource>
+					<formats>
+						<format>
+							<formatName>pdf</formatName>
+							<stylesheetResource>classpath:/xslt/br/gov/frameworkdemoiselle/pdf.xsl</stylesheetResource>
+							<finalName>demoiselle-behave-reference.pdf</finalName>
+						</format>
+						<format>
+							<formatName>html</formatName>
+							<stylesheetResource>classpath:/xslt/br/gov/frameworkdemoiselle/xhtml.xsl</stylesheetResource>
+							<finalName>index.html</finalName>
+						</format>						
+					</formats>
 				</configuration>
 			</plugin>
 		</plugins>
