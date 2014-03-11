@@ -1,7 +1,5 @@
 package ${packageName};
 
-import java.io.File;
-
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
