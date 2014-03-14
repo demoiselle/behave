@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.integration.alm;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
@@ -110,9 +111,12 @@ public class ALMIntegration implements Integration {
 			}
 			
 			if (!started) {
+				// Para evitar problemas com encodings em projetos nós sempre fazemos o decoding e depois encoding 
+				projectAreaAlias = URLDecoder.decode(projectAreaAlias, ENCODING);
+				
 				// Encode do Alias do Projeto
 				projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCODING);
-
+				
 				started = true;
 			}
 
