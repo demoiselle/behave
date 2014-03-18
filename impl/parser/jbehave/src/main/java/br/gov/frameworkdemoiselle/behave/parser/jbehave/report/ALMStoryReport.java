@@ -67,7 +67,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 	Hashtable<String, Boolean> failedScenario = new Hashtable<String, Boolean>();
 	Hashtable<String, String> stepsScenario = new Hashtable<String, String>();
 	Hashtable<String, String> details = new Hashtable<String, String>();
-	
+
 	Map<String, String> examples;
 
 	protected Integration integration = (Integration) InjectionManager.getInstance().getInstanceDependecy(Integration.class);
@@ -90,7 +90,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 					scenarioData.put("endDate", endDateScenario.get(scenario.getTitle()));
 					scenarioData.put("failed", failedScenario.get(scenario.getTitle()));
 					scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
-					scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());					
+					scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
 					scenarioData.put("details", "Resultado enviado pelo Demoiselle Behave<br/>" + details.get(scenario.getTitle()));
 
 					if (meta.hasProperty("casodeteste")) {
@@ -139,18 +139,20 @@ public class ALMStoryReport extends DefaultStoryReport {
 	@Override
 	public void example(Map<String, String> tableRow) {
 		super.example(tableRow);
-		
+
 		examples = new Hashtable<String, String>();
 		examples.putAll(tableRow);
 	}
-	
+
 	private String getNewStep(String step) {
 		String newStep = step;
-		
-		for ( String key : examples.keySet() ) {
-			newStep = newStep.replaceAll("<"+key+">", examples.get(key));
+
+		if (examples != null) {
+			for (String key : examples.keySet()) {
+				newStep = newStep.replaceAll("<" + key + ">", examples.get(key));
+			}
 		}
-		
+
 		return newStep;
 	}
 }
