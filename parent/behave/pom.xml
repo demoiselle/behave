@@ -75,7 +75,7 @@
 		<repository>
 			<id>repo1.maven</id>
 			<name>Repo1 Maven</name>
-			<url>hhttp://repo1.maven.org/maven2</url>
+			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
