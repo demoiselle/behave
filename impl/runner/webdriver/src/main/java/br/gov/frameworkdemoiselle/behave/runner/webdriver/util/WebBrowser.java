@@ -101,7 +101,7 @@ public enum WebBrowser {
 				return new FirefoxDriver(capabilities);
 			}
 			
-			FirefoxBinary binary = !BehaveConfig.getRunner_BinaryPath().equals("") ? new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath())) : null;
+			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath()));
 			
 			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
 			
