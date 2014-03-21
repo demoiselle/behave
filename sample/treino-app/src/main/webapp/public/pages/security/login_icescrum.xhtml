@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default_login.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+	<ui:define name="title">
+
+		<h:outputText value="Icescrum" />
+
+	</ui:define>
+
+	<ui:define name="body">
+
+		<h:messages style="color:#c70000" />
+
+		<h:form id="form">
+			<h:panelGrid columns="2">
+
+				<p:fieldset legend="Autenticação LDAP" style="width:100%;">
+
+					<h:panelGrid columns="2" cellpadding="3" style="width:100%">
+
+						<h:outputText value="Usuário:" />
+						<p:inputText id="txtLogin" value="#{loginMB.username}" />
+
+						<h:outputText id="txtSenha" value="Senha: " />
+						<p:password value="#{loginMB.password}" feedback="false" />
+
+						<h:outputText value="" />
+						<p:commandButton value="Entrar" actionListener="#{loginMB.loginIcescrum}" ajax="true" update="msgLogin" />
+
+					</h:panelGrid>
+
+				</p:fieldset>
+
+			</h:panelGrid>
+			<p:growl id="msgLogin" showDetail="true" showSummary="false" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+	<ui:define name="title">
+		Obras
+	</ui:define>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+	<ui:define name="body">
+
+		<h:form id="formObra" enctype="multipart/form-data">
+
+			<h:panelGrid columns="1">
+				<p:fieldset legend="Cadastro" style="width:70%;"
+					rendered="#{obraMB.modeInsert}">
+					<h:panelGrid columns="2" cellpadding="3" style="width:70%;"
+						rendered="#{obraMB.modeInsert}">
+
+						<h:outputText style="white-space:nowrap" value="Nome da Obra:" />
+						<p:inputText value="#{obraMB.obra.nome}" />
+
+						<h:outputText value="Valor:" />
+						<p:inputText value="#{obraMB.obra.valor}">
+							<!-- f:convertNumber pattern="#,###,##0.00" / -->
+						</p:inputText>
+
+						<h:outputText value="Prazo:" />
+						<p:calendar value="#{obraMB.obra.prazo}" locale="pt_BR"
+							pattern="dd/MM/yyyy" />
+
+						<h:outputText value="Vencedor:" />
+						<p:inputText value="#{obraMB.obra.vencedor}" />
+
+
+						<p:commandButton value="Inserir" actionListener="#{obraMB.insert}"
+							update="tbObra,formObra" />							
+							
+						<p:commandButton update="formObra" value="Cancelar"  actionListener="#{obraMB.cancel}" rendered="#{obraMB.modeInsert}" />
+					</h:panelGrid>
+				</p:fieldset>
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+				<p:commandButton update="formObra" value="Adicionar"
+					actionListener="#{obraMB.setModeInsert(true)}"
+					rendered="#{!obraMB.modeInsert}" />
+					<p:commandButton update="formObra"  value="Voltar Dados" actionListener="#{obraMB.clean}" />
+			</h:panelGrid>
+
+
+
+			<h:panelGrid id="gridObra" style="width:100%;">
+				<p:dataTable var="obra" value="#{obraMB.obras}"
+					emptyMessage="Nenhum projeto encontrado!" paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="25,50,100" rowEditListener="#{obraMB.update}"
+					dynamic="true" selectionMode="single" id="tbObra"
+					style="width:100%;">
+
+					<f:facet name="header">Obras</f:facet>
+
+					<p:column headerText="Obra" style="width:40%" id="colObra">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText  value="#{obra.nome}" />
+							</f:facet>
+
+							<f:facet name="input">
+								<p:inputText  value="#{obra.nome}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column headerText="Valor" style="width:10%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText  value="#{obra.valor}">
+									<!-- f:convertNumber pattern="R$ #,##0.00" / -->
+								</h:outputText>
+							</f:facet>
+
+							<f:facet name="input">
+								<p:inputText  value="#{obra.valor}">
+									<!-- f:convertNumber pattern="#,##0.00" / -->
+								</p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column headerText="Prazo" style="width:10%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText  value="#{obra.prazo}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+
+							<f:facet name="input">
+								<p:calendar  value="#{obra.prazo}"
+									locale="pt_BR" pattern="dd/MM/yyyy" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+
+					<p:column headerText="Vencedor" style="width:10%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText  value="#{obra.vencedor}">
+								</h:outputText>
+							</f:facet>
+
+							<f:facet name="input">
+								<p:inputText  value="#{obra.vencedor}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					
+					<p:column headerText="Atualizado em" style="width:10%">
+							 <f:facet name="header">  
+							 	Atualizado em
+							</f:facet>
+							<h:outputText id="lbAtualizacao" value="#{obra.atualizacao}" >
+								<f:convertDateTime pattern="HH:mm:ss"  timeZone="America/Sao_Paulo" />
+							</h:outputText>
+					</p:column>					
+
+					<p:column style="width:5%">
+						<f:facet name="header">
+							<h:outputText value="Alterar" />
+						</f:facet>
+						<p:rowEditor  />
+					</p:column>
+
+					<p:column headerText="" style="width:5%">
+						<f:facet name="header">
+							<h:outputText value="Excluir" />
+						</f:facet>
+						<p:commandButton 
+							actionListener="#{obraMB.setObra(obra)}" update="formRemoverObra"
+							oncomplete="remover.show()" image="ui-icon ui-icon-close" />
+					</p:column>
+
+					<p:column headerText="" style="width:5%">
+						<f:facet name="header">
+							<h:outputText value="Enviar Projeto" />
+						</f:facet>
+						<p:commandButton 
+							actionListener="#{obraMB.setObra(obra)}" update="fmLance"
+							oncomplete="dlLance.show()" image="ui-icon-disk" />
+					</p:column>
+
+
+				</p:dataTable>
+			</h:panelGrid>
+
+
+
+		</h:form>
+
+
+		<p:dialog widgetVar="remover" header="Remover Recurso" width="200"
+			modal="true">
+			<h:form id="formRemoverObra">
+				<h:outputText value="Remover Obra: #{obraMB.obra.nome} ?" />
+				<h:panelGrid columns="2">
+					<p:commandButton value="Sim" actionListener="#{obraMB.delete}"
+						update="formObra,msgs" oncomplete="remover.hide()" />
+					<p:commandButton value="Não" onclick="remover.hide()" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog widgetVar="dlLance" header="Novo Lançe" width="400" heigth="400"	modal="true">
+			<h:form id="fmLance">
+				<h:outputText value="Obra: #{obraMB.obra.nome} ?" />
+
+
+				<h:panelGrid columns="2">
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{obraMB.obra.nome}?" />
+
+					<h:outputText value="Atual Vencedor:" />
+					<h:outputText value="#{obraMB.obra.vencedor}" />
+
+
+					<h:outputText value="Novo Valor:" />
+					<p:inputText  value="#{obraMB.novoValor}">
+						<!-- f:convertNumber pattern="#,##0.00" / -->
+					</p:inputText>
+
+					<h:outputText value="Novo Prazo:" />
+					<p:calendar  value="#{obraMB.novoPrazo}" locale="pt_BR"
+						pattern="dd/MM/yyyy" />
+
+
+					<p:commandButton  value="Enviar Proposta" actionListener="#{obraMB.enviarProposta}"
+						update="formObra,msgs" oncomplete="dlLance.hide()" />
+					<p:commandButton  value="Cancelar" onclick="dlLance.hide()" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+
+
+	</ui:define>
+
+</ui:composition>

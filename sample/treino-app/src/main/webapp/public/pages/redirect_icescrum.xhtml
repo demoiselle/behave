@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default_login.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+	<ui:define name="body">
+		<body onload="document.forms.frmLogin.submit();">
+		<form name="frmLogin" action="http://stct3.cta.serpro/icescrum/j_spring_security_check" method="post">
+			<input type="hidden" name="j_username" value="#{loginMB.username}" /> 
+			<input type="hidden" name="j_password" value="icescrum" /> 
+			<input type="hidden" name="wpLoginattempt" value="Entrar" />
+		</form>
+		</body>
+	</ui:define>
+</ui:composition>
+

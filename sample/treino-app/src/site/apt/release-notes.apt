@@ -1,0 +1,79 @@
+ 
+                                    ------
+                                    Notas de Versão
+
+Notas de Versão
+
+
+
+* v1.4.0
+
+  * Incluida a funcionalidade de inportar jtl zipado.
+
+* v1.3.1
+
+  * Correção do Filtro, usar enter para separar os critérios de filtragem
+
+* v1.3.0
+
+  * Uso de Filtro
+
+* v1.1.2
+
+  * Correção do bug LDAP, trocado versao do componente rhds para 1.0.1
+
+* v1.1.1
+
+  * Correção do bug de importação de JTL que não possui requisição HTTP
+
+* v1.1.0
+
+  * Alterada a nomenclatura de RLT para RST e Relatório de Testes para Relatório de Resultados de Teste
+  * Alterada a nomenclatura de Bateria para Execução
+
+* v1.0.0
+  
+  * Cadastro de usuários
+  
+  * Autenticação customizada para LDAP e/ou base própria.
+  
+  * Controle de Feedback dos projetos de teste.
+  
+  * Gráficos de resultados de Feedbacks.
+  
+  * Inclusão de erros do jtl no relatório.
+
+* v0.0.6
+  
+  * Inclusao de tarefa agendada para copiar diariamente o backup do testgrid para máquina stct3
+
+* v0.0.5
+  
+  * Criação da entidade Settings para configurações gerais.
+  
+  * Correção do label de bateria para gráficos.
+
+* v0.0.4
+  
+  * Melhoria no script de backup, inclusão do war testgrid no backup.
+  
+  * Integração com hudson por webservice
+  
+  	* Criação do serviço TestGridSender
+  	
+  	* Criação de um sigleton com uma fila de processamento dos importadores
+  
+  * Retirada a funcionalidade de importação de jtl da pasta do hudson
+  
+
+* v0.0.3
+  
+  * Inclusao do nome do arquivo jtl importado nas baterias.
+  
+  * Inclusão do site maven.
+  
+  * Preenchimento automático do campo índice no formulário de baterias.
+  
+  * Melhoria de desempenho para importação do jt. A linha total so é calculada no final da importação e não durante a importação.
+  
+  * Arredondamento para duas casas decimais para segundos.

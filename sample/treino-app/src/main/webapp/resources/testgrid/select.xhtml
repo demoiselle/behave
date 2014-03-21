@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="value" required="true" />		
+		<cc:attribute name="title" required="true" />
+		<cc:attribute name="width" required="true" />
+		<cc:attribute name="selectItems" required="true" />
+		<cc:attribute name="action" required="true" method-signature="void actionListener(javax.faces.event.ActionEvent)" />
+		<cc:attribute name="id" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h:panelGrid columns="2">
+			<h:outputText value="#{cc.attrs.title}" />
+			<p:selectOneMenu id="#{cc.attrs.id}" value="#{cc.attrs.value}" style="width:#{cc.attrs.width};">
+				<f:selectItem itemLabel="Nenhum" itemValue="0" />  
+				<f:selectItems value="#{cc.attrs.selectItems}" />
+				<p:ajax event="change" actionListener="#{cc.attrs.action}" oncomplete="javascript:location.reload(true)"  />
+			</p:selectOneMenu>
+		</h:panelGrid>
+	</cc:implementation>
+</ui:composition>

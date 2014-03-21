@@ -1,0 +1,1 @@
+Style files with restricted access

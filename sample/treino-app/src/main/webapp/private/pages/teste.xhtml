@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+	<ui:define name="title">
+		Testes - Demoiselle Behave
+	</ui:define>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+	<ui:define name="body">
+
+		<h:form id="formObra" enctype="multipart/form-data">
+
+			<h:panelGrid columns="3">
+				<h:outputText value="Delay do Sistema:" />
+				<p:inputText value="#{testeMB.delay}" />
+				<p:commandButton value="Salvar" actionListener="#{testeMB.salvar}" />
+			</h:panelGrid>		
+			
+			<p:separator style="margin-bottom:10px"/>  
+			
+
+			<h:panelGrid columns="3">
+			
+				<p:selectOneMenu value="#{testeMB.categoriaSelecionada}" label="Categorias" filter="true" filterText="Filter" filterMatchMode="startsWith" style="width:220px">
+					<f:selectItem itemLabel="Selecione..." itemValue="0" />    
+        			<f:selectItems value="#{testeMB.categorias}" /> 
+        			<p:ajax event="change" actionListener="#{testeMB.mudarCategoria}" update="formObra" /> 
+    			</p:selectOneMenu>  
+
+				<p:selectOneMenu value="#{testeMB.filmeSelecionado}" label="Films" filter="true" filterText="Filter" filterMatchMode="startsWith" style="width:220px" rendered="#{testeMB.exibiFilme}">
+					<f:selectItem itemLabel="Selecione..." itemValue="0" />    
+        			<f:selectItems value="#{testeMB.filmes}" /> 
+        			<p:ajax event="change" actionListener="#{testeMB.mudaOpcao}" update="formObra" /> 
+    			</p:selectOneMenu>  
+
+    			<p:commandButton id="btSubmit2" value="Exibir" update="displayFilme" oncomplete="dlgFilme.show()" rendered="#{testeMB.exibiFilme}"  />
+    			
+    		</h:panelGrid>      		
+    		
+    		<p:separator style="margin-bottom:10px"/>
+  
+   			<p:dialog header="Filme Escolhido" widgetVar="dlgFilme" resizable="false">  
+       				<p:dataList id="displayFilme" value="#{testeMB.filmeSelecionado}" var="filme">#{filme}</p:dataList>
+       				<p:commandButton value="Fechar" oncomplete="dlgFilme.hide()" />  
+   			</p:dialog>   			
+   			
+   			<p:separator style="margin-bottom:10px"/>  
+   			
+   			<h:panelGrid columns="2">
+	        	<p:selectOneRadio id="options" value="#{testeMB.numero}">  
+	            	<f:selectItem itemLabel="Opção 1" itemValue="1" />  
+	            	<f:selectItem itemLabel="Opção 2" itemValue="2" />  
+	            	<f:selectItem itemLabel="Opção 3" itemValue="3" />  
+	            	<p:ajax event="change" actionListener="#{testeMB.mudaOpcao}" update="formObra:label" /> 
+	        	</p:selectOneRadio>  
+	        	<h:outputText id="label" value="Selecionado: [#{testeMB.numero}]" />
+        	</h:panelGrid>	
+			
+			<p:separator style="margin-bottom:10px"/> 
+			
+			
+			<h:panelGrid columns="8" id="painelCheckBox">
+				
+				<h:outputText value="Valor 1:" />			
+				<p:selectBooleanCheckbox value="#{testeMB.value1}" >
+					<p:ajax event="change" actionListener="#{testeMB.mudaOpcao}" update="painelCheckBox" /> 
+				</p:selectBooleanCheckbox>
+				<h:outputText id="value1" value="Macardo [1]" rendered="#{testeMB.value1}" />
+				  
+			 	<h:outputText value="Valor 2:" />
+				<p:selectBooleanCheckbox value="#{testeMB.value2}" >
+					<p:ajax event="change" actionListener="#{testeMB.mudaOpcao}" update="painelCheckBox" />
+				</p:selectBooleanCheckbox>
+				<h:outputText id="value2" value="Macardo [2]" rendered="#{testeMB.value2}" />
+				
+			</h:panelGrid>
+			
+					
+		</h:form>
+	</ui:define>
+
+</ui:composition>

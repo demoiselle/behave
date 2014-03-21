@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="title" default="Confirmação" />
+		<cc:attribute name="message"  />
+		<cc:attribute name="update"  />
+		<cc:attribute name="widgetVar"  />
+		<cc:attribute name="labelYes" default="Sim"  />
+		<cc:attribute name="labelNo" default="Não"  />
+		<cc:attribute name="width" default="200"  />
+		<cc:attribute name="actionListener"  method-signature="void actionListener(javax.faces.event.ActionEvent)" />		
+	</cc:interface>
+
+	<cc:implementation>	
+		<p:dialog widgetVar="#{cc.attrs.widgetVar}" header="#{cc.attrs.title}" width="#{cc.attrs.width}" modal="false">
+			<h:panelGrid columns="1">
+				<h:outputText value="#{cc.attrs.message}" />
+			</h:panelGrid>			
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{cc.attrs.labelYes}" actionListener="#{cc.attrs.actionListener}" update="#{cc.attrs.update}" oncomplete="#{cc.attrs.widgetVar}.hide();" />
+				<p:commandButton value="#{cc.attrs.labelNo}" onclick="#{cc.attrs.widgetVar}.hide()" />
+			</h:panelGrid>
+		</p:dialog>
+	</cc:implementation>
+</ui:composition>

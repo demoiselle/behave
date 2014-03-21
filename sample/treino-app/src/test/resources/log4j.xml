@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration>
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd hh:mm:ss,SSS} %-5p (%t) [%c{1}]: %m%n" />
+		</layout>
+	</appender>
+
+	<category name="br.gov.serpro.testgridweb"  >
+		<priority value="debug"/>
+		<appender-ref ref="CONSOLE" />
+	</category>
+	
+</log4j:configuration>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="type" />
+	</cc:interface>
+	<cc:implementation>
+
+		<p:dialog widgetVar="dialogEditScenario" header="Edição" width="625" height="440" modal="true">
+			<h:form id="formEditScenario">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{scenarioMB.scenario.observation}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{scenarioMB.update}" update="formReport,msgs" oncomplete="dialogEditScenario.hide()" />
+						<p:commandButton value="Cancelar" onclick="dialogEditScenario.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</cc:implementation>
+</ui:composition>
+
+

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="execution" />
+	</cc:interface>
+
+	<cc:implementation>
+		<p:commandButton value="Editar" actionListener="#" update="formEditSampleJMeterAggregate" oncomplete="remover.show()" image="ui-icon ui-icon-close" />
+
+		<p:dialog widgetVar="remover" header="Edição" width="400" height="600" modal="true">
+			<h:form id="formEditSampleJMeterAggregate">
+
+
+				<table border="0" width="100%" style="border-top: double; border-bottom: double; border-right: blank">
+					<tr>
+						<td><b>Rótulo</b></td>
+						<td align="right"><b>Contador</b></td>
+						<td align="right"><b>Média</b></td>
+						<td align="right"><b>Mediana</b></td>
+						<td align="right" nowrap="nowrap"><b>Linha 90%</b></td>
+						<td align="right"><b>Min</b></td>
+						<td align="right"><b>Max</b></td>
+						<td align="right" nowrap="nowrap"><b>% Erro</b></td>
+						<td align="right" nowrap="nowrap"><b><h:outputText value="Status" rendered="#{!reportMB.readOnly}" /></b></td>
+					</tr>
+
+					<ui:repeat id="repet" value="#{cc.attrs.execution}" var="sample">
+						<p:outputPanel rendered="#{!sample.removed or userMB.isLogged() and !reportMB.readOnly}">
+							<tr>
+								<td width="70px"><h:outputText value="#{sample.sampleJMeterAggregateKey.label}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="wrap" />
+								</h:outputText> <h:outputText value="#{sample.sampleJMeterAggregateKey.label}" rendered="#{!sample.removed}">
+									<f:converter converterId="wrap" />
+								</h:outputText></td>
+								<td width="50px" align="right"><h:outputText value="#{sample.count}" rendered="#{!sample.removed}">
+									<f:convertNumber pattern="#,##0" />
+								</h:outputText> <h:outputText value="#{sample.count}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:convertNumber pattern="#,##0" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.average}" rendered="#{!sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText> <h:outputText value="#{sample.average}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.median}" rendered="#{!sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText> <h:outputText value="#{sample.median}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.line90}" rendered="#{!sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText> <h:outputText value="#{sample.line90}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.min}" rendered="#{!sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText> <h:outputText value="#{sample.min}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.max}" rendered="#{!sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText> <h:outputText value="#{sample.max}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:converter converterId="second" />
+								</h:outputText></td>
+								<td align="right"><h:outputText value="#{sample.errorPercent}" rendered="#{!sample.removed}">
+									<f:convertNumber pattern="#,##0" />
+								</h:outputText> <h:outputText value="#{sample.errorPercent}" style="color:#a9a8a6" rendered="#{!reportMB.readOnly and sample.removed}">
+									<f:convertNumber pattern="#,##0" />
+								</h:outputText> <h:outputText value="%" rendered="#{!sample.removed}" /></td>
+								<td><h:panelGrid id="gridLink" columns="1" style="width: 100%">
+									<p:commandLink id="linkOff" rendered="#{!reportMB.readOnly and sample.removed}" actionListener="#{sampleMB.updateRemoved(sample, false)}" update="msgs,formReport">
+										<p:graphicImage value="/public/resources/images/off.png" style="border:0" />
+									</p:commandLink>
+									<p:commandLink id="linkOn" rendered="#{ !reportMB.readOnly  and !sample.removed}" actionListener="#{sampleMB.updateRemoved(sample, true)}" update="msgs,formReport">
+										<p:graphicImage value="/public/resources/images/on.png" style="border:0" />
+									</p:commandLink>
+								</h:panelGrid></td>
+							</tr>
+						</p:outputPanel>
+					</ui:repeat>
+				</table>
+
+
+				<p:commandButton value="Fechar" actionListener="#" update="formReport,msgs" oncomplete="remover.hide()" />
+
+			</h:form>
+		</p:dialog>
+	</cc:implementation>
+</ui:composition>

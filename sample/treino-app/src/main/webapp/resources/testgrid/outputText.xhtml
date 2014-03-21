@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="sample" />
+		<cc:attribute name="type" />
+	</cc:interface>
+
+	<cc:implementation>
+
+		<!-- Exibicao de Label -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'label' }">
+
+			<h:outputText value="#{cc.attrs.sample.sampleJMeterAggregateKey.label}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:converter converterId="wrap" />
+			</h:outputText>
+
+			<h:outputText value="#{cc.attrs.sample.sampleJMeterAggregateKey.label}" rendered="#{!cc.attrs.sample.removed}">
+				<f:converter converterId="wrap" />
+			</h:outputText>
+
+		</p:outputPanel>
+
+		<!-- Exibicao do Contador -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'count' }">
+			<h:outputText value="#{cc.attrs.sample.count}" rendered="#{!cc.attrs.sample.removed}">
+				<f:convertNumber pattern="0" />
+			</h:outputText>
+			<h:outputText value="#{cc.attrs.sample.count}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:convertNumber pattern="0" />
+			</h:outputText>
+		</p:outputPanel>
+
+		<!-- Exibicao do Tempo minimo -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'min' }">
+			<h:outputText value="#{cc.attrs.sample.min}" rendered="#{!cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+			<h:outputText value="#{cc.attrs.sample.min}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+		</p:outputPanel>
+
+		<!-- Exibicao do Tempo maximo -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'max' }">
+
+			<p:outputPanel rendered="#{reportMB.verifyMax(cc.attrs.sample) and !cc.attrs.sample.removed }">
+				<h:outputText value="#{cc.attrs.sample.max}" style="color:red; font-weight: bold">
+					<f:converter converterId="second" />
+				</h:outputText>
+			</p:outputPanel>
+
+			<p:outputPanel rendered="#{!reportMB.verifyMax(cc.attrs.sample) and !cc.attrs.sample.removed }">
+				<h:outputText value="#{cc.attrs.sample.max}">
+					<f:converter converterId="second" />
+				</h:outputText>
+			</p:outputPanel>
+
+			<h:outputText value="#{cc.attrs.sample.max}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+		</p:outputPanel>
+
+		<!-- Exibicao do Tempo Medio -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'average' }">
+			<h:outputText value="#{cc.attrs.sample.average}" rendered="#{!cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+			<h:outputText value="#{cc.attrs.sample.average}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+		</p:outputPanel>
+
+		<!-- Exibicao do Tempo Medio -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'line90' }">
+
+
+			<p:outputPanel rendered="#{reportMB.verifyLine90(cc.attrs.sample) and !cc.attrs.sample.removed }">
+				<h:outputText value="#{cc.attrs.sample.line90}" style="color:red; font-weight: bold">
+					<f:converter converterId="second" />
+				</h:outputText>
+			</p:outputPanel>
+
+			<p:outputPanel rendered="#{!reportMB.verifyLine90(cc.attrs.sample) and !cc.attrs.sample.removed}">
+				<h:outputText value="#{cc.attrs.sample.line90}">
+					<f:converter converterId="second" />
+				</h:outputText>
+			</p:outputPanel>
+
+			<h:outputText value="#{cc.attrs.sample.line90}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:converter converterId="second" />
+			</h:outputText>
+
+
+		</p:outputPanel>
+
+		<!-- Exibicao do Percentual de Erro -->
+		<p:outputPanel rendered="#{cc.attrs.type == 'error' }">
+
+			<p:outputPanel rendered="#{cc.attrs.sample.errorPercent != 0.0 and !cc.attrs.sample.removed}">
+				<h:outputText value="#{cc.attrs.sample.errorPercent}" style="color:red; font-weight: bold">
+					<f:convertNumber pattern="#,##0.00" />
+				</h:outputText>
+				<h:outputText value="%" style="color:red; font-weight: bold" rendered="#{!cc.attrs.sample.removed}" />
+			</p:outputPanel>
+
+			<p:outputPanel rendered="#{cc.attrs.sample.errorPercent == 0.0 and !cc.attrs.sample.removed}">
+				<h:outputText value="#{cc.attrs.sample.errorPercent}" rendered="#{!cc.attrs.sample.removed}">
+					<f:convertNumber pattern="#,##0.00" />
+				</h:outputText>
+				<h:outputText value="%" rendered="#{!cc.attrs.sample.removed}" />
+			</p:outputPanel>
+
+			<h:outputText value="#{cc.attrs.sample.errorPercent}" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}">
+				<f:convertNumber pattern="#,##0.00" />
+			</h:outputText>
+			<h:outputText value="%" style="color:#a9a8a6" rendered="#{cc.attrs.sample.removed}" />
+
+
+		</p:outputPanel>
+	</cc:implementation>
+</ui:composition>

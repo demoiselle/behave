@@ -1,0 +1,1 @@
+Script files with public access

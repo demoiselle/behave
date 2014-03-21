@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+	<ui:define name="title">
+	</ui:define>
+
+	<ui:define name="body">
+
+		<f:metadata>
+			<f:viewParam name="pj" value="#{reportMB.paramSiglaProject}" />
+			<f:viewParam name="mon" value="#{reportMB.paramShowMon}" />
+			<f:viewParam name="tb" value="#{reportMB.paramShowTables}" />
+		</f:metadata>
+
+		<h:messages style="color:#c70000" />
+		<h:outputText value="Selecione um Projeto. " style="color:#c70000" rendered="#{obraMB.currentProject == null}" />
+		<h:outputText value=" Configure o TestGrid no menu 'Configuração -> Sistema'" style="color:#c70000" rendered="#{!reportMB.isConfigured()}" />
+
+		<f:event type="preRenderView" listener="#{reportMB.processCharts}" />
+		<h:form id="formReport" rendered="#{obraMB.currentProject != null and reportMB.isConfigured()}">
+
+			<h:panelGrid rendered="true">
+				<testgrid:select title="Filtrar cenário de teste:" value="#{scenarioMB.scenarioSelectedId}" selectItems="#{scenarioMB.listScenarios}" action="#{reportMB.changeScenario}" width="650px" />
+			</h:panelGrid>
+
+			<h:panelGrid id="gridButtons" columns="14">
+				<h:outputText value="Imprimir:" />
+				<h:outputLink id="lnk" value="#">
+					<p:printer target="gridMain" />
+					<p:graphicImage value="/public/resources/images/print.png" style="border:0" />
+				</h:outputLink>
+
+				<h:outputText value="| Visualizar:" rendered="#{!reportMB.readOnly}" />
+				<p:commandLink actionListener="#{reportMB.setReadOnly(true)}" update="formReport" rendered="#{!reportMB.readOnly}">
+					<p:graphicImage value="/public/resources/images/view.png" style="border:0" />
+				</p:commandLink>
+
+				<h:outputText value="| Modificar:" rendered="#{reportMB.readOnly and userMB.isLogged()}" />
+				<p:commandLink actionListener="#{reportMB.setReadOnly(false)}" update="formReport" rendered="#{reportMB.readOnly  and userMB.isLogged()}">
+					<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+				</p:commandLink>
+
+				<h:outputText value="| Debug:" rendered="#{userMB.isLogged()}" />
+
+				<p:commandLink actionListener="#{reportMB.setDebug(true)}" update="formReport" rendered="#{userMB.isLogged() and !reportMB.debug}">
+					<p:graphicImage value="/public/resources/images/debug_off.png" style="border:0" />
+				</p:commandLink>
+				<p:commandLink actionListener="#{reportMB.setDebug(false)}" update="formReport" rendered="#{userMB.isLogged() and reportMB.debug}">
+					<p:graphicImage value="/public/resources/images/debug_on.png" style="border:0" />
+				</p:commandLink>
+
+				<h:outputText value="| Recalcular" rendered="#{userMB.isLogged()}" />
+				<p:commandLink actionListener="#{reportMB.recalc}" update="formReport" rendered="#{userMB.isLogged()}">
+					<p:graphicImage value="/public/resources/images/calc.png" style="border:0" />
+				</p:commandLink>
+
+
+				<h:outputText value="| Limpar Gráficos" rendered="#{userMB.isLogged()}" />
+				<p:commandLink actionListener="#{reportMB.cleanCharts}" update="formReport" rendered="#{userMB.isLogged()}">
+					<p:graphicImage value="/public/resources/images/erase.png" style="border:0" />
+				</p:commandLink>
+
+				<h:outputText value="| Exibir Monitoração:" />
+				<p:commandLink actionListener="#{reportMB.setShowMon(true)}" update="formReport" rendered="#{!reportMB.showMon}">
+					<p:graphicImage value="/public/resources/images/exibir.png" style="border:0" />
+				</p:commandLink>
+
+				<p:commandLink actionListener="#{reportMB.setShowMon(false)}" update="formReport" rendered="#{reportMB.showMon}">
+					<p:graphicImage value="/public/resources/images/ocultar.png" style="border:0" />
+				</p:commandLink>
+
+				<h:outputText value="| Exibir Tabelas:" />
+				<p:commandLink actionListener="#{reportMB.setShowTables(true)}" update="formReport" rendered="#{!reportMB.showTables}">
+					<p:graphicImage value="/public/resources/images/exibir.png" style="border:0" />
+				</p:commandLink>
+
+				<p:commandLink actionListener="#{reportMB.setShowTables(false)}" update="formReport" rendered="#{reportMB.showTables}">
+					<p:graphicImage value="/public/resources/images/ocultar.png" style="border:0" />
+				</p:commandLink>
+
+			</h:panelGrid>
+
+
+
+			<h:panelGrid columns="2">
+				<h:outputText value="Link de acesso: " />
+				<h:outputText style="color:#2e79c3" value="#{reportMB.url}public/pages/report.html?pj=#{obraMB.project.sigla}&#38;mon=false&#38;tb=true" />
+			</h:panelGrid>
+
+			<p:outputPanel>
+				<table width="800px" bgcolor="#fdfdfd" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td style='text-align: center;'>
+						<hr style="border: 0; height: 1px; background-color: #094e83; color: #094e83; margin-bottom: 0; margin-top: 0" />
+						</td>
+					</tr>
+				</table>
+			</p:outputPanel>
+
+
+			<h:panelGrid id="gridMain">
+				<table width="800px" cellpadding="5" cellspacing="0" border="0">
+					<tr>
+						<td style='text-align: center;'><h:panelGrid columns="1" style=" width: 100%; text-align:center">
+							<h:outputText value="RELATÓRIO DE RESULTADOS DE TESTE" style=" font-size: 18px; font-weight:bold" />
+							<h:outputText value="Centro de Teste de Curitiba" style=" font-size: 16px; " />
+							<h:outputText value="SUPST/STDTE/STCT3" style=" font-size: 12px; " />
+						</h:panelGrid> <h:panelGrid columns="1" style=" width: 100%; text-align:right">
+							<h:outputText value="Curitiba, #{obraMB.dateNow}" style=" font-size: 10px; " />
+						</h:panelGrid> <h:panelGrid columns="2" >
+							<h:outputText value="Sistema:" style="font-size: 14px" />
+							<h:outputText value="#{obraMB.project.name}" style=" font-size: 14px; font-weight:bold" />
+							<h:outputText value="Solicitação de Serviço:" style=" font-size: 12px" />
+							<h:outputText value="#{obraMB.project.ss}" style=" font-size: 12px; font-weight:bold" />
+						</h:panelGrid></td>
+					</tr>
+					<tr>
+						<td style='text-align: justify;'><h:panelGrid columns="1">
+							<testgrid:outputTextEscape value="#{obraMB.project.description}" escape="#{reportMB.debug}" />
+							<p:commandLink actionListener="#{obraMB.setProject(obraMB.project)}" update="fmDescriptionProject" oncomplete="dlDescriptionProject.show()" rendered="#{!reportMB.readOnly}">
+								<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+							</p:commandLink>
+						</h:panelGrid>
+
+						<hr style="border: 0; height: 1px; background-color: #000000; color: #000000; margin-bottom: 0; margin-top: 0" />
+
+
+						<h:panelGrid columns="1" style=" width: 100%;">
+							<h:outputText value="CENÁRIOS DE TESTE" style=" font-size: 16px; font-weight:bold" />
+						</h:panelGrid>
+						
+						</td>
+					</tr>
+					<ui:repeat value="#{reportMB.scenarios}" var="scenario">
+						<tr>
+							<td style='text-align: justify;'><h:panelGrid columns="1">
+								<h:outputText value="#{scenario.name}" style=" font-size: 16px; font-weight:bold " />
+								<h:panelGrid columns="1">
+									<testgrid:outputTextEscape value="#{scenario.description}" escape="#{reportMB.debug}" />
+									<p:commandLink actionListener="#{scenarioMB.setScenario(scenario)}" update="fmDescriptionScenario" oncomplete="dlDescriptionScenario.show()" rendered="#{!reportMB.readOnly}">
+										<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+									</p:commandLink>
+								</h:panelGrid>
+								<h:panelGrid columns="1" style="width:100%;">
+									<testgrid:chart type="line90" value="#{scenario.id}" />
+									<testgrid:chart type="error" value="#{scenario.id}" />
+									<testgrid:chart type="times" value="#{scenario.id}"  />
+								</h:panelGrid>
+							</h:panelGrid> <h:panelGrid columns="1" style="width: 100%">
+								<testgrid:outputTextEscape value="#{scenario.observation}" escape="#{reportMB.debug}" />
+								<p:commandLink actionListener="#{scenarioMB.setScenario(scenario)}" update="fmObservationScenario" oncomplete="dlObservationScenario.show()" rendered="#{!reportMB.readOnly}">
+									<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+								</p:commandLink>
+							</h:panelGrid></td>
+						</tr>
+
+						<p:outputPanel rendered="#{reportMB.showTables}">
+
+							<tr>
+								<td><h:outputText value="CASOS DE TESTE" style=" font-size: 16px; font-weight:bold" /></td>
+							</tr>
+							<tr>
+								<td style='text-align: justify;'>
+								<hr style="border: 0; height: 2px; background-color: #094e83; color: #094e83; margin-bottom: 0; margin-top: 0" />
+								</td>
+							</tr>
+
+							<ui:repeat value="#{scenario.testCases}" var="testCase">
+								<tr>
+									<td style='text-align: justify;'><h:outputText value="CASO: #{testCase.name} - #{scenario.name}" style=" font-size: 14px; font-weight:bold; color: #094e83" /></td>
+								</tr>
+								<ui:repeat value="#{executionMB.executions(testCase)}" var="execution">
+									<tr>
+										<td style='text-align: justify;'><h:panelGrid columns="9">
+											<h:outputText value="Execução: #{execution.round} " style=" font-size: 12px; font-weight:bold" />
+											<h:outputText value="realizada em " style=" font-size: 12px;" />
+											<h:outputText value="#{execution.startDate}" style=" font-size: 12px; font-weight:bold">
+												<f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" />
+											</h:outputText>
+
+											<h:outputText value="Início:" style=" font-size: 12px" />
+											<h:outputText value="#{execution.startDate}" style=" font-size: 12px; font-weight:bold">
+												<f:convertDateTime pattern="HH:mm:ss" locale="pt,BR" timeZone="America/Sao_Paulo" />
+											</h:outputText>
+
+											<h:outputText value="Fim:" style=" font-size: 12px" />
+											<h:outputText value="#{execution.endDate}" style=" font-size: 12px; font-weight:bold">
+												<f:convertDateTime pattern="HH:mm:ss" locale="pt,BR" timeZone="America/Sao_Paulo" />
+											</h:outputText>
+
+											<h:outputText value="Duração:" style=" font-size: 12px" />
+											<h:outputText value="#{execution.time}" style=" font-size: 12px; font-weight:bold">
+												<f:convertDateTime pattern="HH:mm:ss" />
+											</h:outputText>
+
+										</h:panelGrid> <h:panelGrid columns="3" rendered="#{!reportMB.readOnly}">
+											<h:outputText value="Para todos:" />
+											<p:commandLink id="linkOff" actionListener="#{sampleMB.updateRemovedAll(execution.sampleJMeterAggregate, false)}" update="msgs,formReport">
+												<p:graphicImage value="/public/resources/images/on.png" style="border:0" />
+											</p:commandLink>
+											<p:commandLink id="linkOn" actionListener="#{sampleMB.updateRemovedAll(execution.sampleJMeterAggregate, true)}" update="msgs,formReport">
+												<p:graphicImage value="/public/resources/images/off.png" style="border:0" />
+											</p:commandLink>
+										</h:panelGrid>
+
+										<h:panelGrid columns="1" style="width: 100%">
+											<testgrid:outputTextEscape value="#{execution.observation}" escape="#{reportMB.debug}" />
+											<p:commandLink actionListener="#{executionMB.setExecution(execution)}" update="fmObservationExecution" oncomplete="dlObservationExecution.show()" rendered="#{!reportMB.readOnly}">
+												<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+											</p:commandLink>
+										</h:panelGrid>	
+
+										<table border="0" cellpadding="3" cellspacing="0" width="100%" style="border-top: double; border-bottom: double; border-right: blank;">
+											<tr bgcolor="#d0e0ed">
+												<td><b>Requisição</b></td>
+												<td align="right"><b>Contador</b></td>
+												<td align="right"><b>Min</b></td>
+												<td align="right"><b>Max</b></td>
+												<td align="right"><b>Média</b></td>
+												<td align="right" nowrap="nowrap"><b>Linha 90%</b></td>
+												<td align="right" nowrap="nowrap"><b>% Erro</b></td>
+												<td align="center" nowrap="nowrap"><b><h:outputText value="Status" rendered="#{!reportMB.readOnly}" /></b></td>
+											</tr>
+											<ui:repeat id="repet" value="#{execution.sampleJMeterAggregate}" var="sample">
+												<p:outputPanel >
+													<tr bgcolor="#{reportMB.getLineColor(sample.sampleJMeterAggregateKey.label)}">
+														<td width="70px"><testgrid:outputText type="label" sample="#{sample}" /></td>
+														<td width="50px" align="right"><testgrid:outputText type="count" sample="#{sample}" /></td>
+														<td align="right"><testgrid:outputText type="min" sample="#{sample}" /></td>
+														<td align="right"><testgrid:outputText type="max" sample="#{sample}" /></td>
+														<td align="right"><testgrid:outputText type="average" sample="#{sample}" /></td>
+														<td align="right"><testgrid:outputText type="line90" sample="#{sample}" /></td>
+														<td align="right"><testgrid:outputText type="error" sample="#{sample}" /></td>
+														<td align="center"><h:panelGrid id="gridLink" columns="1">
+															<p:commandLink id="linkOff" rendered="#{!reportMB.readOnly and sample.removed}" actionListener="#{sampleMB.updateRemoved(sample, false)}" update="msgs,formReport">
+																<p:graphicImage value="/public/resources/images/off.png" style="border:0" />
+															</p:commandLink>
+															<p:commandLink id="linkOn" rendered="#{ !reportMB.readOnly  and !sample.removed}" actionListener="#{sampleMB.updateRemoved(sample, true)}" update="msgs,formReport">
+																<p:graphicImage value="/public/resources/images/on.png" style="border:0" />
+															</p:commandLink>
+														</h:panelGrid></td>
+													</tr>
+												</p:outputPanel>
+											</ui:repeat>
+										</table>
+
+										<h:panelGrid columns="1">
+											<h:outputText value="Tempos em segundos." style=" font-size: 10px" />
+										</h:panelGrid> <h:panelGrid columns="1" style="width: 100%">
+											<testgrid:outputTextEscape value="#{execution.description}" escape="#{reportMB.debug}" />
+											<p:commandLink actionListener="#{executionMB.setExecution(execution)}" update="fmDescriptionExecution" oncomplete="dlDescriptionExecution.show()" rendered="#{!reportMB.readOnly}">
+												<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+											</p:commandLink>
+										</h:panelGrid> 
+										<h:panelGrid columns="1" style="width: 100%" rendered="#{reportMB.showMon}">
+											<h:panelGrid style=" width: 100%">
+												<h:outputText value="Recursos monitorados" style="font-size: 14px;font-weight:bold" rendered="#{resourceMB.resources.size() > 0}" />
+											</h:panelGrid>
+											<h:outputText value="Não há recurso de monitoração cadastrado." style="color:#c70000; font-size: 14px;" rendered="#{resourceMB.resources.size() == 0}" />
+											<ui:repeat value="#{resourceMB.resources}" var="item">
+												<h:panelGrid columns="5" rendered="#{resourceMB.resources.size() > 0}">
+													<h:outputText value="#{item.name}" style=" font-size: 14px; font-weight:bold" />
+													<h:outputText value=" - Intervalo para análise:" style="font-size: 12px;" />
+													<h:outputText value="#{execution.startDate}" style=" font-size: 12px; font-weight:bold">
+														<f:convertDateTime pattern="HH:mm:ss" locale="pt,BR" timeZone="America/Sao_Paulo" />
+													</h:outputText>
+													<h:outputText value="e" style=" font-size: 12px" />
+													<h:outputText value="#{execution.endDate}" style=" font-size: 12px ; font-weight:bold">
+														<f:convertDateTime pattern="HH:mm:ss" locale="pt,BR" timeZone="America/Sao_Paulo" />
+													</h:outputText>
+												</h:panelGrid>
+												<testgrid:chart type="mon" value="#{item.id}" value2="#{execution.id}" />
+												<p></p>
+											</ui:repeat>
+										</h:panelGrid>
+										</td>
+									</tr>
+								</ui:repeat>
+								<tr>
+									<td style='text-align: justify;'>
+									<hr style="border: 0; height: 2px; background-color: #094e83; color: #094e83; margin-bottom: 0; margin-top: 0" />
+									</td>
+								</tr>
+							</ui:repeat>
+						</p:outputPanel>
+
+					</ui:repeat>
+
+					<tr>
+						<td style='text-align: justify;'><h:panelGrid columns="1" style="width: 100%">
+							<testgrid:outputTextEscape value="#{obraMB.project.observation}" escape="#{reportMB.debug}" />
+							<p:commandLink actionListener="#{obraMB.setProject(obraMB.project)}" update="fmObservationProject" oncomplete="dlObservationProject.show()" rendered="#{!reportMB.readOnly}">
+								<p:graphicImage value="/public/resources/images/edit.png" style="border:0" />
+							</p:commandLink>
+						</h:panelGrid></td>
+					</tr>
+				</table>
+			</h:panelGrid>
+
+		</h:form>
+
+		<p:dialog widgetVar="dialogEdit" header="Edição" width="625" height="440" modal="true">
+			<h:form id="formEdit">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{reportMB.txtEdit}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{reportMB.setObservation(obraMB.currentProject)}" update="formReport,msgs" oncomplete="dialogEdit.hide()" />
+						<p:commandButton value="Cancelar" onclick="dialogEdit.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- Edicao do scenario -->
+
+		<p:dialog widgetVar="dlDescriptionScenario" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmDescriptionScenario">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{scenarioMB.scenario.description}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{scenarioMB.update}" update="formReport,msgs" oncomplete="dlDescriptionScenario.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlDescriptionScenario.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlObservationScenario" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmObservationScenario">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{scenarioMB.scenario.observation}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{scenarioMB.update}" update="formReport,msgs" oncomplete="dlObservationScenario.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlObservationScenario.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- Edicao do execucao -->
+
+		<p:dialog widgetVar="dlDescriptionExecution" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmDescriptionExecution">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{executionMB.execution.description}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{executionMB.update}" update="formReport,msgs" oncomplete="dlDescriptionExecution.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlDescriptionExecution.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlObservationExecution" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmObservationExecution">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{executionMB.execution.observation}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{executionMB.update}" update="formReport,msgs" oncomplete="dlObservationExecution.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlObservationExecution.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- Edicao do projeto -->
+
+		<p:dialog widgetVar="dlDescriptionProject" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmDescriptionProject">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{obraMB.project.description}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{obraMB.update}" update="formReport,msgs" oncomplete="dlDescriptionProject.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlDescriptionProject.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlObservationProject" header="Edição" width="625" height="440" modal="true">
+			<h:form id="fmObservationProject">
+				<h:panelGrid columns="1" style="width:100%">
+					<p:editor value="#{obraMB.project.observation}" widgetVar="editor" width="600" height="350" language="pt" align="center" rendered="true" />
+					<h:panelGrid columns="2" style="width:0%">
+						<p:commandButton value="Salvar" actionListener="#{obraMB.update}" update="formReport,msgs" oncomplete="dlObservationProject.hide()" />
+						<p:commandButton value="Cancelar" onclick="dlObservationProject.hide()" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

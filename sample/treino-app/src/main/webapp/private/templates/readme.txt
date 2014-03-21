@@ -1,0 +1,1 @@
+templates files with restricted access

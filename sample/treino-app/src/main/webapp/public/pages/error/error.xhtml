@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+	<ui:define name="body">
+    <h:form enctype="multipart/form-data">  
+		<p>SOME UNHANDLED EXCEPTION OCCURED</p>  
+		#{currentView}  
+		#{flash.exceptioniNFO}
+   </h:form>	
+	</ui:define>
+</ui:composition>
+   

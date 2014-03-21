@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_1_0.xsd" version="1.0">
+
+	<persistence-unit name="PersistenceUnitName" transaction-type="RESOURCE_LOCAL">
+
+		<!-- JPA Provider Definition -->
+		<!-- 
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		 -->
+		
+		<!-- Data Source Definition -->
+		<!-- 
+		<jta-data-source>java:jdbc/DataSource</jta-data-source>
+		<non-jta-data-source>java:jdbc/DataSource</non-jta-data-source>
+		 -->
+
+		<!-- Managed Entities -->
+		<!-- 
+		<class>...</class>
+		<class>...</class>
+		<class>...</class>
+		 -->
+
+		<!-- Hibernate EntityManager Settings -->
+		<!-- 
+		<properties>
+			<property name="hibernate.dialect" value="..." />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+		</properties>
+		 -->
+
+		<!-- EclipseLink JPA Settings -->
+		<!-- 
+		<properties>
+			<property name="eclipselink.target-database" value="..." />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<property name="eclipselink.session.customizer" value="..." />
+		</properties>
+		 -->
+
+	</persistence-unit>
+
+</persistence>

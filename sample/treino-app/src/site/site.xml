@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+
+	<publishDate position="left" format="dd/MM/yyyy hh:mm:ss a" />
+
+	<version position="left" />
+
+	<bannerLeft>
+		<name>${project.name}</name>
+		<src>images/logo-l.png</src>
+		<href>${project.url}</href>
+	</bannerLeft>
+
+	<bannerRight>
+		<name>${project.name}</name>
+	</bannerRight>
+
+	<skin>
+		<groupId>br.gov.serpro.component</groupId>
+		<artifactId>component-default-skin</artifactId>
+		<version>1.0.0</version>
+	</skin>
+
+	<body>
+
+		<links>
+			<item name="SERPRO" href="http://www.serpro.gov.br/" />
+		</links>
+		<menu name="${project.name}">
+			<item name="Sobre" href="index.html" />
+			<item name="Documentação" href="docs.html" />
+			<item name="Notas de Versão" href="release-notes.html" />
+		</menu>
+		<menu ref="reports" />
+	</body>
+
+</project>

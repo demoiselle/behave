@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Trfansitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/public/templates/default.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+	<ui:define name="title">
+		Relatório de Feedbacks (Consolidado)
+	</ui:define>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<ui:define name="body">
+		<h:form>
+			<h:outputText value="Limpar Gráficos" rendered="#{userMB.isLogged()}" />
+			<p:commandLink actionListener="#{reportMB.cleanCharts}"
+				update="formReport" rendered="#{userMB.isLogged()}">
+				<p:graphicImage value="/public/resources/images/erase.png"
+					style="border:0" />
+			</p:commandLink>
+
+			<h:panelGrid columns="1">
+
+				
+				<testgrid:chart type="feedbackavganswers" value="1" />
+
+				<br />
+				<br />
+
+				<testgrid:chart type="feedbackanswers" value="1" />
+				
+				<br />
+				<br />
+				
+				<testgrid:chart type="feedbacktotals" value="1" />
+				
+				<br />
+				<br />
+				
+				<testgrid:chart type="feedbacktotalprojects" value="1" />
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

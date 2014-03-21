@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:testgrid="http://java.sun.com/jsf/composite/testgrid">
+
+<h:head>
+	<title><ui:insert name="title">Treino</ui:insert></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/public/resources/styles/style.css" />
+</h:head>
+<body>
+<f:view contentType="text/html">
+
+
+	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+	  
+	
+
+	<p:dialog modal="true" widgetVar="statusDialog" header="Aguarde..." draggable="false" closable="false">
+		<p:graphicImage value="/public/resources/images/wait.gif" />
+	</p:dialog>
+
+	<f:event type="preRenderView" listener="#{obraMB.loadProjects}" />
+
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" summary="Seja bem vindo">
+		<tr>
+			<td>
+			<h1 style="color: #3f3731; background-color: #f4f0ec; font-size: 12px;">
+				
+				<ui:insert name="title"></ui:insert>
+				
+			</h1>
+			</td>
+		</tr>
+		<tr>
+			<td><ui:insert name="message">				
+				<div align="center"><p:growl id="msgs" showDetail="true" showSummary="false" /></div>
+			</ui:insert></td>
+		</tr>
+		<tr>
+			<td align="center">
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<ui:insert name="body">
+			</ui:insert></td>
+		</tr>
+		<tr>
+			<td align="right">
+							
+			</td>
+		</tr>
+	</table>
+</f:view>
+</body>
+</html>
