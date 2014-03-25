@@ -352,10 +352,10 @@ public class WebBase extends MappedElement implements BaseUI {
 				 */
 				if (getText().contains(text)) {
 					found = true;
-					break;
 				}
 
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				
 				if (found) {
 					break;
 				}
