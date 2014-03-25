@@ -40,7 +40,6 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
@@ -51,14 +50,5 @@ public class SearchPage {
 
 	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
 	private Button buttonLuckSearch;
-
-	@ElementMap(name = "Aplicativos", locatorType = ElementLocatorType.XPath, locator = "/html/body/div/div[3]/div/div/div/div[2]/div[2]/div/a")
-	private Button aplicativos;
-
-	@ElementMap(name = "Mais", locatorType = ElementLocatorType.XPath, locator = "/html/body/div/div[3]/div/div/div/div[2]/div[2]/div[2]/a")
-	private Button mais;
-
-	@ElementMap(name = "Google Livros", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Google Livros']")
-	private Link googleLivros;
 
 }
