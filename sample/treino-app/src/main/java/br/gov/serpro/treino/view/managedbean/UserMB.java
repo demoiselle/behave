@@ -14,6 +14,7 @@ import br.gov.serpro.treino.bean.Obra;
 import br.gov.serpro.treino.bean.User;
 import br.gov.serpro.treino.business.IUserBC;
 import br.gov.serpro.treino.business.implementation.UserBC;
+import br.gov.serpro.treino.config.TreinoConfig;
 import br.gov.serpro.treino.constant.Navigation;
 import br.gov.serpro.treino.exception.ErrorMessage;
 
@@ -46,6 +47,10 @@ public class UserMB extends TestGridMB {
 		try {
 			User user = userBC.find(_user, _pass);
 			if (user != null) {
+				
+				// Inicia as configurações e dados do banco em memória
+				TreinoConfig.getInstance();
+				
 				log.info("usuário [" + user.getName() + "] logado");
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", _user);
 				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, Navigation.INDEX);
