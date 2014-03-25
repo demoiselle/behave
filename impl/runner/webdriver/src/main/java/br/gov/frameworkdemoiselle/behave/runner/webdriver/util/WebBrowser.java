@@ -100,24 +100,16 @@ public enum WebBrowser {
 				capabilities.setCapability(CapabilityType.PROXY, proxy);
 				return new FirefoxDriver(capabilities);
 			}
-			if (BehaveConfig.getRunner_ProfileEnabled()) {
-				File profileDir = new File(BehaveConfig.getRunner_ProfilePath());
-				FirefoxProfile profile = new FirefoxProfile(profileDir);
-				if (!BehaveConfig.getRunner_BinaryPath().equals("")) {
-					File binaryDir = new File(BehaveConfig.getRunner_BinaryPath());
-					FirefoxBinary binary = new FirefoxBinary(binaryDir);
-					return new FirefoxDriver(binary, profile);
-				}
-				return new FirefoxDriver(profile);
-			}
-			FirefoxProfile profile = new FirefoxProfile();
+			
+			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath()));
+			
+			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
+			
 			profile.setEnableNativeEvents(true);
-			if (!BehaveConfig.getRunner_BinaryPath().equals("")) {
-				File binaryDir = new File(BehaveConfig.getRunner_BinaryPath());
-				FirefoxBinary binary = new FirefoxBinary(binaryDir);
-				return new FirefoxDriver(binary, profile);
-			}
-			return new FirefoxDriver(profile);
+			
+			FirefoxDriver driver = binary == null ? new FirefoxDriver(profile) : new FirefoxDriver(binary, profile);
+			
+			return driver;
 		}
 	},
 	Safari {
