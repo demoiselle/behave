@@ -56,13 +56,13 @@ public class ComponentsPage {
 	@ElementMap(name = "Seleção de Opção 2", locatorType = ElementLocatorType.XPath, locator = { "//div[@id='formObra:j_idt27']/label", "//div[@id='formObra:j_idt27']/div[3]/div/div/div/ul" })
 	private Select selectOpcao2;
 
-	@ElementMap(name = "Botão Exibir", locatorType = ElementLocatorType.Id, locator = "formObra:btSubmit")
+	@ElementMap(name = "Botão Exibir", locatorType = ElementLocatorType.Id, locator = "formObra:btSubmit2")
 	private Button botaoExibir;
 
-	@ElementMap(name = "Opção Selecionada", locatorType = ElementLocatorType.XPath, locator = "//FORM[@id='formObra']/DIV/DIV[@id='formObra:j_idt31']/DIV[@id='formObra:display']/DIV[@id='formObra:display_content']/UL[@id='formObra:display_list']/LI")
+	@ElementMap(name = "Opção Selecionada", locatorType = ElementLocatorType.XPath, locator = "//*[@id='formObra:displayFilme_list']/li")
 	private Label opcaoSelecionada;
 
-	@ElementMap(name = "Botão Fechar", locatorType = ElementLocatorType.XPath, locator = "//div[@id='formObra:j_idt31']/button")
+	@ElementMap(name = "Botão Fechar", locatorType = ElementLocatorType.XPath, locator = "//button[@id='formObra:j_idt33']")
 	private Button botaoFechar;
 
 	@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")

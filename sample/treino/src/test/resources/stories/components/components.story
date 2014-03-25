@@ -12,8 +12,8 @@ Acesso ao Sistema com usuário "06762344887" e senha "188542"
 Dado que estou na tela "Tela Principal"
 Quando vou para a tela "Tela de Componentes"
 
-Seleção de Valores de Componentes com "Opção 1" e "Opção 1"
-Seleção de Valores de Componentes com "Opção 1" e "Opção 3"
+Seleção de Valores de Componentes com "Ação" e "Jogos Vorazes - Em Chamas"
+Seleção de Valores de Componentes com "Drama" e "Another Year"
 
 Quando seleciono a opção "Opção 1"
 Então será exibido na "Opção Selecionada no Radio" o valor "[1]"
