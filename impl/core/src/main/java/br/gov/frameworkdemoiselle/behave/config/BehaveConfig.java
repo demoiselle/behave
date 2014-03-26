@@ -245,6 +245,11 @@ public class BehaveConfig {
 	public static String getRunner_CatchUIException() {
 		return getProperty("behave.runner.catchUIException");
 	}
+	
+	// Ativa o uso maximizada da janela do navegador
+	public static boolean getRunner_WindowMaximizeEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.runner.window.maximize.enabled", "false"));
+	}
 
 	/*
 	 * Configurações especificas para testes Desktop

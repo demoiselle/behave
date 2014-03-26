@@ -81,6 +81,9 @@ public class WebDriverRunner implements Runner {
 		if (driver == null) {
 			browser = Enum.valueOf(WebBrowser.class, BehaveConfig.getRunner_ScreenType());
 			driver = browser.getWebDriver();
+			if ( BehaveConfig.getRunner_WindowMaximizeEnabled() ) {
+				driver.manage().window().maximize();
+			}
 			logger.debug(message.getString("message-webdriver-started", browser.toString()));
 			try {
 				driver.manage().timeouts().pageLoadTimeout(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
