@@ -44,10 +44,10 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 @ScreenMap(name = "Lista de Obras - Confirmação", location = "Confirmação")
 public class ConfirmacaoExclucaoScreen {
 
-	@ElementMap(name = "Sim", locatorType = ElementLocatorType.Label, locator = "Yes")
+	@ElementMap(name = "Sim", locatorType = ElementLocatorType.Label, locator = "Sim")
 	private Button btnYes;
 
-	@ElementMap(name = "Não", locatorType = ElementLocatorType.Label, locator = "No")
+	@ElementMap(name = "Não", locatorType = ElementLocatorType.Label, locator = "Não")
 	private Button btnNo;
 
 	@ElementMap(name = "OK", locatorType = ElementLocatorType.Label, locator = "OK")
