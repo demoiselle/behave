@@ -260,7 +260,9 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@Given("a \"$elementName\" n\u00E3o esta vis\u00EDvel")
+	@Given("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@When("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@Then("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
 	public void elementNotVisible(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
 		element.waitInvisible();
