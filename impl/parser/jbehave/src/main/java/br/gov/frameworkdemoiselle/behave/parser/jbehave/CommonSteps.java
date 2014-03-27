@@ -247,9 +247,9 @@ public class CommonSteps implements Step {
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
-		element.waitTextInElement(text);		
+		element.waitTextInElement(text);
 	}
-	
+
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
@@ -258,7 +258,12 @@ public class CommonSteps implements Step {
 		if (!element.getText().contains(text)) {
 			throw new BehaveException(message.getString("exception-text-not-found", elementName));
 		}
-		
+	}
+
+	@Given("a \"$elementName\" n\u00E3o esta vis\u00EDvel")
+	public void elementNotVisible(String elementName) {
+		Element element = runner.getElement(currentPageName, elementName);
+		element.waitInvisible();
 	}
 
 	@When("obtenho \"$var\" do campo \"$fieldName\"")
@@ -333,7 +338,5 @@ public class CommonSteps implements Step {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
 	}
-	
-	
 
 }

@@ -52,12 +52,7 @@ public class EnvioLancePage {
 	@ElementMap(name = "Novo Prazo", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'fmLance')][contains(@type, 'text')])[2]")
 	private TextField txtPrazoObra;	
 
-	
 	@ElementMap(name = "Enviar Proposta", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'fmLance')]/span[./text()='Enviar Proposta'])")
 	private Button enviarProposta;	
 
-	
-
-	
-	
 }

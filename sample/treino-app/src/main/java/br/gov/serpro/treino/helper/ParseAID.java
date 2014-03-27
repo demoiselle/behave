@@ -4,10 +4,9 @@ import java.util.Hashtable;
 
 public class ParseAID {
 
-	@SuppressWarnings("unchecked")
-	public static Hashtable parseAID(String aid) {
+	public static Hashtable<String, String> parseAID(String aid) {
 		
-		Hashtable ht = new Hashtable();		
+		Hashtable<String, String> ht = new Hashtable<String, String>();		
 		String[] splitName = aid.split("@");		
 		ht.put("name", splitName[0].toString());
 		String[] ipAux =  splitName[0].split("-");

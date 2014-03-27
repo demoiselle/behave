@@ -38,4 +38,10 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	}
 
+	@Override
+	public void waitInvisible() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

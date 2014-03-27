@@ -10,6 +10,7 @@ Então será exibido "Obras"
 Cenário: Sair do "{sistema}"
 
 Dado que estou na tela "Tela Principal"
+E a "Caixa de Mensagens" não esta visível
 Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"

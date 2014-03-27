@@ -155,7 +155,6 @@ public class WebBase extends MappedElement implements BaseUI {
 			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
 	}
-	
 
 	/**
 	 * TODO: Refactoring dos métodos de verificação de elementos na tela
@@ -163,8 +162,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	protected void waitElement(Integer index) {
 		waitLoading();
 
-		//procura o elemento em qualquer frame
-		getElements();		
+		// procura o elemento em qualquer frame
+		getElements();
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
@@ -238,13 +237,15 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
-
+	
+	// condition 'clickable' is equivalent to 'visible and enabled'
+	// https://code.google.com/p/selenium/issues/detail?id=6804
 	private void waitClickable(By by) {
 		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
-	private void waitVisibility(By by) {
+	private void waitVisibility(By by) {		
 		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
@@ -292,10 +293,12 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
+	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. 
+	 * Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
 	 */
 	public void waitText(String text, Long timeout) {
 		try {
+			// Flag utilizada para o segundo laço
 			boolean found = false;
 
 			driver = (WebDriver) runner.getDriver();
@@ -316,9 +319,12 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				}
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+				// Sai do segundo laço
 				if (found) {
 					break;
 				}
+
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					Assert.fail(message.getString("message-text-not-found", text));
@@ -338,8 +344,6 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	public void waitTextInElement(String text) {
 		try {
-			boolean found = false;
-
 			driver = (WebDriver) runner.getDriver();
 			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
@@ -351,14 +355,10 @@ public class WebBase extends MappedElement implements BaseUI {
 				 * Busca o texto dentro do elemento, atentar para o método getText, ele não é o getText do WebDriver e sim do Element do framework (WebTextField, WebSelect...)
 				 */
 				if (getText().contains(text)) {
-					found = true;
+					break;
 				}
 
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-				
-				if (found) {
-					break;
-				}
 
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
@@ -372,6 +372,14 @@ public class WebBase extends MappedElement implements BaseUI {
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
+	}
+
+	public void waitInvisible() {
+		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		
+		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 
 }

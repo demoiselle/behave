@@ -36,11 +36,12 @@
  */
 package demoisellebehave.serpro.treino.pages;
 
-import demoisellebehave.serpro.treino.config.Config;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
 import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebLabel;
+import demoisellebehave.serpro.treino.config.Config;
 
 @ScreenMap(name = "Tela Principal", base = Config.URLBASE, location = "/private/pages/index.html")
 public class PrincipalPage {
@@ -50,5 +51,8 @@ public class PrincipalPage {
 
 	@ElementMap(name = "Tela as Obras", locatorType = ElementLocatorType.LinkText, locator = "Todas")
 	private Button todasAsObras;
+
+	@ElementMap(name = "Caixa de Mensagens", locatorType = ElementLocatorType.CssSelector, locator = ".ui-growl-message")
+	private WebLabel mensagens;
 
 }

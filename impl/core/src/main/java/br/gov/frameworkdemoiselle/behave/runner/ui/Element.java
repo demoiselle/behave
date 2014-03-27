@@ -59,4 +59,6 @@ public interface Element {
 	
 	public void waitTextInElement(String text);
 
+	public void waitInvisible();
+	
 }
