@@ -204,9 +204,20 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public void setScreen(String screenName) {
+		String location;
+			
+		try {
+			location = ReflectionUtil.getLocation(screenName);
+		} catch(Exception ex) {
+			location = "";
+		}
+		
 		Set<String> lWindowHandles = driver.getWindowHandles();
 		for (String lWindowHandle : lWindowHandles) {
 			WebDriver lWindow = driver.switchTo().window(lWindowHandle);
+			if (!location.isEmpty() && lWindow.getCurrentUrl().equalsIgnoreCase(location)) {
+				return;
+			}
 			if (lWindow.getTitle().toUpperCase().indexOf(screenName.toUpperCase()) >= 0) {
 				return;
 			}

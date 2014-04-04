@@ -17,7 +17,7 @@ public class PopupPage {
 
 	}
 
-	@ScreenMap(name = "Nova Janela")
+	@ScreenMap(name = "Outra Janela", location = "http://demoiselle.sourceforge.net/docs/components/behave/samples/new_window.html")
 	public class Popup {
 
 		@ElementMap(name = "Fechar", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Fechar']")
