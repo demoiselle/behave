@@ -187,7 +187,69 @@ Cenário: Teste
 Acessar o sistema com usuário "demoiselle" e senha "behave"
 Sair do "sistema"</programlisting>
 	</section>
+	
+	<section>
+		<title>Reusando os cenários em outras histórias</title>
+		<para>
+			Para que o reuso de cenários ocorra em outras histórias é necessário, primeiramente,
+			que a história seja adicionada no contexto do teste que será executado.
+		</para>
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Adiciona histórias que serão executadas
+eng.addStories("/stories/acesso.story");
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
 
+// Roda as histórias incluída
+eng.run();
+  		</programlisting>
+		<para>
+			Assim a chamada ao cenário se dar através da utilização do título do cenário pretendido.
+		</para>
+		<programlisting>
+Em /stories/acesso.story:
+
+Cenário: Acesso ao "{sistema}"
+
+Dado que vou para a tela "Tela de Busca"
+Então será exibido "{sistema}"
+
+
+Em /stories/estou-com-sorte.story:
+
+Cenário: Utilização da funcionalidade estou com sorte
+
+<emphasis>Acesso ao "Google"</emphasis>
+Quando clico em "Estou com sorte"
+Então será exibido "Google"
+  		</programlisting>
+		<para>
+			Uma outra possibilidade seria adicionar a história somente para reuso. 
+		</para>  		
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Adiciona história somente para reuso de cenários
+// Cenários que não reutilizados não serão executados
+eng.addStoriesReuse("/stories/acesso.story");
+
+// Adiciona histórias que serão executadas
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
+
+// Roda as histórias incluída
+eng.run();
+  		</programlisting> 
+		<para>
+			Desta maneira os cenários que não são parâmetrizados contidos nas histórias
+			passadas no método "addStoriesReuse" não serão executados.
+			Caso que não ocorre quando utilizado o método "addStories", onde todos os 
+			cenários que não são parâmetrizados serão executados.
+		</para>   		 		
+	</section>
+	
 	<section>
 		<title>Plugin do JBehave para Eclipse</title>
 		<para>
