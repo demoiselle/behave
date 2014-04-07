@@ -50,7 +50,9 @@ public class AppTest {
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
 		// Adiciona histórias
-		eng.addStories("/stories");
+		eng.addStoriesReuse("/stories/acesso.story");
+		eng.addStories("/stories/estou-com-sorte.story");
+		eng.addStories("/stories/pesquisa-simples.story");
 		// Roda as histórias incluída
 		eng.run();
 	}

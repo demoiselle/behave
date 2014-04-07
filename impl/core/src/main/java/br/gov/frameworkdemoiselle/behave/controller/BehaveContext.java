@@ -69,6 +69,8 @@ public class BehaveContext {
 	private List<Step> steps = new ArrayList<Step>();
 
 	private List<String> storiesPath = new ArrayList<String>();
+	
+	private List<String> storiesReusePath = new ArrayList<String>();
 
 	private String step;
 	private Throwable fail;
@@ -108,6 +110,15 @@ public class BehaveContext {
 			
 			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
 			allOriginalStoriesPath.addAll(storiesPath);
+			
+			//Lista de historias só para reuso de cenários
+			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
+			for (String s : storiesReusePath) {
+				listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
+			}
+			
+			// Adiciono as novas historias só para reuso de cenários
+			allOriginalStoriesPath.addAll(listNewPathsReuse);
 
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
@@ -138,6 +149,7 @@ public class BehaveContext {
 		} finally {
 			fail = null;
 			storiesPath.clear();
+			storiesReusePath.clear();
 			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
@@ -160,6 +172,12 @@ public class BehaveContext {
 	public BehaveContext addStories(String storiesPath) {
 		log.debug("addStories:" + storiesPath);
 		this.storiesPath.add(storiesPath);
+		return this;
+	}
+	
+	public BehaveContext addStoriesReuse(String storiesPath) {
+		log.debug("addStoriesReuse:" + storiesPath);
+		this.storiesReusePath.add(storiesPath);
 		return this;
 	}
 
