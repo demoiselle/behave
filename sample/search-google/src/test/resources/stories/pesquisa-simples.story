@@ -7,6 +7,6 @@ Desejo fazer uma busca simples
 
 Cenário: Utilização da funcionalidade de pesquisa
 
-Acesso ao Google
+Acesso ao "Google"
 Quando informo "Framework Demoiselle" no campo "Campo de Busca"
 Então será exibido "frameworkdemoiselle.gov.br"
