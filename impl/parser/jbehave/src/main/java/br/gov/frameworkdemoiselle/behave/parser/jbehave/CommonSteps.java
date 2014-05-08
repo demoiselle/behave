@@ -80,15 +80,7 @@ public class CommonSteps implements Step {
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
-
-	protected String getCurrentPageName() {
-		return CurrentPageNameHolder.currentPageName;
-	}
-
-	protected void setCurrentPageName(String currentPageName) {
-		CurrentPageNameHolder.currentPageName = currentPageName;
-	}
-
+	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
@@ -96,7 +88,7 @@ public class CommonSteps implements Step {
 	@When("vou para a tela \"$local\"")
 	public void goToWithName(String local) {
 		logger.debug("Go to screen " + local);
-		setCurrentPageName(local);
+		currentPageName = local;
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
 	}
@@ -106,7 +98,7 @@ public class CommonSteps implements Step {
 	@When("estou na tela \"$local\"")
 	public void pageWithName(String local) {
 		logger.debug("Go to screen " + local);
-		setCurrentPageName(local);
+		currentPageName = local;
 		runner.setScreen(local);
 	}
 
@@ -114,7 +106,7 @@ public class CommonSteps implements Step {
 	@Then(value = "clico em \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void clickButtonWithParameters(String elementName, List<String> locatorParameters) {
 		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
-		Element element = runner.getElement(getCurrentPageName(), elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Button) {
 			((Button) element).click();
@@ -132,7 +124,7 @@ public class CommonSteps implements Step {
 	@When(value = "clico em \"$elementName\"", priority = 1)
 	@Then(value = "clico em \"$elementName\"", priority = 1)
 	public void clickButton(String elementName) {
-		Element element = runner.getElement(getCurrentPageName(), elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		if (element instanceof Button) {
 			((Button) element).click();
 		} else if (element instanceof Link) {
@@ -150,7 +142,7 @@ public class CommonSteps implements Step {
 	@Then(value = "seleciono a op\u00E7\u00E3o \"$elementName\" referente a \"$locatorParameters\"", priority = 10)
 	public void informWithParameters(String elementName, List<String> locatorParameters) {
 		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
-		Element element = runner.getElement(getCurrentPageName(), elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Radio) {
 			((Radio) element).click();
@@ -168,7 +160,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o \"$fieldName\"", priority = 1)
 	@Then(value = "seleciono a op\u00E7\u00E3o \"$fieldName\"", priority = 1)
 	public void inform(String fieldName) {
-		Element element = runner.getElement(getCurrentPageName(), fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Radio) {
 			((Radio) element).click();
 		} else if (element instanceof CheckBox) {
@@ -185,7 +177,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	@Then(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	public void selectByIndex(String indice, String fieldName) {
-		Element element = runner.getElement(getCurrentPageName(), fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
 		} else {
@@ -196,7 +188,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	@Then(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	public void selectByValue(String value, String fieldName) {
-		Element element = runner.getElement(getCurrentPageName(), fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
 		} else {
@@ -208,7 +200,7 @@ public class CommonSteps implements Step {
 	@Then("informo \"$value\" no campo \"$fieldName\"")
 	public void inform(String value, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
-		Element element = (Element) runner.getElement(getCurrentPageName(), fieldName);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			textField.clear();
@@ -254,13 +246,13 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(getCurrentPageName(), elementName);
+		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.waitTextInElement(text);
 	}
 
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
-		Element element = (Element) runner.getElement(getCurrentPageName(), elementName);
+		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
 		if (!element.getText().contains(text)) {
@@ -272,7 +264,7 @@ public class CommonSteps implements Step {
 	@When("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
 	@Then("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
 	public void elementNotVisible(String elementName) {
-		Element element = runner.getElement(getCurrentPageName(), elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.waitInvisible();
 	}
 
@@ -280,7 +272,7 @@ public class CommonSteps implements Step {
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(getCurrentPageName(), fieldName);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			String value = textField.getText();
@@ -299,7 +291,7 @@ public class CommonSteps implements Step {
 
 	@When("movo o mouse sobre \"$element\"")
 	public void moverMouse(String elementName) {
-		Element element = runner.getElement(getCurrentPageName(), elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		if (element instanceof Menu) {
 			((Menu) element).mouseOver();
 		} else if (element instanceof MenuItem) {
@@ -311,7 +303,7 @@ public class CommonSteps implements Step {
 
 	@When("clico na linha da tabela \"$table\" referente a \"$reference\"")
 	public void clickRowTable(String table, String reference) {
-		Element element = runner.getElement(getCurrentPageName(), table);
+		Element element = runner.getElement(currentPageName, table);
 		if (element instanceof Grid) {
 			((Grid) element).clickRow(reference);
 		} else {
