@@ -80,7 +80,7 @@ public class CommonSteps implements Step {
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
-	protected String currentPageName;
+	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
