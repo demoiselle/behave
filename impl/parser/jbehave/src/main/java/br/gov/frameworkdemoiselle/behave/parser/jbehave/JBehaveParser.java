@@ -115,7 +115,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.doIgnoreFailureInView(true);
 			embedderControls.doSkip(false);
 			embedderControls.doVerboseFailures(true);
-			embedderControls.useStoryTimeoutInSecs(60 * 60);
+			embedderControls.useStoryTimeoutInSecs(BehaveConfig.getParser_StoryTimeout() * 60);
 			embedderControls.useThreads(1);
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);

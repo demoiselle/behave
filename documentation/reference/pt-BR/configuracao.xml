@@ -39,6 +39,11 @@
 					</emphasis>
 				</listitem>
 				<listitem>
+					<citetitle>behave.parser.story.timeout:
+					</citetitle>
+					 Define o tempo maximo em minutos para execucao das historias
+				</listitem>				
+				<listitem>
 					<citetitle>behave.parser.prefixes.bdd.pattern:
 					</citetitle>
 					propriedade define a expressão regular que irá identificar um

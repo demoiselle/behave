@@ -145,6 +145,10 @@ public class BehaveConfig {
 	public static boolean getParser_CommonsStepsEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.parser.commonssteps.enabled", "true"));
 	}
+	
+	public static long getParser_StoryTimeout() {
+		return Long.parseLong(getProperty("behave.parser.story.timeout", "21600"));
+	}
 
 	public static boolean getParser_BeforeAfterStepsEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.parser.beforeaftersteps.enabled", "true"));
