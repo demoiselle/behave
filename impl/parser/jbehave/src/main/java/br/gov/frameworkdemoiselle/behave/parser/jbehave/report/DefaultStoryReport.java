@@ -57,6 +57,7 @@ import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 public class DefaultStoryReport implements StoryReporter {
 	
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private String currentScenario = ""; 
 
 	public void storyNotAllowed(Story story, String filter) {
 		
@@ -83,10 +84,11 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void beforeScenario(String scenarioTitle) {
-		
+		this.currentScenario = scenarioTitle;
 	}
 
 	public void scenarioMeta(Meta meta) {
+		
 	}
 
 	public void afterScenario() {
@@ -126,7 +128,7 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void pending(String step) {
-		BehaveContext.getInstance().fail(step, new BehaveException(message.getString("exception-pending-step")));	
+		BehaveContext.getInstance().fail(currentScenario, step, new BehaveException(message.getString("exception-pending-step")));	
 	}
 
 	public void notPerformed(String step) {		
@@ -135,9 +137,9 @@ public class DefaultStoryReport implements StoryReporter {
 
 	public void failed(String step, Throwable cause) {
 		if (cause.getCause() != null && cause.getCause() instanceof AssertionError){
-			BehaveContext.getInstance().fail(step, cause.getCause());	
+			BehaveContext.getInstance().fail(currentScenario, step, cause.getCause());	
 		}else{
-			BehaveContext.getInstance().fail(step, cause);
+			BehaveContext.getInstance().fail(currentScenario, step, cause);
 		}						
 	}
 

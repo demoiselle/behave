@@ -71,9 +71,10 @@ public class BehaveContext {
 	private List<String> storiesPath = new ArrayList<String>();
 	
 	private List<String> storiesReusePath = new ArrayList<String>();
-
-	private String step;
+	
 	private Throwable fail;
+	private String failScenario;
+	private String failStep;
 
 	private BehaveMessage bm;
 
@@ -141,7 +142,7 @@ public class BehaveContext {
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
-				Assert.fail(bm.getString("exception-fail-step", step, fail.getMessage()));
+				Assert.fail(bm.getString("exception-fail-step", failStep, fail.getMessage()));
 			}
 		} catch (BehaveException ex) {
 			log.error(bm.getString("exception-general"), ex);
@@ -165,8 +166,9 @@ public class BehaveContext {
 
 	public void run() {
 		run(storiesPath);
+		this.failScenario = null;
 		this.fail = null;
-		this.step = null;
+		this.failStep = null;
 	}
 
 	public BehaveContext addStories(String storiesPath) {
@@ -181,8 +183,13 @@ public class BehaveContext {
 		return this;
 	}
 
-	public void fail(String step, Throwable fail) {
-		this.step = step;
+	public String getFailScenario() {
+		return this.failScenario;
+	}
+	
+	public void fail(String scenario, String step, Throwable fail) {
+		this.failScenario = scenario;
+		this.failStep = step;
 		this.fail = fail;
 	}
 }
