@@ -73,8 +73,9 @@ public class BehaveContext {
 	private List<String> storiesReusePath = new ArrayList<String>();
 	
 	private Throwable fail;
-	private String failScenario;
 	private String failStep;
+	
+	private String currentScenario;
 
 	private BehaveMessage bm;
 
@@ -166,7 +167,6 @@ public class BehaveContext {
 
 	public void run() {
 		run(storiesPath);
-		this.failScenario = null;
 		this.fail = null;
 		this.failStep = null;
 	}
@@ -182,13 +182,16 @@ public class BehaveContext {
 		this.storiesReusePath.add(storiesPath);
 		return this;
 	}
-
-	public String getFailScenario() {
-		return this.failScenario;
+	
+	public String getCurrentScenario() {
+		return this.currentScenario;		
 	}
 	
-	public void fail(String scenario, String step, Throwable fail) {
-		this.failScenario = scenario;
+	public void setCurrentScenario(String scenario) {
+		this.currentScenario = scenario;
+	}
+	
+ 	public void fail(String step, Throwable fail) {
 		this.failStep = step;
 		this.fail = fail;
 	}

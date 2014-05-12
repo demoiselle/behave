@@ -54,7 +54,8 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 public class ScreenShootingMaker {
 
-	private static final String DEFAULT_SCREENSHOT_PATH_PATTERN = "{0}" + File.separator + "view" + File.separator + "screenshots" + File.separator + "failed-scenario-{1}-{2}.png";
+	private static final String DEFAULT_SCREENSHOT_PATH_PATTERN = "{0}" + File.separator + "view" + File.separator + "screenshots" + File.separator + "failed-scenario-{1}.png";
+	private static final String DEFAULT_SCREENSHOT_PATH_PATTERN_WITH_SCENARIO = "{0}" + File.separator + "view" + File.separator + "screenshots-with-scenario" + File.separator + "failed-scenario-{1}-{2}.png";
 	private static final Logger logger = Logger.getLogger(ScreenShootingMaker.class);
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
@@ -76,20 +77,21 @@ public class ScreenShootingMaker {
 
 	public void afterScenarioFailure(UUIDExceptionWrapper uuidWrappedFailure) throws Exception {
 
-		String scenario = BehaveContext.getInstance().getFailScenario();
-		
-		// convert string to path
-		String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-		scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");		
-		
-		Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-
 		// Não captura tela dos passos pendentes
 		if (uuidWrappedFailure instanceof PendingStepFound) {
 			return;
 		}
 
-		String screenshotPath = screenshotPath(scenario, uuidWrappedFailure.getUUID());
+		String scenario = BehaveContext.getInstance().getCurrentScenario();
+
+		// convert string to path
+		String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+		scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
+
+		Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+
+		String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
+		String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
 
 		String currentUrl = "";
 		try {
@@ -99,6 +101,7 @@ public class ScreenShootingMaker {
 
 		try {
 			runner.saveScreenshotTo(screenshotPath);
+			runner.saveScreenshotTo(screenshotPathWithScenario);
 		} catch (Exception ex) {
 			logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
 			logger.error(ex);
@@ -107,7 +110,11 @@ public class ScreenShootingMaker {
 		logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
 	}
 
-	protected String screenshotPath(String scenario, UUID uuid) {
-		return MessageFormat.format(screenshotPathPattern, reporterBuilder.outputDirectory(), scenario, uuid);
+	protected String screenshotPathWithScenario(String scenario, UUID uuid) {
+		return MessageFormat.format(DEFAULT_SCREENSHOT_PATH_PATTERN_WITH_SCENARIO, reporterBuilder.outputDirectory(), scenario, uuid);
+	}
+
+	protected String screenshotPath(UUID uuid) {
+		return MessageFormat.format(screenshotPathPattern, reporterBuilder.outputDirectory(), uuid);
 	}
 }
