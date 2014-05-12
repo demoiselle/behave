@@ -107,6 +107,12 @@
 				</ulink>
 			</listitem>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/215">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na identificação do arquivo de screenshot de erro
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/pull/219">
 					<emphasis>[Bug]</emphasis>
 					Corrigi o erro 'Nenhuma página selecionada' quando mais de uma classe herda de CommonSteps
@@ -123,7 +129,7 @@
 					<emphasis>[Melhoria]</emphasis>
 					Atualização das propriedades do framework na documentação
 				</ulink>
-			</listitem>
+			</listitem>			
 		</itemizedlist>
 	</para>
 
