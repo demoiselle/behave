@@ -19,6 +19,115 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.3.2</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/165">
+					<emphasis>[Melhoria]</emphasis>
+					Inclusão de valores dos campos da tabela de exemplos nos passos dos cenários de testes criados no alm
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/169">
+					<emphasis>[Melhoria]</emphasis>
+					Grava a hierarquia da janela ativa no arquivo html do relatório do jbehave para fest
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/173">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir o uso de um firefox não padrão
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/175">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado novo componente componente DesktopLink
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/180">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado novos componentes DesktopRadio e DesktopCheckbox
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/186">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado novo componente para o rich:fileupload
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/187">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado novo componente para o rich:inputNumberSpinner
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/190">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado novo passo: será exibido o valor "$text" em "$elementName" referente a "$locatorParameters"
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/196">
+					<emphasis>[Bug]</emphasis>
+					Correção de bug no preenchimento de campos no IE8+ para Windows 7 64-bits
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/199">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na integração com a ALM permitindo informar a área de projeto com ou sem url encoding
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/204">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir o uso da janela do navegador em modo maximizado
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/205">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir alternar de janela no navegador através da url
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/212">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir reutilizar cenários de uma história sem executá-la
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/214">
+					<emphasis>[Melhoria]</emphasis>
+					Nova propriedade para controlar o timeout das histórias no parser
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/219">
+					<emphasis>[Bug]</emphasis>
+					Corrigi o erro 'Nenhuma página selecionada' quando mais de uma classe herda de CommonSteps
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/220">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização do componente Selenium para funcionar com navegadores mais recentes
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/222">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização das propriedades do framework na documentação
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
 		<citetitle>Versão 1.3.1</citetitle>
 
 		<itemizedlist>
