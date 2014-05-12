@@ -102,7 +102,7 @@
 				<listitem>
 					<citetitle>behave.runner.screen.maxWait</citetitle>
 					: Tempo máximo de espera em uma ação na tela,
-					O valor padrão é
+					o valor padrão é
 					<emphasis>10000 milisegundos</emphasis>
 					.
 				</listitem>
@@ -145,7 +145,7 @@
 					: Para testes remotos, esta propriedade informa
 					a URL na qual o
 					Selenium Server encontra-se,
-					O valor padrão é
+					o valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
@@ -154,7 +154,7 @@
 					: Localização do driver que faz ligação
 					entre o navegador e o
 					webdriver,
-					O valor padrão é
+					o valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
@@ -162,7 +162,7 @@
 					<citetitle>behave.runner.profile.enabled</citetitle>
 					: propriedade que ativa ou desativa o uso de
 					profile no navegador,
-					O
+					o
 					valor padrão é
 					<emphasis>desabilitado</emphasis>
 					.
@@ -170,7 +170,7 @@
 				<listitem>
 					<citetitle>behave.runner.screen.profilePath</citetitle>
 					: Localização do profile,
-					O valor padrão é
+					o valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
@@ -182,7 +182,42 @@
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
+				</listitem>				
+				<listitem>
+					<citetitle>behave.runner.proxy.enabled</citetitle>
+					: habilita a utilização do proxy no runner (Navegador),
+					o valor padrão é
+					<emphasis>desabilitado</emphasis>
+					.
 				</listitem>
+				<listitem>
+					<citetitle>behave.runner.proxy.url</citetitle>
+					: URL do proxy a ser utilizado quando a opção do Proxy esta habilitada,
+					o valor padrão é
+					<emphasis>vazio</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.binaryPath</citetitle>
+					: localização do binário do navegador quando se quer utilizar uma versão específica (ex: //home//USER//firefox//firefox-bin),
+					o valor padrão é
+					<emphasis>desabilitado</emphasis>
+					.
+				</listitem>				
+				<listitem>
+					<citetitle>behave.runner.catchUIException</citetitle>
+					: exceções a serem capturadas em caso de erro genérico (StaleElementReferenceException),
+					o valor padrão é
+					<emphasis>org.openqa.selenium.StaleElementReferenceException</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.window.maximize.enabled</citetitle>
+					: ativa o uso maximizada da janela do navegador,
+					o valor padrão é
+					<emphasis>false</emphasis>
+					.
+				</listitem>				
 			</itemizedlist>
 		</para>
 	</section>
@@ -194,7 +229,7 @@
 					<citetitle>behave.integration.alm.enabled</citetitle>
 					: propriedade que habilita/desabilita a funcionalidade de
 					integração com a ALM.
-					O valor padrão é
+					o valor padrão é
 					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
@@ -202,7 +237,7 @@
 					<citetitle>behave.integration.alm.url.security</citetitle>
 					: Campo obrigatório para integração com a ALM. Endereço
 					completo do
-					caminho para autenticação na ALM
+					caminho para autenticação na ALM. 
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -211,7 +246,7 @@
 					<citetitle>behave.integration.alm.url.services</citetitle>
 					: Campo obrigatório para integração com a ALM. Endereço
 					completo do
-					caminho para os serviços REST
+					caminho para os serviços REST. 
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
@@ -224,8 +259,8 @@
 					projeto, tomar cuidado com
 					áreas renomeadas, pois o Alias não
 					é
-					alterado
-					O valor padrão é
+					alterado, 
+					o valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
@@ -235,14 +270,14 @@
 					para integração com a ALM. Id do
 					plano de testes
 					que pertence a área de
-					projeto
+					projeto. 
 					O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.integration.authenticator.host</citetitle>
-					: Endereço (IP) do Autenticator
+					: Endereço (IP) do Autenticator. 
 					O valor padrão é
 					<emphasis>localhost</emphasis>
 					.
@@ -250,7 +285,7 @@
 				<listitem>
 					<citetitle>behave.integration.authenticator.port</citetitle>
 					: Porta
-					utilizada para comunicação com o Autenticator
+					utilizada para comunicação com o Autenticator. 
 					O valor padrão
 					é
 					<emphasis>9990</emphasis>
