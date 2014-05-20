@@ -23,6 +23,12 @@
 
 		<itemizedlist>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/221">
+					<emphasis>[Bug]</emphasis>
+					Alteração da versão do JBehave para a 3.9.2 e correção de um problema com o JBehave que impedia que fossem gerados relatórios no Windows
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/pull/165">
 					<emphasis>[Melhoria]</emphasis>
 					Inclusão de valores dos campos da tabela de exemplos nos passos dos cenários de testes criados no alm
