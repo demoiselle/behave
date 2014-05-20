@@ -128,8 +128,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public static class ResolveReportPathFix extends AbstractPathResolver {
 		public String resolveName(StoryLocation storyLocation, String extension) {
 			String name = storyLocation.getPath();
-			if (StringUtils.contains(name, File.pathSeparator)) {
-				name = StringUtils.substringAfterLast(name, File.pathSeparator);
+			if (StringUtils.contains(name, File.separator)) {
+				name = StringUtils.substringAfterLast(name, File.separator);
 			}
 			return StringUtils.substringBeforeLast(name, ".") + "." + extension;
 		}
