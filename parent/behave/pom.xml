@@ -189,12 +189,12 @@
 			<dependency>
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-core</artifactId>
-				<version>3.8</version>
+				<version>3.9.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jbehave.web</groupId>
 				<artifactId>jbehave-web-selenium</artifactId>
-				<version>3.5.4</version>
+				<version>3.5.5</version>
 			</dependency>
 
 			<!-- runner -->
@@ -309,7 +309,7 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<overwriteReleases>false</overwriteReleases>
+							<overwriteReleases>true</overwriteReleases>
 							<overwriteSnapshots>true</overwriteSnapshots>
 							<artifactItems>
 								<artifactItem>
@@ -329,7 +329,7 @@
 							<goal>unpack</goal>
 						</goals>
 						<configuration>
-							<overwriteReleases>false</overwriteReleases>
+							<overwriteReleases>true</overwriteReleases>
 							<overwriteSnapshots>true</overwriteSnapshots>
 							<artifactItems>
 								<artifactItem>
