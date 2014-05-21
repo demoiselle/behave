@@ -136,6 +136,12 @@
 					Atualização das propriedades do framework na documentação
 				</ulink>
 			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/177">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização da aplicação treino e inclusão no repositório do GitHub na pasta "sample/treino-app"
+				</ulink>
+			</listitem>
 		</itemizedlist>
 	</para>
 
