@@ -39,9 +39,11 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import junit.framework.Assert;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
@@ -339,6 +341,48 @@ public class CommonSteps implements Step {
 	public void getTextDialog(String value) {
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
+	}
+
+	@Given("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	@When("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	@Then("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	public void informoUmNumeroRandomicoComDigitoInicial(String prefix, String fieldName) {
+		Integer numeroRandomico = (new Random()).nextInt();
+		if (numeroRandomico < 0) {
+			numeroRandomico = numeroRandomico * (-1);
+		}
+		String stringNumeroRandomico = Integer.toString(numeroRandomico);
+		if (StringUtils.isBlank(prefix)) {
+			prefix = "";
+		}
+		inform(prefix + stringNumeroRandomico, fieldName);
+	}
+
+	@When("informo um n\u00FAmero randomico no campo \"$fieldName\"")
+	public void informoUmNumeroRandomicoNoCampo(String fieldName) {
+		Integer numeroRandomico = (new Random()).nextInt();
+		if (numeroRandomico < 0) {
+			numeroRandomico = numeroRandomico * (-1);
+		}
+		String stringNumeroRandomico = Integer.toString(numeroRandomico);
+		inform(stringNumeroRandomico, fieldName);
+	}
+
+	@Given("defino a variável \"$newVar\" com valor \"$value\"")
+	@Then("defino a variável \"$newVar\" com valor \"$value\"")
+	@When("defino a variável \"$newVar\" com valor \"$value\"")
+	public void defineNewVariable(String newVar, String value) {
+		dataProvider.put(newVar, value);
+	}
+
+	@When("imprimo no console o valor da variável \"$var\"")
+	@Then("imprimo no console o valor da variável \"$var\"")
+	public void printVarValueInLog(String var) {
+		String value = (String) dataProvider.get(var);
+		if (value == null)
+			value = "";
+		String msg = "\t" + var + " = " + "|" + value + "|";
+		logger.info(msg);
 	}
 
 }

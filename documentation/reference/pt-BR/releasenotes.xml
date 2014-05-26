@@ -21,7 +21,7 @@
 	<para>
 		<citetitle>Versão 1.3.2</citetitle>
 
-		<itemizedlist>
+		<itemizedlist>	
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/221">
 					<emphasis>[Bug]</emphasis>
