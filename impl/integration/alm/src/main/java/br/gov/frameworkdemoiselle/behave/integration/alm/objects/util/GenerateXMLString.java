@@ -167,15 +167,15 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemId, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
-		Date startDate = (Date)_startDate.clone();
-		Date endDate = (Date)_endDate.clone();
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
+		Date startDate = (Date) _startDate.clone();
+		Date endDate = (Date) _endDate.clone();
 		ApprovalState state = new ApprovalState();
 		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
 		state.setValue("com.ibm.rqm.planning.common.new");
 
 		ExecutionworkitemLink workTest = new ExecutionworkitemLink();
-		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" + executionWorkItemId);
+		workTest.setHref(executionWorkItemUrl);
 
 		Executionresult result = new Executionresult();
 		if (failed) {
@@ -220,7 +220,7 @@ public class GenerateXMLString {
 				String line = "";
 				while ((line = reader.readLine()) != null) {
 					xmlString.append(line);
-			    }
+				}
 			} finally {
 				instream.close();
 			}
