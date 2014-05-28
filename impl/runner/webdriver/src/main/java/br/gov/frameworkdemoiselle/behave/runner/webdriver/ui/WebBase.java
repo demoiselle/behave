@@ -169,7 +169,6 @@ public class WebBase extends MappedElement implements BaseUI {
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
-		waitVisibility(by);
 	}
 
 	protected void waitElementOnlyVisible(Integer index) {
