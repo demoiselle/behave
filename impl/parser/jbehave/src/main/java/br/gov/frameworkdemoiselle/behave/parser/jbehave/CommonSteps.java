@@ -46,6 +46,7 @@ import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -284,9 +285,10 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@When("informo \"$key\" com valor \"$fieldName\"")
-	@Given("informo \"$key\" com valor \"$fieldName\"")
-	@Then("informo \"$key\" com valor \"$fieldName\"")
+	@When("informo \"$key\" com valor \"$value\"")
+	@Given("informo \"$key\" com valor \"$value\"")
+	@Then("informo \"$key\" com valor \"$value\"")
+	@Aliases(values = { "defino a variável \"$key\" com valor \"$value\"" })
 	public void setDataProvider(String key, String value) {
 		dataProvider.put(key, value);
 	}
@@ -366,13 +368,6 @@ public class CommonSteps implements Step {
 		}
 		String stringNumeroRandomico = Integer.toString(numeroRandomico);
 		inform(stringNumeroRandomico, fieldName);
-	}
-
-	@Given("defino a variável \"$newVar\" com valor \"$value\"")
-	@Then("defino a variável \"$newVar\" com valor \"$value\"")
-	@When("defino a variável \"$newVar\" com valor \"$value\"")
-	public void defineNewVariable(String newVar, String value) {
-		dataProvider.put(newVar, value);
 	}
 
 	@When("imprimo no console o valor da variável \"$var\"")
