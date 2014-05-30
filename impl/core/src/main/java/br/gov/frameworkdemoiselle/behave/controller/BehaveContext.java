@@ -95,6 +95,7 @@ public class BehaveContext {
 		try {
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-start"));
+			log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));			
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
