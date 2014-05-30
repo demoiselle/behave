@@ -23,6 +23,12 @@
 
 		<itemizedlist>	
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/223">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema que ocorria quando utilizava o meta info @casodeteste na integração com a ALM
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/221">
 					<emphasis>[Bug]</emphasis>
 					Correção de um problema com o JBehave que impedia que fossem gerados relatórios no Windows
