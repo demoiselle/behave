@@ -90,32 +90,36 @@ public class ScreenShootingMaker {
 		} catch (BehaveException e) {
 		}
 		
-		if (runner != null) {
-			String scenario = BehaveContext.getInstance().getCurrentScenario();
-	
-			// convert string to path
-			String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-			scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
-				
-			String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
-			String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
-	
-			String currentUrl = "";
-			try {
-				currentUrl = runner.getCurrentUrl();
-			} catch (Exception e) {
-			}
-	
-			try {
-				runner.saveScreenshotTo(screenshotPath);
-				runner.saveScreenshotTo(screenshotPathWithScenario);
-			} catch (Exception ex) {
-				logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
-				logger.error(ex);
-				return;
-			}
-			logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
+		if (runner == null) {
+			return;
 		}
+		
+		String scenario = BehaveContext.getInstance().getCurrentScenario();
+
+		// Convert string to path
+		String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+		scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
+			
+		String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
+		String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
+
+		String currentUrl = "";
+		try {
+			currentUrl = runner.getCurrentUrl();
+		} catch (Exception e) {
+		}
+
+		try {
+			runner.saveScreenshotTo(screenshotPath);
+			runner.saveScreenshotTo(screenshotPathWithScenario);
+		} catch (Exception ex) {
+			logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
+			logger.error(ex);
+			return;
+		}
+		
+		logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
+
 	}
 
 	protected String screenshotPathWithScenario(String scenario, UUID uuid) {

@@ -45,8 +45,11 @@ import org.jbehave.core.model.Story;
 import org.jbehave.core.reporters.HtmlOutput;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
+import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 public class ScreenShootingHtmlOutput extends HtmlOutput {
 
@@ -58,7 +61,19 @@ public class ScreenShootingHtmlOutput extends HtmlOutput {
 			Keywords keywords) {
 		super(output, keywords);
 		this.maker = new ScreenShootingMaker(reporterBuilder);
-		super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" + "<br/><img src=\"screenshots/failed-scenario-{3}.png\" alt=\"failing screenshot\"/><br/><a href=\"screenshots/failed-scenario-{3}.png.html\" alt=\"failing screenshot html\" target=\"_blank\">View Html</a></div>\n");
+		
+		// Verifica se existe um runner para ter screenshot
+		Runner runner = null;		
+		try {
+			runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+		} catch (BehaveException e) {
+		}
+		
+		if (runner != null) {					
+			super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span>" + "<br/><img src=\"screenshots/failed-scenario-{3}.png\" alt=\"failing screenshot\"/><br/><a href=\"screenshots/failed-scenario-{3}.png.html\" alt=\"failing screenshot html\" target=\"_blank\">View Html</a></div>\n");
+		} else {
+			super.overwritePattern("failed", "<div class=\"step failed\">{0} <span class=\"keyword failed\">({1})</span><br/><span class=\"message failed\">{2}</span></div>\n");	
+		}
 	}
 
 	@Override
@@ -79,7 +94,7 @@ public class ScreenShootingHtmlOutput extends HtmlOutput {
 		try {
 			if (storyFailure instanceof UUIDExceptionWrapper) {
 				UUIDExceptionWrapper uuidWrappedFailure = (UUIDExceptionWrapper) storyFailure;
-				this.maker.afterScenarioFailure(uuidWrappedFailure);
+				this.maker.afterScenarioFailure(uuidWrappedFailure);				
 			} else {
 				logger.warn(message.getString("exception-screen-not-save"));
 			}
