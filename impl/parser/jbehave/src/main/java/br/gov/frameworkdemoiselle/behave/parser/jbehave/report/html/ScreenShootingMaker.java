@@ -47,6 +47,7 @@ import org.jbehave.core.failures.UUIDExceptionWrapper;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
@@ -81,33 +82,40 @@ public class ScreenShootingMaker {
 		if (uuidWrappedFailure instanceof PendingStepFound) {
 			return;
 		}
-
-		String scenario = BehaveContext.getInstance().getCurrentScenario();
-
-		// convert string to path
-		String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-		scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
-
-		Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
-
-		String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
-		String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
-
-		String currentUrl = "";
+		
+		// Ignora o erro quando não existe o runner
+		Runner runner = null;		
 		try {
-			currentUrl = runner.getCurrentUrl();
-		} catch (Exception e) {
+			runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
+		} catch (BehaveException e) {
 		}
-
-		try {
-			runner.saveScreenshotTo(screenshotPath);
-			runner.saveScreenshotTo(screenshotPathWithScenario);
-		} catch (Exception ex) {
-			logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
-			logger.error(ex);
-			return;
+		
+		if (runner != null) {
+			String scenario = BehaveContext.getInstance().getCurrentScenario();
+	
+			// convert string to path
+			String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
+				
+			String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
+			String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
+	
+			String currentUrl = "";
+			try {
+				currentUrl = runner.getCurrentUrl();
+			} catch (Exception e) {
+			}
+	
+			try {
+				runner.saveScreenshotTo(screenshotPath);
+				runner.saveScreenshotTo(screenshotPathWithScenario);
+			} catch (Exception ex) {
+				logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
+				logger.error(ex);
+				return;
+			}
+			logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
 		}
-		logger.info(message.getString("message-screen-save", currentUrl, screenshotPath, new File(screenshotPath).length()));
 	}
 
 	protected String screenshotPathWithScenario(String scenario, UUID uuid) {
