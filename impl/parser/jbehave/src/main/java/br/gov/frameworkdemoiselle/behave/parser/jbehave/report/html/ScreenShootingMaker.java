@@ -95,14 +95,17 @@ public class ScreenShootingMaker {
 		}
 		
 		String scenario = BehaveContext.getInstance().getCurrentScenario();
-
+		String screenshotPathWithScenario = "";
+		
 		// Convert string to path
-		String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-		scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
-			
-		String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
-		String screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
+		if (scenario != null) {
+			String ret = Normalizer.normalize(scenario, Normalizer.Form.NFD).replace(" ", "").replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			scenario = ret.replaceAll("[-]", "").replaceAll("[:]", "").replaceAll("[.]", "").replaceAll("[#]", "");
+			screenshotPathWithScenario = screenshotPathWithScenario(scenario, uuidWrappedFailure.getUUID());
+		}
 
+		String screenshotPath = screenshotPath(uuidWrappedFailure.getUUID());
+		
 		String currentUrl = "";
 		try {
 			currentUrl = runner.getCurrentUrl();
@@ -111,7 +114,9 @@ public class ScreenShootingMaker {
 
 		try {
 			runner.saveScreenshotTo(screenshotPath);
-			runner.saveScreenshotTo(screenshotPathWithScenario);
+			if (!screenshotPathWithScenario.equals("")) {
+				runner.saveScreenshotTo(screenshotPathWithScenario);
+			}
 		} catch (Exception ex) {
 			logger.error(message.getString("exception-screen-save", currentUrl, screenshotPath, ex.getMessage()));
 			logger.error(ex);
