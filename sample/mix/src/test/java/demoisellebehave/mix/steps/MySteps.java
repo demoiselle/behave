@@ -16,6 +16,7 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichFileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichInputNumberSpinner;
+import demoisellebehave.mix.ui.WebFileUpload;
 
 public class MySteps extends CommonSteps {
 	
@@ -94,19 +95,41 @@ public class MySteps extends CommonSteps {
 
 	@When("informo no \"$element\" o arquivo \"$arquivo\"")
 	public void adicionarArquivo(String element, String arquivo) throws UnsupportedEncodingException{
-		RichFileUpload fu = (RichFileUpload)runner.getElement(currentPageName, element);		
-		
-		String pathFile = MySteps.class.getResource(arquivo).getPath();
-		pathFile = java.net.URLDecoder.decode(pathFile, "UTF-8");
-		
-		// Testa se o arquivo existe		
-		File f = new File(pathFile); 		
-		if (!f.exists()) {
-			throw new BehaveException("O arquivo informado não existe!");
+		try {
+			RichFileUpload fu = (RichFileUpload) runner.getElement(currentPageName, element);
+
+			String pathFile = MySteps.class.getResource(arquivo).getPath();
+			pathFile = java.net.URLDecoder.decode(pathFile, "UTF-8");
+
+			// Testa se o arquivo existe
+			File f = new File(pathFile);
+			if (!f.exists()) {
+				throw new BehaveException("O arquivo informado não existe!");
+			}
+
+			fu.add(f.getPath());
+		} catch (ClassCastException e) {
+			
+			WebFileUpload fu = (WebFileUpload) runner.getElement(currentPageName, element);
+
+			String pathFile = MySteps.class.getResource(arquivo).getPath();
+			pathFile = java.net.URLDecoder.decode(pathFile, "UTF-8");
+
+			// Testa se o arquivo existe
+			File f = new File(pathFile);
+			if (!f.exists()) {
+				throw new BehaveException("O arquivo informado não existe!");
+			}
+			
+			fu.sendKeys(pathFile);
+
+			
+
 		}
-		
-		fu.add(f.getPath());
 	}
+	
+	
+	
 
 	@When("aciono \"$funcionalidade\" no campo \"$element\"")
 	public void acionarFuncionalidade(String funcionalidade, String element){

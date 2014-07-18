@@ -49,5 +49,10 @@ public class AllTest {
 	public void testColor(){
 		eng.run("/stories/color/color.story");
 	}
+	
+	@Test
+	public void testFileUpload(){
+		eng.run("/stories/primefaces/fileupload.story");
+	}
 
 }
