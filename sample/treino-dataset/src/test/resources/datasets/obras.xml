@@ -1,0 +1,32 @@
+﻿<DataSet>
+	<dataRecords>
+		<DataRecord id="Parque olímpico">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Parque Olímpico" />
+				<DataItem key="Valor" value="250000000" />
+				<DataItem key="Prazo" value="01/05/2015" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="Vila olímpica">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Vila Olímpica e Paraolímpica" />
+				<DataItem key="Valor" value="150000000" />
+				<DataItem key="Prazo" value="01/07/2015" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="Centro olímpico">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Centro Olímpico de BMX" />
+				<DataItem key="Valor" value="4000000" />
+				<DataItem key="Prazo" value="02/06/2015" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="Estádio olímpico">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Estádio Olímpico de Canoagem Slalom" />
+				<DataItem key="Valor" value="5000000" />
+				<DataItem key="Prazo" value="01/07/2015" />
+			</dataItems>
+		</DataRecord>
+	</dataRecords>
+</DataSet>
