@@ -77,11 +77,12 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	public String getText() {
 		// Fazer tratamento para SELECT normal e PrimeFaces
-		if (getElements().get(0).getTagName().equals("select")) {
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+		List<WebElement> elements = getElements(); 
+		if (elements.get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(elements.get(0));
 			return lSelect.getFirstSelectedOption().getText();
 		} else {
-			return getElements().get(0).getText();
+			return elements.get(0).getText();
 		}
 	}
 
@@ -97,12 +98,13 @@ public class WebSelect extends WebBase implements Select {
 		waitText(value);
 
 		// Aguarda o primeiro elemento ser clicável
-		waitElement(0);
+		List<WebElement> elements = waitElement(0);
 
-		if (getElements().get(0).getTagName().equals("select")) {
+		if (elements.get(0).getTagName().equals("select")) {
 
 			// Select comum e usa um helper do selenium
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(
+					elements.get(0));
 
 			// Verifica o tipo valor do select
 			if (type == WebSelectType.TEXT) {
@@ -116,10 +118,14 @@ public class WebSelect extends WebBase implements Select {
 		} else {
 
 			// Outros tipos de select como a do primefaces
-			WebElement elementMain = getElements().get(0);
+			WebElement elementMain = elements.get(0);
 			elementMain.click();
 
-			List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
+			// Tempo do efeito de abertura das opções
+			waitElementOnlyVisible(1);
+			
+			List<WebElement> elementValue = elements.get(1).findElements(
+					By.tagName("li"));
 			for (WebElement item : elementValue) {
 				if (item.getText().equals(value)) {
 					// Aguarda o segundo elemento ser clicável

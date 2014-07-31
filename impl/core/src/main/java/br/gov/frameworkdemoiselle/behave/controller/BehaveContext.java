@@ -75,7 +75,7 @@ public class BehaveContext {
 	private Throwable fail;
 	private String failStep;
 	
-	private String currentScenario;
+	private String currentScenario = "";
 
 	private BehaveMessage bm;
 

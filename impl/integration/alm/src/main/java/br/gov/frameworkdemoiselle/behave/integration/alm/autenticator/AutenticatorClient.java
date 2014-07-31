@@ -91,6 +91,7 @@ public class AutenticatorClient {
 	 * @param _message
 	 * @return
 	 */
+	@SuppressWarnings("resource")
 	private String sendMessage(String host, int port, String _message) {
 		try {
 			Socket socket = new Socket(host, port);

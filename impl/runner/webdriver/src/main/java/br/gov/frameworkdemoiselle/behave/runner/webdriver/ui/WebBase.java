@@ -143,9 +143,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	public String getText() {
-		waitElement(0);
-
-		return getElements().get(0).getText();
+		List<WebElement> elements = waitElement(0);
+		return elements.get(0).getText();
 	}
 
 	protected static void waitThreadSleep(Long delay) {
@@ -159,16 +158,19 @@ public class WebBase extends MappedElement implements BaseUI {
 	/**
 	 * TODO: Refactoring dos métodos de verificação de elementos na tela
 	 */
-	protected void waitElement(Integer index) {
+	protected List<WebElement> waitElement(Integer index) {
 		waitLoading();
 
 		// procura o elemento em qualquer frame
-		getElements();
+		List<WebElement> elements = getElements();
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitClickable(by);
+		waitVisibility(by);
+		
+		return elements;
 	}
 
 	protected void waitElementOnlyVisible(Integer index) {
