@@ -153,7 +153,7 @@ Então será exibido "Seja bem vindo"</programlisting>
 			"behave.parser.identification.scenario.pattern.&lt;idioma&gt;" no
 			arquivo behave.properties.
 		</para>
-		<programlisting>Cenário: Acessar o sistema com usuário "demoiselle" e senha "behave"
+		<programlisting>Cenário: Acessar o sistema com usuário "{demoiselle}" e senha "{behave}"
 Dado que estou na página "Login"
 Quando informo "demoiselle" no campo "Usuário:"
 E informo "behave" no campo "Senha:" 
