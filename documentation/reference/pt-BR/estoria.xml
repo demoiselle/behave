@@ -202,14 +202,14 @@ E informo "{senha}" no campo "Senha:"
 Quando clico em "Entrar"
 Então será exibido "Seja bem vindo"
 
-Cenário: Sair do {sistema}
+Cenário: Sair do "{sistema}"
 Dado que vou para a página "Tela Principal"
 Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
 
 Cenário: Teste
-Acessar o sistema com usuário "demoiselle" e senha "behave"
+Acessar o sistema com usuário "{demoiselle}" e senha "{behave}"
 Sair do "sistema"</programlisting>
 	</section>
 	
