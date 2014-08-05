@@ -53,6 +53,7 @@ import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
+import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
@@ -82,6 +83,7 @@ public class CommonSteps implements Step {
 
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
+	protected DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
 	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
@@ -242,6 +244,7 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
 		Element element = (Element) runner.getScreen();
+		text = DataProviderUtil.replaceValue(text);
 		element.waitText(text);
 	}
 
@@ -249,6 +252,7 @@ public class CommonSteps implements Step {
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
+		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
 	}
 
@@ -257,6 +261,7 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
+		text = DataProviderUtil.replaceValue(text);
 		if (!element.getText().contains(text)) {
 			throw new BehaveException(message.getString("exception-text-not-found", elementName));
 		}
@@ -379,4 +384,16 @@ public class CommonSteps implements Step {
 		logger.info(msg);
 	}
 
-}
+	@Given("que selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
+	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
+	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
+		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
+	}
+	
+	@When("informo o valor do campo \"$fieldName\"")
+	@Then("informo o valor do campo \"$fieldName\"")
+	public void informWithDataProviderValue(String fieldName) {
+		inform(fieldName, fieldName);
+	}
+	
+ }
