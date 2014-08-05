@@ -8,6 +8,10 @@ public class DataRecord {
 
 	private List<DataItem> dataItems = null;
 
+	public DataRecord() {
+	
+	}
+	
 	public DataRecord(String id) {
 		this.id = id;
 	}
