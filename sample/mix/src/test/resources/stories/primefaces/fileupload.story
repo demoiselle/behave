@@ -4,7 +4,7 @@ Como um: usuário do sistema
 Desejo: enviar arquivos por Upload
 De modo que: o arquivo seja adicionado e enviado para o servidor
 
-Cenário: Adicionar arquivo
+Cenário: Adicionar arquivo primefaces
 
 Dado que vou para a tela "Upload Auto"
 Quando informo no "FileUpload" o arquivo "/images-upload/testes-1.jpg"

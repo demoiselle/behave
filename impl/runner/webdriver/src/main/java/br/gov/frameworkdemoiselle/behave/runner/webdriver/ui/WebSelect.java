@@ -77,7 +77,7 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	public String getText() {
 		// Fazer tratamento para SELECT normal e PrimeFaces
-		List<WebElement> elements = getElements(); 
+		List<WebElement> elements = getElements();
 		if (elements.get(0).getTagName().equals("select")) {
 			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(elements.get(0));
 			return lSelect.getFirstSelectedOption().getText();
@@ -94,17 +94,13 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	private void select(String value, WebSelectType type) {
 
-		// Esperar que o texto do valo esteja na tela
-		waitText(value);
-
 		// Aguarda o primeiro elemento ser clicável
 		List<WebElement> elements = waitElement(0);
 
 		if (elements.get(0).getTagName().equals("select")) {
 
 			// Select comum e usa um helper do selenium
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(
-					elements.get(0));
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(elements.get(0));
 
 			// Verifica o tipo valor do select
 			if (type == WebSelectType.TEXT) {
@@ -123,14 +119,17 @@ public class WebSelect extends WebBase implements Select {
 
 			// Tempo do efeito de abertura das opções
 			waitElementOnlyVisible(1);
-			
-			List<WebElement> elementValue = elements.get(1).findElements(
-					By.tagName("li"));
+
+			List<WebElement> elementValue = elements.get(1).findElements(By.tagName("li"));
 			for (WebElement item : elementValue) {
 				if (item.getText().equals(value)) {
 					// Aguarda o segundo elemento ser clicável
-					waitElement(1);
-					item.click();
+					try {
+						item.click();
+					} catch (Throwable t) {
+						waitElement(1);
+						item.click();
+					}
 					break;
 				}
 			}

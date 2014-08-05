@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Given;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -52,6 +53,7 @@ public class MySteps extends CommonSteps {
 
 	private DecimalFormat formatDecimal = new DecimalFormat("###.0");
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private Logger logger = Logger.getLogger(MySteps.class);
 
 	@Given("decremento \"$decremento\" centavos \"$variavel\"")
 	public void decrementoCentavo(double decremento, String variavel) {
@@ -60,11 +62,16 @@ public class MySteps extends CommonSteps {
 			String melhorValorString = (String) dataProvider.get(variavel);
 
 			// Converte para double e decrementa
-			double melhorValorDouble = formatDecimal.parse(melhorValorString).doubleValue();
+			double melhorValorDouble = formatDecimal.parse(melhorValorString)
+					.doubleValue();
 			melhorValorDouble -= decremento / 100;
 
 			// Converta para String e retorna novo valor ao DataContainer
-			melhorValorString = formatDecimal.format(melhorValorDouble).replace(',', '.');
+			melhorValorString = formatDecimal.format(melhorValorDouble)
+					.replace(',', '.');
+
+			logger.debug("Valor com decremento: " + melhorValorString);
+
 			dataProvider.put(variavel, melhorValorString);
 		} catch (ParseException e) {
 			throw new BehaveException("Erro ao parsear número", e);
@@ -76,23 +83,24 @@ public class MySteps extends CommonSteps {
 		try {
 			// Obtem valor da variável do DataContainer
 			String melhorDateString = (String) dataProvider.get(variavel);
-			
-			//Converte a string em data
+
+			// Converte a string em data
 			Date melhorData = dateFormat.parse(melhorDateString);
-			
-			//Decremenda em dias
+
+			// Decremenda em dias
 			Calendar cl = GregorianCalendar.getInstance();
 			cl.setTime(melhorData);
 			cl.add(Calendar.DAY_OF_MONTH, -valor);
-			
+
 			melhorDateString = dateFormat.format(cl.getTime());
-			
-			//Converte data para string e e retorna novo valor ao DataContainer
+
+			logger.debug("Valor com decremento: " + melhorDateString);
+
+			// Converte data para string e e retorna novo valor ao DataContainer
 			dataProvider.put(variavel, melhorDateString);
 		} catch (ParseException e) {
 			throw new BehaveException("Erro ao parsear número", e);
 		}
 	}
 
-	
 }

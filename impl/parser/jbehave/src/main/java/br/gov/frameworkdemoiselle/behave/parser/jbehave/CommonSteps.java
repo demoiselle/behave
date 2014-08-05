@@ -100,7 +100,7 @@ public class CommonSteps implements Step {
 	@Then("estou na tela \"$local\"")
 	@When("estou na tela \"$local\"")
 	public void pageWithName(String local) {
-		logger.debug("Go to screen " + local);
+		logger.debug("Setting screen " + local);
 		currentPageName = local;
 		runner.setScreen(local);
 	}
@@ -206,7 +206,6 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			textField.clear();
 			textField.sendKeys(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
@@ -278,7 +277,7 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			String value = textField.getText();
+			String value = textField.getText();			
 			dataProvider.put(var, value);
 		} else {
 			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
