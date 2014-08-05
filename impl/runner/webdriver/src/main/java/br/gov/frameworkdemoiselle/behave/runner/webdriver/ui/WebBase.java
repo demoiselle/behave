@@ -87,9 +87,9 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	public List<WebElement> getElements() {
 		try {
-			
+
 			driver = (WebDriver) runner.getDriver();
-			
+
 			List<WebElement> elements = new ArrayList<WebElement>();
 			for (String locator : getElementMap().locator()) {
 
@@ -133,7 +133,6 @@ public class WebBase extends MappedElement implements BaseUI {
 		List<WebElement> elements = new ArrayList<WebElement>();
 		boolean found = false;
 
-		
 		frame = new SwitchDriver(driver);
 		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 		while (true) {
@@ -203,7 +202,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
 		waitLoading();
-		
+
 		// Pega o elemento
 		elements = getElements();
 
@@ -427,10 +426,34 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitInvisible() {
 		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
-		
-		Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
-		WebDriverWait wait = new WebDriverWait(getDriver(), waitTime);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		boolean testInvisibility = true;
+		driver = (WebDriver) runner.getDriver();
+
+		// Zera o tempo do driver, se não o implicity wait não funciona com o
+		// tempo correto
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+		try {
+			// Aguarda o elemento ficar visivel. Aguarda por 1/5 do tempo
+			// máximo.
+			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMaxWait() / 1000) / 5;
+			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
+			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
+
+			testInvisibility = true;
+		} catch (org.openqa.selenium.TimeoutException e) {
+			testInvisibility = false;
+		}
+
+		if (testInvisibility) {
+			// Aguarda ele sumir
+			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
+			WebDriverWait wait = new WebDriverWait(driver, waitTime);
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		}
+
+		// Volta o tempo padrão (maxWait) no driver
+		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
 }
