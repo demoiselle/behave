@@ -36,18 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 
 public class WebCheckBox extends WebBase implements CheckBox {
 
 	public void click() {
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
 
-		elements.get(0).click();
+		getElements().get(0).click();
 	}
 
 }

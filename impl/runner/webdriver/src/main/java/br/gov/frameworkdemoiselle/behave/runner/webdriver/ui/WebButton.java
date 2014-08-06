@@ -36,9 +36,6 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
@@ -46,19 +43,19 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 public class WebButton extends WebBase implements Button {
 
 	public void click() {
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
 
 		// Clica
-		elements.get(0).click();
+		getElements().get(0).click();
 	}
 
 	@Override
 	public void mouseOver() {
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
 
 		// mouse over
 		Actions actions = new Actions(getDriver());
-		actions.moveToElement(elements.get(0)).build().perform();
+		actions.moveToElement(getElements().get(0)).build().perform();
 	}
 
 }

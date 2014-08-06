@@ -49,9 +49,11 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
@@ -102,6 +104,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 				try {
+					
 					// Primeiro tenta encontrar na página sem frame sem Timeout
 					List<WebElement> elementsFound = driver.findElements(by);
 					if (elementsFound.size() > 0) {
@@ -120,7 +123,8 @@ public class WebBase extends MappedElement implements BaseUI {
 					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				}
 
-			}
+			}			
+			
 			return elements;
 		} catch (BehaveException be) {
 			throw be;
@@ -178,8 +182,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	public String getText() {
-		List<WebElement> elements = waitElement(0);
-		return elements.get(0).getText();
+		waitElement(0);
+		return getElements().get(0).getText();
 	}
 
 	protected static void waitThreadSleep(Long delay) {
@@ -193,24 +197,18 @@ public class WebBase extends MappedElement implements BaseUI {
 	/**
 	 * TODO: Refactoring dos métodos de verificação de elementos na tela
 	 */
-	protected List<WebElement> waitElement(Integer index) {
-
-		List<WebElement> elements;
-
+	// protected List<WebElement> waitElement(Integer index) {
+	protected void waitElement(Integer index) {
 		// Locators
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
+		// Aguarda o loading
 		waitLoading();
-
-		// Pega o elemento
-		elements = getElements();
 
 		// Espera ser visível e clicável
 		waitClickable(by);
-		waitVisibility(by);
-
-		return elements;
+		// waitVisibility(by);
 	}
 
 	protected void waitElementOnlyVisible(Integer index) {
@@ -234,7 +232,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-		if (loadingMap == null && !alreadySearchLoadingMap) {
+		if (loadingMap == null) {
 
 			alreadySearchLoadingMap = true;
 
@@ -264,7 +262,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 						if (existeLoading) {
 							// Aguardo o LOADING desaparecer!
-							WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+							Wait<WebDriver> wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000)).ignoring(StaleElementReferenceException.class);
 							wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
 						}
 
@@ -285,12 +283,12 @@ public class WebBase extends MappedElement implements BaseUI {
 	// condition 'clickable' is equivalent to 'visible and enabled'
 	// https://code.google.com/p/selenium/issues/detail?id=6804
 	private void waitClickable(By by) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		Wait<WebDriver> wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000)).ignoring(StaleElementReferenceException.class);
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	private void waitVisibility(By by) {
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		Wait<WebDriver> wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000)).ignoring(StaleElementReferenceException.class);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
@@ -437,7 +435,7 @@ public class WebBase extends MappedElement implements BaseUI {
 			// Aguarda o elemento ficar visivel. Aguarda por 1/5 do tempo
 			// máximo.
 			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMaxWait() / 1000) / 5;
-			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
+			Wait<WebDriver> waitVis = new WebDriverWait(driver, waitTimeVis).ignoring(StaleElementReferenceException.class);
 			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
 
 			testInvisibility = true;
@@ -448,7 +446,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		if (testInvisibility) {
 			// Aguarda ele sumir
 			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
-			WebDriverWait wait = new WebDriverWait(driver, waitTime);
+			Wait<WebDriver> wait = new WebDriverWait(driver, waitTime).ignoring(StaleElementReferenceException.class);
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 		}
 

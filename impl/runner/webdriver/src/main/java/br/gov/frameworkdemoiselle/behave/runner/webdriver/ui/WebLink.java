@@ -36,18 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 
 public class WebLink extends WebBase implements Link {
 
 	public void click() {
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
 		// Clica
-		elements.get(0).click();
+		getElements().get(0).click();
 	}
 
 }

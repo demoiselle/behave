@@ -95,7 +95,9 @@ public class WebSelect extends WebBase implements Select {
 	private void select(String value, WebSelectType type) {
 
 		// Aguarda o primeiro elemento ser clicável
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
+
+		List<WebElement> elements = getElements();
 
 		if (elements.get(0).getTagName().equals("select")) {
 

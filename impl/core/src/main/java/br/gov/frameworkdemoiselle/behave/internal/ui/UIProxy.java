@@ -31,10 +31,9 @@ public class UIProxy implements java.lang.reflect.InvocationHandler {
 		while (true) {
 
 			try {
-				// Espera entre cada tentativa
 				result = m.invoke(obj, args);
 				return result;
-			} catch (Throwable ex) { // TESTE
+			} catch (Throwable ex) {
 				// Somente armazena o erro do valor não encontrado, e tenta
 				// novamente
 				if (BehaveConfig.getRunner_CatchUIException().contains(ex.getCause().getClass().getCanonicalName())) {
@@ -43,6 +42,9 @@ public class UIProxy implements java.lang.reflect.InvocationHandler {
 					throw ex;
 				}
 			}
+			
+			// Faz uma pequena espera entre as tentativas
+			Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
 
 			// Se nenhum valor selecionado for encontrado tem que dar erro
 			// depois do timeout

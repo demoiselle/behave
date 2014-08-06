@@ -52,25 +52,23 @@ public class WebTextField extends WebBase implements TextField {
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 
 	public void sendKeys(CharSequence... keysToSend) {
+		waitElement(0);
 		sendKeysWithTries(keysToSend);
-	}
-
-	public void sendKeysWithTries(CharSequence... keysToSend) {
-		List<WebElement> elements = waitElement(0);
-		sendKeysWithTries(elements, keysToSend);
 	}
 
 	/**
 	 * Função que tenta preencher mais de uma vez o campo. Ela verifica se o
 	 * conteúdo enviado é o mesmo que esta atualmente no campo.
 	 */
-	public void sendKeysWithTries(List<WebElement> elements, CharSequence... keysToSend) {
+	public void sendKeysWithTries(CharSequence... keysToSend) {
 
 		String value = "";
 		for (int i = 0; i < keysToSend.length; i++)
 			value += keysToSend[i];
 
 		int totalMilliseconds = 0;
+
+		List<WebElement> elements = getElements();
 
 		while (!elements.get(0).getAttribute("value").equals(value)) {
 
@@ -117,9 +115,9 @@ public class WebTextField extends WebBase implements TextField {
 	 * ------------------------------------------------------------------------
 	 */
 	public void clear() {
-		List<WebElement> elements = waitElement(0);
+		waitElement(0);
 		// Limpa o campo enviando BACKSPACE
-		sendKeysWithTries(elements);
+		sendKeysWithTries();
 	}
 
 	@Override
