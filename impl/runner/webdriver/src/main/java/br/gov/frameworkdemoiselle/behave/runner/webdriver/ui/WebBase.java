@@ -267,7 +267,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		} else if (loadingMap != null) {
 
 			// Espera que o elemento seja mostrado pela biblioteca JavaScript
-			waitThreadSleep(200L);
+			waitThreadSleep(100L);
 			
 			// Cache do elementMap
 			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
