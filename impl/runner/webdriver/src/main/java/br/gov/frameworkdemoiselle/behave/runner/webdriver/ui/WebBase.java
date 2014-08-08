@@ -203,6 +203,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		// Espera ser visível e clicável
 		waitClickable(by);
+		
+		// Esta verificação é necessária mesmo que dentro do clickable ele já faça
+		waitVisibility(by);
 	}
 
 	protected void waitElementOnlyVisible(Integer index) {
@@ -264,11 +267,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					}
 				}
 			}
-		} else if (loadingMap != null) {
-
-			// Espera que o elemento seja mostrado pela biblioteca JavaScript
-			waitThreadSleep(100L);
-			
+		} else if (loadingMap != null) {			
 			// Cache do elementMap
 			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
