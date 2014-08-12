@@ -193,6 +193,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	@Then(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	public void selectByValue(String value, String fieldName) {
+		value = DataProviderUtil.replaceValue(value);
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
