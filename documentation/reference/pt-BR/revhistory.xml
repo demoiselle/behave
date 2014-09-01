@@ -2,8 +2,14 @@
 <!DOCTYPE revhistory PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
-<revision>
-	<revnumber>1.3.2</revnumber>
+	<revision>
+		<revnumber>1.4.0-BETA1</revnumber>
+		<date>02/09/2014</date>
+		<authorinitials>vbs,jcs</authorinitials>
+		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.3.2</revnumber>
 		<date>30/05/2014</date>
 		<authorinitials>vbs,jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
