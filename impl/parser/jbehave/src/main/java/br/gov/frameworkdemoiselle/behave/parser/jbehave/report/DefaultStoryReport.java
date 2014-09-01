@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave.report;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.model.GivenStories;
 import org.jbehave.core.model.Meta;
@@ -49,12 +50,15 @@ import org.jbehave.core.model.Story;
 import org.jbehave.core.model.StoryDuration;
 import org.jbehave.core.reporters.StoryReporter;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 public class DefaultStoryReport implements StoryReporter {
 
-	// private static BehaveMessage message = new
-	// BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	private Logger log = Logger.getLogger(DefaultStoryReport.class);
 
 	public void storyNotAllowed(Story story, String filter) {
 
@@ -113,7 +117,13 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void beforeStep(String step) {
-
+		if (BehaveConfig.getParser_DelayBetweenSteps() != 0) {
+			log.debug(message.getString("message-parser-delay-between-steps", BehaveConfig.getParser_DelayBetweenSteps()));
+			try {
+				Thread.sleep(BehaveConfig.getParser_DelayBetweenSteps() * 1000);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 
 	public void successful(String step) {

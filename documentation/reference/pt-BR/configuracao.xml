@@ -88,10 +88,18 @@
 					propriedade que habilita os passos anteriores e posteriores as
 					execuções das histórias, no caso do runner WebDriver ele levando o
 					navegador nestes passos.
-					O padrão para é a
+					O padrão é 
 					<emphasis>ativado</emphasis>
 					.
 				</listitem>
+				<listitem>
+					<citetitle>behave.parser.delayBetweenSteps:
+					</citetitle>
+					propriedade que coloca uma espera entre a execução dos passos, se for 0 (Zero) ele esta desabilitado.
+					O padrão é 
+					<emphasis>0</emphasis>
+					.
+				</listitem>				
 			</itemizedlist>
 		</para>
 	</section>
@@ -108,7 +116,7 @@
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.minWait</citetitle>
-					: Tempo mínimo de espera em uma ação na tela,
+					: Tempo mínimo de espera entre as ações da tela, contudo está propriedade é utilizada somente nos casos em que o framework precisa tentar mais de uma vez localizar e executar uma ação em um elemento. 
 					O valor padrão é
 					<emphasis>100 milisegundos</emphasis>
 					.
@@ -291,7 +299,14 @@
 					<emphasis>9990</emphasis>
 					.
 				</listitem>
-
+				<listitem>
+					<citetitle>behave.integration.alm.autoAssociateTestCaseInPlan</citetitle>
+					: propriedade que habilita/desabilita a a associação automática de Casos de Teste ao Plano de Teste do RQM. 
+					O valor padrão
+					é
+					<emphasis>true</emphasis>
+					.
+				</listitem>
 			</itemizedlist>
 		</para>
 	</section>

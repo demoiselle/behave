@@ -123,6 +123,8 @@ public class ALMStoryReport extends DefaultStoryReport {
 
 	@Override
 	public void beforeStep(String step) {
+		super.beforeStep(step);
+		
 		String newString = stepsScenario.get(currentScenarioTitle) + "<br/>" + getNewStep(step);
 		stepsScenario.put(currentScenarioTitle, newString);
 	}

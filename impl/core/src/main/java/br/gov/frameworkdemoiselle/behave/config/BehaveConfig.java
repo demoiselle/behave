@@ -154,6 +154,10 @@ public class BehaveConfig {
 		return Boolean.parseBoolean(getProperty("behave.parser.beforeaftersteps.enabled", "true"));
 	}
 
+	public static long getParser_DelayBetweenSteps() {
+		return Long.parseLong(getProperty("behave.parser.delayBetweenSteps", "0"));
+	}
+
 	/** INTEGRATION PROPERTIES **/
 
 	// habilita a integracao
