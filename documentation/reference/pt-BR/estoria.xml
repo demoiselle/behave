@@ -119,7 +119,9 @@ Então será exibida a página de boas vindas</programlisting>
 				
 				<listitem><para>[Dado que | Quando | Então] defino a variável "&lt;nome da variável&gt;" com valor "&lt;texto&gt;"</para></listitem>
 								
-				<listitem><para>[Quando | Então] imprimo no console o valor da variável "&lt;nome da variável&gt;"</para></listitem>				
+				<listitem><para>[Quando | Então] imprimo no console o valor da variável "&lt;nome da variável&gt;"</para></listitem>
+				
+				<listitem><para>[Quando] seleciono "&lt;registro do conjunto de dados&gt;" do conjunto de dados "nome do conunto de dados"</para></listitem>												
 				
 			</itemizedlist>
 		</para>
