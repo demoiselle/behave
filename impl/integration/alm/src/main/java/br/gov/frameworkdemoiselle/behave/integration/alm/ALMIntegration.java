@@ -142,22 +142,6 @@ public class ALMIntegration implements Integration {
 
 			// Somente cria e associa o caso de teste quando ele não é informado
 			if (testCaseId == null) {
-				// --------------------------- Test Plan (GET)
-				// Conexão HTTPS
-				client = HttpsClient.getNewHttpClient(ENCODING);
-				// Login
-				login(client);
-
-				Testplan plan;
-
-				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
-				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
-				if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
-				} else {
-					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
-				}
-
 				// --------------------------- TestCase (PUT)
 				// Conexão HTTPS
 				client = HttpsClient.getNewHttpClient(ENCODING);
@@ -173,17 +157,36 @@ public class ALMIntegration implements Integration {
 					throw new BehaveException(message.getString("exception-create-test-case", responseTestCase.getStatusLine().toString()));
 				}
 
-				// --------------------------- Test Plan (PUT)
-				// Conexão HTTPS
-				client = HttpsClient.getNewHttpClient(ENCODING);
-				// Login
-				login(client);
+				// Verifica se a auto associação esta habilitada
+				if (BehaveConfig.getIntegration_AutoAssociateTestCaseInPlan()) {
+					// --------------------------- Test Plan (GET)
+					// Conexão HTTPS
+					client = HttpsClient.getNewHttpClient(ENCODING);
+					// Login
+					login(client);
 
-				// TestPlan
-				log.debug(message.getString("message-send-test-plan"));
-				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
-				if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-					throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
+					Testplan plan;
+
+					String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
+					HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
+					if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+						throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
+					} else {
+						plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+					}
+
+					// --------------------------- Test Plan (PUT)
+					// Conexão HTTPS
+					client = HttpsClient.getNewHttpClient(ENCODING);
+					// Login
+					login(client);
+
+					// TestPlan
+					log.debug(message.getString("message-send-test-plan"));
+					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
+					if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+						throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
+					}
 				}
 			} else {
 				testCaseName = "urn:com.ibm.rqm:testcase:" + testCaseId;
@@ -223,13 +226,13 @@ public class ALMIntegration implements Integration {
 			// WorkItem
 			log.debug(message.getString("message-send-result"));
 			String resultName = "result" + System.nanoTime();
-			
+
 			// Tratamento da identificação do workitem
-			String executionWorkItemUrl = urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" +  workItemName;
+			String executionWorkItemUrl = urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" + workItemName;
 			if (redirect) {
 				executionWorkItemUrl = workItemName;
-			} 
-			
+			}
+
 			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
 				throw new BehaveException(message.getString("exception-send-result", responseResult.getStatusLine().toString()));
