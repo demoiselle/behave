@@ -253,7 +253,6 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		text = DataProviderUtil.replaceValue(text);
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
@@ -261,7 +260,6 @@ public class CommonSteps implements Step {
 
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
-		text = DataProviderUtil.replaceValue(text);
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
