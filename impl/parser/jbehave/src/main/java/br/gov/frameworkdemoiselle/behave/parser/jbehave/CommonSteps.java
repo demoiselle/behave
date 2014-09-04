@@ -182,6 +182,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	@Then(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	public void selectByIndex(String indice, String fieldName) {
+		indice = DataProviderUtil.replaceValue(indice);
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
@@ -252,6 +253,7 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
+		text = DataProviderUtil.replaceValue(text);
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
@@ -259,6 +261,7 @@ public class CommonSteps implements Step {
 
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
+		text = DataProviderUtil.replaceValue(text);
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
@@ -340,12 +343,14 @@ public class CommonSteps implements Step {
 	@Given("informo na caixa de di\u00E1logo \"$value\"")
 	@Then("informo na caixa de di\u00E1logo \"$value\"")
 	public void sendKeysDialog(String value) {
+		value = DataProviderUtil.replaceValue(value);
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		dialog.sendKeys(value);
 	}
 
 	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
 	public void getTextDialog(String value) {
+		value = DataProviderUtil.replaceValue(value);
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
 	}
