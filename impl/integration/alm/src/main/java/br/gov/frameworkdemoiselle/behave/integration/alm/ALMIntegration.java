@@ -82,9 +82,9 @@ public class ALMIntegration implements Integration {
 
 	private BehaveMessage message = new BehaveMessage(MESSAGEBUNDLE);
 
-	public String urlServer = BehaveConfig.getIntegration_UrlServices();
-	public String urlServerAuth = BehaveConfig.getIntegration_UrlSecurity();
-	public String projectAreaAlias = BehaveConfig.getIntegration_ProjectArea();
+	public String urlServer;
+	public String urlServerAuth;
+	public String projectAreaAlias;
 	private Boolean started = false;
 	private Integer testCaseId;
 
@@ -100,7 +100,7 @@ public class ALMIntegration implements Integration {
 	public void sendScenario(Hashtable<String, Object> result) {
 
 		try {
-			// Tenta obter dados de autenticado vindo do Hashtable
+			// Tenta obter dados de autenticacao vindo do Hashtable
 			if (result.containsKey("user") && result.containsKey("password")) {
 				username = (String) result.get("user");
 				password = (String) result.get("password");
@@ -113,7 +113,12 @@ public class ALMIntegration implements Integration {
 				password = autenticator.getPassword();
 				autenticator.close();
 			}
-
+			
+			// Tenta obter dados de conexao com o ALM via hash			
+			urlServer = getHash(result, "urlServer", BehaveConfig.getIntegration_UrlServices());
+			urlServerAuth = getHash(result,"urlServerAuth",BehaveConfig.getIntegration_UrlSecurity());
+			projectAreaAlias = getHash(result,"projectAreaAlias",BehaveConfig.getIntegration_ProjectArea());			
+			
 			if (!started) {
 				// Para evitar problemas com encodings em projetos nós sempre
 				// fazemos o decoding e depois encoding
@@ -254,6 +259,21 @@ public class ALMIntegration implements Integration {
 			throw new BehaveException(e);
 		}
 
+	}
+	
+	/**
+	 * Obteem o valor do hash ou retorna um valor padrão
+	 * @param result
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
+	private String getHash(Hashtable<String, Object> result, String key, String defaultValue) {		
+		if (result.containsKey(key)) {
+			return (String) result.get(key);			
+		}else{
+			return defaultValue;
+		}
 	}
 
 	public void login(HttpClient client) throws Exception {
