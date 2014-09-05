@@ -85,7 +85,6 @@ public class ALMIntegration implements Integration {
 	public String urlServer;
 	public String urlServerAuth;
 	public String projectAreaAlias;
-	private Boolean started = false;
 	private Integer testCaseId;
 
 	private String username;
@@ -113,22 +112,18 @@ public class ALMIntegration implements Integration {
 				password = autenticator.getPassword();
 				autenticator.close();
 			}
-			
-			// Tenta obter dados de conexao com o ALM via hash			
+
+			// Tenta obter dados de conexao com o ALM via hash
 			urlServer = getHash(result, "urlServer", BehaveConfig.getIntegration_UrlServices());
-			urlServerAuth = getHash(result,"urlServerAuth",BehaveConfig.getIntegration_UrlSecurity());
-			projectAreaAlias = getHash(result,"projectAreaAlias",BehaveConfig.getIntegration_ProjectArea());			
-			
-			if (!started) {
-				// Para evitar problemas com encodings em projetos nós sempre
-				// fazemos o decoding e depois encoding
-				projectAreaAlias = URLDecoder.decode(projectAreaAlias, ENCODING);
+			urlServerAuth = getHash(result, "urlServerAuth", BehaveConfig.getIntegration_UrlSecurity());
+			projectAreaAlias = getHash(result, "projectAreaAlias", BehaveConfig.getIntegration_ProjectArea());
 
-				// Encode do Alias do Projeto
-				projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCODING);
+			// Para evitar problemas com encodings em projetos nós sempre
+			// fazemos o decoding e depois encoding
+			projectAreaAlias = URLDecoder.decode(projectAreaAlias, ENCODING);
 
-				started = true;
-			}
+			// Encode do Alias do Projeto
+			projectAreaAlias = URLEncoder.encode(projectAreaAlias, ENCODING);
 
 			// ID fixo de caso de teste
 			boolean testCaseIdMeta = false;
@@ -260,18 +255,19 @@ public class ALMIntegration implements Integration {
 		}
 
 	}
-	
+
 	/**
 	 * Obteem o valor do hash ou retorna um valor padrão
+	 * 
 	 * @param result
 	 * @param key
 	 * @param defaultValue
 	 * @return
 	 */
-	private String getHash(Hashtable<String, Object> result, String key, String defaultValue) {		
+	private String getHash(Hashtable<String, Object> result, String key, String defaultValue) {
 		if (result.containsKey(key)) {
-			return (String) result.get(key);			
-		}else{
+			return (String) result.get(key);
+		} else {
 			return defaultValue;
 		}
 	}
