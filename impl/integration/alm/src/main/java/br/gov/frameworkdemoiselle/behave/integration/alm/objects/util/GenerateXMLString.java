@@ -110,19 +110,13 @@ public class GenerateXMLString {
 		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
 
-		// State state = new State();
-		// state.setResource(urlServer +
-		// "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.draft");
-		// state.setValue("com.ibm.rqm.planning.common.draft");
-
 		Testcasedesign design = new Testcasedesign();
 		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
-		design.setValue(steps);
+		design.setValue(escapeHTMLForAlm(steps));
 
 		Testcase testcase = new Testcase();
 		testcase.setTitle(name);
 		testcase.setPriority(priority);
-		// testcase.setState(state);
 		testcase.setSuspect(false);
 		testcase.setWeight(100);
 		testcase.setTestCaseDesign(design);
@@ -235,6 +229,35 @@ public class GenerateXMLString {
 
 		return plan;
 
+	}
+
+	/**
+	 * Trata todas as tags para serem enviadas para a ALM, exceto a quebra de linha <br/>
+	 * 
+	 * @param s string a ser tratada
+	 * @return string tatada
+	 */
+	public static String escapeHTMLForAlm(String s) {
+		
+		// Substitui as quebras de linha para não serem tratadas
+		s = s.replace("<br/>", "\n");
+		
+		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c > 127 || c == '"' || c == '<' || c == '>' || c == '&') {
+				out.append("&#");
+				out.append((int) c);
+				out.append(';');
+			} else {
+				out.append(c);
+			}
+		}
+		
+		// Volta as quebras de linha
+		String stringRet = out.toString().replace("\n", "<br/>");
+		
+		return stringRet;
 	}
 
 }
