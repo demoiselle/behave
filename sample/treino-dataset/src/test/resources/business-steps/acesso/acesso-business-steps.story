@@ -1,4 +1,4 @@
-Cenário: que acessei o sistema com usuário "{usuário}"
+Cenário: Acesso o sistema com usuário "{usuário}"
 	
 Dado que vou para a tela "Tela de Login"
 E que selecionei "{usuário}" do conjunto de dados "usuários"
@@ -9,12 +9,10 @@ Quando clico em "Entrar"
 Então será exibido "Obras"
 
 
-
-Cenário: saí do "{sistema}"
+Cenário: Saí do "{sistema}"
 
 Dado que estou na tela "Tela Principal"
 E "Caixa de Mensagens" não está visível
 Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
-

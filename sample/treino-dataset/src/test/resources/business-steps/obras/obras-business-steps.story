@@ -1,4 +1,4 @@
-Cenário: adiciono a obra "{obra}"
+Cenário: Adiciono a obra "{obra}"
 
 Dado que estou na tela "Tela Principal"
 Então vou para a tela "Lista de Obras"
