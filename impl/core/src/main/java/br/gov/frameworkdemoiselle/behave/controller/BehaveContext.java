@@ -105,16 +105,14 @@ public class BehaveContext {
 			}
 
 			// Correção de bug: Substitui as barras por File.separator para funcionar de acordo com o SO
-			ArrayList<String> listNewPaths = new ArrayList<String>();
 			for (String s : storiesPath) {
-				listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
+				s.replace("\\", File.separator).replace("/", File.separator);
 			}
-			storiesPath = listNewPaths;
-			
+						
 			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
 			allOriginalStoriesPath.addAll(storiesPath);
 			
-			//Lista de historias só para reuso de cenários
+			// Lista de historias só para reuso de cenários
 			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
 			for (String s : storiesReusePath) {
 				listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
