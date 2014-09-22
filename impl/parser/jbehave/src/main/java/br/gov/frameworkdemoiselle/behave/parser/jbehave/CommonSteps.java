@@ -408,4 +408,12 @@ public class CommonSteps implements Step {
 		element.waitVisibleClickableEnabled();
 	}
 	
+	@Given("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	@When("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	@Then("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	public void elementVisibleDisable(String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.isVisibleDisabled();
+	}
+	
  }

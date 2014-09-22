@@ -50,4 +50,10 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	}
 
+	@Override
+	public boolean isVisibleDisabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

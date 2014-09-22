@@ -9,3 +9,4 @@ Cenário: Campo desabilitado
 
 Dado que vou para a tela "Disabled"
 Então será exibido no "Nome" o valor "Autor Selenium ExcluirProcDoc"
+Então o elemento "Nome" está visível e desabilitado
