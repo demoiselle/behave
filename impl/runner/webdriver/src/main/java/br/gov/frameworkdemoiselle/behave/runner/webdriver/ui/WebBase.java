@@ -203,8 +203,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		// Espera ser visível e clicável
 		waitClickable(by);
-		
-		// Esta verificação é necessária mesmo que dentro do clickable ele já faça
+
+		// Esta verificação é necessária mesmo que dentro do clickable ele já
+		// faça
 		waitVisibility(by);
 	}
 
@@ -267,7 +268,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					}
 				}
 			}
-		} else if (loadingMap != null) {			
+		} else if (loadingMap != null) {
 			// Cache do elementMap
 			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
@@ -366,7 +367,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	public void waitText(String text) {
-		waitText(text, BehaveConfig.getRunner_ScreenMaxWait());
+		waitVisibleText(text);
 	}
 
 	private SwitchDriver getSwitchDriver(WebDriver driver) {
@@ -379,48 +380,76 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * através de um loop controlado por nós e não pelo implicityWait do
 	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
 	 * valor padrão das propriedades.
+	 * 
+	 * Método que busca o texto visível SOMENTE dentro do body do HTML.
 	 */
-	public void waitText(String text, Long timeout) {
-		try {
-			// Flag utilizada para o segundo laço
-			boolean found = false;
+	public void waitVisibleText(String text) {
 
-			driver = (WebDriver) runner.getDriver();
-			frame = getSwitchDriver(driver);
-			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		// Flag utilizada para o segundo laço
+		boolean found = false;
 
-			while (true) {
-				frame.bind();
+		driver = (WebDriver) runner.getDriver();
+		frame = getSwitchDriver(driver);
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		By by = By.tagName("body");
+
+		while (true) {
+
+			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-				for (int i = 0; i < frame.countFrames(); i++) {
-					frame.switchNextFrame();
-
-					// Busca em todo o texto da página, independente do local
-					if (driver.getPageSource().contains(text)) {
-						found = true;
-						break;
+				// Busca o texto no body
+				List<WebElement> elementsFound = driver.findElements(by);
+				if (elementsFound.size() > 0) {
+					for (WebElement element : elementsFound) {
+						if (element.getText().contains(text)) {
+							found = true;
+							break;
+						}
 					}
-
 				}
+
+				// Se não encontrar nada sem frames busca nos frames
+				if (!found) {
+					frame.bind();
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+
+						// Busca o texto no body
+						elementsFound = driver.findElements(by);
+						if (elementsFound.size() > 0) {
+							for (WebElement element : elementsFound) {
+								if (element.getText().contains(text)) {
+									found = true;
+									break;
+								}
+							}
+						}
+					}
+					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				}
+
+			} catch (BehaveException be) {
+				throw be;
+			} catch (NoSuchFrameException ex) {
+				throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+			} catch (Exception e) {
+				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			} finally {
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-
-				// Sai do segundo laço
-				if (found) {
-					break;
-				}
-
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					Assert.fail(message.getString("message-text-not-found", text));
-				}
 			}
-		} catch (BehaveException be) {
-			throw be;
-		} catch (NoSuchFrameException ex) {
-			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+
+			if (found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+				Assert.fail(message.getString("message-text-not-found", text));
+			}
+
 		}
+
 	}
 
 	/**
