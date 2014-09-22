@@ -378,8 +378,8 @@ public class CommonSteps implements Step {
 		inform(stringNumeroRandomico, fieldName);
 	}
 
-	@When("imprimo no console o valor da variável \"$var\"")
-	@Then("imprimo no console o valor da variável \"$var\"")
+	@When("imprimo no console o valor da vari\u00E1vel \"$var\"")
+	@Then("imprimo no console o valor da vari\u00E1vel \"$var\"")
 	public void printVarValueInLog(String var) {
 		String value = (String) dataProvider.get(var);
 		if (value == null)
@@ -388,7 +388,7 @@ public class CommonSteps implements Step {
 		logger.info(msg);
 	}
 
-	@Given("que selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
+	@Given("selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
 		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
@@ -398,6 +398,14 @@ public class CommonSteps implements Step {
 	@Then("informo o valor do campo \"$fieldName\"")
 	public void informWithDataProviderValue(String fieldName) {
 		inform(fieldName, fieldName);
+	}
+	
+	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	public void elementVisibleClicableEnable(String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.waitVisibleClickableEnabled();
 	}
 	
  }

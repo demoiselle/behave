@@ -310,6 +310,15 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
+	public void waitVisibleClickableEnabled() {
+		// Locators
+		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		
+		// Wait
+		waitClickable(by);
+	}
+	
 	// condition 'clickable' is equivalent to 'visible and enabled'
 	// https://code.google.com/p/selenium/issues/detail?id=6804
 	private void waitClickable(By by) {
