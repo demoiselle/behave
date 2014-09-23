@@ -36,6 +36,8 @@
  */
 package demoisellebehave.serpro.treino;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
@@ -54,7 +56,7 @@ public class AcessoTest {
 
 	@Test
 	public void testAllAcesso() throws Throwable {
-		eng.run("/stories/acesso/");
+		eng.run(Arrays.asList("/stories/acesso/acessar-sistema.story", "/stories/acesso/acessar-sistema-testes.story"));
 	}
 	
 
