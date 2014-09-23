@@ -69,12 +69,12 @@ public class BehaveContext {
 	private List<Step> steps = new ArrayList<Step>();
 
 	private List<String> storiesPath = new ArrayList<String>();
-	
+
 	private List<String> storiesReusePath = new ArrayList<String>();
-	
+
 	private Throwable fail;
 	private String failStep;
-	
+
 	private String currentScenario = "";
 
 	private BehaveMessage bm;
@@ -91,33 +91,33 @@ public class BehaveContext {
 		steps.add(step);
 	}
 
-	public void run(List<String> storiesPath) {
+	public void run(List<String> storiesFiles) {
 		try {
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-start"));
-			log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));			
+			log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
 
-			if (storiesPath == null || storiesPath.isEmpty()) {
+			if (storiesFiles == null || storiesFiles.isEmpty()) {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 
 			// Correção de bug: Substitui as barras por File.separator para funcionar de acordo com o SO
-			for (String s : storiesPath) {
+			for (String s : storiesFiles) {
 				s.replace("\\", File.separator).replace("/", File.separator);
 			}
-						
+
 			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
-			allOriginalStoriesPath.addAll(storiesPath);
-			
+			allOriginalStoriesPath.addAll(storiesFiles);
+
 			// Lista de historias só para reuso de cenários
 			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
 			for (String s : storiesReusePath) {
 				listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
 			}
-			
+
 			// Adiciono as novas historias só para reuso de cenários
 			allOriginalStoriesPath.addAll(listNewPathsReuse);
 
@@ -128,7 +128,7 @@ public class BehaveContext {
 			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
 			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
 			List<String> finalArray = new ArrayList<String>();
-			for (String storyFile : storiesPath) {
+			for (String storyFile : storiesFiles) {
 				for (String storyFileC : allStoriesConverted) {
 					if (storyFileC.contains(storyFile)) {
 						finalArray.add(storyFileC);
@@ -175,22 +175,22 @@ public class BehaveContext {
 		this.storiesPath.add(storiesPath);
 		return this;
 	}
-	
+
 	public BehaveContext addStoriesReuse(String storiesPath) {
 		log.debug("addStoriesReuse:" + storiesPath);
 		this.storiesReusePath.add(storiesPath);
 		return this;
 	}
-	
+
 	public String getCurrentScenario() {
-		return this.currentScenario;		
+		return this.currentScenario;
 	}
-	
+
 	public void setCurrentScenario(String scenario) {
 		this.currentScenario = scenario;
 	}
-	
- 	public void fail(String step, Throwable fail) {
+
+	public void fail(String step, Throwable fail) {
 		this.failStep = step;
 		this.fail = fail;
 	}
