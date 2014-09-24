@@ -244,7 +244,7 @@ public class CommonSteps implements Step {
 	}
 
 	@Then("ser\u00E1 exibido \"$text\"")
-	public void text(String text) {
+	public void textVisible(String text) {
 		Element element = (Element) runner.getScreen();
 		text = DataProviderUtil.replaceValue(text);
 		element.waitText(text);
