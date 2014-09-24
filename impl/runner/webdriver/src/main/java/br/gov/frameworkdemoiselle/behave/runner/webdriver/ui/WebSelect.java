@@ -109,6 +109,10 @@ public class WebSelect extends WebBase implements Select {
 				lSelect.selectByVisibleText(value);
 			} else if (type == WebSelectType.INDEX) {
 				lSelect.selectByIndex(Integer.parseInt(value));
+				
+				// Solução de contorno para atualizar o valor selecionado
+				lSelect.getFirstSelectedOption();
+				
 			} else if (type == WebSelectType.VALUE) {
 				lSelect.selectByValue(value);
 			}
