@@ -49,6 +49,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -458,6 +459,8 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			} catch (BehaveException be) {
 				throw be;
+			} catch (StaleElementReferenceException ex) {
+				// Ignore this exception
 			} catch (NoSuchFrameException ex) {
 				throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
 			} catch (Exception e) {

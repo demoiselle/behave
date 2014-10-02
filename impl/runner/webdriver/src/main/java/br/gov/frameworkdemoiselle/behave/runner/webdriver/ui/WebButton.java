@@ -36,6 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
@@ -43,10 +45,17 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 public class WebButton extends WebBase implements Button {
 
 	public void click() {
-		waitElement(0);
 
-		// Clica
-		getElements().get(0).click();
+		try {
+			// Tenta utilizar o click normal
+			waitElement(0);
+			getElements().get(0).click();
+		} catch (WebDriverException ex) {
+			// Tenta método alternativo de click
+			WebElement el = getElements().get(0);
+			getJavascriptExecutor().executeScript("arguments[0].click();", el);
+		}
+
 	}
 
 	@Override
