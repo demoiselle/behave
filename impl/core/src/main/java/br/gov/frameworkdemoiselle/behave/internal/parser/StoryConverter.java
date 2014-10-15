@@ -78,8 +78,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import br.gov.frameworkdemoiselle.behave.controller.Filter;
+import br.gov.frameworkdemoiselle.behave.controller.ScenarioFilter;
+import br.gov.frameworkdemoiselle.behave.controller.StoryFilter;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.RegularExpressionUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -199,9 +204,14 @@ public class StoryConverter {
 			if (RegularExpressionUtil.matches(BehaveConfig.getParser_IdentificationScenarioPattern(), scenarioToken.trim())) {
 				return storyDefinition;
 			}
-			storyDefinition += scenarioToken + LINE_BREAK_TOKEN;
+			String st = removeComment(scenarioToken);
+			storyDefinition += st.equals("") ? "" : st + LINE_BREAK_TOKEN;
 		}
 		return storyDefinition;
+	}
+
+	private static String removeComment(String scenarioToken) {
+		return !Pattern.compile("^(!--)(.*)").matcher(scenarioToken).find() ? (scenarioToken): "";
 	}
 
 	private static List<Scenario> extractScenarios(String storyContent) {
@@ -210,14 +220,41 @@ public class StoryConverter {
 		Scenario scenario = null;
 		for (int i = 0; i < scenarioTokens.length; i++) {
 			String scenarioToken = scenarioTokens[i];
-			if (RegularExpressionUtil.matches(BehaveConfig.getParser_IdentificationScenarioPattern(), scenarioToken.trim())) {
+			if(RegularExpressionUtil.matches(BehaveConfig.getParser_IdentificationScenarioPattern(), scenarioToken.trim())){
 				scenario = createScenario(scenarioToken);
-				scenarios.add(scenario);
-			} else if (scenario != null) {
-				scenario.getSentences().add(scenarioToken);
+				if(scenario.getReusable()){
+					scenarios.add(scenario); 
+				}else{
+					if(has(ScenarioFilter.class)){
+						if(matches(scenario)){
+							scenarios.add(scenario);
+						}
+					}else{
+						scenarios.add(scenario);
+					}
+				}
+			}else{
+				if(scenario != null){
+					scenario.getSentences().add(scenarioToken);
+				}
 			}
 		}
 		return scenarios;
+	}
+
+	private static boolean has(Class<?> c) {
+		Filter filter = BehaveContext.getInstance().getFilter();
+		return filter != null && filter.getClass().getName().equals(c.getName());
+	}
+
+	private static boolean matches(String value) {
+		String filter = BehaveContext.getInstance().getFilter().getValue();
+		boolean result = Pattern.compile(filter).matcher(value).find();
+		return result;
+	}
+
+	private static boolean matches(Scenario scenario) {
+		return matches(scenario.getIdentification());
 	}
 
 	private static Scenario createScenario(String scenarioToken) {
@@ -242,7 +279,17 @@ public class StoryConverter {
 	private static Map<String, String> scenariosToStories(Map<String, String> storyDefinitions, Map<String, List<Scenario>> scenarios) {
 		Map<String, String> stories = new LinkedHashMap<String, String>();
 		for (String storyPath : scenarios.keySet()) {
-			stories.put(storyPath, storyDefinitions.get(storyPath) + scenariosToText(scenarios.get(storyPath)));
+			String sd = storyDefinitions.get(storyPath);
+			if(has(StoryFilter.class) || has(ScenarioFilter.class)){
+				if(has(StoryFilter.class) && matches(sd)){
+					stories.put(storyPath, sd + scenariosToText(scenarios.get(storyPath)));
+				}
+				if(has(ScenarioFilter.class) && scenarios.get(storyPath).size() > 0){
+					stories.put(storyPath, sd + scenariosToText(scenarios.get(storyPath)));
+				}
+			}else{
+				stories.put(storyPath, sd + scenariosToText(scenarios.get(storyPath)));
+			}
 		}
 		return stories;
 	}
@@ -257,10 +304,14 @@ public class StoryConverter {
 		String text = "";
 		for (Scenario scenario : scenarios) {
 			if (!scenario.getReusable()) {
+				if(text.length() > 0){
+					text += LINE_BREAK_TOKEN;
+				}
 				text += scenario.getDeclaration().replaceAll("\t", "") + LINE_BREAK_TOKEN;
 				for (String sentence : scenario.getSentences()) {
-					if (sentence.trim().length() > 0)
-						text += sentence.replaceAll("\t", "") + LINE_BREAK_TOKEN;
+					String s = removeComment(sentence);
+					if (s.trim().length() > 0)
+						text += s.replaceAll("\t", "") + LINE_BREAK_TOKEN;
 				}
 			}
 		}

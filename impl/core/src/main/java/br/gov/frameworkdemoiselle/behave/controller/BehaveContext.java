@@ -51,6 +51,11 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 
+import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.impl.PojoClassFactory;
+import java.util.regex.Pattern;
+import java.util.Arrays;
+
 /**
  * 
  * @author SERPRO
@@ -66,6 +71,8 @@ public class BehaveContext {
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 
+	private Filter filter = null;
+
 	private List<Step> steps = new ArrayList<Step>();
 
 	private List<String> storiesPath = new ArrayList<String>();
@@ -73,6 +80,7 @@ public class BehaveContext {
 	private List<String> storiesReusePath = new ArrayList<String>();
 
 	private Throwable fail;
+
 	private String failStep;
 
 	private String currentScenario = "";
@@ -89,6 +97,26 @@ public class BehaveContext {
 
 	public void addSteps(Step step) {
 		steps.add(step);
+	}
+
+	public void setFilter(Filter filter) {
+		this.filter = filter;
+	}
+
+	public Filter getFilter() {
+		return this.filter;
+	}
+
+	public void setStepsPackage(String name) {
+		scanPackage(name, new Class [] {});
+	}
+
+	public void setStepsPackage(String name, String excludes) {
+		scanPackage(name, excludes);
+	}
+
+	public void setStepsPackage(String name, Class... excludes) {
+		scanPackage(name, excludes);
 	}
 
 	public void run(List<String> storiesFiles) {
@@ -164,6 +192,51 @@ public class BehaveContext {
 		run(stories);
 	}
 
+	private void scanPackage(String name, Class... excludes) {
+		for(PojoClass pc : PojoClassFactory.enumerateClassesByExtendingType(name, Step.class, null)){
+			try {
+				if(excludes.length > 0){
+					if(!Arrays.asList(excludes).contains(pc.getClazz())){
+						addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
+					}
+				}else{
+					addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void scanPackage(String name, String excludes) {
+		for(PojoClass pc : PojoClassFactory.enumerateClassesByExtendingType(name, Step.class, null)){
+			try {
+				if(excludes != null){
+					if(!Pattern.compile(excludes).matcher(pc.getClazz().getName()).find()){
+						addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
+					}
+				}else{
+					addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static Step createInstanceOf(Class<?> clazz) throws Throwable {
+		return (Step)clazz.newInstance();
+	}
+
+	public void run(String storiesPath, Filter filter) {
+		setFilter(filter);
+		run(storiesPath);
+	}
+
 	public void run() {
 		run(storiesPath);
 		this.fail = null;
@@ -193,5 +266,9 @@ public class BehaveContext {
 	public void fail(String step, Throwable fail) {
 		this.failStep = step;
 		this.fail = fail;
+	}
+
+	public void run(String storiesPath, String filter) {
+		run(storiesPath, Filter.scenario(filter));
 	}
 }
