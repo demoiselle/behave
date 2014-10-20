@@ -210,13 +210,25 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			textField.sendKeys(value);
+			textField.sendKeysWithTries(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
 		} else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
+	
+	@When("limpo o valor do campo \"$fieldName\"")
+	@Alias("n\u00E3o informo valor para o campo \"$fieldName\"")
+	public void notInform(String fieldName) {
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		if (element instanceof TextField) {
+			TextField textField = (TextField) element;
+			textField.clear();
+		} else {
+			throw new BehaveException(message.getString("exception-element-not-found"));
+		}
+	}	
 
 	@When("informo: $table")
 	@Given("informo: $table")

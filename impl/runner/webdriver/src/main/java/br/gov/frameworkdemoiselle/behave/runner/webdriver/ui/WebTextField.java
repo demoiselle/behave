@@ -55,7 +55,11 @@ public class WebTextField extends WebBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
 		waitElement(0);
-		sendKeysWithTries(keysToSend);
+		
+		String value = charSequenceToString(keysToSend);
+		
+		//Envia uma sequencia de char
+		getElements().get(0).sendKeys(value);
 	}
 
 	/**
@@ -63,10 +67,9 @@ public class WebTextField extends WebBase implements TextField {
 	 * conteúdo enviado é o mesmo que esta atualmente no campo.
 	 */
 	public void sendKeysWithTries(CharSequence... keysToSend) {
-
-		String value = "";
-		for (int i = 0; i < keysToSend.length; i++)
-			value += keysToSend[i];
+		waitElement(0);
+		
+		String value = charSequenceToString(keysToSend);
 
 		int totalMilliseconds = 0;
 
@@ -74,17 +77,8 @@ public class WebTextField extends WebBase implements TextField {
 
 		while (!elements.get(0).getAttribute("value").equals(value)) {
 
-			// Bug no Chrome: Ele não aceita Key.CANCEL, por isoso foi  modificado para Keys.ESCAPE
-			Capabilities caps = ((RemoteWebDriver) getDriver()).getCapabilities();
-			String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.CANCEL);
-
-			// Se for Chrome o último caracter deve ser ESCAPE e não CANCEL
-			if (caps.getBrowserName().equals("chrome")) {
-				finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.ESCAPE);
-			}
-			
 			// Envia para o elemento
-			elements.get(0).sendKeys(finalValue);
+			elements.get(0).sendKeys(getValueToSend(value));
 
 			// Verifica se o elemento já esta com o valor correto
 			if (elements.get(0).getAttribute("value").equals(value))
@@ -103,6 +97,28 @@ public class WebTextField extends WebBase implements TextField {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private String charSequenceToString(CharSequence... keysToSend) {
+		String value = "";
+		
+		for (int i = 0; i < keysToSend.length; i++)
+			value += keysToSend[i];
+		
+		return value;
+	}
+	
+	private String getValueToSend(String value) {
+		// Bug no Chrome: Ele não aceita Key.CANCEL, por isoso foi  modificado para Keys.ESCAPE
+		Capabilities caps = ((RemoteWebDriver) getDriver()).getCapabilities();
+		String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.CANCEL);
+
+		// Se for Chrome o último caracter deve ser ESCAPE e não CANCEL
+		if (caps.getBrowserName().equals("chrome")) {
+			finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.ESCAPE);
+		}
+		
+		return finalValue;
 	}
 
 	/**
@@ -125,8 +141,9 @@ public class WebTextField extends WebBase implements TextField {
 	 */
 	public void clear() {
 		waitElement(0);
+		
 		// Limpa o campo enviando BACKSPACE
-		sendKeysWithTries();
+		getElements().get(0).sendKeys(getValueToSend(Keys.chord(Keys.BACK_SPACE)));
 	}
 
 	@Override

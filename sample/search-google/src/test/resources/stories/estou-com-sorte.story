@@ -9,4 +9,4 @@ Cenário: Utilização da funcionalidade estou com sorte
 
 Acesso ao "Google"
 Quando clico em "Estou com sorte"
-Então será exibido "Google"
+Então será exibido "Sobre"
