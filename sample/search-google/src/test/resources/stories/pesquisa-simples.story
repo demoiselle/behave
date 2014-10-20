@@ -10,3 +10,7 @@ Cenário: Utilização da funcionalidade de pesquisa
 Acesso ao "Google"
 Quando informo "Framework Demoiselle" no campo "Campo de Busca"
 Então será exibido "frameworkdemoiselle.gov.br"
+Quando informo "" no campo "Campo de Busca"
+Então será exibido ""
+Quando informo "Framework Demoiselle" no campo "Campo de Busca"
+Então será exibido "frameworkdemoiselle.gov.br"

@@ -76,11 +76,11 @@ public class WebTextField extends WebBase implements TextField {
 
 			// Bug no Chrome: Ele não aceita Key.CANCEL, por isoso foi  modificado para Keys.ESCAPE
 			Capabilities caps = ((RemoteWebDriver) getDriver()).getCapabilities();
-			String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.CANCEL);
+			String finalValue = Keys.chord(Keys.CONTROL, "a") + Keys.chord(Keys.DELETE) + value + Keys.chord(Keys.CANCEL);
 
 			// Se for Chrome o último caracter deve ser ESCAPE e não CANCEL
 			if (caps.getBrowserName().equals("chrome")) {
-				finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.ESCAPE);
+				finalValue = Keys.chord(Keys.CONTROL, "a") + Keys.chord(Keys.DELETE) + value + Keys.chord(Keys.ESCAPE);
 			}
 			
 			// Envia para o elemento
