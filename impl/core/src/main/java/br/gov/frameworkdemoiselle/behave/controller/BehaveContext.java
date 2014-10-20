@@ -45,16 +45,13 @@ import org.junit.Assert;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.filter.StepsFilter;
+import br.gov.frameworkdemoiselle.behave.internal.filter.StoryOrScenarioFilter;
 import br.gov.frameworkdemoiselle.behave.internal.parser.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Parser;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
-
-import com.openpojo.reflection.PojoClass;
-import com.openpojo.reflection.impl.PojoClassFactory;
-import java.util.regex.Pattern;
-import java.util.Arrays;
 
 /**
  * 
@@ -71,7 +68,7 @@ public class BehaveContext {
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 
-	private Filter filter = null;
+	private StoryOrScenarioFilter storyOrScenarioFilter = null;
 
 	private List<Step> steps = new ArrayList<Step>();
 
@@ -99,26 +96,7 @@ public class BehaveContext {
 		steps.add(step);
 	}
 
-	public void setFilter(Filter filter) {
-		this.filter = filter;
-	}
-
-	public Filter getFilter() {
-		return this.filter;
-	}
-
-	public void setStepsPackage(String name) {
-		scanPackage(name, new Class [] {});
-	}
-
-	public void setStepsPackage(String name, String excludes) {
-		scanPackage(name, excludes);
-	}
-
-	public void setStepsPackage(String name, Class... excludes) {
-		scanPackage(name, excludes);
-	}
-
+	// Métodos para rodar o teste
 	public void run(List<String> storiesFiles) {
 		try {
 			log.info("--------------------------------");
@@ -132,12 +110,14 @@ public class BehaveContext {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 
-			// Correção de bug: Substitui as barras por File.separator para funcionar de acordo com o SO
+			// Correção de bug: Substitui as barras por File.separator para
+			// funcionar de acordo com o SO
 			for (String s : storiesFiles) {
-				s.replace("\\", File.separator).replace("/", File.separator);
+				s = s.replace("\\", File.separator).replace("/", File.separator);
 			}
 
-			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
+			// Adiciono as novas histórias no array com TODAS, inclusive as da
+			// execução anterior
 			allOriginalStoriesPath.addAll(storiesFiles);
 
 			// Lista de historias só para reuso de cenários
@@ -153,8 +133,10 @@ public class BehaveContext {
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
 			// Cria um novo array contendo somente as histórias atuais
-			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
-			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
+			// Correção de bug: Quando a história é explicitamente enviada
+			// novamente ao run ela tem que rodar
+			// Correção de bug: Quando existe reutilização de história ele
+			// alterava a ordem da execução atual de acordo com a reutilização
 			List<String> finalArray = new ArrayList<String>();
 			for (String storyFile : storiesFiles) {
 				for (String storyFileC : allStoriesConverted) {
@@ -192,55 +174,23 @@ public class BehaveContext {
 		run(stories);
 	}
 
-	private void scanPackage(String name, Class... excludes) {
-		for(PojoClass pc : PojoClassFactory.enumerateClassesByExtendingType(name, Step.class, null)){
-			try {
-				if(excludes.length > 0){
-					if(!Arrays.asList(excludes).contains(pc.getClazz())){
-						addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
-					}
-				}else{
-					addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
-				}
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private void scanPackage(String name, String excludes) {
-		for(PojoClass pc : PojoClassFactory.enumerateClassesByExtendingType(name, Step.class, null)){
-			try {
-				if(excludes != null){
-					if(!Pattern.compile(excludes).matcher(pc.getClazz().getName()).find()){
-						addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
-					}
-				}else{
-					addSteps(createInstanceOf(Class.forName(pc.getClazz().getName())));
-				}
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private static Step createInstanceOf(Class<?> clazz) throws Throwable {
-		return (Step)clazz.newInstance();
-	}
-
-	public void run(String storiesPath, Filter filter) {
-		setFilter(filter);
-		run(storiesPath);
-	}
-
 	public void run() {
 		run(storiesPath);
 		this.fail = null;
 		this.failStep = null;
+	}
+
+	public void run(String storiesPath, StoryOrScenarioFilter storyOrScenarioFilter) {
+		setStoryOrScenarioFilter(storyOrScenarioFilter);
+		run(storiesPath);
+	}
+
+	public void runWithScenarioFilter(String storiesPath, String scenarioFilter) {
+		run(storiesPath, StoryOrScenarioFilter.scenario(scenarioFilter));
+	}
+
+	public void runWithStoryFilter(String storiesPath, String storyFilter) {
+		run(storiesPath, StoryOrScenarioFilter.story(storyFilter));
 	}
 
 	public BehaveContext addStories(String storiesPath) {
@@ -268,7 +218,27 @@ public class BehaveContext {
 		this.fail = fail;
 	}
 
-	public void run(String storiesPath, String filter) {
-		run(storiesPath, Filter.scenario(filter));
+	// Seleciona o filtro para História OU Cenário
+	public void setStoryOrScenarioFilter(StoryOrScenarioFilter filter) {
+		this.storyOrScenarioFilter = filter;
 	}
+
+	public StoryOrScenarioFilter getStoryOrScenarioFilter() {
+		return this.storyOrScenarioFilter;
+	}
+
+	// Métodos para tratamento de filtro nos Steps
+	public void setStepsPackage(String name) {
+		steps.addAll(StepsFilter.scanPackage(name, new Class[] {}));
+	}
+
+	public void setStepsPackage(String name, String excludes) {
+		steps.addAll(StepsFilter.scanPackage(name, excludes));
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void setStepsPackage(String name, Class... excludes) {
+		steps.addAll(StepsFilter.scanPackage(name, excludes));
+	}
+
 }
