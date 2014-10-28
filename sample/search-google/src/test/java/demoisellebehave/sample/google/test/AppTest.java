@@ -42,11 +42,12 @@ import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import demoisellebehave.sample.google.test.steps.MySteps;
 
 public class AppTest {
-
-	@Test
-	public void testBDD() throws Throwable {
+	
+	private BehaveContext eng;
+	
+	public AppTest() {
 		// Instância o motor de testes
-		BehaveContext eng = BehaveContext.getInstance();
+		eng = BehaveContext.getInstance();
 		
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
@@ -54,7 +55,10 @@ public class AppTest {
 		// Adiciona história somente para reuso de cenários
 		// Cenários que não reutilizados não serão executados
 		eng.addStoriesReuse("/stories/acesso.story");
+	}
 
+	@Test
+	public void testBDD() throws Throwable {
 		// Adiciona histórias que serão executadas
 		eng.addStories("/stories/estou-com-sorte.story");
 		eng.addStories("/stories/pesquisa-simples.story");
@@ -62,5 +66,16 @@ public class AppTest {
 		// Roda as histórias incluída
 		eng.run();
 	}
+	
+	@Test
+	public void testPlusBDD() throws Throwable {
+		// Adiciona histórias que serão executadas
+		eng.addStories("/stories/pesquisa-simples.story");
+		eng.addStories("/stories/estou-com-sorte.story");		
+		
+		// Roda as histórias incluída
+		eng.run();
+	}
+	
 
 }
