@@ -112,13 +112,14 @@ public class BehaveContext {
 
 			// Correção de bug: Substitui as barras por File.separator para
 			// funcionar de acordo com o SO
+			ArrayList<String> listNewPaths = new ArrayList<String>();
 			for (String s : storiesFiles) {
-				s = s.replace("\\", File.separator).replace("/", File.separator);
+				listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
 			}
 
 			// Adiciono as novas histórias no array com TODAS, inclusive as da
 			// execução anterior
-			allOriginalStoriesPath.addAll(storiesFiles);
+			allOriginalStoriesPath.addAll(listNewPaths);
 
 			// Lista de historias só para reuso de cenários
 			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
@@ -138,7 +139,7 @@ public class BehaveContext {
 			// Correção de bug: Quando existe reutilização de história ele
 			// alterava a ordem da execução atual de acordo com a reutilização
 			List<String> finalArray = new ArrayList<String>();
-			for (String storyFile : storiesFiles) {
+			for (String storyFile : listNewPaths) {
 				for (String storyFileC : allStoriesConverted) {
 					if (storyFileC.contains(storyFile)) {
 						finalArray.add(storyFileC);
