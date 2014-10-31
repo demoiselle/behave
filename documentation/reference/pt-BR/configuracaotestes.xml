@@ -3,10 +3,7 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <chapter id="behave-configuracao-testes">
 
-	<title>Configurações dos Testes</title>
-	<para>
-		Descrição do capítulo.
-	</para>
+	<title>Configurações dos Testes</title>	
 	<section>
 		<title>Configuração de Passos (Steps)</title>
 		<para>
