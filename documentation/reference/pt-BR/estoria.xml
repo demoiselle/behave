@@ -84,6 +84,10 @@ Então será exibida a página de boas vindas</programlisting>
 				<listitem><para>[Quando | Então] seleciono a opção de valor "&lt;valor&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
 								
 				<listitem><para>[Dado que | Quando | Então] informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
+								
+				<listitem><para>[Quando] limpo o valor do campo "&lt;nome do campo&gt;"</para></listitem>
+								
+				<listitem><para>[Quando] não informo valor para o campo "&lt;nome do campo&gt;"</para></listitem>
 				
 				<listitem><para>[Dado que | Quando] informo "&lt;tabela de exemplos&gt;"</para></listitem>
 				
