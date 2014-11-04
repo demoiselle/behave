@@ -281,8 +281,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	private void findFrameContainingElement(By by) {
 		// Primeiro encontra o frame que o elemento esta, para depois esperar
 		// ele
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		frame = getSwitchDriver(driver);
+		getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		frame = getSwitchDriver(getDriver());
 		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 		boolean found = false;
 
@@ -291,7 +291,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			for (int i = 0; i < frame.countFrames(); i++) {
 				frame.switchNextFrame();
-				List<WebElement> elementsFound = driver.findElements(by);
+				List<WebElement> elementsFound = getDriver().findElements(by);
 				if (elementsFound.size() > 0) {
 					found = true;
 					break;
@@ -308,7 +308,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 			}
 		}
-		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+		getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
 	public boolean isVisibleDisabled() {
