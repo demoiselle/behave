@@ -13,5 +13,4 @@ then
    `which x11vnc` -display :4 &
 fi
 
-
-DISPLAY=:4 time $MAVEN_COMMAND test -Dtest=$1
+DISPLAY=:4 time $MAVEN_COMMAND test
