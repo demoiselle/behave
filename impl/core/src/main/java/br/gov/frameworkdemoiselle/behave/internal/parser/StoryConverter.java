@@ -131,18 +131,6 @@ public class StoryConverter {
 		// Pega as definições das histórias (tudo que vem antes do primeiro
 		// cenário)
 		Map<String, String> storyDefinitions = extractStoryDefinitions(stories);
-		/*
-		if(hasFilter(StoryFilter.class)){
-			Map<String, String> filtered = new LinkedHashMap<String, String>();
-			for(String key : storyDefinitions.keySet()){
-				String value = storyDefinitions.get(key);
-				if(matchesStoryOrScenario(value)) {
-					filtered.put(key, value);
-				}
-			}
-			storyDefinitions = filtered;
-		}
-		*/
 
 		// Cria uma lista contendo o identificador da história e uma lista com
 		// todos os cenários
