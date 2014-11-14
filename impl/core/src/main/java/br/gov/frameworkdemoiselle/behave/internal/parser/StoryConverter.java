@@ -76,6 +76,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -137,6 +138,18 @@ public class StoryConverter {
 
 		// Faz a reutilização dos cenários
 		reuseScenario(scenarios);
+
+		// Evita que os cenários reutilizáveis sejam executados, mesmo que nenhum cenário concreto tenha sido encontrado.
+		for(String key : scenarios.keySet()){
+			List<Scenario> actual = scenarios.get(key);
+			List<Scenario> toRemove = new ArrayList<Scenario>();
+			for(Scenario cenario : actual){
+				if(cenario.getReusable()){
+					toRemove.add(cenario);
+				}
+			}
+			actual.removeAll(toRemove);
+		}
 
 		// Converte os objetos dos cenários (com reuso) em histórias novamente
 		convertedStories = scenariosToStories(storyDefinitions, scenarios);
