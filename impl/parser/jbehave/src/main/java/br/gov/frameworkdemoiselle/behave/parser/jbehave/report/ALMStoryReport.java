@@ -52,6 +52,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 public class ALMStoryReport extends DefaultStoryReport {
@@ -67,6 +68,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 	Hashtable<String, Boolean> failedScenario = new Hashtable<String, Boolean>();
 	Hashtable<String, String> stepsScenario = new Hashtable<String, String>();
 	Hashtable<String, String> details = new Hashtable<String, String>();
+	Hashtable<String, ScenarioState> stateScenario = new Hashtable<String, ScenarioState>();
 
 	Map<String, String> examples;
 
@@ -92,6 +94,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 					scenarioData.put("steps", stepsScenario.get(scenario.getTitle()));
 					scenarioData.put("testPlanId", BehaveConfig.getIntegration_TestPlanId());
 					scenarioData.put("details", "Resultado enviado pelo Demoiselle Behave<br/>" + details.get(scenario.getTitle()));
+					scenarioData.put("state", stateScenario.get(scenario.getTitle()));
 
 					if (meta.hasProperty("casodeteste")) {
 						scenarioData.put("testCaseId", meta.getProperty("casodeteste"));
@@ -136,6 +139,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 		details.put(currentScenarioTitle, message.getString("message-detail-result", step, detail.getMessage()));
 		failedScenario.put(currentScenarioTitle, true);
 		stepsScenario.put(currentScenarioTitle, message.getString("message-error-result", stepsScenario.get(currentScenarioTitle), cause.getCause()));
+		stateScenario.put(currentScenarioTitle, ScenarioState.FAILED);
 	}
 
 	@Override
@@ -156,5 +160,17 @@ public class ALMStoryReport extends DefaultStoryReport {
 		}
 
 		return newStep;
+	}
+
+	@Override
+	public void successful(String step) {
+		super.successful(step);
+		stateScenario.put(currentScenarioTitle, ScenarioState.PASSED);
+	}
+
+	@Override
+	public void pending(String step) {
+		super.pending(step);
+		stateScenario.put(currentScenarioTitle, ScenarioState.PENDING);
 	}
 }
