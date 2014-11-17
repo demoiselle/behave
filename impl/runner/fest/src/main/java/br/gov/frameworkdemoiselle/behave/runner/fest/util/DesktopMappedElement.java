@@ -51,9 +51,9 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 	}
 
 	@Override
-	public boolean isVisibleDisabled() {
+	public void isVisibleDisabled() {
 		// TODO Auto-generated method stub
-		return false;
+
 	}
 
 }

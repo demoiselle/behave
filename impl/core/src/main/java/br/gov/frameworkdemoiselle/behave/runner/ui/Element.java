@@ -63,6 +63,6 @@ public interface Element {
 	
 	public void waitVisibleClickableEnabled();
 	
-	public boolean isVisibleDisabled();
+	public void isVisibleDisabled();
 	
 }

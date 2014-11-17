@@ -311,17 +311,15 @@ public class WebBase extends MappedElement implements BaseUI {
 		getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
-	public boolean isVisibleDisabled() {
+	public void isVisibleDisabled() {
 		List<WebElement> elementsFound = getElements();
 
 		if (elementsFound.size() > 0) {
 			WebElement e = elementsFound.get(0);
 
-			// Visível e Desabilitado
-			if (e.isDisplayed() && !e.isEnabled()) {
-				return true;
-			} else {
-				return false;
+			// Tem que estar Visível e Desabilitado, se estiver invisível OU habilitado lança a exception
+			if (!e.isDisplayed() || e.isEnabled()) {
+				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 			}
 
 		} else {
