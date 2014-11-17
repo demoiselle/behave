@@ -194,7 +194,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
-	protected void waitElement(Integer index) {
+	public void waitElement(Integer index) {
 		// Locators
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
@@ -210,7 +210,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		waitVisibility(by);
 	}
 
-	protected void waitElementOnlyVisible(Integer index) {
+	public void waitElementOnlyVisible(Integer index) {
 		waitLoading();
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
@@ -225,7 +225,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * continuar.
 	 */
 	@SuppressWarnings("unchecked")
-	private void waitLoading() {
+	public void waitLoading() {
 
 		driver = (WebDriver) runner.getDriver();
 
