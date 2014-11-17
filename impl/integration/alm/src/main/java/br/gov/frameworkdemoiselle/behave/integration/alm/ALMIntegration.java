@@ -73,6 +73,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
 
 public class ALMIntegration implements Integration {
 
@@ -233,7 +234,8 @@ public class ALMIntegration implements Integration {
 				executionWorkItemUrl = workItemName;
 			}
 
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
+			//HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, ((ScenarioState)result.get("state")), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
 				throw new BehaveException(message.getString("exception-send-result", responseResult.getStatusLine().toString()));
 			}

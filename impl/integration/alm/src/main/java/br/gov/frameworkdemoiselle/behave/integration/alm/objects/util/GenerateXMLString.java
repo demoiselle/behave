@@ -65,6 +65,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
+import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
 
 public class GenerateXMLString {
 
@@ -161,7 +162,8 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
+	//public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, Date _startDate, Date _endDate, String details) throws JAXBException {
 		Date startDate = (Date) _startDate.clone();
 		Date endDate = (Date) _endDate.clone();
 		ApprovalState state = new ApprovalState();
@@ -172,10 +174,19 @@ public class GenerateXMLString {
 		workTest.setHref(executionWorkItemUrl);
 
 		Executionresult result = new Executionresult();
-		if (failed) {
+//		if (failed) {
+//			result.setState("com.ibm.rqm.execution.common.state.failed");
+//		} else {
+//			result.setState("com.ibm.rqm.execution.common.state.passed");
+//		}
+		if(stateOf.equals(ScenarioState.FAILED)){
 			result.setState("com.ibm.rqm.execution.common.state.failed");
-		} else {
-			result.setState("com.ibm.rqm.execution.common.state.passed");
+		}else{
+			if(stateOf.equals(ScenarioState.PENDING)){
+				result.setState("com.ibm.rqm.execution.common.state.blocked");
+			}else{
+				result.setState("com.ibm.rqm.execution.common.state.passed");
+			}
 		}
 		result.setApprovalstate(state);
 		result.setExecutionworkitem(workTest);
