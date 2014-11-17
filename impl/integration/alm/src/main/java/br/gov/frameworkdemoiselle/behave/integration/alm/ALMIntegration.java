@@ -72,8 +72,8 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.Autenticat
 import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
+import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
-import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
 
 public class ALMIntegration implements Integration {
 

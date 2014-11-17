@@ -50,9 +50,9 @@ import org.jbehave.core.model.Story;
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
+import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
-import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
 public class ALMStoryReport extends DefaultStoryReport {

@@ -65,7 +65,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
-import br.gov.frameworkdemoiselle.behave.parser.ScenarioState;
+import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 
 public class GenerateXMLString {
 
