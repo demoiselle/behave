@@ -3,33 +3,33 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
-		<revnumber>1.4.0-BETA1</revnumber>
-		<date>02/09/2014</date>
-		<authorinitials>vbs,jcs</authorinitials>
+		<revnumber>1.4.0-RC2</revnumber>
+		<date>18/11/2014</date>
+		<authorinitials>Vbs,Jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
 	</revision>
 	<revision>
 		<revnumber>1.3.2</revnumber>
 		<date>30/05/2014</date>
-		<authorinitials>vbs,jcs</authorinitials>
+		<authorinitials>Vbs,Jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
 	</revision>
 	<revision>
 		<revnumber>1.3.1</revnumber>
 		<date>18/12/2013</date>
-		<authorinitials>vbs,jcs</authorinitials>
+		<authorinitials>Vbs,Jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
 	</revision>
 	<revision>
 		<revnumber>1.3.0</revnumber>
 		<date>31/10/2013</date>
-		<authorinitials>jcs</authorinitials>
+		<authorinitials>Jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
 	</revision>
 	<revision>
 		<revnumber>1.2.0</revnumber>
 		<date>22/08/2013</date>
-		<authorinitials>jcs</authorinitials>
+		<authorinitials>Jcs</authorinitials>
 		<revremark>Alteração de repositório maven, adicionados novos capítulos
 			relacionados aos testes Desktop (FEST) e configurações adicionais do
 			framework.</revremark>
@@ -37,13 +37,13 @@
 	<revision>
 		<revnumber>1.1.0</revnumber>
 		<date>30/06/2013</date>
-		<authorinitials>vbs</authorinitials>
+		<authorinitials>Vbs</authorinitials>
 		<revremark>Documentação de Referência.</revremark>
 	</revision>
 	<revision>
 		<revnumber>1.0.0</revnumber>
 		<date>15/05/2013</date>
-		<authorinitials>vbs</authorinitials>
+		<authorinitials>Vbs</authorinitials>
 		<revremark>Guia Rápido.</revremark>
 	</revision>
 </revhistory>
