@@ -23,6 +23,13 @@
 
 		<itemizedlist>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/248">
+					<emphasis>[Melhoria]</emphasis>
+					Duas novas funcionalidades adicionadas: Configuração de Passos
+					(Steps) e Configuração de Histórias e Cenários
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/245">
 					<emphasis>[Melhoria]</emphasis>
 					Criada nova propriedade behave.parser.delayBetweenSteps para que
