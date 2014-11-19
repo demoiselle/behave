@@ -38,10 +38,8 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import java.util.List;
 
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -76,7 +74,7 @@ public class WebTextField extends WebBase implements TextField {
 		List<WebElement> elements = getElements();
 
 		while (!elements.get(0).getAttribute("value").equals(value)) {
-
+			
 			// Envia para o elemento
 			elements.get(0).sendKeys(getValueToSend(value));
 
@@ -109,15 +107,7 @@ public class WebTextField extends WebBase implements TextField {
 	}
 	
 	private String getValueToSend(String value) {
-		// Bug no Chrome: Ele não aceita Key.CANCEL, por isoso foi  modificado para Keys.ESCAPE
-		Capabilities caps = ((RemoteWebDriver) getDriver()).getCapabilities();
-		String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.TAB);
-
-		// Se for Chrome o último caracter deve ser ESCAPE e não CANCEL
-		if (caps.getBrowserName().equals("chrome")) {
-			finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.ESCAPE);
-		}
-		
+		String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.TAB);		
 		return finalValue;
 	}
 
