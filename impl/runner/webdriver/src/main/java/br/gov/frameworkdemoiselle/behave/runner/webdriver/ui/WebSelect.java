@@ -109,10 +109,9 @@ public class WebSelect extends WebBase implements Select {
 				lSelect.selectByVisibleText(value);
 			} else if (type == WebSelectType.INDEX) {
 				lSelect.selectByIndex(Integer.parseInt(value));
-				
+
 				// Solução de contorno para atualizar o valor selecionado
 				lSelect.getFirstSelectedOption();
-				
 			} else if (type == WebSelectType.VALUE) {
 				lSelect.selectByValue(value);
 			}
@@ -127,16 +126,33 @@ public class WebSelect extends WebBase implements Select {
 			waitElementOnlyVisible(1);
 
 			List<WebElement> elementValue = elements.get(1).findElements(By.tagName("li"));
-			for (WebElement item : elementValue) {
-				if (item.getText().equals(value)) {
-					// Aguarda o segundo elemento ser clicável
-					try {
-						item.click();
-					} catch (Throwable t) {
-						waitElement(1);
-						item.click();
+
+			// Aguarda o segundo elemento ser clicável
+			if (type == WebSelectType.INDEX) {
+				// Índice começando em 1 - Muitas vezes o 1 é o item SELECIONE
+				int index = 1;
+				for (WebElement item : elementValue) {
+					if (index++ == Integer.valueOf(value)) {
+						try {
+							item.click();
+						} catch (Throwable t) {
+							waitElement(1);
+							item.click();
+						}
+						break;
 					}
-					break;
+				}
+			} else {
+				for (WebElement item : elementValue) {
+					if (item.getText().equals(value)) {
+						try {
+							item.click();
+						} catch (Throwable t) {
+							waitElement(1);
+							item.click();
+						}
+						break;
+					}
 				}
 			}
 
