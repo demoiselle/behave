@@ -231,7 +231,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-		if (loadingMap == null && !alreadySearchLoadingMap) {
+		if (!alreadySearchLoadingMap) {
 
 			alreadySearchLoadingMap = true;
 
@@ -243,36 +243,31 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				if (fields.size() == 1) {
 					for (Field field : fields) {
-						ElementMap map = field.getAnnotation(ElementMap.class);
-
-						boolean existeLoading;
-
-						try {
-							// Verifica se existe o LOADING
-							ExpectedConditions.presenceOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])).apply(driver);
-
-							existeLoading = true;
-
-							loadingMap = map;
-
-						} catch (Exception e) {
-							existeLoading = false;
-						}
-
-						if (existeLoading) {
-							// Aguardo o LOADING desaparecer!
-							WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-							wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
-						}
-
-						break;
+						loadingMap = field.getAnnotation(ElementMap.class);
 					}
 				}
 			}
-		} else if (loadingMap != null) {
-			// Cache do elementMap
-			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
+
+		}
+
+		if (loadingMap != null) {
+			
+			boolean existeLoading;
+
+			try {
+				// Verifica se existe o LOADING
+				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
+				existeLoading = true;
+			} catch (Exception e) {
+				existeLoading = false;
+			}
+
+			if (existeLoading) {				
+				// Aguardo o LOADING desaparecer!
+				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));				
+			}
+			
 		}
 
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
@@ -317,7 +312,8 @@ public class WebBase extends MappedElement implements BaseUI {
 		if (elementsFound.size() > 0) {
 			WebElement e = elementsFound.get(0);
 
-			// Tem que estar Visível e Desabilitado, se estiver invisível OU habilitado lança a exception
+			// Tem que estar Visível e Desabilitado, se estiver invisível OU
+			// habilitado lança a exception
 			if (!e.isDisplayed() || e.isEnabled()) {
 				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 			}
