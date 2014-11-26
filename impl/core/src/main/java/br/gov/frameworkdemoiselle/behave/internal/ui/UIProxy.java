@@ -31,11 +31,10 @@ public class UIProxy implements java.lang.reflect.InvocationHandler {
 		while (true) {
 
 			try {
-				// Espera entre cada tentativa
 				result = m.invoke(obj, args);
 				return result;
-			} catch (Throwable ex) { // TESTE
-				// Somente armazena o erro do valor não encontrado, e tenta
+			} catch (Throwable ex) {
+				// Somente mostra o erro do valor não encontrado, e tenta
 				// novamente
 				if (BehaveConfig.getRunner_CatchUIException().contains(ex.getCause().getClass().getCanonicalName())) {
 					log.debug(bm.getString("exception-value-dont-selected"));
@@ -44,10 +43,17 @@ public class UIProxy implements java.lang.reflect.InvocationHandler {
 				}
 			}
 
+			// Faz uma pequena espera entre as tentativas
+			Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+
 			// Se nenhum valor selecionado for encontrado tem que dar erro
 			// depois do timeout
-			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+			// Correção: maior tolerância no tempo de timeout deste proxy
+			Long maxTimoutProxy = BehaveConfig.getRunner_ScreenMaxWait() / 2;
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > (BehaveConfig.getRunner_ScreenMaxWait() + maxTimoutProxy)) {
 				throw new BehaveException(bm.getString("exception-value-dont-selected"));
+			} else {
+				log.debug(bm.getString("message-try-again"));
 			}
 
 		}

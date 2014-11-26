@@ -45,6 +45,4 @@ public interface Screen extends BaseUI {
 
 	public void waitText(String text);
 
-	public void waitText(String text, Long timeout);
-
 }

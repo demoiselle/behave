@@ -67,35 +67,66 @@ Então será exibida a página de boas vindas</programlisting>
 			das classes
 			de teste. São elas:
 			<itemizedlist>
-				<listitem><para>Dado que vou para a tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Então vou para a tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Quando vou para a tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Dado que estou na tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Então estou na tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Quando estou na tela "&lt;título da tela&gt;"</para></listitem>
-				<listitem><para>Quando clico em "&lt;nome do elemento&gt;" referente a "&lt;lista de parametros&gt;"</para></listitem>
-				<listitem><para>Então clico em "&lt;nome do elemento&gt;" referente a "&lt;lista de parametros&gt;"</para></listitem>
-				<listitem><para>Quando clico em "&lt;texto do botão/link&gt;"</para></listitem>
-				<listitem><para>Então clico em "&lt;texto do botão/link&gt;"</para></listitem>
-				<listitem><para>Quando seleciono a opção "&lt;texto da opção&gt;"</para></listitem>
-				<listitem><para>Então seleciono a opção "&lt;texto da opção&gt;"</para></listitem>
-				<listitem><para>Quando seleciono a opção "&lt;nome do elemento&gt;" referente a "&lt;lista de parametros&gt;"</para></listitem>
-				<listitem><para>Então seleciono a opção "&lt;nome do elemento&gt;" referente a "&lt;lista de parametros&gt;"</para></listitem>
-				<listitem><para>Quando seleciono a opção de índice "&lt;indice&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
-				<listitem><para>Então seleciono a opção de índice "&lt;indice&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
-				<listitem><para>Quando seleciono a opção de valor "&lt;valor&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
-				<listitem><para>Então seleciono a opção de valor "&lt;valor&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
-				<listitem><para>Dado que informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Quando informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Então informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Então será exibido "&lt;texto&gt;"</para></listitem>
-				<listitem><para>Então será exibido na "&lt;nome do elemento&gt;" o valor "&lt;valor&gt;"</para></listitem>
-				<listitem><para>Então será exibido no "&lt;nome do elemento&gt;" o valor "&lt;valor&gt;"</para></listitem>
-				<listitem><para>Dado que obtenho "&lt;texto&gt;" do campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Quando obtenho "&lt;texto&gt;" do campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Então obtenho "&lt;texto&gt;" do campo "&lt;nome do campo&gt;"</para></listitem>
-				<listitem><para>Quando movo o mouse sobre "&lt;elemento&gt;"</para></listitem>
-				<listitem><para>Quando clico na linha da tabela "&lt;tabela&gt;" referente a "&lt;texto&gt;"</para></listitem>
+				<listitem><para>[Dado que | Quando | Então] vou para a tela "&lt;título da tela&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] estou na tela "&lt;título da tela&gt;"</para></listitem>
+				
+				<listitem><para>[Quando | Então] clico em "&lt;nome do elemento&gt;" referente a "&lt;lista de parâmetros&gt;"</para></listitem>
+				
+				<listitem><para>[Quando | Então] clico em "&lt;texto do botão/link&gt;"</para></listitem>
+				
+				<listitem><para>[Quando | Então] seleciono a opção "&lt;texto da opção&gt;"</para></listitem>								
+				
+				<listitem><para>[Quando | Então] seleciono a opção de índice "&lt;indice&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
+				
+				<listitem><para>[Quando | Então] seleciono a opção "&lt;nome do elemento&gt;" referente a "&lt;lista de parametros&gt;"</para></listitem>				
+				
+				<listitem><para>[Quando | Então] seleciono a opção de valor "&lt;valor&gt;" no campo "&lt;nome do elemento&gt;"</para></listitem>
+								
+				<listitem><para>[Dado que | Quando | Então] informo "&lt;valor&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
+								
+				<listitem><para>[Quando] limpo o valor do campo "&lt;nome do campo&gt;"</para></listitem>
+								
+				<listitem><para>[Quando] não informo valor para o campo "&lt;nome do campo&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando] informo "&lt;tabela de exemplos&gt;"</para></listitem>
+				
+				<listitem><para>[Quando] informo os campos "&lt;tabela de exemplos&gt;"</para></listitem>
+				
+				<listitem><para>[Então] será exibido "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Então] será exibido na "&lt;nome do elemento&gt;" o valor "&lt;valor&gt;"</para></listitem>
+				
+				<listitem><para>[Então] será exibido o valor "&lt;texto&gt;" em "&lt;nome do elemento&gt;" referente a "&lt;lista de parâmetros&gt;"</para></listitem>				
+				
+				<listitem><para>[Dado que | Quando | Então] "&lt;nome do elemento&gt;" não está visível</para></listitem>						
+				
+				<listitem><para>[Dado que | Quando | Então] obtenho "&lt;texto&gt;" do campo "&lt;nome do campo&gt;"</para></listitem>				
+				
+				<listitem><para>[Dado que | Quando | Então] informo "&lt;chave&gt;" com valor "&lt;nome do campo&gt;"</para></listitem>					
+				
+				<listitem><para>[Quando] movo o mouse sobre "&lt;elemento&gt;"</para></listitem>
+				
+				<listitem><para>[Quando] clico na linha da tabela "&lt;tabela&gt;" referente a "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] confirmo a caixa de diálogo</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] cancelo a caixa de diálogo</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] informo na caixa de diálogo "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Então] será exibido na caixa de diálogo "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] informo um número randomico com prefixo "&lt;texto do prefixo&gt;" no campo "&lt;nome do campo&gt;"</para></listitem>
+				
+				<listitem><para>[Quando] informo um número randomico no campo "&lt;nome do campo&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] defino a variável "&lt;nome da variável&gt;" com valor "&lt;texto&gt;"</para></listitem>
+								
+				<listitem><para>[Quando | Então] imprimo no console o valor da variável "&lt;nome da variável&gt;"</para></listitem>
+				
+				<listitem><para>[Quando] seleciono "&lt;registro do conjunto de dados&gt;" do conjunto de dados "nome do conunto de dados"</para></listitem>												
+				
 			</itemizedlist>
 		</para>
 		<programlisting>Dado que estou na tela "Login"
@@ -128,7 +159,7 @@ Então será exibido "Seja bem vindo"</programlisting>
 			"behave.parser.identification.scenario.pattern.&lt;idioma&gt;" no
 			arquivo behave.properties.
 		</para>
-		<programlisting>Cenário: Acessar o sistema com usuário "demoiselle" e senha "behave"
+		<programlisting>Cenário: Acessar o sistema com usuário demoiselle e senha behave
 Dado que estou na página "Login"
 Quando informo "demoiselle" no campo "Usuário:"
 E informo "behave" no campo "Senha:" 
@@ -150,7 +181,7 @@ Então será exibido "Seja bem vindo"</programlisting>
 			na
 			classe de mapeamento da tela.
 		</para>
-		<programlisting>Cenário: Acessar o sistema com usuário "demoiselle" e senha "behave"
+		<programlisting>Cenário: Acessar o sistema com usuário "{usuario}" e senha "{senha}"
 Dado que estou na página "Login"
 Quando informo "{usuario}" no campo "Usuário:"
 E informo "{senha}" no campo "Senha:" 
@@ -177,17 +208,79 @@ E informo "{senha}" no campo "Senha:"
 Quando clico em "Entrar"
 Então será exibido "Seja bem vindo"
 
-Cenário: Sair do {sistema}
+Cenário: Sair do sistema
 Dado que vou para a página "Tela Principal"
 Quando clico em "Sair"
 Então será exibido "Usuário:"
 E será exibido "Senha:"
 
-Cenário: Teste
-Acessar o sistema com usuário "demoiselle" e senha "behave"
-Sair do "sistema"</programlisting>
+Cenário: Teste com dados "{usuario}" e senha "{senha}"
+Acessar o sistema com usuário "{usuario}" e senha "{senha}"
+Sair do sistema</programlisting>
 	</section>
+	
+	<section>
+		<title>Reusando os cenários em outras histórias</title>
+		<para>
+			Para que o reuso de cenários ocorra em outras histórias é necessário, primeiramente,
+			que a história seja adicionada no contexto do teste que será executado.
+		</para>
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Adiciona histórias que serão executadas
+eng.addStories("/stories/acesso.story");
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
 
+// Roda as histórias incluída
+eng.run();
+  		</programlisting>
+		<para>
+			Assim a chamada ao cenário se dar através da utilização do título do cenário pretendido.
+		</para>
+		<programlisting>
+Em /stories/acesso.story:
+
+Cenário: Acesso ao "{sistema}"
+
+Dado que vou para a tela "Tela de Busca"
+Então será exibido "{sistema}"
+
+
+Em /stories/estou-com-sorte.story:
+
+Cenário: Utilização da funcionalidade estou com sorte
+
+<emphasis>Acesso ao "Google"</emphasis>
+Quando clico em "Estou com sorte"
+Então será exibido "Google"
+  		</programlisting>
+		<para>
+			Uma outra possibilidade seria adicionar a história somente para reuso. 
+		</para>  		
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Adiciona história somente para reuso de cenários
+// Cenários que não reutilizados não serão executados
+eng.addStoriesReuse("/stories/acesso.story");
+
+// Adiciona histórias que serão executadas
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
+
+// Roda as histórias incluída
+eng.run();
+  		</programlisting> 
+		<para>
+			Desta maneira os cenários que não são parâmetrizados contidos nas histórias
+			passadas no método "addStoriesReuse" não serão executados.
+			Caso que não ocorre quando utilizado o método "addStories", onde todos os 
+			cenários que não são parâmetrizados serão executados.
+		</para>   		 		
+	</section>
+	
 	<section>
 		<title>Plugin do JBehave para Eclipse</title>
 		<para>

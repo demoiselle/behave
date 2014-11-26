@@ -39,17 +39,21 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import junit.framework.Assert;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
+import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
+import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
@@ -79,8 +83,9 @@ public class CommonSteps implements Step {
 
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
+	protected DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
-	protected String currentPageName;
+	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
@@ -97,7 +102,7 @@ public class CommonSteps implements Step {
 	@Then("estou na tela \"$local\"")
 	@When("estou na tela \"$local\"")
 	public void pageWithName(String local) {
-		logger.debug("Go to screen " + local);
+		logger.debug("Setting screen " + local);
 		currentPageName = local;
 		runner.setScreen(local);
 	}
@@ -177,6 +182,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	@Then(value = "seleciono a op\u00E7\u00E3o de \u00EDndice \"$indice\" no campo \"$fieldName\"", priority = 10)
 	public void selectByIndex(String indice, String fieldName) {
+		indice = DataProviderUtil.replaceValue(indice);
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
@@ -188,6 +194,7 @@ public class CommonSteps implements Step {
 	@When(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	@Then(value = "seleciono a op\u00E7\u00E3o de valor \"$value\" no campo \"$fieldName\"", priority = 20)
 	public void selectByValue(String value, String fieldName) {
+		value = DataProviderUtil.replaceValue(value);
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
@@ -203,14 +210,25 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			textField.clear();
-			textField.sendKeys(value);
+			textField.sendKeysWithTries(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
 		} else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
+	
+	@When("limpo o valor do campo \"$fieldName\"")
+	@Alias("n\u00E3o informo valor para o campo \"$fieldName\"")
+	public void notInform(String fieldName) {
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		if (element instanceof TextField) {
+			TextField textField = (TextField) element;
+			textField.clear();
+		} else {
+			throw new BehaveException(message.getString("exception-element-not-found"));
+		}
+	}	
 
 	@When("informo: $table")
 	@Given("informo: $table")
@@ -240,6 +258,7 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
 		Element element = (Element) runner.getScreen();
+		text = DataProviderUtil.replaceValue(text);
 		element.waitText(text);
 	}
 
@@ -247,6 +266,7 @@ public class CommonSteps implements Step {
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
+		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
 	}
 
@@ -255,6 +275,7 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
+		text = DataProviderUtil.replaceValue(text);
 		if (!element.getText().contains(text)) {
 			throw new BehaveException(message.getString("exception-text-not-found", elementName));
 		}
@@ -275,16 +296,17 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			String value = textField.getText();
+			String value = textField.getText();			
 			dataProvider.put(var, value);
 		} else {
 			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
 		}
 	}
 
-	@When("informo \"$key\" com valor \"$fieldName\"")
-	@Given("informo \"$key\" com valor \"$fieldName\"")
-	@Then("informo \"$key\" com valor \"$fieldName\"")
+	@When("informo \"$key\" com valor \"$value\"")
+	@Given("informo \"$key\" com valor \"$value\"")
+	@Then("informo \"$key\" com valor \"$value\"")
+	@Aliases(values = { "defino a variável \"$key\" com valor \"$value\"" })
 	public void setDataProvider(String key, String value) {
 		dataProvider.put(key, value);
 	}
@@ -331,14 +353,79 @@ public class CommonSteps implements Step {
 	@Given("informo na caixa de di\u00E1logo \"$value\"")
 	@Then("informo na caixa de di\u00E1logo \"$value\"")
 	public void sendKeysDialog(String value) {
+		value = DataProviderUtil.replaceValue(value);
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		dialog.sendKeys(value);
 	}
 
 	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
 	public void getTextDialog(String value) {
+		value = DataProviderUtil.replaceValue(value);
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
 	}
 
-}
+	@Given("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	@When("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	@Then("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
+	public void informoUmNumeroRandomicoComDigitoInicial(String prefix, String fieldName) {
+		Integer numeroRandomico = (new Random()).nextInt();
+		if (numeroRandomico < 0) {
+			numeroRandomico = numeroRandomico * (-1);
+		}
+		String stringNumeroRandomico = Integer.toString(numeroRandomico);
+		if (StringUtils.isBlank(prefix)) {
+			prefix = "";
+		}
+		inform(prefix + stringNumeroRandomico, fieldName);
+	}
+
+	@When("informo um n\u00FAmero randomico no campo \"$fieldName\"")
+	public void informoUmNumeroRandomicoNoCampo(String fieldName) {
+		Integer numeroRandomico = (new Random()).nextInt();
+		if (numeroRandomico < 0) {
+			numeroRandomico = numeroRandomico * (-1);
+		}
+		String stringNumeroRandomico = Integer.toString(numeroRandomico);
+		inform(stringNumeroRandomico, fieldName);
+	}
+
+	@When("imprimo no console o valor da vari\u00E1vel \"$var\"")
+	@Then("imprimo no console o valor da vari\u00E1vel \"$var\"")
+	public void printVarValueInLog(String var) {
+		String value = (String) dataProvider.get(var);
+		if (value == null)
+			value = "";
+		String msg = "\t" + var + " = " + "|" + value + "|";
+		logger.info(msg);
+	}
+
+	@Given("selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
+	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
+	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
+		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
+	}
+	
+	@When("informo o valor do campo \"$fieldName\"")
+	@Then("informo o valor do campo \"$fieldName\"")
+	public void informWithDataProviderValue(String fieldName) {
+		inform(fieldName, fieldName);
+	}
+	
+	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	public void elementVisibleClicableEnable(String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.waitVisibleClickableEnabled();
+	}
+	
+	@Given("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	@When("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	@Then("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	public void elementVisibleDisable(String fieldName) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.isVisibleDisabled();
+	}
+	
+ }

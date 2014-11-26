@@ -49,6 +49,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -77,54 +78,92 @@ public class WebBase extends MappedElement implements BaseUI {
 	Logger log = Logger.getLogger(WebBase.class);
 
 	static ElementMap loadingMap = null;
+	static boolean alreadySearchLoadingMap = false;
 
 	/**
-	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
+	 * ele busca o elemento em todos os frames
 	 * 
 	 * @return Lista de elementos encontrados
 	 */
 	public List<WebElement> getElements() {
 		try {
+
+			driver = (WebDriver) runner.getDriver();
+
 			List<WebElement> elements = new ArrayList<WebElement>();
 			for (String locator : getElementMap().locator()) {
 
-				boolean found = false;
-
+				// Locators
 				locator = getLocatorWithParameters(locator);
 				By by = ByConverter.convert(getElementMap().locatorType(), locator);
-				driver = (WebDriver) runner.getDriver();
-				frame = new SwitchDriver(driver);
-				long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
-				while (true) {
-					frame.bind();
-					driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-					for (int i = 0; i < frame.countFrames(); i++) {
-						frame.switchNextFrame();
-						List<WebElement> elementsFound = driver.findElements(by);
-						if (elementsFound.size() > 0) {
-							for (WebElement element : elementsFound) {
-								elements.add(element);
-								found = true;
-							}
-							break;
+
+				// Todas as buscas por elemento tem seu timeout controlado pelo
+				// Demoiselle Behave
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				try {
+
+					// Primeiro tenta encontrar na página sem frame sem Timeout
+					List<WebElement> elementsFound = driver.findElements(by);
+					if (elementsFound.size() > 0) {
+						for (WebElement element : elementsFound) {
+							elements.add(element);
 						}
+					} else {
+						// Se não encontrar nada sem frames busca nos frames
+						elements = getElementsWithFrames(driver, by);
 					}
+
+				} catch (Throwable t) {
+					// Se não encontrar nada sem frames busca nos frames
+					elements = getElementsWithFrames(driver, by);
+				} finally {
 					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-					if (found) {
-						break;
-					}
-					waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-					if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
-					}
 				}
+
 			}
+
 			return elements;
 		} catch (BehaveException be) {
 			throw be;
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
+	}
+
+	private List<WebElement> getElementsWithFrames(WebDriver driver, By by) {
+		List<WebElement> elements = new ArrayList<WebElement>();
+		boolean found = false;
+
+		frame = getSwitchDriver(driver);
+
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		while (true) {
+			frame.bind();
+
+			for (int i = 0; i < frame.countFrames(); i++) {
+				frame.switchNextFrame();
+				List<WebElement> elementsFound = driver.findElements(by);
+				if (elementsFound.size() > 0) {
+					for (WebElement element : elementsFound) {
+						elements.add(element);
+						found = true;
+					}
+					break;
+				}
+			}
+
+			if (found) {
+				break;
+			}
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+			}
+		}
+
+		return elements;
 	}
 
 	private String getLocatorWithParameters(String locator) {
@@ -144,7 +183,6 @@ public class WebBase extends MappedElement implements BaseUI {
 
 	public String getText() {
 		waitElement(0);
-
 		return getElements().get(0).getText();
 	}
 
@@ -156,23 +194,23 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
-	/**
-	 * TODO: Refactoring dos métodos de verificação de elementos na tela
-	 */
-	protected void waitElement(Integer index) {
-		waitLoading();
-
-		// procura o elemento em qualquer frame
-		getElements();
-
+	public void waitElement(Integer index) {
+		// Locators
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 
+		// Aguarda o loading
+		waitLoading();
+
+		// Espera ser visível e clicável
 		waitClickable(by);
+
+		// Esta verificação é necessária mesmo que dentro do clickable ele já
+		// faça
 		waitVisibility(by);
 	}
 
-	protected void waitElementOnlyVisible(Integer index) {
+	public void waitElementOnlyVisible(Integer index) {
 		waitLoading();
 
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
@@ -182,16 +220,20 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading,
+	 * e se existir, ele sempre espera que este elemento desapareça antes de
+	 * continuar.
 	 */
 	@SuppressWarnings("unchecked")
-	private void waitLoading() {
+	public void waitLoading() {
 
 		driver = (WebDriver) runner.getDriver();
 
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-		if (loadingMap == null) {
+		if (!alreadySearchLoadingMap) {
+
+			alreadySearchLoadingMap = true;
 
 			Reflections reflections = new Reflections("");
 			Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(ScreenMap.class);
@@ -201,51 +243,108 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				if (fields.size() == 1) {
 					for (Field field : fields) {
-						ElementMap map = field.getAnnotation(ElementMap.class);
-
-						boolean existeLoading;
-
-						try {
-							// Verifica se existe o LOADING
-							ExpectedConditions.presenceOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])).apply(driver);
-
-							existeLoading = true;
-
-							loadingMap = map;
-
-						} catch (Exception e) {
-							existeLoading = false;
-						}
-
-						if (existeLoading) {
-							// Aguardo o LOADING desaparecer!
-							WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-
-							wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(map.locatorType(), map.locator()[0])));
-						}
-
-						break;
+						loadingMap = field.getAnnotation(ElementMap.class);
 					}
 				}
 			}
-		} else {
 
-			// Cache do elementMap
-			WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
+		}
+
+		if (loadingMap != null) {
+			
+			boolean existeLoading;
+
+			try {
+				// Verifica se existe o LOADING
+				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
+				existeLoading = true;
+			} catch (Exception e) {
+				existeLoading = false;
+			}
+
+			if (existeLoading) {				
+				// Aguardo o LOADING desaparecer!
+				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));				
+			}
+			
 		}
 
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
-	
+
+	private void findFrameContainingElement(By by) {
+		// Primeiro encontra o frame que o elemento esta, para depois esperar
+		// ele
+		getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		frame = getSwitchDriver(getDriver());
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		boolean found = false;
+
+		while (true) {
+			frame.bind();
+
+			for (int i = 0; i < frame.countFrames(); i++) {
+				frame.switchNextFrame();
+				List<WebElement> elementsFound = getDriver().findElements(by);
+				if (elementsFound.size() > 0) {
+					found = true;
+					break;
+				}
+			}
+
+			if (found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+
+			if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+			}
+		}
+		getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+	}
+
+	public void isVisibleDisabled() {
+		List<WebElement> elementsFound = getElements();
+
+		if (elementsFound.size() > 0) {
+			WebElement e = elementsFound.get(0);
+
+			// Tem que estar Visível e Desabilitado, se estiver invisível OU
+			// habilitado lança a exception
+			if (!e.isDisplayed() || e.isEnabled()) {
+				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
+			}
+
+		} else {
+			throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+		}
+	}
+
+	public void waitVisibleClickableEnabled() {
+		// Locators
+		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
+		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+		// Wait
+		waitClickable(by);
+	}
+
 	// condition 'clickable' is equivalent to 'visible and enabled'
 	// https://code.google.com/p/selenium/issues/detail?id=6804
 	private void waitClickable(By by) {
+		findFrameContainingElement(by);
+
+		// Faz a verificação no FRAME selecionado
 		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
-	private void waitVisibility(By by) {		
+	private void waitVisibility(By by) {
+		findFrameContainingElement(by);
+
 		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
@@ -264,7 +363,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em
+	 * uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
@@ -289,54 +389,91 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	public void waitText(String text) {
-		waitText(text, BehaveConfig.getRunner_ScreenMaxWait());
+		waitVisibleText(text);
+	}
+
+	private SwitchDriver getSwitchDriver(WebDriver driver) {
+		frame = new SwitchDriver(driver);
+		return frame;
 	}
 
 	/**
-	 * Neste método waitText estamos forçando que seja verificado dentro do body através de um loop controlado por nós e não pelo implicityWait do Webdriver. 
-	 * Por isso zeramos o implicityWait e depois voltamos para o valor padrão das propriedades.
+	 * Neste método waitText estamos forçando que seja verificado dentro do body
+	 * através de um loop controlado por nós e não pelo implicityWait do
+	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
+	 * valor padrão das propriedades.
+	 * 
+	 * Método que busca o texto visível SOMENTE dentro do body do HTML.
 	 */
-	public void waitText(String text, Long timeout) {
-		try {
-			// Flag utilizada para o segundo laço
-			boolean found = false;
+	public void waitVisibleText(String text) {
 
-			driver = (WebDriver) runner.getDriver();
-			frame = new SwitchDriver(driver);
-			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		// Flag utilizada para o segundo laço
+		boolean found = false;
 
-			while (true) {
-				frame.bind();
+		driver = (WebDriver) runner.getDriver();
+		frame = getSwitchDriver(driver);
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		By by = By.tagName("body");
+
+		while (true) {
+
+			try {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-				for (int i = 0; i < frame.countFrames(); i++) {
-					frame.switchNextFrame();
-
-					// Busca em todo o texto da página, independente do local
-					if (driver.getPageSource().contains(text)) {
-						found = true;
-						break;
+				// Busca o texto no body
+				List<WebElement> elementsFound = driver.findElements(by);
+				if (elementsFound.size() > 0) {
+					for (WebElement element : elementsFound) {
+						if (element.getText().contains(text)) {
+							found = true;
+							break;
+						}
 					}
-
 				}
+
+				// Se não encontrar nada sem frames busca nos frames
+				if (!found) {
+					frame.bind();
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+
+						// Busca o texto no body
+						elementsFound = driver.findElements(by);
+						if (elementsFound.size() > 0) {
+							for (WebElement element : elementsFound) {
+								if (element.getText().contains(text)) {
+									found = true;
+									break;
+								}
+							}
+						}
+					}
+					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				}
+
+			} catch (BehaveException be) {
+				throw be;
+			} catch (StaleElementReferenceException ex) {
+				// Ignore this exception
+			} catch (NoSuchFrameException ex) {
+				throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+			} catch (Exception e) {
+				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			} finally {
 				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-
-				// Sai do segundo laço
-				if (found) {
-					break;
-				}
-
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					Assert.fail(message.getString("message-text-not-found", text));
-				}
 			}
-		} catch (BehaveException be) {
-			throw be;
-		} catch (NoSuchFrameException ex) {
-			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+
+			if (found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+				Assert.fail(message.getString("message-text-not-found", text));
+			}
+
 		}
+
 	}
 
 	/**
@@ -352,7 +489,9 @@ public class WebBase extends MappedElement implements BaseUI {
 				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 				/*
-				 * Busca o texto dentro do elemento, atentar para o método getText, ele não é o getText do WebDriver e sim do Element do framework (WebTextField, WebSelect...)
+				 * Busca o texto dentro do elemento, atentar para o método
+				 * getText, ele não é o getText do WebDriver e sim do Element do
+				 * framework (WebTextField, WebSelect...)
 				 */
 				if (getText().contains(text)) {
 					break;
@@ -377,9 +516,34 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitInvisible() {
 		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
-		
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		boolean testInvisibility = true;
+		driver = (WebDriver) runner.getDriver();
+
+		// Zera o tempo do driver, se não o implicity wait não funciona com o
+		// tempo correto
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+		try {
+			// Aguarda o elemento ficar visivel. Aguarda por 1/5 do tempo
+			// máximo.
+			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMaxWait() / 1000) / 5;
+			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
+			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
+
+			testInvisibility = true;
+		} catch (org.openqa.selenium.TimeoutException e) {
+			testInvisibility = false;
+		}
+
+		if (testInvisibility) {
+			// Aguarda ele sumir
+			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
+			WebDriverWait wait = new WebDriverWait(driver, waitTime);
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		}
+
+		// Volta o tempo padrão (maxWait) no driver
+		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
 }

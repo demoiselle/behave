@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-dados">
+
+	<title>Conjunto de Dados</title>
+	<section>
+		<title>Conceito</title>
+		<para>
+			Este capítulo apresenta a funcionalidade de Conjunto de Dados 
+			(Dataset), que permite a criação de gandes conjuntos de dados em 
+			formato XML para utilização nas histórias, o exemplo de teste
+			utilizado tem como objetivo cadastrar diversas obras em um cadastro,
+			contudo deverão ser informados vários dados de cadastro.
+		</para>
+	</section>
+	<section>
+		<title>Criação do XML de Dados</title>
+		<para>
+			O primeiro passo para a utilização do Conjunto de Dados é a criação de 
+			um XML contendo os dados que serão utilizados nas histórias, a estrutura deve  
+			ser parecida com a do exemplo abaixo do arquivo <emphasis>obras.xml</emphasis>:
+		</para>
+		<programlisting><![CDATA[<DataSet>
+	<dataRecords>
+		<DataRecord id="Parque olímpico">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Parque Olímpico" />
+				<DataItem key="Valor" value="250000000" />
+				<DataItem key="Prazo" value="01/05/2015" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="Vila olímpica">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Vila Olímpica e Paraolímpica" />
+				<DataItem key="Valor" value="150000000" />
+				<DataItem key="Prazo" value="01/07/2015" />
+			</dataItems>
+		</DataRecord>
+	</dataRecords>
+</DataSet>]]></programlisting>
+	</section>
+	<section>
+		<title>Configuração do Data Provider</title>
+		<para>
+			Para utilizar o arquivo de dados XML ele deve ser informado antes de rodar o teste como
+			no exemplo abaixo do arquivo <emphasis>ObrasTest.java</emphasis>.
+		</para>
+		<programlisting>public class ObrasTest {
+	private BehaveContext eng = BehaveContext.getInstance();
+	<citetitle>private static DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);</citetitle>
+
+	public ObrasTest() {
+		<citetitle>datasetProvider.load("obras","/datasets/obras.xml");</citetitle>
+	}
+
+	@Test
+	public void testAllObras() throws Throwable {
+		eng.addStories("/stories/obra.story");
+		eng.run();
+	}
+}</programlisting>
+	</section>	
+	<section>
+		<title>Criação da História</title>
+		<para>
+			Na criação da história (obra.story) foram adicionados 2 cenários, um 
+			para reuso recebendo o parâmetro obra, e outro que irá chamar 2 vezes 
+			o cenário de reuso com parâmetros diferentes, abaixo esta a história 
+			que será utilizada 2 vezes.
+		</para>
+		<programlisting>Cenário: adiciono a obra "{obra}"
+
+Dado que estou na tela "Tela Principal"
+Então vou para a tela "Lista de Obras"
+Quando clico em "Adicionar Obra"
+Então será exibido "Cadastro"
+<citetitle>Quando seleciono "{obra}" do conjunto de dados "obras"</citetitle>
+Quando informo o valor do campo "Nome Obra"
+Quando informo o valor do campo "Valor"
+Quando informo o valor do campo "Prazo"
+Quando clico em "Inserir"</programlisting>
+		<para>
+			Vale notar que o passo <citetitle>Quando seleciono "{obra}" do conjunto de dados "obras"</citetitle>
+			seleciona o registro criado no XML anteriormente, que é utilizado nos 3 passos seguintes.
+		</para>
+		<para>
+			No exemplo abaixo está sendo chamado 2 vezes o cenário de reuso criado no exemplo acima. É 
+			importante citar que ele é chamado utilizando 2 <emphasis>Data Records</emphasis> diferentes, primeiro
+			o "Parque olímpico" e depois a "Vila olímpica".
+		</para>
+		<programlisting>Cenário: Adição de obras armazenadas no dataset
+
+Dado que acessei o sistema
+<citetitle>Quando adiciono a obra "Parque olímpico"</citetitle>
+Então será exibido "Nome Obra"
+<citetitle>Quando adiciono a obra "Vila olímpica"</citetitle>
+Então será exibido "Nome Obra"</programlisting>
+	</section>	
+</chapter>

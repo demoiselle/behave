@@ -65,6 +65,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
+import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 
 public class GenerateXMLString {
 
@@ -110,19 +111,13 @@ public class GenerateXMLString {
 		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
 
-		// State state = new State();
-		// state.setResource(urlServer +
-		// "process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcase.workflow/com.ibm.rqm.planning.common.draft");
-		// state.setValue("com.ibm.rqm.planning.common.draft");
-
 		Testcasedesign design = new Testcasedesign();
 		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
-		design.setValue(steps);
+		design.setValue(escapeHTMLForAlm(steps));
 
 		Testcase testcase = new Testcase();
 		testcase.setTitle(name);
 		testcase.setPriority(priority);
-		// testcase.setState(state);
 		testcase.setSuspect(false);
 		testcase.setWeight(100);
 		testcase.setTestCaseDesign(design);
@@ -167,21 +162,31 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemId, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
-		Date startDate = (Date)_startDate.clone();
-		Date endDate = (Date)_endDate.clone();
+	//public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, Date _startDate, Date _endDate, String details) throws JAXBException {
+		Date startDate = (Date) _startDate.clone();
+		Date endDate = (Date) _endDate.clone();
 		ApprovalState state = new ApprovalState();
 		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
 		state.setValue("com.ibm.rqm.planning.common.new");
 
 		ExecutionworkitemLink workTest = new ExecutionworkitemLink();
-		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/executionworkitem/" + executionWorkItemId);
+		workTest.setHref(executionWorkItemUrl);
 
 		Executionresult result = new Executionresult();
-		if (failed) {
+//		if (failed) {
+//			result.setState("com.ibm.rqm.execution.common.state.failed");
+//		} else {
+//			result.setState("com.ibm.rqm.execution.common.state.passed");
+//		}
+		if(stateOf.equals(ScenarioState.FAILED)){
 			result.setState("com.ibm.rqm.execution.common.state.failed");
-		} else {
-			result.setState("com.ibm.rqm.execution.common.state.passed");
+		}else{
+			if(stateOf.equals(ScenarioState.PENDING)){
+				result.setState("com.ibm.rqm.execution.common.state.blocked");
+			}else{
+				result.setState("com.ibm.rqm.execution.common.state.passed");
+			}
 		}
 		result.setApprovalstate(state);
 		result.setExecutionworkitem(workTest);
@@ -220,7 +225,7 @@ public class GenerateXMLString {
 				String line = "";
 				while ((line = reader.readLine()) != null) {
 					xmlString.append(line);
-			    }
+				}
 			} finally {
 				instream.close();
 			}
@@ -235,6 +240,35 @@ public class GenerateXMLString {
 
 		return plan;
 
+	}
+
+	/**
+	 * Trata todas as tags para serem enviadas para a ALM, exceto a quebra de linha <br/>
+	 * 
+	 * @param s string a ser tratada
+	 * @return string tatada
+	 */
+	public static String escapeHTMLForAlm(String s) {
+		
+		// Substitui as quebras de linha para não serem tratadas
+		s = s.replace("<br/>", "\n");
+		
+		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			if (c > 127 || c == '"' || c == '<' || c == '>' || c == '&') {
+				out.append("&#");
+				out.append((int) c);
+				out.append(';');
+			} else {
+				out.append(c);
+			}
+		}
+		
+		// Volta as quebras de linha
+		String stringRet = out.toString().replace("\n", "<br/>");
+		
+		return stringRet;
 	}
 
 }

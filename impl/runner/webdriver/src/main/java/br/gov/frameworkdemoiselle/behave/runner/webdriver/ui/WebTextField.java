@@ -36,7 +36,10 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import java.util.List;
+
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -50,7 +53,11 @@ public class WebTextField extends WebBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
 		waitElement(0);
-		sendKeysWithTries(keysToSend);
+		
+		String value = charSequenceToString(keysToSend);
+		
+		//Envia uma sequencia de char
+		getElements().get(0).sendKeys(value);
 	}
 
 	/**
@@ -58,39 +65,50 @@ public class WebTextField extends WebBase implements TextField {
 	 * conteúdo enviado é o mesmo que esta atualmente no campo.
 	 */
 	public void sendKeysWithTries(CharSequence... keysToSend) {
-		String value = "";
-		for (int i = 0; i < keysToSend.length; i++)
-			value += keysToSend[i];
+		waitElement(0);
+		
+		String value = charSequenceToString(keysToSend);
 
 		int totalMilliseconds = 0;
-		while (!getElements().get(0).getAttribute("value").equals(value)) {
-			try {
-				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 
-			// Tenta limpar utilizando o WebDriver
-			getElements().get(0).clear();
+		List<WebElement> elements = getElements();
+
+		while (!elements.get(0).getAttribute("value").equals(value)) {
 			
-			// Tenta limpar com força bruta
-			Keys[] keys = new Keys[getElements().get(0).getAttribute("value").length() + 1];
-			keys[0] = Keys.END; // Final da Linha
-			for (int i = 1; i < keys.length; i++)
-				keys[i] = Keys.BACK_SPACE;			
-
-			// Correção de Bug no Chrome: Ele não aceita Key.CANCEL, por isso foi modificado para Keys.ESCAPE
-			String finalValue = Keys.chord(keys) + value;
-
 			// Envia para o elemento
-			getElements().get(0).sendKeys(finalValue);
-			
+			elements.get(0).sendKeys(getValueToSend(value));
+
+			// Verifica se o elemento já esta com o valor correto
+			if (elements.get(0).getAttribute("value").equals(value))
+				break;
+
 			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
 			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()) {
 				throw new BehaveException(message.getString("exception-not-clean"));
 			}
+
+			// Aguarda um tempo antes de tentar novamente
+			try {
+				Thread.sleep(BehaveConfig.getRunner_ScreenMinWait());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+	}
+	
+	private String charSequenceToString(CharSequence... keysToSend) {
+		String value = "";
+		
+		for (int i = 0; i < keysToSend.length; i++)
+			value += keysToSend[i];
+		
+		return value;
+	}
+	
+	private String getValueToSend(String value) {
+		String finalValue = Keys.chord(Keys.CONTROL, "a") + value + Keys.chord(Keys.TAB);		
+		return finalValue;
 	}
 
 	/**
@@ -115,7 +133,7 @@ public class WebTextField extends WebBase implements TextField {
 		waitElement(0);
 		
 		// Limpa o campo enviando BACKSPACE
-		sendKeysWithTries();
+		getElements().get(0).sendKeys(getValueToSend(Keys.chord(Keys.BACK_SPACE)));
 	}
 
 	@Override

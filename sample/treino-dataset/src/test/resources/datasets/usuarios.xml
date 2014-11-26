@@ -1,0 +1,22 @@
+﻿<DataSet>
+	<dataRecords>
+		<DataRecord id="operador 01">
+			<dataItems>
+				<DataItem key="Usuário" value="06762344887" />
+				<DataItem key="Senha" value="188542" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="operador 02">
+			<dataItems>
+				<DataItem key="Usuário" value="19175991454" />
+				<DataItem key="Senha" value="577763" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="operador 03">
+			<dataItems>
+				<DataItem key="Usuário" value="45140518295" />
+				<DataItem key="Senha" value="630315" />
+			</dataItems>
+		</DataRecord>
+	</dataRecords>
+</DataSet>

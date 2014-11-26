@@ -77,11 +77,12 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	public String getText() {
 		// Fazer tratamento para SELECT normal e PrimeFaces
-		if (getElements().get(0).getTagName().equals("select")) {
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+		List<WebElement> elements = getElements();
+		if (elements.get(0).getTagName().equals("select")) {
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(elements.get(0));
 			return lSelect.getFirstSelectedOption().getText();
 		} else {
-			return getElements().get(0).getText();
+			return elements.get(0).getText();
 		}
 	}
 
@@ -93,22 +94,24 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	private void select(String value, WebSelectType type) {
 
-		// Esperar que o texto do valo esteja na tela
-		waitText(value);
-
 		// Aguarda o primeiro elemento ser clicável
 		waitElement(0);
 
-		if (getElements().get(0).getTagName().equals("select")) {
+		List<WebElement> elements = getElements();
+
+		if (elements.get(0).getTagName().equals("select")) {
 
 			// Select comum e usa um helper do selenium
-			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(getElements().get(0));
+			org.openqa.selenium.support.ui.Select lSelect = new org.openqa.selenium.support.ui.Select(elements.get(0));
 
 			// Verifica o tipo valor do select
 			if (type == WebSelectType.TEXT) {
 				lSelect.selectByVisibleText(value);
 			} else if (type == WebSelectType.INDEX) {
 				lSelect.selectByIndex(Integer.parseInt(value));
+
+				// Solução de contorno para atualizar o valor selecionado
+				lSelect.getFirstSelectedOption();
 			} else if (type == WebSelectType.VALUE) {
 				lSelect.selectByValue(value);
 			}
@@ -116,16 +119,40 @@ public class WebSelect extends WebBase implements Select {
 		} else {
 
 			// Outros tipos de select como a do primefaces
-			WebElement elementMain = getElements().get(0);
+			WebElement elementMain = elements.get(0);
 			elementMain.click();
 
-			List<WebElement> elementValue = getElements().get(1).findElements(By.tagName("li"));
-			for (WebElement item : elementValue) {
-				if (item.getText().equals(value)) {
-					// Aguarda o segundo elemento ser clicável
-					waitElement(1);
-					item.click();
-					break;
+			// Tempo do efeito de abertura das opções
+			waitElementOnlyVisible(1);
+
+			List<WebElement> elementValue = elements.get(1).findElements(By.tagName("li"));
+
+			// Aguarda o segundo elemento ser clicável
+			if (type == WebSelectType.INDEX) {
+				// Índice começando em 1 - Muitas vezes o 1 é o item SELECIONE
+				int index = 1;
+				for (WebElement item : elementValue) {
+					if (index++ == Integer.valueOf(value)) {
+						try {
+							item.click();
+						} catch (Throwable t) {
+							waitElement(1);
+							item.click();
+						}
+						break;
+					}
+				}
+			} else {
+				for (WebElement item : elementValue) {
+					if (item.getText().equals(value)) {
+						try {
+							item.click();
+						} catch (Throwable t) {
+							waitElement(1);
+							item.click();
+						}
+						break;
+					}
 				}
 			}
 

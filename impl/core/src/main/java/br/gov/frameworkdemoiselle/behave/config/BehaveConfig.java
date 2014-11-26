@@ -146,8 +146,16 @@ public class BehaveConfig {
 		return Boolean.parseBoolean(getProperty("behave.parser.commonssteps.enabled", "true"));
 	}
 
+	public static long getParser_StoryTimeout() {
+		return Long.parseLong(getProperty("behave.parser.story.timeout", "21600"));
+	}
+
 	public static boolean getParser_BeforeAfterStepsEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.parser.beforeaftersteps.enabled", "true"));
+	}
+
+	public static long getParser_DelayBetweenSteps() {
+		return Long.parseLong(getProperty("behave.parser.delayBetweenSteps", "0"));
 	}
 
 	/** INTEGRATION PROPERTIES **/
@@ -187,6 +195,11 @@ public class BehaveConfig {
 		return getProperty("behave.integration.authenticator.host", "locahost");
 	}
 
+	// associar o caso de teste ao plano automaticamente
+	public static boolean getIntegration_AutoAssociateTestCaseInPlan() {
+		return Boolean.parseBoolean(getProperty("behave.integration.alm.autoAssociateTestCaseInPlan", "true"));
+	}
+
 	/** RUNNER Properties **/
 
 	// Tempo máximo de espera em uma ação na tela
@@ -218,7 +231,7 @@ public class BehaveConfig {
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
-	
+
 	// Para execução remota
 	public static String getRunner_RemoteUrl() {
 		return getProperty("behave.runner.screen.remote.url", "");
@@ -232,7 +245,7 @@ public class BehaveConfig {
 	public static String getRunner_ProfilePath() {
 		return getProperty("behave.runner.screen.profilePath");
 	}
-	
+
 	// Localização do binário do navegador
 	public static String getRunner_BinaryPath() {
 		return getProperty("behave.runner.screen.binaryPath", "");
@@ -245,7 +258,7 @@ public class BehaveConfig {
 	public static String getRunner_CatchUIException() {
 		return getProperty("behave.runner.catchUIException");
 	}
-	
+
 	// Ativa o uso maximizada da janela do navegador
 	public static boolean getRunner_WindowMaximizeEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.window.maximize.enabled", "false"));

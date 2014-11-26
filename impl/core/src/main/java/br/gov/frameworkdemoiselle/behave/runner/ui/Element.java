@@ -61,4 +61,8 @@ public interface Element {
 
 	public void waitInvisible();
 	
+	public void waitVisibleClickableEnabled();
+	
+	public void isVisibleDisabled();
+	
 }

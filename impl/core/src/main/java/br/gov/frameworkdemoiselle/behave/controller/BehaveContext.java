@@ -45,6 +45,8 @@ import org.junit.Assert;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.internal.filter.StepsFilter;
+import br.gov.frameworkdemoiselle.behave.internal.filter.StoryOrScenarioFilter;
 import br.gov.frameworkdemoiselle.behave.internal.parser.StoryFileConverter;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -66,12 +68,19 @@ public class BehaveContext {
 
 	private ArrayList<String> allOriginalStoriesPath = new ArrayList<String>();
 
+	private StoryOrScenarioFilter storyOrScenarioFilter = null;
+
 	private List<Step> steps = new ArrayList<Step>();
 
 	private List<String> storiesPath = new ArrayList<String>();
 
-	private String step;
+	private List<String> storiesReusePath = new ArrayList<String>();
+
 	private Throwable fail;
+
+	private String failStep;
+
+	private String currentScenario = "";
 
 	private BehaveMessage bm;
 
@@ -87,36 +96,50 @@ public class BehaveContext {
 		steps.add(step);
 	}
 
-	public void run(List<String> storiesPath) {
+	// Métodos para rodar o teste
+	public void run(List<String> storiesFiles) {
 		try {
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-start"));
+			log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
 
-			if (storiesPath == null || storiesPath.isEmpty()) {
+			if (storiesFiles == null || storiesFiles.isEmpty()) {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
 
-			// Correção de bug: Substitui as barras por File.separator para funcionar de acordo com o SO
+			// Correção de bug: Substitui as barras por File.separator para
+			// funcionar de acordo com o SO
 			ArrayList<String> listNewPaths = new ArrayList<String>();
-			for (String s : storiesPath) {
+			for (String s : storiesFiles) {
 				listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
 			}
-			storiesPath = listNewPaths;
-			
-			// Adiciono as novas histórias no array com TODAS, inclusive as da execução anterior
-			allOriginalStoriesPath.addAll(storiesPath);
+
+			// Adiciono as novas histórias no array com TODAS, inclusive as da
+			// execução anterior
+			allOriginalStoriesPath.addAll(listNewPaths);
+
+			// Lista de historias só para reuso de cenários
+			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
+			for (String s : storiesReusePath) {
+				listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
+			}
+
+			// Adiciono as novas historias só para reuso de cenários
+			allOriginalStoriesPath.addAll(listNewPathsReuse);
 
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
 			// Cria um novo array contendo somente as histórias atuais
-			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
-			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
+			// Correção de bug: Quando a história é explicitamente enviada
+			// novamente ao run ela tem que rodar
+			// Correção de bug: Quando existe reutilização de história ele
+			// alterava a ordem da execução atual de acordo com a reutilização
 			List<String> finalArray = new ArrayList<String>();
-			for (String storyFile : storiesPath) {
+			for (String storyFile : listNewPaths) {
 				for (String storyFileC : allStoriesConverted) {
 					if (storyFileC.contains(storyFile)) {
 						finalArray.add(storyFileC);
@@ -130,7 +153,7 @@ public class BehaveContext {
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
-				Assert.fail(bm.getString("exception-fail-step", step, fail.getMessage()));
+				Assert.fail(bm.getString("exception-fail-step", failStep, fail.getMessage()));
 			}
 		} catch (BehaveException ex) {
 			log.error(bm.getString("exception-general"), ex);
@@ -138,6 +161,7 @@ public class BehaveContext {
 		} finally {
 			fail = null;
 			storiesPath.clear();
+			storiesReusePath.clear();
 			steps.clear();
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
@@ -154,7 +178,20 @@ public class BehaveContext {
 	public void run() {
 		run(storiesPath);
 		this.fail = null;
-		this.step = null;
+		this.failStep = null;
+	}
+
+	public void run(String storiesPath, StoryOrScenarioFilter storyOrScenarioFilter) {
+		setStoryOrScenarioFilter(storyOrScenarioFilter);
+		run(storiesPath);
+	}
+
+	public void runWithScenarioFilter(String storiesPath, String scenarioFilter) {
+		run(storiesPath, StoryOrScenarioFilter.scenario(scenarioFilter));
+	}
+
+	public void runWithStoryFilter(String storiesPath, String storyFilter) {
+		run(storiesPath, StoryOrScenarioFilter.story(storyFilter));
 	}
 
 	public BehaveContext addStories(String storiesPath) {
@@ -163,8 +200,46 @@ public class BehaveContext {
 		return this;
 	}
 
+	public BehaveContext addStoriesReuse(String storiesPath) {
+		log.debug("addStoriesReuse:" + storiesPath);
+		this.storiesReusePath.add(storiesPath);
+		return this;
+	}
+
+	public String getCurrentScenario() {
+		return this.currentScenario;
+	}
+
+	public void setCurrentScenario(String scenario) {
+		this.currentScenario = scenario;
+	}
+
 	public void fail(String step, Throwable fail) {
-		this.step = step;
+		this.failStep = step;
 		this.fail = fail;
 	}
+
+	// Seleciona o filtro para História OU Cenário
+	public void setStoryOrScenarioFilter(StoryOrScenarioFilter filter) {
+		this.storyOrScenarioFilter = filter;
+	}
+
+	public StoryOrScenarioFilter getStoryOrScenarioFilter() {
+		return this.storyOrScenarioFilter;
+	}
+
+	// Métodos para tratamento de filtro nos Steps
+	public void setStepsPackage(String name) {
+		steps.addAll(StepsFilter.scanPackage(name, new Class[] {}));
+	}
+
+	public void setStepsPackage(String name, String excludes) {
+		steps.addAll(StepsFilter.scanPackage(name, excludes));
+	}
+
+	@SuppressWarnings("rawtypes")
+	public void setStepsPackage(String name, Class... excludes) {
+		steps.addAll(StepsFilter.scanPackage(name, excludes));
+	}
+
 }

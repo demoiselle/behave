@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-configuracao-testes">
+
+	<title>Configurações dos Testes</title>	
+	<section>
+		<title>Configuração de Passos (Steps)</title>
+		<para>
+			Configuração de um pacote para carga das subclasses de Step, incluindo um filtro
+			das classes que devem ser excluídas desta varredura;
+
+			Quando um contexto for inicializado, não será mais necessário instanciar
+			cada uma das subclasses de Step a serem utilizadas:
+
+			<programlisting>context = BehaveContext.getInstance();
+context.addSteps(new PrimeiraSteps());
+context.addSteps(new SegundaSteps());
+context.addSteps(new TerceiraSteps());
+context.addSteps(new QuartaSteps());</programlisting>
+
+			Bastando para tanto:
+
+			<programlisting>context.setStepsPackage("pacote.onde.estao.as.subclasses.da.inferface.step");</programlisting>
+			
+			Ainda é possível utilizar um segundo parâmetro para filtrar as classes que não devem ser instanciadas, através de uma expressão regular:
+
+			<programlisting>context.setStepsPackage("pacote.onde.estao.as.subclasses.da.inferface.step", "((Primeira)|(Terceira))");</programlisting>
+			
+			Ou, ainda, através da listagem das mesmas:
+
+			<programlisting>context.setStepsPackage("pacote.onde.estao.as.subclasses.da.inferface.step", PrimeiraSteps.class, TerceiraSteps.class);</programlisting>
+		</para>
+	</section>
+	<section>
+		<title>Configuração de Histórias e Cenários</title>
+		<para>
+			Filtro de histórias/cenários a serem executados, permitindo que um desenvolvedor foque em apenas uma estória ou cenário;
+
+			Dadas as histórias:
+		
+		<programlisting>!-- /stories/primeira.story
+Funcionalidade: Primeira
+
+Cenário: Primeiro da primeira
+Dado que contexto
+Quando evento
+Então resultado
+
+Cenário: Segunda da primeira
+Dado que contexto
+Quando evento
+Então resultado</programlisting>
+
+		<programlisting>!-- /stories/segunda.story
+Funcionalidade: Segunda
+
+Cenário: Primeiro da segunda
+Dado que contexto
+Quando evento
+Então resultado
+
+Cenário: Segundo da segunda
+Dado que contexto
+Quando evento
+Então resultado</programlisting>
+
+Quando da execução das histórias/cenários:
+
+<programlisting>context.run("/stories");</programlisting>
+
+Agora é possível, filtrar quais histórias:
+
+<programlisting>context.run("/stories", Filter.story("Primeira"));</programlisting>
+
+Ou, quais cenários:
+
+<programlisting>context.run("/stories", Filter.scenario("Segundo da segunda"));</programlisting>
+
+Sendo que o último, pode ser informado usando apenas a expressão regular:
+
+<programlisting>context.run("/stories", "Segundo da segunda");</programlisting>
+
+		</para>
+	</section>
+
+</chapter>
