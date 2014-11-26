@@ -37,12 +37,15 @@
 package br.gov.frameworkdemoiselle.behave.runner.fest;
 
 import java.awt.Container;
+import java.awt.Graphics2D;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -66,6 +69,7 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopElement;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopReflectionUtil;
+import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopWindowSize;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
@@ -82,7 +86,8 @@ public class FestRunner implements Runner {
 	public Container currentContainer;
 	public FrameFixture mainFixture;
 	public String currentTitle;
-
+	public DesktopWindowSize currentDesktopWindowSize; 
+	
 	@Override
 	public void start() {
 
@@ -153,6 +158,7 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 					currentTitle = title;
 					logger.debug(message.getString("message-navigate-dialod", title));
+					takeDesktopWindowSize(currentContainer);					
 					return;
 				}
 			}
@@ -171,6 +177,7 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 					currentTitle = title;
 					logger.debug(message.getString("message-navigate-dialod", title));
+					takeDesktopWindowSize(frame);	
 					return;
 				}
 			}
@@ -180,6 +187,15 @@ public class FestRunner implements Runner {
 		}
 		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 
+	}
+
+	/**
+	 * Obtem as dimensoes e posicao de um Container
+	 * @param w Window
+	 */
+	private void takeDesktopWindowSize(Container w) {
+		currentDesktopWindowSize = new DesktopWindowSize();
+		currentDesktopWindowSize.reSize(w.getX(), w.getY(), (int) w.getSize().getWidth(), (int) w.getSize().getHeight());
 	}
 
 	public String getHierarchy() {
@@ -270,7 +286,28 @@ public class FestRunner implements Runner {
 		screenshotFile.getParentFile().mkdirs();
 		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
 		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
+		if (currentDesktopWindowSize != null){
+			reSize(screenshotFile.getAbsolutePath());
+		}
 		return screenshotFile;
+	}
+
+	private void reSize(String filePath) {
+		try {				
+			DesktopWindowSize w = currentDesktopWindowSize;
+			double scale = 1.0;
+			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
+			BufferedImage img = ImageIO.read(new File(filePath));
+			img = img.getSubimage(w.getX(), w.getY(), w.getWidth(), w.getHeight());
+			BufferedImage bi = new BufferedImage((int) (scale * img.getWidth()), (int) (scale * img.getHeight()), BufferedImage.TYPE_INT_RGB);
+			Graphics2D grph = (Graphics2D) bi.getGraphics();
+			grph.scale(scale, scale);
+			grph.drawImage(img, 0, 0, null);
+			grph.dispose();
+			ImageIO.write(bi, extension, new File(filePath));
+		} catch (Exception ex) {
+			throw new BehaveException(message.getString("exception-error-resize-image", filePath));
+		}
 	}
 
 	public void setScreen(String screenName) {

@@ -41,7 +41,19 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 	@Override
 	public void waitInvisible() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void waitVisibleClickableEnabled() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void isVisibleDisabled() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

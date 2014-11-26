@@ -34,15 +34,40 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
+package br.gov.frameworkdemoiselle.behave.runner.fest.util;
 
-import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
+public class DesktopWindowSize {
 
-public class DesktopLink extends DesktopBase implements Link {
+	private int x;
+	private int y;
+	private int width;
+	private int height;
 
-	@Override
-	public void click() {
-		runner.robot.click(getElement());
+	public DesktopWindowSize() {
 	}
 
+	public void reSize(int x, int y, int width, int height) {		
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	
 }
