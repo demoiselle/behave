@@ -3,8 +3,8 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
-		<revnumber>1.4.0-RC2</revnumber>
-		<date>18/11/2014</date>
+		<revnumber>1.4.0</revnumber>
+		<date>01/12/2014</date>
 		<authorinitials>Vbs,Jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
 	</revision>

@@ -23,6 +23,70 @@
 
 		<itemizedlist>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/280">
+					<emphasis>[Melhoria]</emphasis>
+					Nova funcionalidade de seleção de valor por índice dentro de combo
+					do Primefaces
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/279">
+					<emphasis>[Melhoria]</emphasis>
+					Agora na integração com a ALM os cenários pendentes, agora são
+					marcados no ALM como blocked
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/278">
+					<emphasis>[Bug]</emphasis>
+					Correção na verificação de elementos visíveis e desabilitados
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/277">
+					<emphasis>[Melhoria]</emphasis>
+					Evita que os cenários reutilizáveis sejam executados depois de
+					utilizados
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/270">
+					<emphasis>[Melhoria]</emphasis>
+					Novos passos para a limpeza de campos
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/266">
+					<emphasis>[Melhoria]</emphasis>
+					Correção de problemas de execução no Windows
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/256">
+					<emphasis>[Melhoria]</emphasis>
+					Corrigido um problema que não limpava as histórias corretamente ao
+					final do teste
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/253">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria no preenchimento de campos
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/251">
+					<emphasis>[Bug]</emphasis>
+					Corrigido erro ao enviar os caractere de maior e menor
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/250">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na utilização do DataProvider nos passos comuns
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/248">
 					<emphasis>[Melhoria]</emphasis>
 					Duas novas funcionalidades adicionadas: Configuração de Passos
