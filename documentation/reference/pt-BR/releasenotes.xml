@@ -23,6 +23,12 @@
 
 		<itemizedlist>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/284">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria do Screenshot no - módulo Desktop (Fest)
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/280">
 					<emphasis>[Melhoria]</emphasis>
 					Nova funcionalidade de seleção de valor por índice dentro de combo
