@@ -69,7 +69,6 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopElement;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopReflectionUtil;
-import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopWindowSize;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
@@ -86,7 +85,6 @@ public class FestRunner implements Runner {
 	public Container currentContainer;
 	public FrameFixture mainFixture;
 	public String currentTitle;
-	public DesktopWindowSize currentDesktopWindowSize; 
 	
 	@Override
 	public void start() {
@@ -158,7 +156,6 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 					currentTitle = title;
 					logger.debug(message.getString("message-navigate-dialod", title));
-					takeDesktopWindowSize(currentContainer);					
 					return;
 				}
 			}
@@ -177,7 +174,6 @@ public class FestRunner implements Runner {
 					currentContainer.setEnabled(true);
 					currentTitle = title;
 					logger.debug(message.getString("message-navigate-dialod", title));
-					takeDesktopWindowSize(frame);	
 					return;
 				}
 			}
@@ -187,15 +183,6 @@ public class FestRunner implements Runner {
 		}
 		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 
-	}
-
-	/**
-	 * Obtem as dimensoes e posicao de um Container
-	 * @param w Window
-	 */
-	private void takeDesktopWindowSize(Container w) {
-		currentDesktopWindowSize = new DesktopWindowSize();
-		currentDesktopWindowSize.reSize(w.getX(), w.getY(), (int) w.getSize().getWidth(), (int) w.getSize().getHeight());
 	}
 
 	public String getHierarchy() {
@@ -286,15 +273,14 @@ public class FestRunner implements Runner {
 		screenshotFile.getParentFile().mkdirs();
 		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
 		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
-		if (currentDesktopWindowSize != null){
-			reSize(screenshotFile.getAbsolutePath());
+		if (currentContainer != null){
+			reSize(currentContainer, screenshotFile.getAbsolutePath());
 		}
 		return screenshotFile;
 	}
 
-	private void reSize(String filePath) {
+	private void reSize(Container w, String filePath) {
 		try {				
-			DesktopWindowSize w = currentDesktopWindowSize;
 			double scale = 1.0;
 			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
 			BufferedImage img = ImageIO.read(new File(filePath));
