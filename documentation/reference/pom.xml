@@ -23,7 +23,7 @@
 
 	<artifactId>demoiselle-behave-reference</artifactId>
 	<packaging>jdocbook</packaging>
-	<version>1.4.0</version>
+	<version>1.4.0-SNAPSHOT</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
