@@ -23,7 +23,7 @@
 
 	<artifactId>demoiselle-behave-reference</artifactId>
 	<packaging>jdocbook</packaging>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.4.0</version>
 
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -85,4 +85,8 @@
 			</plugin>
 		</plugins>
 	</build>
+
+  <scm>
+    <tag>demoiselle-behave-build-1.4.0</tag>
+  </scm>
 </project>
