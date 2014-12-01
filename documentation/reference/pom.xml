@@ -85,8 +85,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-  <scm>
-    <tag>demoiselle-behave-build-1.4.0</tag>
-  </scm>
 </project>
