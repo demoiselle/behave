@@ -61,6 +61,7 @@ import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.Step;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.AutoComplete;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
@@ -213,8 +214,32 @@ public class CommonSteps implements Step {
 			textField.sendKeysWithTries(value);
 		} else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
-		} else {
+		} else if (element instanceof AutoComplete) {
+			((AutoComplete) element).selectByValue(value);
+		}else{
 			throw new BehaveException(message.getString("exception-element-not-found"));
+		}
+	}
+	
+	/**
+	 * Sobrecarga do método inform sobrescrito do CommonSteps, para levar em consideração elementos
+	 * do tipo AutoComplete, que necessitem buscar por um valor no campo de texto, e 
+	 * selecionar um outro valor na lista de opções
+	 * 
+	 * @author Michel Felipe<michel.ferreira@serpro.gov.br>
+	 * @param String value Valor a ser informado
+	 * @param String selectValue Valor a ser procurado na lista de resultados
+	 * @param String fieldName Nome do campo
+	 */
+	@When("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
+	@Then("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
+	public void inform(String value, String selectValue, String fieldName) {
+		value = DataProviderUtil.replaceValue(value);
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		if (element instanceof AutoComplete) {
+			((AutoComplete) element).searchAndSelectValue(value, selectValue);
+		} else {
+			this.inform(value, fieldName);
 		}
 	}
 	
