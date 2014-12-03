@@ -16,5 +16,10 @@ public class PrimeFacesAutocompleteTest {
 	public void testTree() throws Throwable {
 		eng.run("/stories/primefaces/autocomplete.story");
 	}
+	
+	@Test
+	public void testComponent() throws Throwable {
+		eng.run("/stories/primefaces/autocomplete_component.story");
+	}
 
 }
