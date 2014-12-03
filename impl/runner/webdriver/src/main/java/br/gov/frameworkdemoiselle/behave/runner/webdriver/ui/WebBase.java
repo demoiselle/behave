@@ -251,7 +251,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 
 		if (loadingMap != null) {
-			
+
 			boolean existeLoading;
 
 			try {
@@ -262,12 +262,12 @@ public class WebBase extends MappedElement implements BaseUI {
 				existeLoading = false;
 			}
 
-			if (existeLoading) {				
+			if (existeLoading) {
 				// Aguardo o LOADING desaparecer!
 				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));				
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
 			}
-			
+
 		}
 
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
@@ -314,8 +314,17 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			// Tem que estar Visível e Desabilitado, se estiver invisível OU
 			// habilitado lança a exception
-			if (!e.isDisplayed() || e.isEnabled()) {
-				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
+			if (e.getTagName().toLowerCase().equals("input") || e.getTagName().toLowerCase().equals("select")) {
+				if (!e.isDisplayed() || e.isEnabled()) {
+					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
+				}
+			} else {
+				// Faz a verificação se esta desabilitado por meio das classes
+				// de css para os casos de combo estilo Primefaces e Richfaces
+				String classes = e.getAttribute("class");
+				if (!e.isDisplayed() || !classes.contains("disabled")) {
+					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
+				}
 			}
 
 		} else {
