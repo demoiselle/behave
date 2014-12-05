@@ -9,20 +9,19 @@
 	<preface>
 		<title>Demoiselle Behave</title>
 		<para>
-			Behavior Driven Development (BDD) é uma técnica que foi
-			desenvolvida por Dan North, em 2003, com o objetivo de facilitar a
-			colaboração entre desenvolvedores, setores de qualidade e o cliente,
-			em um projeto de software. A técnica parte do princípio de que
-			especificando histórias de usuários em um formato adequado, elas
-			poderiam ser utilizadas como requisito e como artefato de entrada
-			para testes automatizados. A técnica se utiliza de uma linguagem
-			ubíqua, a qual permite que os testes de aceitação sejam escritos em
-			linguagem mais próxima da de negócio.
+			Behavior Driven Development (BDD) é uma técnica desenvolvida por
+			Dan North, em 2003, com o objetivo de facilitar a colaboração entre
+			desenvolvedores, setores de qualidade e o cliente, em um projeto de software.
+			Parte do princípio de que especificando histórias de usuários, em um formato
+			adequado, elas poderiam ser utilizadas como requisito e como artefato de
+			entrada para testes automatizados. Ela faz uso de uma linguagem ubíqua, a
+			qual permite que os testes de aceitação sejam escritos em linguagem mais
+			próxima da de negócio.
 		</para>
 		<para>
-			Os testes descritos são interpretados por ferramentas
-			especializadas que exercitam o código do sistema, para demonstrar se
-			o comportamento esperado foi alcançado. As práticas do BDD incluem:
+			Os testes descritos são interpretados por ferramentas especializadas, que
+			exercitam o código do sistema, para demonstrar se o comportamento esperado
+			foi alcançado. As práticas do BDD incluem:
 		</para>
 		<para>
 
@@ -31,54 +30,44 @@
 					<para>
 						Envolver os
 						<emphasis>stakeholders</emphasis>
-						do projeto (
-						<citetitle pubwork="webpage">Wikipedia</citetitle>
-						)
+						do projeto (Wikipedia)
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Usar derivação por exemplos para descrever o comportamento de
-						uma aplicação ou de unidades de código
+						Usar derivação por exemplos para descrever o comportamento de uma
+						aplicação ou de unidades de código
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Automatizar os exemplos para prover
-						<emphasis>feedback</emphasis>
-						rápido e
-						testes de regressão
+						Automatizar os exemplos para prover <emphasis>feedback</emphasis> rápido e testes de
+						regressão;
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Usar
-						<emphasis>mocks</emphasis>
-						para
-						auxiliar na colaboração entre módulos e
-						códigos que ainda não
-						foram escritos
+						Usar <emphasis>mocks</emphasis> para auxiliar na colaboração entre módulos e códigos que
+						ainda não foram escritos
 					</para>
 				</listitem>
 			</orderedlist>
 		</para>
 		<para>
-			O Demoisele Behave, comumente chamado de dbehave, é um
+			O Demoisele-Behave, comumente chamado de dbehave, é um
 			<emphasis>framework</emphasis>
 			que permite aos usuários
 			automatizar testes utilizando recursos de
 			BDD.
 		</para>
 		<para>
-			A aplicação apresenta quatro módulos principais: Core, Parser,
-			Runner
-			e Integration. O Core é responsável pelas principais
+			A aplicação apresenta quatro módulos principais: <emphasis role="bold">Core</emphasis>, <emphasis role="bold">Parser</emphasis>,
+			<emphasis role="bold">Runner</emphasis>
+			e <emphasis role="bold">Integration</emphasis>. O <emphasis role="bold">Core</emphasis> é responsável pelas principais
 			interfaces
 			do
-			<emphasis>framework</emphasis>
-			. O Controller é responsável pela orquestração das
-			informações entre
-			os outros 3 projetos.
+			<emphasis>framework</emphasis>, sendo a classe Controller responsável pela orquestração das
+			informações entre os outros 3 módulos.
 
 		</para>
 		<para>
@@ -92,16 +81,15 @@
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Arquitetura da ferramenta Demoiselle Behave.
+					<para>Arquitetura da ferramenta Demoiselle-Behave.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			O Parser é responsável pela abstração do componente que
-			transformará a história em código Java para enviar ao Runner por
-			meio
-			de sentenças padrões ou específicas de cada projeto.
+			O <emphasis role="bold">Parser</emphasis> é responsável pela abstração do componente que
+			transformará a história em código Java, para enviar ao <emphasis role="bold">Runner</emphasis> por
+			meio de sentenças padrões ou específicas de cada projeto.
 		</para>
 		<para>
 			<mediaobject>
@@ -114,23 +102,23 @@
 						align="center" format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Modelo de Funcionamento do Parser.
+					<para>Modelo de Funcionamento do <emphasis role="bold">Parser</emphasis>.
 					</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			O Runner é responsável pela abstração do componente que fará as
+			O <emphasis role="bold">Runner</emphasis> é responsável pela abstração do componente que fará as
 			manipulações de tela, como o Selenium ou até mesmo diretamente o
-			JUnit. O modulo Integration é responsável pela abstração do
+			JUnit. O módulo <emphasis role="bold">Integration</emphasis> é responsável pela abstração do
 			componente que irá fazer as integrações entre a solução e as
 			ferramentas externas da empresa como o ALM (RQM). O
 			<emphasis>framework</emphasis>
 			faz com
-			que histórias escritas em TXT sejam enviadas ao módulo Parser
+			que histórias escritas em TXT sejam enviadas ao módulo <emphasis role="bold">Parser</emphasis>
 			e,
-			posteriormente, para o Runner, responsável por interagir com um
-			navegador web ou uma tela Desktop, utilizando o
+			posteriormente, para o <emphasis role="bold">Runner</emphasis>, responsável por interagir com um
+			navegador Web ou uma tela Desktop, utilizando o
 			<emphasis>framework</emphasis>
 			Selenium ou
 			Fest, respectivamente.
@@ -147,7 +135,7 @@
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Funcionamento do Demoiselle Behave.
+					<para>Funcionamento do Demoiselle-Behave
 					</para>
 				</caption>
 			</mediaobject>
@@ -168,7 +156,7 @@
 						format="PNG" scalefit="1" width="75%" />
 				</imageobject>
 				<caption>
-					<para>Modelo de Uso do Demoiselle Behave.
+					<para>Modelo de Uso do Demoiselle-Behave
 					</para>
 				</caption>
 			</mediaobject>
