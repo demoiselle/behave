@@ -315,7 +315,13 @@ public class WebBase extends MappedElement implements BaseUI {
 			// Tem que estar Visível e Desabilitado, se estiver invisível OU
 			// habilitado lança a exception
 			if (e.getTagName().toLowerCase().equals("input") || e.getTagName().toLowerCase().equals("select")) {
-				if (!e.isDisplayed() || e.isEnabled()) {
+
+				// Verifica também se tem o atributo READONLY no elemento
+				String readonlyAttribute = e.getAttribute("readonly");
+
+				// SE não estiver visivel OU (estiver habilitado E não tiver o
+				// atributo readonly) ENTÃO de erro!
+				if (!e.isDisplayed() || (e.isEnabled() && readonlyAttribute != null)) {
 					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 				}
 			} else {
