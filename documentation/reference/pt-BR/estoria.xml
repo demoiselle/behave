@@ -5,9 +5,8 @@
 
 	<title>Como criar uma história</title>
 	<para>
-		Neste capítulo serão descritos os termos, frases e regras para
-		criação
-		e reuso de cenários de teste através do framework Behave.
+		Neste capítulo estão descritos os termos, frases e regras para
+		criação e reúso de cenários de teste realizáveis por meio do framework Behave.
 	</para>
 
 	<section>
@@ -192,8 +191,8 @@ Então será exibido "Seja bem vindo"</programlisting>
 	<section>
 		<title>Reusando os cenários</title>
 		<para>
-			Para que o reuso ocorra é necessário, primeiramente, utilizar
-			parâmetros no nome do cenário. Isto irá previnir que o cenário
+			Para que o reúso ocorra é necessário, primeiramente, utilizar
+			parâmetros no nome do cenário. Isto irá prevenir que o cenário
 			seja
 			"executado" pelo framework, mas, deste forma, ele poderá
 			ser
@@ -222,7 +221,7 @@ Sair do sistema</programlisting>
 	<section>
 		<title>Reusando os cenários em outras histórias</title>
 		<para>
-			Para que o reuso de cenários ocorra em outras histórias é necessário, primeiramente,
+			Para que o reúso de cenários ocorra em outras histórias é necessário, primeiramente,
 			que a história seja adicionada no contexto do teste que será executado.
 		</para>
 		<programlisting>
@@ -257,7 +256,7 @@ Quando clico em "Estou com sorte"
 Então será exibido "Google"
   		</programlisting>
 		<para>
-			Uma outra possibilidade seria adicionar a história somente para reuso. 
+			Uma outra possibilidade seria adicionar a história somente para reúso. 
 		</para>  		
 		<programlisting>
 BehaveContext eng = BehaveContext.getInstance();
@@ -274,10 +273,10 @@ eng.addStories("/stories/pesquisa-simples.story");
 eng.run();
   		</programlisting> 
 		<para>
-			Desta maneira os cenários que não são parâmetrizados contidos nas histórias
+			Desta maneira os cenários que não são parametrizados contidos nas histórias
 			passadas no método "addStoriesReuse" não serão executados.
 			Caso que não ocorre quando utilizado o método "addStories", onde todos os 
-			cenários que não são parâmetrizados serão executados.
+			cenários que não são parametrizados serão executados.
 		</para>   		 		
 	</section>
 	
@@ -332,8 +331,7 @@ eng.run();
 				</listitem>
 				<listitem>
 					Com esta configuração será possível ver as histórias escritas em
-					português com as marcações coloridas e o auto completar irá
-					funcionar normalmente.
+					português com as marcações coloridas e o auto completar funcionará normalmente.
 				</listitem>
 			</itemizedlist>
 		</para>

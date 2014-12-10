@@ -10,20 +10,20 @@
 	<section>
 		<title>Capturando os objetos da tela a serem utilizados</title>
 		<para>
-			O primeiro passo na criação de um script no Demoiselle-Behave e
+			O primeiro passo na criação de um script no Demoiselle-Behave é
 			a escolha dos objetos visuais que
 			serão utilizados.
 			Os objetos poderão
-			ser identificados de diversas formas como Id,XPath ou CSS. Estas
+			ser identificados de diversas formas como Id, XPath ou CSS. Estas
 			diferentes formas de encontrar
 			um objeto na tela são denominadas
 			localizadores.
 			Neste tutorial serão utilizadas algumas ferramentas de
-			apoio para escolha
+			apoio para a escolha
 			dos objetos. De forma exemplificativa
 			o tutorial
 			apresentará um
-			exemplo onde o usuário irá buscar uma informação na
+			exemplo onde o usuário buscará uma informação na
 			página do
 			SERPRO(www.serpro.gov.br).
 		</para>
@@ -83,13 +83,13 @@
 		</para>
 
 		<para>
-			Após instalação das ferramentas de apoio devem ser escolhido os
+			Após instalação das ferramentas de apoio devem ser escolhidos os
 			objetos que devem interagir com a tela. De forma a exemplificar
 			o
 			processo será realizada uma pesquisa na página do SERPRO
-			(www.serpro.gov.br). Sera selecionado o campo de busca e o botão de
+			(www.serpro.gov.br). Será selecionado o campo de busca e o botão de
 			pesquisa.
-			Utilizando o firepath é identificado o id do campo de
+			Utilizando o firepath será identificado o id do campo de
 			pesquisa.
 		</para>
 		<para>
@@ -121,8 +121,8 @@
 	<section>
 		<title>Classe de Mapeamento</title>
 		<para>
-			O próximo passo é implementar uma classe com o mapeamento dos
-			objetos a serem testados e seus idenficadores.
+			O próximo passo será implementar uma classe com o mapeamento dos
+			objetos a serem testados e seus identificadores.
 
 		</para>
 		<programlisting>package packageName;
@@ -187,7 +187,7 @@ public class WebRadio extends WebBase implements Radio {
 			A implementação da classe para a interface visual é configurada
 			utilizando o conceito de SPI no framework.
 			Para cada interface existe
-			um arquivo que indica que implementação sera
+			um arquivo que indica qual implementação será
 			escolhida para cada
 			interface.
 		</para>
@@ -215,13 +215,13 @@ public class WebRadio extends WebBase implements Radio {
 			É possível por meio de frases pré definidas parametrizar o locator.
 		</para>
 		<para>
-			Em uma determinada situação é necessário que seja selecionado um botão que esta presente em uma linha que possue na sua primeira coluna a palavra "Brasil", para facilitar esta tarefa foram criados os locators parametrizáveis.
-			O primeiro passo é criar o mapeamento na classe como mostra o exemplo a abaixo.
+			Em uma determinada situação será necessário que seja selecionado um botão que está presente em uma linha que possui na sua primeira coluna a palavra "Brasil", para facilitar esta tarefa foram criados os locators parametrizáveis.
+			O primeiro passo será criar o mapeamento na classe como mostra o exemplo abaixo.
 		</para>
 		<programlisting>@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'tr-identification')][.//text()='<citetitle>%param1%</citetitle>']//button)[1]")
 private Button botao;</programlisting>
 		<para>
-			Perceba que no locator existe o trecho <citetitle>%param1%</citetitle>, esse é o identificador para que na história seja passada algum texto para ser inserido neste local, como por exemplo:
+			Perceba que no locator existe o trecho <citetitle>%param1%</citetitle>, esse é o identificador para que na história seja passado algum texto para ser inserido neste local, como por exemplo:
 			
 			
 		</para>
@@ -271,7 +271,7 @@ public class LoginPage {
 
 }</programlisting>
 		<para>
-			Se a tela de login fosse utilizada em várias partes públicas do sistema bastaria que em qualquer <citetitle>ScreenMap</citetitle> criassemos um atributo da seguinte maneira: 
+			Para que a tela de login seja utilizada em várias partes públicas do sistema basta que em qualquer <citetitle>ScreenMap</citetitle> seja criado um atributo da seguinte maneira: 
 		</para>
 		<programlisting><citetitle>@Embedded</citetitle>
 private LoginPage loginPage;</programlisting>
@@ -283,7 +283,7 @@ private LoginPage loginPage;</programlisting>
 	<section>
 		<title>Sistemas com AJAX (Componente Loading)</title>
 		<para>
-			O framework fornece um componente de tela chamado Loading, que auxilia no tratamento das ações AJAX que normalmente tem como comportamento padrão abrir em cima do conteúdo uma imagem/texto de carregando, impedindo o acesso aos outros elementos de tela enquanto a imagem/texto é exibida. 
+			O framework fornece um componente de tela chamado Loading, que auxilia no tratamento das ações AJAX que normalmente têm como comportamento padrão abrir um elemento em cima do conteúdo com uma imagem/texto de "Carregando...", impedindo o acesso aos outros elementos de tela, enquanto a imagem/texto é exibida. 
 			O componente tem como objetivo aguardar que a imagem desapareça para ir para o próximo passo.
 			
 			Para utilizar o componente, adicione em qualquer ScreenMap um ElementeMap com tipo <citetitle>Loading</citetitle> como mostra abaixo:
@@ -295,8 +295,7 @@ private <citetitle>Loading</citetitle> loading;</programlisting>
 		</para>		
 		<tip>
 			<para>
-				O problema que este componente resolve são percebidos aleatóriamente em sistemas com AJAX e que possua a image/texto de Carregando nas ações. 
-				Quando ocorre uma lentidão no sistema a imagem/texto fica mais tempo que o normal impedindo que o próximo passo seja executado.
+				O problema que este componente resolve pode ocorrer de forma aleatória em sistemas com AJAX e que possuam a image/texto de "Carregando..." nas ações. Quando ocorre uma lentidão no sistema a imagem/texto é mantida mais tempo que o normal impedindo que o próximo passo seja executado.
 			</para>
 		</tip>
 	</section>

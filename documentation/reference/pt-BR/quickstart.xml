@@ -6,7 +6,7 @@
 
 	<para>
 		Esta seção apresenta um roteiro rápido para criação e
-		configuração de projeto do Demoiselle Behave.
+		configuração de um projeto com uso do framework Demoiselle Behave.
 	</para>
 	<section>
 		<title>Pré Requisitos de Uso</title>
@@ -40,12 +40,11 @@
 	<section>
 		<title>Configurando o Arquétipo</title>
 		<para>
-			O projeto Demoiselle Behave disponibiliza um arquétipo Maven
+			O framework Demoiselle Behave disponibiliza um arquétipo Maven
 			para faciliar a criação de projetos.
 			O primeiro passo na configuração
-			do arquétipo consiste em configurar o repositório. Ir no menu
-			Windows>Preferences
-			do eclipse.
+			do arquétipo consiste em configurar o repositório. Para tanto deve ser acessado o menu
+			Windows>Preferences do Eclipse.
 		</para>
 		<para>
 			<mediaobject>
@@ -64,7 +63,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			O próximo passo é clicar no botão Add Remote Catalog.
+			O próximo passo deverá ser o acionamento do botão Add Remote Catalog.
 		</para>
 		<para>
 			<mediaobject>
@@ -83,7 +82,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			Informe no campo Catalog File url:
+			Em seguida deverá ser informado no campo Catalog File url:
 			<emphasis>
 				http://demoiselle.sourceforge.net/repository/archetype-catalog.xml
 			</emphasis>
@@ -113,8 +112,8 @@
 		<title>Criação do Projeto</title>
 		<para>
 			O primeiro passo na criação de um projeto Demoisele-Behave é
-			criar um projeto Maven com o arquetipo adequado ao projeto de testes.
-			Neste tutorial será utilizado o arquetipo jbehave-selenium-archetype.
+			criar um projeto Maven com o arquétipo adequado ao projeto de testes.
+			Neste tutorial será utilizado o arquétipo jbehave-selenium-archetype.
 			O primeiro passo é escolher a opção File>New>Other>Maven>Maven
 			Project.
 
@@ -136,8 +135,8 @@
 			</mediaobject>
 		</para>
 		<para>
-			Escolher o catalogo Demoisele-Behave e escolher o arquetipo do
-			selenium.
+			Escolher o catálogo Demoisele-Behave e escolher o arquétipo do
+			Selenium.
 		</para>
 		<para>
 			<mediaobject>
@@ -183,7 +182,7 @@
 			src/test/java e src/test/resources. No diretório src/test/resource
 			estarão contidas as histórias de usuários. No diretório src/test/java
 			estarão contidos os Steps do demoiselle bem como os objetos
-			responsáveis pela indentificação das telas envolvidas nos testes e
+			responsáveis pela identificação das telas envolvidas nos testes e
 			seus objetos.
 		</para>
 		<para>
@@ -208,7 +207,7 @@
 		<para>
 			A classe MyTest é responsável pela configuração da pasta onde
 			estão localizadas as histórias de usuários bem como os passos (Steps)
-			a serem adicionados no projeto.
+			a serem adicionados ao projeto.
 		</para>
 
 		<para>
@@ -227,7 +226,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			O projeto criado ja possui um exemplo que realiza uma consulta
+			O projeto criado já possui um exemplo que realiza uma consulta
 			no
 			Google. Para executar o teste basta clicar com o botão direito na
 			classe AppTeste e escolher Run as>JUnit Test.
@@ -249,8 +248,8 @@
 			</mediaobject>
 		</para>
 		<para>
-			O framework inicia o Driver e abre o navegador, e as ações das
-			histórias podem ser vistas no console da IDE como na imagem abaixo.
+			O framework inicia o Driver e abre o navegador. As ações das
+			histórias poderão ser vistas no console da IDE como na imagem abaixo.
 		</para>
 		<para>
 			<mediaobject>
@@ -268,11 +267,11 @@
 			</mediaobject>
 		</para>
 		<para>
-			Abaixo segue a histórias executada pelo framework:
+			Abaixo segue a história executada pelo framework:
 			<programlisting>Funcionalidade: Acesso
 
 Narrativa:
-Para obter a tela inicial apareceça para mim
+Para obter a tela inicial aparece para mim
 Como um visitante
 Desejo acessar o Google
 
@@ -289,7 +288,7 @@ Então será exibido "https://github.com/demoiselle/behave/"</programlisting>
 		</para>
 		<para>
 			O framework associa o campo
-			<emphasis>"Campo Busca"</emphasis>
+			<emphasis>"Campo de Busca"</emphasis>
 			com o elemento searchField da classe MyPage criada
 			de forma a
 			mapear os
@@ -297,7 +296,7 @@ Então será exibido "https://github.com/demoiselle/behave/"</programlisting>
 			locatorType
 			informa o
 			tipo de
-			reconhecimento de objetos será utilizado
+			reconhecimento de objetos que será utilizado
 			no
 			framework. No
 			exemplo, será localizado o elemento cujo Id
