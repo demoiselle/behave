@@ -560,5 +560,13 @@ public class WebBase extends MappedElement implements BaseUI {
 		// Volta o tempo padrão (maxWait) no driver
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
-
+	
+	/**
+	 * Retira o foco do campo. O comportamento 
+	 * padrão para isso é selecionar o <body>
+	 */
+	public void blur(){
+		driver = (WebDriver) runner.getDriver();
+		driver.findElement(By.tagName("body")).click();
+	}
 }
