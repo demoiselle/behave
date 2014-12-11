@@ -45,4 +45,6 @@ public interface Link extends BaseUI {
 
 	public void click();
 	
+	public void mouseOver();
+	
 }
