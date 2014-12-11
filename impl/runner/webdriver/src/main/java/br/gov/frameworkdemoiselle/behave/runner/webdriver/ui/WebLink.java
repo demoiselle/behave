@@ -46,4 +46,11 @@ public class WebLink extends WebBase implements Link {
 		getElements().get(0).click();
 	}
 
+	public void mouseOver() {
+		waitElement(0);
+
+		// mouse over
+		Actions actions = new Actions(getDriver());
+		actions.moveToElement(getElements().get(0)).build().perform();
+	}
 }
