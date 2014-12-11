@@ -1,5 +1,6 @@
 package br.gov.frameworkdemoiselle.behave.internal.ui;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 
@@ -9,7 +10,7 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
-public class UIProxy implements java.lang.reflect.InvocationHandler {
+public class UIProxy implements InvocationHandler {
 
 	private Object obj;
 	Logger log = Logger.getLogger(UIProxy.class);
@@ -58,5 +59,29 @@ public class UIProxy implements java.lang.reflect.InvocationHandler {
 
 		}
 
+	}
+	
+	/**
+	 * Retorna o objeto de uma instância do proxy
+	 * 
+	 * Obs: Ideal para capturar a instancia real
+	 * 		do proxy, não somente pela interface 
+	 * 		que o implementa
+	 * 
+	 * @param proxyInstance Instância que contém um objeto da sua classe real encapsulada
+	 * @return Objeto real da instância do proxy
+	 */
+	public static InvocationHandler getHandler(Object proxyInstance){
+		
+		return (InvocationHandler) java.lang.reflect.Proxy.getInvocationHandler(proxyInstance);
+	}
+	
+	/**
+	 * Captura o objeto real encapsulado pelo proxy
+	 * 
+	 * @return
+	 */
+	public Object getObj(){
+		return this.obj;
 	}
 }
