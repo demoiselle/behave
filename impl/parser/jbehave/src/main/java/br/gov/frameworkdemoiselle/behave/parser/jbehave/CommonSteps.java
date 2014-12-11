@@ -345,6 +345,8 @@ public class CommonSteps implements Step {
 			((MenuItem) element).mouseOver();
 		} else if (element instanceof Button) {
 			((Button) element).mouseOver();
+		} else if (element instanceof Link) {
+			((Link) element).mouseOver();
 		}
 	}
 
