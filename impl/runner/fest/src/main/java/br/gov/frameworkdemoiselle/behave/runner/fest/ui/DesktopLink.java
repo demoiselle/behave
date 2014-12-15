@@ -44,5 +44,9 @@ public class DesktopLink extends DesktopBase implements Link {
 	public void click() {
 		runner.robot.click(getElement());
 	}
+	
+	public void mouseOver(){
+		
+	}
 
 }
