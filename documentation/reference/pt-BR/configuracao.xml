@@ -5,16 +5,16 @@
 
 	<title>Configurações do Behave</title>
 	<para>
-		Todos os os módulos do Demoseille Behave possuem configurações
+		Todos os módulos do Demoseille Behave possuem configurações
 		específicas (Parsers, Runners e Integrations), boa parte delas possui
 		um valor padrão que pode ser alterado no projeto.
 	</para>
 	<tip>
 		<para>
 			Também é possível alterar estas configurações utilizando o
-			parâmetro -D para a chamada da maquina virtual Java.
+			parâmetro-D para a chamada da máquina virtual Java.
 			Por exemplo:
-			-Dbehave.integration.alm.enabled=true .
+			-Dbehave.integration.alm.enabled=true
 		</para>
 	</tip>
 	<section>
@@ -24,16 +24,12 @@
 				<listitem>
 					<citetitle>behave.parser.language:</citetitle>
 					propriedade que seleciona a linguagem que o
-					parser irá trabalhar,
-					o
-					padrão é
-					<emphasis>pt</emphasis>
-					.
+					parser trabalhará, o padrão é <emphasis>pt</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.parser.identification.scenario.pattern:
 					</citetitle>
-					propriedade define a expressão regular que irá identificar um
+					propriedade define a expressão regular que identificará um
 					início de cenário no arquivo de história. O Padrão é
 					<emphasis>^(\\s)*(CEN\u00C1RIO|Cen\u00E1rio|cen\u00E1rio)\:(.*)
 					</emphasis>
@@ -41,15 +37,15 @@
 				<listitem>
 					<citetitle>behave.parser.story.timeout:
 					</citetitle>
-					 Define o tempo maximo em minutos para execucao das historias
+					 Define o tempo máximo em minutos para execução das histórias.
 				</listitem>				
 				<listitem>
 					<citetitle>behave.parser.prefixes.bdd.pattern:
 					</citetitle>
-					propriedade define a expressão regular que irá identificar um
+					propriedade define a expressão regular que identificará um
 					início de cada passo no arquivo de história. O Padrão é
 					<emphasis>^(\\s)*(DADO |QUANDO |ENT\u00C3O |E |MAS |Dado |Quando
-						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas )(.*)
+						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas)(.*)
 					</emphasis>
 				</listitem>
 				<listitem>
@@ -60,45 +56,31 @@
 					padrão é
 					<emphasis>bdd</emphasis>
 					no core, mas no caso do JBehave o padrão é
-					<emphasis>story</emphasis>
-					.
+					<emphasis>story</emphasis>.
 				</listitem>
 				<listitem>
-					<citetitle>behave.parser.story.extension.converted:
-					</citetitle>
-					propriedade define a extensão do arquivo gerado após o pré
-					processamento do framework,
-					o padrão é
-					<emphasis>story</emphasis>
-					no core, mas no caso do JBehave o padrão é
-					<emphasis>storyConverted</emphasis>
+					<citetitle>behave.parser.story.extension.converted:</citetitle>
+					propriedade define a extensão do arquivo gerado após o pré-processamento do framework,
+					o padrão é <emphasis>story</emphasis>
+					no core, mas no caso do JBehave o padrão é <emphasis>storyConverted</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.parser.commonssteps.enabled:
 					</citetitle>
 					propriedade que habilita os passos comuns utilizados pelos
-					parsers,
-					o padrão é
-					<emphasis>ativado</emphasis>
-					.
+					parsers. O padrão é <emphasis>ativado</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.parser.beforeaftersteps.enabled:
 					</citetitle>
-					propriedade que habilita os passos anteriores e posteriores as
-					execuções das histórias, no caso do runner WebDriver ele levando o
-					navegador nestes passos.
-					O padrão é 
-					<emphasis>ativado</emphasis>
-					.
+					propriedade que habilita os passos anteriores e posteriores às
+					execuções das histórias. No caso do runner WebDriver ele conduz o
+					navegador nestes passos. O padrão é <emphasis>ativado</emphasis>.
 				</listitem>
 				<listitem>
-					<citetitle>behave.parser.delayBetweenSteps:
-					</citetitle>
-					propriedade que coloca uma espera entre a execução dos passos, se for 0 (Zero) ele esta desabilitado.
-					O padrão é 
-					<emphasis>0</emphasis>
-					.
+					<citetitle>behave.parser.delayBetweenSteps:</citetitle>
+					propriedade que coloca uma espera entre a execução dos passos. Se for 0 (Zero) ele estará desabilitado.
+					O padrão é <emphasis>0 (Zero)</emphasis>.
 				</listitem>				
 			</itemizedlist>
 		</para>
@@ -109,24 +91,20 @@
 			<itemizedlist>
 				<listitem>
 					<citetitle>behave.runner.screen.maxWait</citetitle>
-					: Tempo máximo de espera em uma ação na tela,
-					o valor padrão é
-					<emphasis>10000 milisegundos</emphasis>
-					.
+					: Tempo máximo de espera em uma ação na tela. O valor padrão é
+					<emphasis>10000 milissegundos</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.minWait</citetitle>
-					: Tempo mínimo de espera entre as ações da tela, contudo está propriedade é utilizada somente nos casos em que o framework precisa tentar mais de uma vez localizar e executar uma ação em um elemento. 
+					: Tempo mínimo de espera entre as ações da tela, contudo esta propriedade é utilizada somente nos casos em que o framework precisa tentar mais de uma vez localizar e executar uma ação em um elemento. 
 					O valor padrão é
-					<emphasis>100 milisegundos</emphasis>
+					<emphasis>100 milissegundos</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.proxy.url</citetitle>
-					: propriedade, quando informada, ativa o uso de proxy no navegador.
-					O valor padrão da url do proxy é
-					<emphasis>vazio</emphasis>
-					.
+					: propriedade que, quando informada, ativará o uso de proxy no navegador.
+					O valor padrão da url do proxy é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.type</citetitle>
@@ -142,89 +120,60 @@
 				<listitem>
 					<citetitle>behave.runner.screen.remote.name</citetitle>
 					: Para testes remotos, esta propriedade informa
-					qual navegadore será
-					utilizada,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
+					qual navegador será
+					utilizado. O valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.remote.url</citetitle>
 					: Para testes remotos, esta propriedade informa
-					a URL na qual o
-					Selenium Server encontra-se,
-					o valor padrão é
-					<emphasis>vazio</emphasis>
-					.
+					a URL na qual o Selenium Server encontra-se,
+					o valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.driverPath</citetitle>
 					: Localização do driver que faz ligação
 					entre o navegador e o
-					webdriver,
-					o valor padrão é
-					<emphasis>vazio</emphasis>
-					.
+					webdriver. O valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.profile.enabled</citetitle>
 					: propriedade que ativa ou desativa o uso de
-					profile no navegador,
-					o
-					valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
+					profile no navegador. O valor padrão é <emphasis>desabilitado</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.profilePath</citetitle>
-					: Localização do profile,
-					o valor padrão é
+					: Localização do profile. O valor padrão é
 					<emphasis>vazio</emphasis>
 					.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.app.mainClass</citetitle>
-					: Nome de domínio totalmente qualificado da
-					classe principal da
-					aplicação sobre testes,
-					O valor padrão é
-					<emphasis>vazio</emphasis>
-					.
+					: Nome de domínio qualificado da classe principal da
+					aplicação sobre testes. O valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>				
 				<listitem>
 					<citetitle>behave.runner.proxy.enabled</citetitle>
-					: habilita a utilização do proxy no runner (Navegador),
-					o valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
+					: habilita a utilização do proxy no runner (Navegador).
+					O valor padrão é <emphasis>desabilitado</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.proxy.url</citetitle>
-					: URL do proxy a ser utilizado quando a opção do Proxy esta habilitada,
-					o valor padrão é
-					<emphasis>vazio</emphasis>
-					.
+					: URL do proxy a ser utilizado quando a opção do Proxy está habilitada.
+					 O valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.screen.binaryPath</citetitle>
-					: localização do binário do navegador quando se quer utilizar uma versão específica (ex: //home//USER//firefox//firefox-bin),
-					o valor padrão é
-					<emphasis>desabilitado</emphasis>
-					.
+					: localização do binário do navegador quando se quer utilizar uma versão específica (ex: //home//USER//firefox//firefox-bin).
+					O valor padrão é <emphasis>desabilitado</emphasis>.
 				</listitem>				
 				<listitem>
 					<citetitle>behave.runner.catchUIException</citetitle>
-					: exceções a serem capturadas em caso de erro genérico (StaleElementReferenceException),
-					o valor padrão é
-					<emphasis>org.openqa.selenium.StaleElementReferenceException</emphasis>
-					.
+					: exceções a serem capturadas em caso de erro genérico (StaleElementReferenceException). O valor padrão é 
+					<emphasis>org.openqa.selenium.StaleElementReferenceException</emphasis>.
 				</listitem>
 				<listitem>
 					<citetitle>behave.runner.window.maximize.enabled</citetitle>
-					: ativa o uso maximizada da janela do navegador,
-					o valor padrão é
-					<emphasis>false</emphasis>
-					.
+					: ativa o uso maximizado da janela do navegador, o valor padrão é <emphasis>false</emphasis>.
 				</listitem>				
 			</itemizedlist>
 		</para>
@@ -237,7 +186,7 @@
 					<citetitle>behave.integration.alm.enabled</citetitle>
 					: propriedade que habilita/desabilita a funcionalidade de
 					integração com a ALM.
-					o valor padrão é
+					O valor padrão é
 					<emphasis>desabilitado</emphasis>
 					.
 				</listitem>
@@ -264,7 +213,7 @@
 					: Campo obrigatório
 					para integração com a ALM. Alias da
 					área de
-					projeto, tomar cuidado com
+					projeto. Tomar cuidado com
 					áreas renomeadas, pois o Alias não
 					é
 					alterado, 
@@ -322,14 +271,14 @@
 					utilitário.
 					Caso o Autenticator não esteja disponível a seguinte
 					mensagem será
-					exebida na exceção lançada:
+					exibida na exceção lançada:
 					<citetitle>br.gov.frameworkdemoiselle.behave.exception.BehaveException:
 						Autenticador inacessível. Verifique se o processo foi iniciado
 					</citetitle>
 				</para>
 			</warning>
 			<section>
-				<title>Instação no Projeto</title>
+				<title>Instalação no Projeto</title>
 				<para>
 					Para fazer uso do módulo de integração basta acrescentar a
 					dependência no pom.xml do projeto.
