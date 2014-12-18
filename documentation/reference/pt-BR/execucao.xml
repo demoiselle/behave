@@ -6,7 +6,7 @@
 	<title>Execução de Testes</title>
 	<para>
 		Este capítulo apresenta recursos avançados para execução de
-		testes com o Demoiselle Behave que
+		testes com o Demoiselle Behave, que
 		podem auxiliar a montagem de um
 		ambiente para execução de testes funcionais.
 	</para>
@@ -19,42 +19,39 @@
 			esta abordagem
 			aumenta a
 			necessidade de processamento da máquina de
-			ativação dos testes, além disso
-			deve-se
+			ativação dos testes. Além disso se deve
 			garantir a independência entre
 			os testes para evitar falsos positivos.
 		</para>
 		<para>
-			O Demoiselle Behave recomenda a utilização do plugin maven
-			maven-surefire-plugin que
-			gerencia a execução do teste conforme os
-			seguintes parâmetros:
+			O Demoiselle Behave recomenda a utilização do maven-surefire-plugin que
+			gerencia a execução do teste conforme os seguintes parâmetros:
 		</para>
 		<itemizedlist>
 			<listitem>
 				<citetitle>forkCount</citetitle>
 				: Determina o número máximo de threads que deverão ser
-				paralelizadas
+				paralelizadas;
 			</listitem>
 			<listitem>
 				<citetitle>threadCount</citetitle>
-				: Número máximo de threads por jvm
+				: Número máximo de threads por jvm;
 			</listitem>
 			<listitem>
 				<citetitle>reuseForks=false</citetitle>
 				: Garante a execução das threads em JVMs isoladas.
 				Esta configuração
 				evita que dados utilizados por uma thread sejam
-				afetadas por outras.
+				afetados por outras.
 			</listitem>
 			<listitem>
 				<citetitle>parallel=classes</citetitle>
-				: Define a estratégia de paralelização, neste caso,
+				: Define a estratégia de paralelização. Neste caso,
 				cada classe de
 				teste do JUnit será instanciada por uma thread até
 				atingir o número
 				máximo de threads (forkCount).
-				Recomendamos utilizar
+				É recomendado utilizar
 				o nível de
 				classe, pois havendo a necessidade de
 				dependência entre os
@@ -82,7 +79,7 @@
 	&lt;/plugins&gt;
 &lt;/build&gt; </programlisting>
 		<para>
-			Para executar seu teste de forma paralela acine o menu “Run as →
+			Para executar seu teste de forma paralela acione o menu “Run as →
 			Maven
 			Test”
 			do eclipse ou no terminal execute “mvn test”.
@@ -104,12 +101,12 @@
 			Outra situação comum acontece quando o testador executa os
 			testes em sua estação de trabalho e
 			necessita utilizar outros
-			programas que concorrerão com sua tela devido a
+			programas que concorrerão com sua tela, devido a
 			utilização de
 			navegadores.
 		</para>
 		<para>
-			Para ambientes linux, que possuem ferramentas para emulação de
+			Para ambientes Linux, que possuem ferramentas para emulação de
 			tela, o Demoiselle Behave recomenda
 			a utilização da ferramenta Xvfb.
 		</para>
@@ -129,7 +126,7 @@
 			É possível instanciar vários processos Xvfb por meio de
 			identificadores diferentes.
 			No exemplo acima foi definido com o
-			identificaro “2”
+			identificador “2”.
 		</para>
 
 		<para>
@@ -140,7 +137,7 @@
 		<programlisting>DISPLAY=:2 firefox</programlisting>
 
 		<para>
-			Para rodar um teste no xvfb, basta rodar:
+			Para rodar um teste no Xvfb, basta rodar:
 		</para>
 
 		<programlisting>DISPLAY=:2 mvn test</programlisting>
@@ -149,7 +146,7 @@
 			Para visualizar processos rodando no Xvfb use o x11vnc (apt-get
 			install x11vnc)
 			que instanciará o serviço vnc para um identificador
-			xvfb específico:
+			Xvfb específico:
 		</para>
 		<programlisting>x11vnc -display :2</programlisting>
 	</section>
@@ -157,9 +154,8 @@
 	<section>
 		<title>Integração Contínua</title>
 		<para>
-			Para execução de testes funcionais em modo background sob um ambiente
-			de integração contínua
-			se faz necessário a instalação de plugins que
+			Para execução de testes funcionais em modo background, sob um ambiente
+			de integração contínua é necessária a instalação de plugins que
 			permitam gerenciar o
 			Xvfb. O Jenkins possui o
 			plugin:
@@ -228,7 +224,7 @@
 		<para>
 			Ao executar seu projeto, o Jenkins iniciará o Xvfb antes da
 			construção da build
-			e finalizar o processo ao final da build:
+			e finalizará o processo ao final da build:
 		</para>
 		<para>
 			<mediaobject>
@@ -252,8 +248,8 @@
 		<title>Testes Remotos</title>
 		<para>
 			A execução de testes remotos, na qual o navegador rodará numa estação diferente da 
-			estação originadora dos testes, é realizada meio do Selenium Server. Este roteiro 
-			auxiliar a criação rápida deste ambiente.
+			estação originadora dos testes, é realizada por meio do Selenium Server. Este roteiro 
+			auxilia a criação rápida deste ambiente.
 		</para>
 
 		<para>
@@ -301,13 +297,11 @@ behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
 	<section>
 		<title>Relatórios JBehave</title>
 		<para>
-			A final da execução dos testes automatizados são gerados
-			relatórios na
-			pasta
-			<citetitle>target/jbehave/view</citetitle>.
-			O arquivo principal é o index.html e pode ser aberto em qualquer
-			navegador. Ao abrir o arquivo clique em "Story Reports" para acessar
-			o relatório da execução.
+			Ao final da execução dos testes automatizados são gerados
+			relatórios na pasta <citetitle>target/jbehave/view</citetitle>. 
+			O arquivo principal é o index.html, passível de abertura com qualquer
+			navegador. Ao abrir o arquivo deve-se clicar em "Story Reports" para ter acesso
+			ao relatório da execução.
 		</para>
 		<para>
 			<mediaobject>
@@ -322,7 +316,7 @@ behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
 		</para>
 		<para>
 			Para acessar os detalhes de cada história existe um link na
-			última coluna (view) na direta da tabela como mostra a imagem abaixo.
+			última coluna (view), na direita da tabela, como mostra a imagem abaixo:
 		</para>
 		<para>
 			<mediaobject>
@@ -331,12 +325,12 @@ behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
 						format="PNG" scalefit="1" width="80%" />
 				</imageobject>
 				<caption>
-					<para>Link para detalhes da hitória</para>
+					<para>Link para detalhes da história</para>
 				</caption>
 			</mediaobject>
 		</para>
 		<para>
-			Após clicar no link "html" da tela de visão geral, a seguinte tela será exibida.
+			Após clicar no link "html" da tela de visão geral, a seguinte tela será exibida:
 		</para>
 		<para>
 			<mediaobject>
@@ -350,7 +344,7 @@ behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
 			</mediaobject>
 		</para>
 		<para>
-		 	Ela contém os detalhamentos dos cenários contidos na história.
+		 	Na tela acima é apresentado o detalhamento dos cenários contidos na história.
 		</para>
 				<para>
 			<mediaobject>
@@ -364,7 +358,7 @@ behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
 			</mediaobject>
 		</para>
 		<para>
-		 	No caso de algum erro ocorrer a tela acima será exibida, ela contém o erro e um print screen da tela (Desktop e Web).
+		 	Caso algum erro venha a ocorrer, este será apresentado junto com um print screen da tela (Desktop e Web).
 		</para>
 	</section>
 

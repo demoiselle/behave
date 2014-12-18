@@ -8,18 +8,18 @@
 		<title>Conceito</title>
 		<para>
 			Este capítulo apresenta a funcionalidade de Conjunto de Dados 
-			(Dataset), que permite a criação de gandes conjuntos de dados em 
-			formato XML para utilização nas histórias, o exemplo de teste
+			(Dataset), que permite a criação de grandes conjuntos de dados em 
+			formato XML para utilização nas histórias. O exemplo de teste
 			utilizado tem como objetivo cadastrar diversas obras em um cadastro,
-			contudo deverão ser informados vários dados de cadastro.
+			para tanto deverão ser informados vários dados de cadastro.
 		</para>
 	</section>
 	<section>
 		<title>Criação do XML de Dados</title>
 		<para>
 			O primeiro passo para a utilização do Conjunto de Dados é a criação de 
-			um XML contendo os dados que serão utilizados nas histórias, a estrutura deve  
-			ser parecida com a do exemplo abaixo do arquivo <emphasis>obras.xml</emphasis>:
+			um XML contendo os dados que serão utilizados nas histórias. A estrutura deve  
+			ser parecida com a do exemplo abaixo, realtivo ao arquivo <emphasis>obras.xml</emphasis>:
 		</para>
 		<programlisting><![CDATA[<DataSet>
 	<dataRecords>
@@ -44,7 +44,7 @@
 		<title>Configuração do Data Provider</title>
 		<para>
 			Para utilizar o arquivo de dados XML ele deve ser informado antes de rodar o teste como
-			no exemplo abaixo do arquivo <emphasis>ObrasTest.java</emphasis>.
+			no exemplo abaixo, relativo ao arquivo <emphasis>ObrasTest.java</emphasis>.
 		</para>
 		<programlisting>public class ObrasTest {
 	private BehaveContext eng = BehaveContext.getInstance();
@@ -64,10 +64,10 @@
 	<section>
 		<title>Criação da História</title>
 		<para>
-			Na criação da história (obra.story) foram adicionados 2 cenários, um 
-			para reuso recebendo o parâmetro obra, e outro que irá chamar 2 vezes 
-			o cenário de reuso com parâmetros diferentes, abaixo esta a história 
-			que será utilizada 2 vezes.
+			Na criação da história (obra.story) foram adicionados dois cenários, um 
+			para reúso recebendo o parâmetro obra, e outro que chamará duas vezes 
+			o cenário de reúso, com parâmetros diferentes. Abaixo está a história 
+			que será utilizada duas vezes.
 		</para>
 		<programlisting>Cenário: adiciono a obra "{obra}"
 
@@ -85,8 +85,8 @@ Quando clico em "Inserir"</programlisting>
 			seleciona o registro criado no XML anteriormente, que é utilizado nos 3 passos seguintes.
 		</para>
 		<para>
-			No exemplo abaixo está sendo chamado 2 vezes o cenário de reuso criado no exemplo acima. É 
-			importante citar que ele é chamado utilizando 2 <emphasis>Data Records</emphasis> diferentes, primeiro
+			No exemplo abaixo está sendo chamado duas vezes o cenário de reuso criado no exemplo acima. É 
+			importante citar que ele é chamado utilizando dois <emphasis>Data Records</emphasis> diferentes, primeiro
 			o "Parque olímpico" e depois a "Vila olímpica".
 		</para>
 		<programlisting>Cenário: Adição de obras armazenadas no dataset
