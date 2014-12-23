@@ -255,17 +255,26 @@ public class WebBase extends MappedElement implements BaseUI {
 			boolean existeLoading;
 
 			try {
+				log.debug("LOADING - 1 - Aguarda o loading estar presente");
+
 				// Verifica se existe o LOADING
 				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
 				existeLoading = true;
+
+				log.debug("LOADING - 2 - Loading presente");
 			} catch (Exception e) {
+				log.debug("LOADING - 2 - Loading NÃO presente");
 				existeLoading = false;
 			}
 
 			if (existeLoading) {
+				log.debug("LOADING - 3 - Aguarda Loading ficar invisível");
+
 				// Aguardo o LOADING desaparecer!
 				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
+
+				log.debug("LOADING - 4 - Loading invisível");
 			}
 
 		}
@@ -539,33 +548,41 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		try {
-			// Aguarda o elemento ficar visivel. Aguarda por 1/5 do tempo
-			// máximo.
-			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMaxWait() / 1000) / 5;
+			log.debug("1 - Aguarda o elemento [" + getElementMap().name() + "] ficar visível (MinWait)");
+
+			// Aguarda o elemento ficar visivel (MinWait)
+			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMinWait() / 1000);
 			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
 			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
 
+			log.debug("2 - Elemento [" + getElementMap().name() + "] visível");
+
 			testInvisibility = true;
 		} catch (org.openqa.selenium.TimeoutException e) {
+			log.debug("2 - Elemento [" + getElementMap().name() + "] NÃO visível");
 			testInvisibility = false;
 		}
 
 		if (testInvisibility) {
+			log.debug("3 - Aguarda o elemento [" + getElementMap().name() + "] ficar invisível");
+
 			// Aguarda ele sumir
 			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
 			WebDriverWait wait = new WebDriverWait(driver, waitTime);
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+
+			log.debug("4 - Elemento [" + getElementMap().name() + "] invisível");
 		}
 
 		// Volta o tempo padrão (maxWait) no driver
 		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
-	
+
 	/**
-	 * Retira o foco do campo. O comportamento 
-	 * padrão para isso é selecionar o <body>
+	 * Retira o foco do campo. O comportamento padrão para isso é selecionar o
+	 * <body>
 	 */
-	public void blur(){
+	public void blur() {
 		driver = (WebDriver) runner.getDriver();
 		driver.findElement(By.tagName("body")).click();
 	}
