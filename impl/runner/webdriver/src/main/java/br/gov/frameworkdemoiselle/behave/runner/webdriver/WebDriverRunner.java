@@ -48,6 +48,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnsupportedCommandException;
@@ -102,6 +103,7 @@ public class WebDriverRunner implements Runner {
 
 	public void navigateTo(String url) {
 		try {
+			logger.debug(message.getString("message-try-access", url));
 			setDefaultWindow();
 			driver.navigate().to(url);
 		} catch (WebDriverException cause) {
