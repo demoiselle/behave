@@ -13,10 +13,10 @@ import org.openqa.selenium.WebElement;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebButton;
+import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebFileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.Tree;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichFileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.richfaces4.RichInputNumberSpinner;
-import demoisellebehave.mix.ui.WebFileUpload;
 
 public class MySteps extends CommonSteps {
 	
