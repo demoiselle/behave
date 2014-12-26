@@ -50,14 +50,13 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 public class WebSelect extends WebBase implements Select {
 
 	Logger log = Logger.getLogger(WebSelect.class);
-	
+
 	/**
-	 * Armazena o elemento html principal
-	 * que compôe o combo
+	 * Armazena o elemento html principal que compôe o combo
 	 * 
 	 * <b>Obs:</b> Específico para combos do primefaces
 	 */
-	private WebElement elementMain = null; 
+	private WebElement elementMain = null;
 
 	/**
 	 * {@inheritDoc}
@@ -94,7 +93,7 @@ public class WebSelect extends WebBase implements Select {
 			return elements.get(0).getText();
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -102,8 +101,9 @@ public class WebSelect extends WebBase implements Select {
 	public void blur() {
 		getElements().get(0).click();
 	}
-	
+
 	public void blur(WebElement element) {
+		// Clica em outro elemento para tirar o foco
 		element.click();
 	}
 
@@ -154,28 +154,21 @@ public class WebSelect extends WebBase implements Select {
 				int index = 1;
 				for (WebElement item : elementValue) {
 					if (index++ == Integer.valueOf(value)) {
-						try {
-							item.click();
-						} catch (Throwable t) {
-							waitElement(1);
-							item.click();
-						}
+						itemListClick(item);
 						break;
 					}
 				}
 			} else {
 				for (WebElement item : elementValue) {
-										
-					if(value.contains(",")){
-						if((item.getText() != "") && value.contains(item.getText())){
-							itemListClick(item, ElementMainAction.DO_NOTHING);
-							
+					if (value.contains(",")) {
+						if ((item.getText() != "") && value.contains(item.getText())) {
+							itemListClick(item);
+
 							item = null;
 							continue;
 						}
-						
-					}else if (item.getText().equals(value)) {
-						itemListClick(item, ElementMainAction.EXECUTE_BLUR);
+					} else if (item.getText().equals(value)) {
+						itemListClick(item);
 						break;
 					}
 				}
@@ -184,43 +177,26 @@ public class WebSelect extends WebBase implements Select {
 		}
 
 	}
-	
+
 	/**
-	 * Seleciona um item <li> da lista do combo,
-	 * retirando ou não o foco a depender do
-	 * que for definido no parâmetro "action"
+	 * Seleciona um item <li>da lista do combo, retirando ou não o foco a
+	 * depender do que for definido no parâmetro "action"
 	 * 
-	 * @param WebElement item Elemento <li> que será selecionado
-	 * @param ElementMainAction action Enum que define se será ou não retirado o foco do combo
-	 * @see ElementMainAction 
+	 * @param WebElement
+	 *            item Elemento <li>que será selecionado
+	 * @see ElementMainAction
 	 */
-	private void itemListClick(WebElement item, ElementMainAction action){
-		
+	private void itemListClick(WebElement item) {
 		try {
 			item.click();
-			
-			if(action == ElementMainAction.EXECUTE_BLUR){
-				blur(elementMain);
-			}
 		} catch (Throwable t) {
 			waitElement(1);
 			item.click();
-			
-			if(action == ElementMainAction.EXECUTE_BLUR){
-				blur(elementMain);
-			}
 		}
-	}
-
-	public WebElement getElementMain() {
-		return elementMain;
 	}
 
 	public enum WebSelectType {
 		TEXT, INDEX, VALUE
 	}
-	
-	public enum ElementMainAction {
-		DO_NOTHING, EXECUTE_BLUR
-	}
+
 }
