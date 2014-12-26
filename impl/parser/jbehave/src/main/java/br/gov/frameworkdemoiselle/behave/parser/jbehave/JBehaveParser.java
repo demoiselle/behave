@@ -66,6 +66,7 @@ import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -158,12 +159,18 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
+
+		// Pega os steps do Context
+		steps.addAll(BehaveContext.getInstance().getSteps());
+		
 		if (BehaveConfig.getParser_BeforeAfterStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
 		}
+		
 		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new CommonSteps());
-		}
+		}		
+		
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 

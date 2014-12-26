@@ -42,6 +42,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.jbehave.core.model.ExamplesTable;
 import org.jbehave.core.model.GivenStories;
+import org.jbehave.core.model.Lifecycle;
 import org.jbehave.core.model.Meta;
 import org.jbehave.core.model.Narrative;
 import org.jbehave.core.model.OutcomesTable;
@@ -164,6 +165,10 @@ public class DefaultStoryReport implements StoryReporter {
 
 	public void pendingMethods(List<String> methods) {
 
+	}
+
+	public void lifecyle(Lifecycle arg0) {
+		
 	}
 
 }
