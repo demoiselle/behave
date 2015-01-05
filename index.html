@@ -1,79 +1,212 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>Demoiselle Behave - Novo</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-        <link rel="stylesheet" href="stylesheets/styles.css">
-        <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <title>dbehave - Framework de Testes Funcionais Automatizados com BDD</title>
 
+        <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> -->
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+        <!-- Custom styles for this template -->
+        <link href="css/navbar-fixed-top.css" rel="stylesheet">
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="js/ie-emulation-modes-warning.js"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <link href='http://fonts.googleapis.com/css?family=BenchNine|Raleway|Indie+Flower|Pacifico' rel='stylesheet' type='text/css'>
+        <link href="css/dbehave.css" rel="stylesheet">
+
+        <link href="./font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
     </head>
     <body>
 
-        <div class="wrapper">
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">                   
+                    <a class="navbar-brand" href="http://dbehave.com">Testes Funcionais Automatizados com BDD</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse github">  
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Questões no <strong>GitHub</strong></a></li>
+                        <li><a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">Docs do <strong>Projeto</strong></a></li>
+                        <li><a href="https://github.com/demoiselle/behave" target="_blank">Ver no <strong>GitHub</strong></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
 
-            <header>
-                <h1 style="font-family: 'Indie Flower', cursive; font-size: 60px; color: #177e96;">Demoiselle Behave</h1>
+        <div class="container">
 
-                <h3 style="color: #029d4e;">Ferramenta de Testes Funcionais Automatizados com BDD</h3>
+            <div class="row">
+                <div class="col-md-4 text-center"><a href="http://dbehave.com"><img src="./images/dbehave_marca_positiva.png" alt="dbehave" /></a></div>
+                <div class="col-md-7 text-center" style="height: 100%;">
+                    <blockquote>
+                        <p>Site oficial dbehave, a ideia é conhecer a ferramenta, dar início a um projeto e tirar dúvidas na documentação.</p>
+                        <footer>
+                            <a href="https://github.com/demoiselle/behave">Veja o projeto no GitHub <cite title="Demoiselle Behave">demoiselle/behave</cite></a>
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="clearfix"></div>
+            </div>
 
-                <a href="#links-uteis">Links Úteis</a><br/>
-                <a href="#repo-maven">Repositório Maven</a><br/>                
-                <a href="#treina-modulo-1">Treinamento - Módulo 1</a><br/>
-                <a href="#treina-modulo-2">Treinamento - Módulo 2</a><br/>
-                <a href="#treina-modulo-3">Treinamento - Módulo 3</a><br/>                
-                <a href="#treina-modulo-4">Treinamento - Módulo 4</a><br/>
-                <a href="#apresen-art">Apresentações e Artigos</a><br/>              
-                <a href="#autores">Autores e Principais Colaboradores</a><br/>
-                <a href="#suporte">Suporte e Contato</a><br/>
-                <br/>
+            <div class="row dbehave-description">
+                <div class="col-md-12">
+                    O dbehave é uma ferramenta de testes funcionais automatizados com BDD - Behavior Driven Development ou em uma tradução - Desenvolvimento Guiado por Comportamento que é uma técnica de desenvolvimento Ágil que encoraja a colaboração entre desenvolvedores, setores de qualidade e pessoas não-técnicas ou de negócios num projeto de software.
+                </div>
+            </div>
 
-                <!--<small>
-                    <b>Frameworks de Referência: </b><br/>
-                    - JBehave: Framework de BDD<br/>
-                    - Selenium 2.0: Framework de Interação com UI Web<br/>
-                    - FEST: Framework de Interação com UI Desktop<br/>
-                </small>-->
+            <div class="row margin-botton-20">
+                <div class="col-md-3 text-center margin-botton-20">
+                    <p class="text-center dbahave-icon-text">1 - escreva histórias</p>                    
+                    <i class="fa fa-file-text-o dbahave-icon"></i>
+                </div>                
 
-                <br/>
+                <div class="col-md-3 text-center margin-botton-20">
+                    <p class="text-center dbahave-icon-text">2 - mapeie telas</p>                    
+                    <i class="fa fa-desktop dbahave-icon"></i>
+                </div>                
 
-                <p class="view"><a href="https://github.com/demoiselle/behave">Veja o projeto no GitHub <small>demoiselle/behave</small></a></p>
+                <div class="col-md-3 text-center margin-botton-20">
+                    <p class="text-center dbahave-icon-text">3 - execute o teste</p>                    
+                    <i class="fa fa-cogs dbahave-icon"></i>
+                </div>                
 
-                <ul>
-                    <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Questões no <strong>GitHub</strong></a></li>
-                    <li><a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">Docs do <strong>Projeto</strong></a></li>
-                    <li><a href="https://github.com/demoiselle/behave" target="_blank">Ver no <strong>GitHub</strong></a></li>
-                </ul>
-            </header>
+                <div class="col-md-3 text-center margin-botton-20">
+                    <p class="text-center dbahave-icon-text">4 - obtenha o relatório</p>                    
+                    <i class="fa fa-line-chart dbahave-icon"></i>
+                </div>                
+            </div>
+        </div>
 
-            <section>
-                <h2><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Olá,</h2>
+        <div class="jumbotron jumbotron-blue">
+            <div class="container">
+                <h2 class="margin-botton-30">Treinamentos e Artigos</h2>
+                <div class="row">                
+                    <div class="col-md-12 text-center">
 
-                <p>este é o site oficial da ferramenta de automação de testes funcionais Demoiselle Behave, a ideia é que por meio deste site seja possível conhecer a ferramenta, dar início a um projeto e tirar dúvidas na documentação.</p>
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
 
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="//www.slideshare.net/slideshow/embed_code/37242224" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
+                                            </iframe> 
+                                            <div> 
+                                                <strong>
+                                                    <a href="https://pt.slideshare.net/vandersonsilva9615/treinamento-demoiselle-behave-parte-01" title="Treinamento - Demoiselle Behave - Parte 1" target="_blank">Treinamento - Demoiselle Behave - Parte 1</a> 
+                                                </strong> from 
+                                                <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a>
+                                                </strong> 
+                                            </div>
+                                        </div>                
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="//www.slideshare.net/slideshow/embed_code/37356011" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
+                                            </iframe> 
+                                            <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/02-treinamentodbehaveweb" title="Demoiselle Behave - Parte 2" target="_blank">Demoiselle Behave - Parte 2</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
+                                            </div>
+                                        </div>                                        
+                                    </div>                                    
+                                </div>
+                                <div class="item">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="//www.slideshare.net/slideshow/embed_code/37810466" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
+                                            </iframe>
+                                            <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/demoiselle-behave-parte-3" title="Demoiselle Behave - Parte 3" target="_blank">Demoiselle Behave - Parte 3</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
+                                            </div>
+                                        </div>                
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="//www.slideshare.net/slideshow/embed_code/38498040" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
+                                            </iframe> 
+                                            <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/demoiselle-behave-parte-4" title="Demoiselle Behave - Parte 4" target="_blank">Demoiselle Behave - Parte 4</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
+                                            </div>
+                                        </div>                
+                                    </div>                
+                                </div>
+                                <div class="item">
+                                    <div class="row">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="http://www.slideshare.net/slideshow/embed_code/25355472" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; max-width: 100%;" allowfullscreen></iframe>
+                                            <div style="margin-bottom:5px"> 
+                                                <strong><a href="https://pt.slideshare.net/vandersonsilva9615/testes-25355472" title="Demoiselle Behave - Visão Geral" target="_blank">Demoiselle Behave - Visão Geral</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
+                                            </div>
+                                        </div>                
+                                        <div class="col-md-5 text-center">
+                                            <iframe src="http://www.slideshare.net/slideshow/embed_code/28430074?rel=0" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
+                                            </iframe> 
+                                            <div style="margin-bottom:5px"> 
+                                                <strong><a href="https://pt.slideshare.net/juliancesarsantos/artigo-tema-outubro" title="Artigo Automação de testes funcionais com Demoiselle Behave" target="_blank">Artigo Automação de testes funcionais com dbehave
+                                                    </a> 
+                                                </strong>from <strong><a href="http://www.slideshare.net/juliancesarsantos" target="_blank">Julian Cesar</a></strong> 
+                                            </div>
+                                        </div>                
+                                    </div>                
+                                </div>
+                            </div>
 
-                <h3 id="links-uteis">Links Úteis</h3>
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
 
-                <ul>
-                    <li><a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">Documentação: Aprenda agora!</a></li>
-                    <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Fórum: Abra um issue para discutirmos um assunto</a></li>
-                    <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Bugs e Sugestões: Abra um issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades</a></li>
-                    <li><a href="http://demoiselle.sourceforge.net/repository/archetype-catalog.xml" target="_blank">Catálogo de Arquétipos Releases: Para versões estáveis</a></li>
-                    <li><a href="http://demoiselle.sourceforge.net/repository/archetype-catalog-snapshot.xml" target="_blank">Catálogo de Arquétipos Snapshot: Para versões de desenvolvimento (snapshot)</a></li>
-                    <li><a href="http://sourceforge.net/projects/demoiselle/files/tools/behave/treino-bundle-1.0.2.zip/download" target="_blank">Aplicação de Treinamento - 1.0.2</a></li>
-                    <li><a href="https://github.com/demoiselle/behave/wiki/Compatibilidade-de-Navegadores" target="_blank">Compatibilidade de Navegadores</a></li>
-                </ul>
+                    </div>                
+                </div>
+            </div>
+        </div>
 
-                <h3 id="repo-maven">Repositório Maven</h3>
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 links">
+                        <h2>Links Úteis</h2>
 
-                <pre>&lt;repositories&gt;
+                        <ul>
+                            <li><a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">Documentação: Aprenda agora!</a></li>
+                            <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Fórum: Abra um issue para discutirmos um assunto</a></li>
+                            <li><a href="https://github.com/demoiselle/behave/issues" target="_blank">Bugs e Sugestões: Abra um issue para submeter e acompanhar Bugs, enviar dúvidas, propor melhorias ou novas funcionalidades</a></li>
+                            <li><a href="http://demoiselle.sourceforge.net/repository/archetype-catalog.xml" target="_blank">Catálogo de Arquétipos Releases: Para versões estáveis</a></li>
+                            <li><a href="http://demoiselle.sourceforge.net/repository/archetype-catalog-snapshot.xml" target="_blank">Catálogo de Arquétipos Snapshot: Para versões de desenvolvimento (snapshot)</a></li>
+                            <li><a href="http://sourceforge.net/projects/demoiselle/files/tools/behave/treino-bundle-1.0.2.zip/download" target="_blank">Aplicação de Treinamento - 1.0.2</a></li>
+                            <li><a href="https://github.com/demoiselle/behave/wiki/Compatibilidade-de-Navegadores" target="_blank">Compatibilidade de Navegadores</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Repositório Maven</h2>
+
+                        <pre>&lt;repositories&gt;
     &lt;repository&gt;
         &lt;id&gt;demoiselle.sourceforge.net-release&lt;/id&gt;
         &lt;url&gt;http://demoiselle.sourceforge.net/repository/release&lt;/url&gt;
@@ -83,101 +216,30 @@
         &lt;url&gt;http://demoiselle.sourceforge.net/repository/snapshot&lt;/url&gt;
     &lt;/repository&gt;
 &lt;/repositories&gt;</pre>
-
-
-                <h3><a name="samples" class="anchor" href="#samples"><span class="octicon octicon-link"></span></a>Treinamento</h3>
-
-                <h2 id="treina-modulo-1">Módulo 1</h2>
-                <iframe src="//www.slideshare.net/slideshow/embed_code/37242224" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
-                </iframe> 
-                <div style="margin-bottom:5px"> 
-                    <strong>
-                        <a href="https://pt.slideshare.net/vandersonsilva9615/treinamento-demoiselle-behave-parte-01" title="Treinamento - Demoiselle Behave - Parte 1" target="_blank">Treinamento - Demoiselle Behave - Parte 1</a> 
-                    </strong> from 
-                    <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a>
-                    </strong> 
+                    </div>
                 </div>
 
-                <h2 id="treina-modulo-2">Módulo 2</h2>
-
-                <iframe src="//www.slideshare.net/slideshow/embed_code/37356011" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
-                </iframe> 
-                <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/02-treinamentodbehaveweb" title="Demoiselle Behave - Parte 2" target="_blank">Demoiselle Behave - Parte 2</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2><i class="fa fa-life-ring support-icon"></i>Suporte e Contato</h2>
+                        Se estiver com algum problema verifique a <a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">Documentação</a> ou crie uma nova <a href="https://github.com/demoiselle/behave/issues" target="_blank">Issue no Git Hub</a>.
+                    </div>
                 </div>
-
-                <h2 id="treina-modulo-3">Módulo 3</h2>
-
-                <iframe src="//www.slideshare.net/slideshow/embed_code/37810466" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
-                </iframe>
-                <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/demoiselle-behave-parte-3" title="Demoiselle Behave - Parte 3" target="_blank">Demoiselle Behave - Parte 3</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
-                </div>
-                
-                <h2 id="treina-modulo-4">Módulo 4</h2>
-
-                <iframe src="//www.slideshare.net/slideshow/embed_code/38498040" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
-                </iframe> 
-                <div style="margin-bottom:5px"> <strong> <a href="https://pt.slideshare.net/vandersonsilva9615/demoiselle-behave-parte-4" title="Demoiselle Behave - Parte 4" target="_blank">Demoiselle Behave - Parte 4</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
-                </div>
-
-                <h3 id="apresen-art"><a name="samples" class="anchor" href="#samples"><span class="octicon octicon-link"></span></a>Apresentações e Artigos</h3>
-
-                <iframe src="http://www.slideshare.net/slideshow/embed_code/25355472" width="386" height="334" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; max-width: 100%;" allowfullscreen></iframe>
-                <div style="margin-bottom:20px"> 
-                    <strong><a href="https://pt.slideshare.net/vandersonsilva9615/testes-25355472" title="Demoiselle Behave - Visão Geral" target="_blank">Demoiselle Behave - Visão Geral</a> </strong> from <strong><a href="http://www.slideshare.net/vandersonsilva9615" target="_blank">Vanderson Silva</a></strong> 
-                </div>
-
-                <iframe src="http://www.slideshare.net/slideshow/embed_code/28430074?rel=0" width="386" height="410" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> 
-                </iframe> 
-                <div style="margin-bottom:20px"> 
-                    <strong> 
-                        <a href="https://pt.slideshare.net/juliancesarsantos/artigo-tema-outubro" title="Artigo Automação de testes funcionais com Demoiselle Behave" target="_blank">
-                            Artigo Automação de testes funcionais com Demoiselle Behave
-                        </a> 
-                    </strong> 
-                    from 
-                    <strong><a href="http://www.slideshare.net/juliancesarsantos" target="_blank">Julian Cesar</a>
-                    </strong> 
-                </div>
-
-                <h3 id="autores"><a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Autores e Principais Colaboradores</h3>
-
-                <ul>
-                    <li>Julian Cesar (<a href="https://github.com/juliancesar" class="user-mention" target="_blank">@juliancesar</a>)</li>
-                    <li>Vanderson Botelho (<a href="https://github.com/botelhojp" class="user-mention" target="_blank">@botelhojp</a>)</li>
-                    <li>Antonio Claudio Pedreira Neiva (<a href="https://github.com/antonioclaudioneiva" class="user-mention" target="_blank">@antonioclaudioneiva</a>)</li>
-                    <li>Rogério Nobre dos Santos (<a href="https://github.com/rogernobre" class="user-mention" target="_blank">@rogernobre</a>)</li>                    
-                    <li>Hudson Leite (<a href="https://github.com/mestihudson" class="user-mention" target="_blank">@mestihudson</a>)</li>
-                    <li>Luiz Fernando Estivalet (<a href="https://github.com/estivalet" class="user-mention" target="_blank">@estivalet</a>)</li>    
-                    <li>Alexandre Henrique Vieira Soares (<a href="https://github.com/ahvsoares" class="user-mention" target="_blank">@ahvsoares</a>)</li>
-                    <li>Lucas Mazzardo Veloso (<a href="https://github.com/lmveloso" class="user-mention" target="_blank">@lmveloso</a>)</li>
-                    <li>Ticiana Oniki Toffoli (<a href="https://github.com/ticianatoffoli" class="user-mention" target="_blank">@ticianatoffoli</a>)</li>
-                    <li>Emanuel Motta Grohs (<a href="https://github.com/egrohs" class="user-mention" target="_blank">@egrohs</a>)</li>
-                    <li>Marcus Siqueira (<a href="https://github.com/marvinsiq" class="user-mention" target="_blank">@marvinsiq</a>)</li>                    
-                </ul>               
-
-                <h3 id="suporte"><a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Suporte e Contato</h3>
-
-                <p>Se você estiver com algum problema com a ferramenta, primeiro verifique a <a href="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/index.html" target="_blank">documentação</a> ou crie uma nova <a href="https://github.com/demoiselle/behave/issues" target="_blank">issue</a>.</p>
-            </section>
-
-            <footer>
-                <p>Este projeto é mantido pelo <a href="http://www.serpro.gov.br">SERPRO</a></p>
-                <p><small>Este é um sub-projeto do projeto <a href="https://github.com/demoiselle">Framework Demoiselle</a></small></p>
-            </footer>
+            </div>
         </div>
 
-        <script src="javascripts/scale.fix.js"></script>
-        <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-        </script>
-        <script type="text/javascript">
-            try {
-                var pageTracker = _gat._getTracker("UA-47809638-1");
-                pageTracker._trackPageview();
-            } catch (err) {
-            }
-        </script>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted text-center">Este é um projeto mantido pelo <a href="http://www.serpro.gov.br" target="_blank">SERPRO</a> e é um sub-projeto do <a href="http://www.frameworkdemoiselle.gov.br" target="_blank">Framework Demoiselle</a>.</p>
+            </div>
+        </footer>
 
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="js/ie10-viewport-bug-workaround.js"></script>
     </body>
 </html>
