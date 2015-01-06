@@ -21,8 +21,8 @@ a, h2 {
 }
 
 blockquote p {
-    font-family: "Bauhaus";
-    font-size: 18px;
+    font-family: Arial;
+    font-size: 24px;
 }
 
 .navbar-header a {
@@ -58,10 +58,10 @@ blockquote p {
 }
 
 .dbahave-icon-text {
-    font-family: "Bauhaus";
+    font-family: Arial;
     color: #233982;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .margin-botton-20 {
