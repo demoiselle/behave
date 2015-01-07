@@ -52,12 +52,23 @@ public class Testplan {
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private List<TestcaseLink> testcase;
 
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private List<TestplanCategory> category;
+
 	public List<TestcaseLink> getTestcase() {
 		return testcase;
 	}
 
 	public void setTestcase(List<TestcaseLink> testcase) {
 		this.testcase = testcase;
+	}
+
+	public List<TestplanCategory> getCategory() {
+		return category;
+	}
+
+	public void setCategory(List<TestplanCategory> category) {
+		this.category = category;
 	}
 
 }
