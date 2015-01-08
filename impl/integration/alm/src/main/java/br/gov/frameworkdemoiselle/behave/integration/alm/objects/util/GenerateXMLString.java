@@ -45,7 +45,6 @@ import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -65,7 +64,6 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanCategory;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 
@@ -73,35 +71,38 @@ public class GenerateXMLString {
 
 	private static Logger log = Logger.getLogger(GenerateXMLString.class);
 
-	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, List<TestcaseLink> testCaseLinks, List<TestplanCategory> testPlanCategories) throws JAXBException {
+	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan oldPlan) throws JAXBException {
 
 		// Adiciona o novo test case se não existir
 		boolean exists = false;
 		String newTestCaseId = urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId;
 
-		if (testCaseLinks != null) {
-			for (TestcaseLink link : testCaseLinks) {
+		if (oldPlan.getTestcase() != null) {
+			for (TestcaseLink link : oldPlan.getTestcase()) {
 				if (link.getHref().equals(newTestCaseId)) {
 					exists = true;
 					break;
 				}
 			}
 		} else {
-			testCaseLinks = new ArrayList<TestcaseLink>();
+			oldPlan.setTestcase(new ArrayList<TestcaseLink>());
 		}
 
 		if (!exists) {
 			TestcaseLink testcase = new TestcaseLink();
 			testcase.setHref(newTestCaseId);
 
-			testCaseLinks.add(testcase);
+			oldPlan.getTestcase().add(testcase);
 		}
 
 		Testplan plan = new Testplan();
-		plan.setTestcase(testCaseLinks);
+		plan.setTestcase(oldPlan.getTestcase());
 
 		// Adiciona as categorias
-		plan.setCategory(testPlanCategories);
+		plan.setCategory(oldPlan.getCategory());
+
+		// Adiciona os aprovadores
+		plan.setApprovals(oldPlan.getApprovals());
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testplan.class);
 		Marshaller marshaller = jaxb.createMarshaller();

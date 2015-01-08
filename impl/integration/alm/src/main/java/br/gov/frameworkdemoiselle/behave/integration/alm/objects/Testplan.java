@@ -55,6 +55,9 @@ public class Testplan {
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private List<TestplanCategory> category;
 
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private TestplanApprovals approvals;
+
 	public List<TestcaseLink> getTestcase() {
 		return testcase;
 	}
@@ -69,6 +72,14 @@ public class Testplan {
 
 	public void setCategory(List<TestplanCategory> category) {
 		this.category = category;
+	}
+
+	public TestplanApprovals getApprovals() {
+		return approvals;
+	}
+
+	public void setApprovals(TestplanApprovals approvals) {
+		this.approvals = approvals;
 	}
 
 }

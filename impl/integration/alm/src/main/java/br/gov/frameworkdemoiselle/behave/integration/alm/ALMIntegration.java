@@ -184,7 +184,7 @@ public class ALMIntegration implements Integration {
 
 					// TestPlan
 					log.debug(message.getString("message-send-test-plan"));
-					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase(), plan.getCategory()));
+					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
 					if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 						throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
 					}
