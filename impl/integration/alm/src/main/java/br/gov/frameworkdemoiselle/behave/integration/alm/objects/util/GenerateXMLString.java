@@ -53,7 +53,6 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult;
@@ -68,8 +67,6 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 
 public class GenerateXMLString {
-
-	private static Logger log = Logger.getLogger(GenerateXMLString.class);
 
 	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan oldPlan) throws JAXBException {
 
@@ -232,9 +229,6 @@ public class GenerateXMLString {
 		}
 
 		if (!xmlString.equals("")) {
-			log.debug("Test Plan XML:");
-			log.debug(xmlString);
-
 			JAXBContext jaxbContext = JAXBContext.newInstance(Testplan.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(xmlString.toString());
