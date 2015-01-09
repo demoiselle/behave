@@ -75,6 +75,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXM
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
+@SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
 
 	private static Logger log = Logger.getLogger(ALMIntegration.class);
