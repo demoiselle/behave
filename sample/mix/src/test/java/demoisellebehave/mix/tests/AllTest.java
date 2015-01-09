@@ -10,8 +10,9 @@ public class AllTest {
 	private BehaveContext eng = null;
 
 	public AllTest() {
-		eng = BehaveContext.getInstance();
+		eng = BehaveContext.getInstance();		
 		eng.addSteps(new MySteps());
+		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

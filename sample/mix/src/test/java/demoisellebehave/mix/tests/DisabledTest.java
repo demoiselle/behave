@@ -10,6 +10,7 @@ public class DisabledTest {
 
 	public DisabledTest() {
 		eng = BehaveContext.getInstance();
+		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

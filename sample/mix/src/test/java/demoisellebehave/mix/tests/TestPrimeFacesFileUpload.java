@@ -13,6 +13,7 @@ public class TestPrimeFacesFileUpload {
 	public TestPrimeFacesFileUpload() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
+		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

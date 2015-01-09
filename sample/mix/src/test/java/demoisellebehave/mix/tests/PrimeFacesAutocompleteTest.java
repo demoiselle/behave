@@ -10,6 +10,7 @@ public class PrimeFacesAutocompleteTest {
 
 	public PrimeFacesAutocompleteTest() {
 		eng = BehaveContext.getInstance();
+		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test
