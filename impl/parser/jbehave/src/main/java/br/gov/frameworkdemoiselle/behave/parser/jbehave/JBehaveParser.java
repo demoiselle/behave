@@ -120,7 +120,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.doVerboseFailures(true);
 			embedderControls.useStoryTimeoutInSecs(BehaveConfig.getParser_StoryTimeout() * 60);
 			embedderControls.useThreads(1);
-			
+
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
@@ -143,6 +143,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void run() {
 		logger.info(message.getString("message-parser-started"));
 		Embedder embedder = configuredEmbedder();
+		
+		// Sempre seleciona o steps factory 
+		embedder.useStepsFactory(stepsFactory());
+		
 		try {
 			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
@@ -160,17 +164,20 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 
+		// Limpa os passos atuais
+		steps.clear();
+
 		// Pega os steps do Context
 		steps.addAll(BehaveContext.getInstance().getSteps());
-		
+
 		if (BehaveConfig.getParser_BeforeAfterStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
 		}
-		
+
 		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new CommonSteps());
-		}		
-		
+		}
+
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 
