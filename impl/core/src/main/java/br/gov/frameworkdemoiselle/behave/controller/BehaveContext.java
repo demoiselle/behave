@@ -164,9 +164,12 @@ public class BehaveContext {
 			throw ex;
 		} finally {
 			fail = null;
+			failStep = null;
+			storyOrScenarioFilter = null;
 			storiesPath.clear();
 			storiesReusePath.clear();
-			steps.clear();
+			steps.clear();			
+			
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
@@ -181,8 +184,6 @@ public class BehaveContext {
 
 	public void run() {
 		run(storiesPath);
-		this.fail = null;
-		this.failStep = null;
 	}
 
 	public void run(String storiesPath, StoryOrScenarioFilter storyOrScenarioFilter) {
