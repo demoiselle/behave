@@ -12,7 +12,6 @@ public class TestRichInputNumberSpinner {
 	public TestRichInputNumberSpinner() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
-		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

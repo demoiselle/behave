@@ -13,7 +13,6 @@ public class TestRichFileUpload {
 	public TestRichFileUpload() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
-		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

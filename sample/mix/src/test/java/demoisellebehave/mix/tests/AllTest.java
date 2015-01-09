@@ -12,7 +12,6 @@ public class AllTest {
 	public AllTest() {
 		eng = BehaveContext.getInstance();		
 		eng.addSteps(new MySteps());
-		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

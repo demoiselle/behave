@@ -13,7 +13,6 @@ public class PrimeFacesTreeTest {
 	public PrimeFacesTreeTest() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
-		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test

@@ -11,7 +11,6 @@ public class PrimeFacesInputTest {
 
 	public PrimeFacesInputTest() {
 		eng = BehaveContext.getInstance();
-		eng.setStoryOrScenarioFilter(null);
 	}
 
 	@Test
