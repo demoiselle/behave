@@ -67,6 +67,11 @@
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
 		<module>impl/integration/alm</module>
+		
+		<module>impl/extension/regression/report</module>
+		<module>impl/extension/regression/repository</module>
+		<module>impl/extension/regression/step</module>
+		
 		<module>documentation/reference</module>
 	</modules>
 
