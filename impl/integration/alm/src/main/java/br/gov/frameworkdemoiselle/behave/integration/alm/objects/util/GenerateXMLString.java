@@ -45,7 +45,6 @@ import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -69,32 +68,38 @@ import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 
 public class GenerateXMLString {
 
-	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, List<TestcaseLink> testCaseLinks) throws JAXBException {
+	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan oldPlan) throws JAXBException {
 
 		// Adiciona o novo test case se não existir
 		boolean exists = false;
 		String newTestCaseId = urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId;
 
-		if (testCaseLinks != null) {
-			for (TestcaseLink link : testCaseLinks) {
+		if (oldPlan.getTestcase() != null) {
+			for (TestcaseLink link : oldPlan.getTestcase()) {
 				if (link.getHref().equals(newTestCaseId)) {
 					exists = true;
 					break;
 				}
 			}
 		} else {
-			testCaseLinks = new ArrayList<TestcaseLink>();
+			oldPlan.setTestcase(new ArrayList<TestcaseLink>());
 		}
 
 		if (!exists) {
 			TestcaseLink testcase = new TestcaseLink();
 			testcase.setHref(newTestCaseId);
 
-			testCaseLinks.add(testcase);
+			oldPlan.getTestcase().add(testcase);
 		}
 
 		Testplan plan = new Testplan();
-		plan.setTestcase(testCaseLinks);
+		plan.setTestcase(oldPlan.getTestcase());
+
+		// Adiciona as categorias
+		plan.setCategory(oldPlan.getCategory());
+
+		// Adiciona os aprovadores
+		plan.setApprovals(oldPlan.getApprovals());
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testplan.class);
 		Marshaller marshaller = jaxb.createMarshaller();
@@ -162,7 +167,6 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	//public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, Boolean failed, Date _startDate, Date _endDate, String details) throws JAXBException {
 	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, Date _startDate, Date _endDate, String details) throws JAXBException {
 		Date startDate = (Date) _startDate.clone();
 		Date endDate = (Date) _endDate.clone();
@@ -174,24 +178,17 @@ public class GenerateXMLString {
 		workTest.setHref(executionWorkItemUrl);
 
 		Executionresult result = new Executionresult();
-//		if (failed) {
-//			result.setState("com.ibm.rqm.execution.common.state.failed");
-//		} else {
-//			result.setState("com.ibm.rqm.execution.common.state.passed");
-//		}
-		if(stateOf.equals(ScenarioState.FAILED)){
+		if (stateOf.equals(ScenarioState.FAILED)) {
 			result.setState("com.ibm.rqm.execution.common.state.failed");
-		}else{
-			if(stateOf.equals(ScenarioState.PENDING)){
+		} else {
+			if (stateOf.equals(ScenarioState.PENDING)) {
 				result.setState("com.ibm.rqm.execution.common.state.blocked");
-			}else{
+			} else {
 				result.setState("com.ibm.rqm.execution.common.state.passed");
 			}
 		}
 		result.setApprovalstate(state);
 		result.setExecutionworkitem(workTest);
-		// result.setPointspassed(1);
-		// result.setPointsattempted(1);
 
 		// Adiciona 3 horas (3 * 60 * 60 * 1000)
 		startDate.setTime(startDate.getTime() + 10800000L);
@@ -243,16 +240,18 @@ public class GenerateXMLString {
 	}
 
 	/**
-	 * Trata todas as tags para serem enviadas para a ALM, exceto a quebra de linha <br/>
+	 * Trata todas as tags para serem enviadas para a ALM, exceto a quebra de
+	 * linha <br/>
 	 * 
-	 * @param s string a ser tratada
+	 * @param s
+	 *            string a ser tratada
 	 * @return string tatada
 	 */
 	public static String escapeHTMLForAlm(String s) {
-		
+
 		// Substitui as quebras de linha para não serem tratadas
 		s = s.replace("<br/>", "\n");
-		
+
 		StringBuilder out = new StringBuilder(Math.max(16, s.length()));
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
@@ -264,10 +263,10 @@ public class GenerateXMLString {
 				out.append(c);
 			}
 		}
-		
+
 		// Volta as quebras de linha
 		String stringRet = out.toString().replace("\n", "<br/>");
-		
+
 		return stringRet;
 	}
 

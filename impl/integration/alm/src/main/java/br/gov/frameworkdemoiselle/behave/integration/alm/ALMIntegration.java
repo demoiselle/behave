@@ -75,6 +75,7 @@ import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXM
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
+@SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
 
 	private static Logger log = Logger.getLogger(ALMIntegration.class);
@@ -184,7 +185,7 @@ public class ALMIntegration implements Integration {
 
 					// TestPlan
 					log.debug(message.getString("message-send-test-plan"));
-					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan.getTestcase()));
+					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
 					if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 						throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
 					}
@@ -234,8 +235,7 @@ public class ALMIntegration implements Integration {
 				executionWorkItemUrl = workItemName;
 			}
 
-			//HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, Boolean.parseBoolean(result.get("failed").toString()), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, ((ScenarioState)result.get("state")), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, ((ScenarioState) result.get("state")), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
 				throw new BehaveException(message.getString("exception-send-result", responseResult.getStatusLine().toString()));
 			}

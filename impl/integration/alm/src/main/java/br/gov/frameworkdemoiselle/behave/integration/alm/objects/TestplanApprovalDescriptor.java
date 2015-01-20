@@ -41,45 +41,76 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "testplan")
-public class Testplan {
+@XmlType(name = "approvalDescriptor")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class TestplanApprovalDescriptor {
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private List<TestcaseLink> testcase;
+	private String id;
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private List<TestplanCategory> category;
+	private String name;
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private TestplanApprovals approvals;
+	private String approvalType;
 
-	public List<TestcaseLink> getTestcase() {
-		return testcase;
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private String approvalStateChangedDate;
+
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private String archived;
+
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private List<TestplanApproval> approval;
+
+	public String getId() {
+		return id;
 	}
 
-	public void setTestcase(List<TestcaseLink> testcase) {
-		this.testcase = testcase;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public List<TestplanCategory> getCategory() {
-		return category;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategory(List<TestplanCategory> category) {
-		this.category = category;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public TestplanApprovals getApprovals() {
-		return approvals;
+	public String getApprovalType() {
+		return approvalType;
 	}
 
-	public void setApprovals(TestplanApprovals approvals) {
-		this.approvals = approvals;
+	public void setApprovalType(String approvalType) {
+		this.approvalType = approvalType;
+	}
+
+	public String getApprovalStateChangedDate() {
+		return approvalStateChangedDate;
+	}
+
+	public void setApprovalStateChangedDate(String approvalStateChangedDate) {
+		this.approvalStateChangedDate = approvalStateChangedDate;
+	}
+
+	public String getArchived() {
+		return archived;
+	}
+
+	public void setArchived(String archived) {
+		this.archived = archived;
+	}
+
+	public List<TestplanApproval> getApproval() {
+		return approval;
+	}
+
+	public void setApproval(List<TestplanApproval> approval) {
+		this.approval = approval;
 	}
 
 }

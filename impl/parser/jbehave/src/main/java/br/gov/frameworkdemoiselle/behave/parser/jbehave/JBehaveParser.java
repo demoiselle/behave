@@ -66,6 +66,7 @@ import org.jbehave.core.steps.ParameterConverters.ParameterConverter;
 import org.jbehave.core.steps.StepFinder;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.util.FileUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -119,7 +120,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			embedderControls.doVerboseFailures(true);
 			embedderControls.useStoryTimeoutInSecs(BehaveConfig.getParser_StoryTimeout() * 60);
 			embedderControls.useThreads(1);
-			
+
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
@@ -142,6 +143,10 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	public void run() {
 		logger.info(message.getString("message-parser-started"));
 		Embedder embedder = configuredEmbedder();
+		
+		// Sempre seleciona o steps factory 
+		embedder.useStepsFactory(stepsFactory());
+		
 		try {
 			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
@@ -158,12 +163,21 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {
+
+		// Limpa os passos atuais
+		steps.clear();
+
+		// Pega os steps do Context
+		steps.addAll(BehaveContext.getInstance().getSteps());
+
 		if (BehaveConfig.getParser_BeforeAfterStepsEnabled()) {
 			steps.add(new BeforeAfterSteps());
 		}
+
 		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new CommonSteps());
 		}
+
 		return new InstanceStepsFactory(configuration(), steps.toArray());
 	}
 

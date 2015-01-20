@@ -96,6 +96,10 @@ public class BehaveContext {
 		steps.add(step);
 	}
 
+	public List<Step> getSteps() {
+		return steps;
+	}
+
 	// Métodos para rodar o teste
 	public void run(List<String> storiesFiles) {
 		try {
@@ -149,7 +153,7 @@ public class BehaveContext {
 
 			// Roda o runner com as histórias convertidas
 			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
-			parser.setSteps(steps);
+			// parser.setSteps(steps); // Na versão 3.9 do JBehave foi alterada a ordem de carregamento dos steps
 			parser.setStoryPaths(finalArray);
 			parser.run();
 			if (fail != null) {
@@ -160,9 +164,12 @@ public class BehaveContext {
 			throw ex;
 		} finally {
 			fail = null;
+			failStep = null;
+			storyOrScenarioFilter = null;
 			storiesPath.clear();
 			storiesReusePath.clear();
-			steps.clear();
+			steps.clear();			
+			
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
@@ -177,8 +184,6 @@ public class BehaveContext {
 
 	public void run() {
 		run(storiesPath);
-		this.fail = null;
-		this.failStep = null;
 	}
 
 	public void run(String storiesPath, StoryOrScenarioFilter storyOrScenarioFilter) {

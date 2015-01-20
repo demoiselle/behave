@@ -36,50 +36,35 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration.alm.objects;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-@XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "testplan")
-public class Testplan {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "category")
+public class TestplanCategory {
 
-	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private List<TestcaseLink> testcase;
+	@XmlAttribute
+	private String value;
+	
+	@XmlAttribute
+	private String term;
 
-	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private List<TestplanCategory> category;
-
-	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
-	private TestplanApprovals approvals;
-
-	public List<TestcaseLink> getTestcase() {
-		return testcase;
+	public String getValue() {
+		return value;
 	}
 
-	public void setTestcase(List<TestcaseLink> testcase) {
-		this.testcase = testcase;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public List<TestplanCategory> getCategory() {
-		return category;
+	public String getTerm() {
+		return term;
 	}
 
-	public void setCategory(List<TestplanCategory> category) {
-		this.category = category;
-	}
-
-	public TestplanApprovals getApprovals() {
-		return approvals;
-	}
-
-	public void setApprovals(TestplanApprovals approvals) {
-		this.approvals = approvals;
+	public void setTerm(String term) {
+		this.term = term;
 	}
 
 }
