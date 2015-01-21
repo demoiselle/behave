@@ -59,7 +59,7 @@ public class Testcasedesign {
 	}
 
 	public String getValue() {
-		return value;
+		return "<![CDATA[" + value + "]]>";
 	}
 
 	public void setValue(String value) {
