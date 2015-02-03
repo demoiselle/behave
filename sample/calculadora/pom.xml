@@ -51,7 +51,7 @@
 	<name>Demoiselle Behave Calculadora</name>
 
 	<description>Demoiselle Behave Calculadora</description>
-
+	
 	<organization>
 		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
 		<url>http://www.serpro.gov.br</url>
@@ -67,12 +67,6 @@
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- temp -->
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-			<artifactId>demoiselle-behave-regression-report</artifactId>
-			<version>1.4.1-SNAPSHOT</version>		
-		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -87,27 +81,6 @@
 	</repositories>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.2</version>
-					<configuration>
-						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-					</configuration>
-					<executions>
-						<execution>
-							<id>mojo-descriptor</id>
-							<phase>process-classes</phase>
-							<goals>
-								<goal>descriptor</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
