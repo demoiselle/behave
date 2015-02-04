@@ -160,8 +160,10 @@ public class WebSelect extends WebBase implements Select {
 				}
 			} else {
 				for (WebElement item : elementValue) {
+					// Verifica se existe a virgula, se existir significa que
+					// são multiplos valores e procura por contains
 					if (value.contains(",")) {
-						if ((item.getText() != "") && value.contains(item.getText())) {
+						if (!item.getText().equals("") && value.contains(item.getText())) {
 							itemListClick(item);
 
 							item = null;
