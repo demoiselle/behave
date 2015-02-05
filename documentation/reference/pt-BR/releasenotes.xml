@@ -14,6 +14,79 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.4.1</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/301">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema na verificação da presença do loading
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/299">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização da versão do Selenium para a 2.44 (2014-10-23)
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/298">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema com a integração ALM - Sobrescrita de Aprovações
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/297">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema com a integração ALM - Sobrescrita de Categorias do Plano
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/296">
+					<emphasis>[Bug]</emphasis>
+					Melhoria no tratamento de IFrames sem Source
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/290">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionando a interface Link como tipo de elemento para a frase que move o mouse sobre um elemento
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/289">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na documentação do projeto
+				</ulink>
+			</listitem>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/287">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema com passo para verificação de campos não editáveis e visíveis
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/286">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema na frase que aguarda elementos em combos do Primefaces
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/285">
+					<emphasis>[Melhoria]</emphasis>
+					Novos Componentes WebAutoComplete e WebImage
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/235">
+					<emphasis>[Bug]</emphasis>
+					Erro na integração com ALM quando existiam requisitos ligados ao plano de testes
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
 		<citetitle>Versão 1.4.0</citetitle>
 
 		<itemizedlist>
