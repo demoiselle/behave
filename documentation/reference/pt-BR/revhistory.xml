@@ -3,7 +3,13 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
-		<revnumber>1.4.0 - BETA1</revnumber>
+		<revnumber>1.4.1</revnumber>
+		<date>06/02/2015</date>
+		<authorinitials>Vbs, jcs</authorinitials>
+		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.0</revnumber>
 		<date>02/09/2014</date>
 		<authorinitials>Vbs, jcs</authorinitials>
 		<revremark>Novas funcionalidades e melhorias no framework.</revremark>
