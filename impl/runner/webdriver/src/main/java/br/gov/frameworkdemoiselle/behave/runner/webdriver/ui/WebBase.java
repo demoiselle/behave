@@ -255,26 +255,17 @@ public class WebBase extends MappedElement implements BaseUI {
 			boolean existeLoading;
 
 			try {
-				log.debug("LOADING - 1/4 - Aguarda o loading estar presente");
-
 				// Verifica se existe o LOADING
 				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
 				existeLoading = true;
-
-				log.debug("LOADING - 2/4 - Loading presente");
 			} catch (Exception e) {
-				log.debug("LOADING - 2/4 - Loading NÃO presente");
 				existeLoading = false;
 			}
 
 			if (existeLoading) {
-				log.debug("LOADING - 3/4 - Aguarda Loading ficar invisível");
-
 				// Aguardo o LOADING desaparecer!
 				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
-
-				log.debug("LOADING - 4/4 - Loading invisível");
 			}
 
 		}
@@ -548,30 +539,21 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		try {
-			log.debug("1 - Aguarda o elemento [" + getElementMap().name() + "] ficar visível (MinWait)");
-
 			// Aguarda o elemento ficar visivel (MinWait)
 			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMinWait() / 1000);
 			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
 			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
 
-			log.debug("2 - Elemento [" + getElementMap().name() + "] visível");
-
 			testInvisibility = true;
 		} catch (org.openqa.selenium.TimeoutException e) {
-			log.debug("2 - Elemento [" + getElementMap().name() + "] NÃO visível");
 			testInvisibility = false;
 		}
 
 		if (testInvisibility) {
-			log.debug("3 - Aguarda o elemento [" + getElementMap().name() + "] ficar invisível");
-
 			// Aguarda ele sumir
 			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
 			WebDriverWait wait = new WebDriverWait(driver, waitTime);
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
-
-			log.debug("4 - Elemento [" + getElementMap().name() + "] invisível");
 		}
 
 		// Volta o tempo padrão (maxWait) no driver
