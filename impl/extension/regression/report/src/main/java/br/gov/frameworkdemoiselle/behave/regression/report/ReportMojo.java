@@ -63,24 +63,28 @@ public class ReportMojo extends AbstractMojo {
 	private Properties properties = new Properties();
 
 	public void execute() {
-		getLog().info("========================================");
-		getLog().info("REGRESSION");
-		getLog().info("========================================");
-		getLog().info("target:" + target);
-		loadBehaveProperties();		
-		getLog().info("behave.properties");
-		getLog().info("type:" + getProperty("behave.regression.type"));
-		getLog().info("url:" + getProperty("behave.regression.url"));		
-		getLog().info("user:" + getProperty("behave.regression.user"));
-		getLog().info("password:" + getProperty("behave.regression.password"));
-		getLog().info("========================================");
+		loadBehaveProperties();	
+		String enabled = getProperty("behave.regression.enabled");		
+		if ( enabled != null && Boolean.parseBoolean(enabled)){
+			getLog().info("========================================");
+			getLog().info("REGRESSION");
+			getLog().info("========================================");
+			getLog().info("target:" + target);			
+			getLog().info("behave.properties");
+			getLog().info("type:" + getProperty("behave.regression.enabled"));
+			getLog().info("type:" + getProperty("behave.regression.type"));
+			getLog().info("url:" + getProperty("behave.regression.url"));		
+			getLog().info("user:" + getProperty("behave.regression.user"));
+			getLog().info("password:" + getProperty("behave.regression.password"));
+			getLog().info("========================================");			
+		}
 	}
 
 	public String getProperty(String key){
 		if (properties.containsKey(key)){
 			return properties.getProperty(key);
 		}else{
-			throw new RuntimeException("properties '"+ key +"' not found");
+			return null;
 		}
 	}
 
@@ -96,7 +100,7 @@ public class ReportMojo extends AbstractMojo {
 				getLog().error(e);
 			}
 		} else {
-			getLog().error(	"File behave.properties not found: " + behaveProperties);
+			getLog().debug(	"File behave.properties not found: " + behaveProperties);
 		}		
 	}	
 }
