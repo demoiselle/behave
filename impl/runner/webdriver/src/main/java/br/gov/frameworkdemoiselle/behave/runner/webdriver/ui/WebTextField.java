@@ -75,13 +75,16 @@ public class WebTextField extends WebBase implements TextField {
 
 		while (!elements.get(0).getAttribute("value").equals(value)) {
 			
+			// Limpa o valor atual do campo utilizando a função padrão 
+			elements.get(0).clear();
+			
 			// Envia para o elemento
 			elements.get(0).sendKeys(getValueToSend(value));
 
 			// Verifica se o elemento já esta com o valor correto
 			if (elements.get(0).getAttribute("value").equals(value))
 				break;
-
+			
 			totalMilliseconds += BehaveConfig.getRunner_ScreenMinWait();
 
 			if (totalMilliseconds > BehaveConfig.getRunner_ScreenMaxWait()) {
