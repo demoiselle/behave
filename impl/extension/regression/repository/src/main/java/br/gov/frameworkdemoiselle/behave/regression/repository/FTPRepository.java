@@ -46,8 +46,29 @@ import br.gov.frameworkdemoiselle.behave.regression.Result;
  */
 public class FTPRepository implements Repository {
 
+	@Override
 	public void save(Result result) {
 		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
+	public void clean() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int countResults() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Result get(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

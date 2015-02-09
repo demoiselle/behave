@@ -36,11 +36,60 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression;
 
+import java.io.File;
+
 /**
  * 
  * @author SERPRO
  *
  */
-public interface Result {
-
+public class Result {
+	private String id;
+	private String location;
+	private String detail;
+	private File file;
+	
+	public Result(String id, String location, String detail, File file) {
+		super();
+		this.id = id;
+		this.location = location;
+		this.detail = detail;
+		this.file = file;
+	}
+	
+	public Result(String id, String location, String detail) {
+		super();
+		this.id = id;
+		this.location = location;
+		this.detail = detail;
+		this.file = null;
+	}
+	
+	public Result() {
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
 }

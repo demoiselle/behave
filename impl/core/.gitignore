@@ -5,3 +5,4 @@
 /.externalToolBuilders
 /bin
 /coverage-report
+/target/

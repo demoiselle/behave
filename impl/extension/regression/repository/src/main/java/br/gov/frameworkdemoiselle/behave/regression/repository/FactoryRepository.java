@@ -34,21 +34,30 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.regression;
+package br.gov.frameworkdemoiselle.behave.regression.repository;
 
-/**
- * 
- * @author SERPRO
- *
- */
-public interface Repository {
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.regression.Repository;
 
-	public void save(Result result);
+public class FactoryRepository {
 
-	public void clean();
-
-	public int countResults();
-
-	public Result get(String string, String string2);
+	public static String MESSAGEBUNDLE = "demoiselle-regression-repository-bundle";
+	private static BehaveMessage message = new BehaveMessage(FactoryRepository.MESSAGEBUNDLE);
+	
+	public static Repository getInstance() {
+		String type = BehaveConfig.getProperty("behave.regression.type");
+		if (type == null || type.length() == 0){
+			throw new BehaveException(message.getString("exception-properties-not-found", "behave.regression.type"));
+		}
+		if (type.equalsIgnoreCase("local")){
+			return new LocalRepository();
+		}
+		if (type.equalsIgnoreCase("ftp")){
+			return new FTPRepository();
+		}
+		throw new BehaveException(message.getString("exception-properties-invalid", type));
+	}
 
 }

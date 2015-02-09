@@ -34,21 +34,27 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.regression;
+package br.gov.frameworkdemoiselle.behave.regression.repository;
 
-/**
- * 
- * @author SERPRO
- *
- */
-public interface Repository {
+import static org.junit.Assert.*;
 
-	public void save(Result result);
+import org.junit.Before;
+import org.junit.Test;
 
-	public void clean();
+import br.gov.frameworkdemoiselle.behave.regression.Repository;
 
-	public int countResults();
+public class FactoryRepositoryTest {
 
-	public Result get(String string, String string2);
+private Repository repo;
+	
+	@Before
+	public void setup(){
+		repo = FactoryRepository.getInstance();
+	}
+
+	@Test
+	public void testGetInstance() {		
+		assertTrue(repo instanceof LocalRepository);
+	}
 
 }
