@@ -75,6 +75,10 @@
 			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-regression-repository</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
