@@ -189,7 +189,10 @@ public class WebDriverRunner implements Runner {
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
-			writeHtmlFile(screenshotFile.getAbsolutePath());
+
+			if (generateSource) {
+				writeHtmlFile(screenshotFile.getAbsolutePath());
+			}
 		} catch (IOException e) {
 			throw new BehaveException(message.getString("exception-save-screenshot"), e);
 		}
