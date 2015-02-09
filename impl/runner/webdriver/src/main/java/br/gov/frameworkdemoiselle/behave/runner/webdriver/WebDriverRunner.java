@@ -81,7 +81,7 @@ public class WebDriverRunner implements Runner {
 		if (driver == null) {
 			browser = Enum.valueOf(WebBrowser.class, BehaveConfig.getRunner_ScreenType());
 			driver = browser.getWebDriver();
-			if ( BehaveConfig.getRunner_WindowMaximizeEnabled() ) {
+			if (BehaveConfig.getRunner_WindowMaximizeEnabled()) {
 				driver.manage().window().maximize();
 			}
 			logger.debug(message.getString("message-webdriver-started", browser.toString()));
@@ -122,8 +122,8 @@ public class WebDriverRunner implements Runner {
 		return driver.getTitle();
 	}
 
-	public Element getElement(String currentPageName, String elementName) {		
-		
+	public Element getElement(String currentPageName, String elementName) {
+
 		if ((currentPageName == null) || (currentPageName.equals(""))) {
 			throw new BehaveException(message.getString("exception-page-not-selected"));
 		}
@@ -179,6 +179,10 @@ public class WebDriverRunner implements Runner {
 	}
 
 	public File saveScreenshotTo(String fileName) {
+		return saveScreenshotTo(fileName, true);
+	}
+
+	public File saveScreenshotTo(String fileName, boolean generateSource) {
 		File screenshotFile = new File(fileName);
 
 		screenshotFile.getParentFile().mkdirs();
@@ -206,13 +210,13 @@ public class WebDriverRunner implements Runner {
 
 	public void setScreen(String screenName) {
 		String location;
-			
+
 		try {
 			location = ReflectionUtil.getLocation(screenName);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			location = "";
 		}
-		
+
 		Set<String> lWindowHandles = driver.getWindowHandles();
 		for (String lWindowHandle : lWindowHandles) {
 			WebDriver lWindow = driver.switchTo().window(lWindowHandle);

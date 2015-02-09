@@ -44,7 +44,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 /**
  * 
  * @author SERPRO
- *
+ * 
  */
 public interface Runner {
 
@@ -67,10 +67,12 @@ public interface Runner {
 	public void quit();
 
 	public Object getDriver();
-	
+
 	public Screen getScreen();
-	
+
 	public File saveScreenshotTo(String fileName);
+
+	public File saveScreenshotTo(String fileName, boolean generateSource);
 
 	public void setScreen(String screenName);
 

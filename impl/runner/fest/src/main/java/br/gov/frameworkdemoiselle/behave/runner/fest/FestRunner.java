@@ -85,7 +85,7 @@ public class FestRunner implements Runner {
 	public Container currentContainer;
 	public FrameFixture mainFixture;
 	public String currentTitle;
-	
+
 	@Override
 	public void start() {
 
@@ -269,18 +269,22 @@ public class FestRunner implements Runner {
 	}
 
 	public File saveScreenshotTo(String fileName) {
+		return saveScreenshotTo(fileName, true);
+	}
+
+	public File saveScreenshotTo(String fileName, boolean generateSource) {
 		File screenshotFile = new File(fileName);
 		screenshotFile.getParentFile().mkdirs();
 		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
 		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
-		if (currentContainer != null){
+		if (currentContainer != null) {
 			reSize(currentContainer, screenshotFile.getAbsolutePath());
 		}
 		return screenshotFile;
 	}
 
 	private void reSize(Container w, String filePath) {
-		try {				
+		try {
 			double scale = 1.0;
 			String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
 			BufferedImage img = ImageIO.read(new File(filePath));
