@@ -58,9 +58,9 @@ public class LocalRepositoryTest {
 	
 	@Test
 	public void testSaveAndClean() {
-		repo.save(new Result("login", "/ubuntu/firefox", "Ok"));
+		repo.save(new Result("login", "ubuntu/firefox", "Ok"));
 		assertEquals(1, repo.countResults());
-		repo.save(new Result("logout", "/ubuntu/firefox", "Ok"));
+		repo.save(new Result("logout", "ubuntu/firefox", "Ok"));
 		assertEquals(2, repo.countResults());		
 		repo.clean();
 		assertEquals(0, repo.countResults());
@@ -68,9 +68,9 @@ public class LocalRepositoryTest {
 	
 	@Test
 	public void testSaveAndCleanFile() {
-		repo.save(new Result("login", "/ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("login", "ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
 		assertEquals(1, repo.countResults());
-		repo.save(new Result("logout", "/ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("logout", "ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
 		assertEquals(2, repo.countResults());		
 		repo.clean();
 		assertEquals(0, repo.countResults());
@@ -79,10 +79,10 @@ public class LocalRepositoryTest {
 	
 	@Test
 	public void testGetResult() {
-		repo.save(new Result("r1", "/ubuntu/chrome", "Ok1"));		
-		repo.save(new Result("r2", "/ubuntu/chrome", "Ok2"));
-		repo.save(new Result("r3", "/ubuntu/chrome", "Ok3"));
-		Result result = repo.get("/ubuntu/chrome", "r2");
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1"));		
+		repo.save(new Result("r2", "ubuntu/chrome", "Ok2"));
+		repo.save(new Result("r3", "ubuntu/chrome", "Ok3"));
+		Result result = repo.get("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertNull(result.getFile());
@@ -90,10 +90,10 @@ public class LocalRepositoryTest {
 	
 	@Test
 	public void testGetResultFile() {
-		repo.save(new Result("r1", "/ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
-		repo.save(new Result("r2", "/ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
-		repo.save(new Result("r3", "/ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
-		Result result = repo.get("/ubuntu/chrome", "r2");
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
+		Result result = repo.get("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertEquals("r2.png", result.getFile().getName() );

@@ -163,7 +163,7 @@ public class LocalRepository implements Repository {
 	}
 
 	private String getFolder(Result result) {
-		return root.getAbsolutePath() + result.getLocation();
+		return root.getAbsolutePath() + File.separatorChar + result.getLocation();
 	}
 
 	public int countResults() {

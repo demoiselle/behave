@@ -36,13 +36,13 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression.step;
 
-import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
 import br.gov.frameworkdemoiselle.behave.regression.RegressionConfig;
+import br.gov.frameworkdemoiselle.behave.regression.Result;
+import br.gov.frameworkdemoiselle.behave.regression.repository.FactoryRepository;
 
 /**
  * 
@@ -57,8 +57,6 @@ public class RegressionSteps extends CommonSteps {
 	@When("tiro um print screen")
 	public void print() {
 
-		logger.debug("TIRO UM PRINT SCREEN");
-
 		// Delay de renderização da página, se não tiver esse delay ele tira um
 		// print screen em branco!
 		try {
@@ -66,22 +64,10 @@ public class RegressionSteps extends CommonSteps {
 		} catch (InterruptedException e) {
 		}
 
-		String folderBrowserType = RegressionConfig.getRunner_ScreenshotsFolder() + File.separator + RegressionConfig.getCurrentType();
+		String imageName = countImage++ + "_" + currentPageName;
+		FactoryRepository.getInstance().save(new Result(imageName, RegressionConfig.getCurrentType(), currentPageName, runner.saveScreenshot()));
 
-		// Verifica se a pasta do screenshot existe
-		File f = new File(folderBrowserType);
-		if (!f.exists()) {
-			boolean success = f.mkdirs();
-			if (!success) {
-				logger.error("Erro ao criar a pasta de comparação!");
-			}
-		}
-
-		String screenPath = folderBrowserType + File.separator + countImage++ + "_" + currentPageName + ".png";
-		runner.saveScreenshotTo(screenPath, false);
-
-		logger.debug("Print Screen gerado no arquivo [" + screenPath + "]");
+		logger.debug("Print Screen gerado");
 
 	}
-
 }

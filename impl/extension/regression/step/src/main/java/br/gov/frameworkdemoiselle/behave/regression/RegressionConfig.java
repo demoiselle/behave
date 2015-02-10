@@ -125,11 +125,6 @@ public class RegressionConfig {
 		return getProperty("behave.regression.defaultType");
 	}
 
-	// Folder screen shots
-	public static String getRunner_ScreenshotsFolder() {
-		return getProperty("behave.regression.screenshotFolder");
-	}
-
 	/** RUNNER Properties **/
 
 	// Tempo máximo de espera em uma ação na tela
