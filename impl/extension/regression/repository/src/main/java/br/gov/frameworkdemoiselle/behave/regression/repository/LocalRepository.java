@@ -88,6 +88,27 @@ public class LocalRepository implements Repository {
 			throw new BehaveException(message.getString("exception-error-delete-file", file.getAbsoluteFile()));
 		}
 	}
+	
+	public List<Result> getResulstByLocation(String location) {
+		List<String> ids = new ArrayList<String>();
+		File folder = new File(root.getAbsolutePath() + BAR + location);
+		if (folder.exists() && folder.isDirectory()){
+			for (File file : folder.listFiles()) {
+				if (FileUtils.getExtension(file).equalsIgnoreCase("txt")){	
+					ids.add(file.getName().substring(0, file.getName().length()-4));
+				}
+			}
+		}	
+		Collections.sort(ids);
+		List<Result> r = new ArrayList<Result>();
+		for (String id : ids) {
+			Result result = getResul(location, id);
+			if (result != null){
+				r.add(result);
+			}	
+		}
+		return r;
+	}
 
 	private String getProperty(String key) {
 		String value = BehaveConfig.getProperty(key);
@@ -112,7 +133,7 @@ public class LocalRepository implements Repository {
 		}
 	}
 
-	public Result get(String location, String id) {
+	public Result getResul(String location, String id) {
 		Result result = new Result();
 		result.setLocation(location);
 		result.setId(id);
@@ -190,9 +211,4 @@ public class LocalRepository implements Repository {
 		}
 		return count;
 	}
-
-	
-	
-
-
 }

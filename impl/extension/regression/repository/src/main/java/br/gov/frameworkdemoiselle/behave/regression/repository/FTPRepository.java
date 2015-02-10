@@ -67,16 +67,23 @@ public class FTPRepository implements Repository {
 	}
 
 	@Override
-	public Result get(String string, String string2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<String> getLocations() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public Result getResul(String id, String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Result> getResulstByLocation(String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 }

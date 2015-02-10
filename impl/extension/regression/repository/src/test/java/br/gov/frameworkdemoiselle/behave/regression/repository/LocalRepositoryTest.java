@@ -84,7 +84,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1"));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2"));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3"));
-		Result result = repo.get("ubuntu/chrome", "r2");
+		Result result = repo.getResul("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertNull(result.getFile());
@@ -95,7 +95,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
-		Result result = repo.get("ubuntu/chrome", "r2");
+		Result result = repo.getResul("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertEquals("r2.png", result.getFile().getName());
@@ -107,7 +107,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
-		Result result = repo.get("ubuntu/chromeold", "r2");
+		Result result = repo.getResul("ubuntu/chromeold", "r2");
 		assertNull(result);
 	}
 
@@ -133,5 +133,25 @@ public class LocalRepositoryTest {
 		repo.clean();
 		List<String> locations = repo.getLocations();
 		assertEquals(0, locations.size());
+	}
+	
+	
+	@Test
+	public void testGetResultsByLocation() {
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r1", "windows/iexplorer", "Ok1", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r1", "mac/safari", "Ok3"));
+		
+		List<Result> results = repo.getResulstByLocation("windows/iexplorer");
+		assertEquals(2, results.size());
+		assertEquals("r1", results.get(0).getId());
+		assertEquals("Ok1", results.get(0).getDetail());
+		assertEquals("r1.png", results.get(0).getFile().getName());
+		
+		
+		assertEquals("r2", results.get(1).getId());
+		assertEquals("Ok2", results.get(1).getDetail());
+		assertEquals("r2.png", results.get(1).getFile().getName());
 	}
 }
