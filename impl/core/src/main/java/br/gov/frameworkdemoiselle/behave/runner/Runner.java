@@ -70,6 +70,8 @@ public interface Runner {
 
 	public Screen getScreen();
 
+	public File saveScreenshot();
+	
 	public File saveScreenshotTo(String fileName);
 
 	public File saveScreenshotTo(String fileName, boolean generateSource);

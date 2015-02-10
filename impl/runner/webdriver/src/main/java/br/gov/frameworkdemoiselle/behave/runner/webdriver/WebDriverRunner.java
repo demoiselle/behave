@@ -178,6 +178,10 @@ public class WebDriverRunner implements Runner {
 		return (Screen) InjectionManager.getInstance().getInstanceDependecy(Screen.class);
 	}
 
+	public File saveScreenshot() {
+		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	}
+
 	public File saveScreenshotTo(String fileName) {
 		return saveScreenshotTo(fileName, true);
 	}

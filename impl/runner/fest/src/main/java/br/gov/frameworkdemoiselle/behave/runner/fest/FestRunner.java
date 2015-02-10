@@ -44,6 +44,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
+import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
@@ -218,10 +219,12 @@ public class FestRunner implements Runner {
 		Class<?> clazz = f.getType();
 
 		DesktopElement element = null;
-		// Comportamento padrão usa o InjectionManager para resolver quem implementa a interface
+		// Comportamento padrão usa o InjectionManager para resolver quem
+		// implementa a interface
 		if (clazz.isInterface())
 			element = (DesktopElement) InjectionManager.getInstance().getInstanceDependecyWithoutProxy(clazz);
-		// Instancia a classe fornecida explicitamente como implementação da interface Element
+		// Instancia a classe fornecida explicitamente como implementação da
+		// interface Element
 		else if (Element.class.isAssignableFrom(clazz))
 			try {
 				element = (DesktopElement) clazz.newInstance();
@@ -266,6 +269,17 @@ public class FestRunner implements Runner {
 	@Override
 	public Screen getScreen() {
 		return (Screen) InjectionManager.getInstance().getInstanceDependecy(Screen.class);
+	}
+
+	public File saveScreenshot() {
+		File screenshotFile = new File(System.getProperty("java.io.tmpdir") + File.separator + GregorianCalendar.getInstance().getTimeInMillis() + ".png");
+		screenshotFile.getParentFile().mkdirs();
+		ScreenshotTaker screenshotTaker = new ScreenshotTaker();
+		screenshotTaker.saveDesktopAsPng(screenshotFile.getAbsolutePath());
+		if (currentContainer != null) {
+			reSize(currentContainer, screenshotFile.getAbsolutePath());
+		}
+		return screenshotFile;
 	}
 
 	public File saveScreenshotTo(String fileName) {
