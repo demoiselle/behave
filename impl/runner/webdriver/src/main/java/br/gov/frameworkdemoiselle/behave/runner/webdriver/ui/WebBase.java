@@ -320,8 +320,9 @@ public class WebBase extends MappedElement implements BaseUI {
 				String readonlyAttribute = e.getAttribute("readonly");
 
 				// SE não estiver visivel OU (estiver habilitado E não tiver o
-				// atributo readonly) ENTÃO de erro!
-				if (!e.isDisplayed() || (e.isEnabled() && readonlyAttribute != null)) {
+				// atributo readonly) OU (Existe o atributo readonlye E (ele não
+				// contem o texto READONLY E TRUE)) ENTÃO de erro!
+				if (!e.isDisplayed() || ((e.isEnabled() && readonlyAttribute == null) || (readonlyAttribute != null && (!readonlyAttribute.equals("readonly") && !readonlyAttribute.equals("true"))))) {
 					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 				}
 			} else {
