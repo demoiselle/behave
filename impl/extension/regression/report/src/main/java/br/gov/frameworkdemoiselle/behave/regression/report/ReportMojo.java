@@ -76,6 +76,9 @@ public class ReportMojo extends AbstractMojo {
 			getLog().info("url:" + getProperty("behave.regression.url"));		
 			getLog().info("user:" + getProperty("behave.regression.user"));
 			getLog().info("password:" + getProperty("behave.regression.password"));
+			
+			getLog().info("types:" + getProperty("behave.regression.types"));
+			getLog().info("defaultType:" + getProperty("behave.regression.defaultType"));			
 			getLog().info("========================================");			
 		}
 	}
