@@ -36,6 +36,8 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression.repository;
 
+import java.util.List;
+
 import br.gov.frameworkdemoiselle.behave.regression.Repository;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
 
@@ -66,6 +68,12 @@ public class FTPRepository implements Repository {
 
 	@Override
 	public Result get(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getLocations() {
 		// TODO Auto-generated method stub
 		return null;
 	}

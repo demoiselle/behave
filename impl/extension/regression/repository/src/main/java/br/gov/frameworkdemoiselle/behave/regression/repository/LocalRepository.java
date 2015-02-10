@@ -36,11 +36,10 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression.repository;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -58,6 +57,7 @@ import com.google.common.io.Files;
 public class LocalRepository implements Repository {
 
 	public static String MESSAGEBUNDLE = "demoiselle-regression-repository-bundle";
+	public static char BAR = File.separatorChar;
 	private static BehaveMessage message = new BehaveMessage(FactoryRepository.MESSAGEBUNDLE);
 
 	private File root;
@@ -67,11 +67,11 @@ public class LocalRepository implements Repository {
 		String folder = getProperty("behave.regression.folder");
 		String urlProperties = System.getProperty(url);
 		if (urlProperties == null || urlProperties.length() == 0) {
-			root = new File(url + File.separatorChar + folder);
+			root = new File(url + BAR + folder);
 		} else {
-			root = new File(urlProperties + File.separatorChar + folder);
+			root = new File(urlProperties + BAR + folder);
 		}
-		createFolder(root.getAbsolutePath());
+		FileUtils.createFolder(root.getAbsolutePath());
 	}
 
 	public void clean() {
@@ -99,96 +99,97 @@ public class LocalRepository implements Repository {
 	public void save(Result result) {
 		try {
 			String folder = getFolder(result);
-			createFolder(folder);
-			PrintWriter writer = new PrintWriter(folder + File.separatorChar + result.getId() + ".txt", "UTF-8");
+			FileUtils.createFolder(folder);
+			PrintWriter writer = new PrintWriter(folder + BAR + result.getId() + ".txt", "UTF-8");
 			writer.println(result.getDetail());
 			writer.close();
-			if (result.getFile() != null){
-				Files.copy(result.getFile(), new File(folder + File.separatorChar + result.getId() + "." + getExtension(result.getFile())));
+			if (result.getFile() != null) {
+				Files.copy(result.getFile(), new File(folder + BAR + result.getId() + "." + FileUtils.getExtension(result.getFile())));
 			}
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-erro-save-result", e.getMessage()), e);
 		}
 	}
 
-	@Override
 	public Result get(String location, String id) {
 		Result result = new Result();
 		result.setLocation(location);
 		result.setId(id);
-		File detail = new File(root.getAbsolutePath() + File.separatorChar + location + File.separatorChar + id + ".txt");
-		result.setDetail(readFile(detail));
-		result.setFile(getFile(location, id));
-		return result;
+		File folder = new File(root.getAbsolutePath() + BAR + location);
+		if (folder.exists() && folder.isDirectory()) {
+			File detail = new File(folder.getAbsolutePath() + BAR + id + ".txt");
+			if (detail.exists() && detail.isFile()) {
+				result.setDetail(FileUtils.readFile(detail));
+				result.setFile(getFile(location, id));
+				return result;
+			}
+		}
+		return null;
+	}
+	
+	public List<String> getLocations() {
+		return findFolders(root);
 	}
 
+	private List<String> findFolders(File _file) {
+		List<String> r = new ArrayList<String>();
+		if (! FileUtils.hasSubFolder(_file)){
+			if (_file.equals(root)){
+				return r;
+			}else{
+				r.add(BAR + _file.getName());
+				return r;
+			}
+		}else{			
+			for (File file : _file.listFiles()) {
+				if (file.isDirectory()){
+					for(String path : findFolders(file)){
+						if (_file.equals(root)){
+							r.add(path);
+						}else{
+							r.add(_file.getName() + path);
+						}
+					}							
+				}
+			}
+		}
+		return r;		
+	}
+		
 	private File getFile(String location, String id) {
-		File folder = new File(root.getAbsolutePath() + File.separatorChar + location);
-		for (File file : folder.listFiles()){
-			if (file.getName().startsWith(id + ".") && !getExtension(file).equals("txt")){
+		File folder = new File(root.getAbsolutePath() + BAR + location);
+		for (File file : folder.listFiles()) {
+			if (file.getName().startsWith(id + ".") && ! FileUtils.getExtension(file).equals("txt")) {
 				return file;
 			}
 		}
-		return null;		
+		return null;
 	}
 
-	private String readFile(File detail) {
-		BufferedReader br = null;
-		try {
-			StringBuffer result = new StringBuffer();
-			String line;
-			br = new BufferedReader(new FileReader(detail));
-			while ((line = br.readLine()) != null) {
-				result.append(line).append("\n");
-			}			
-			return result.substring(0, result.length()-1);
-		} catch (IOException e) {
-			throw new BehaveException(e);
-		} finally {
-			try {
-				if (br != null)
-					br.close();
-			} catch (IOException ex) {
-				throw new BehaveException(ex);
-			}
-		}
-
-	}
-
-	private void createFolder(String folder) {
-		File _folder = new File(folder);
-		if (!_folder.exists()) {
-			_folder.mkdirs();
-		}
-	}
 
 	private String getFolder(Result result) {
-		return root.getAbsolutePath() + File.separatorChar + result.getLocation();
+		return root.getAbsolutePath() + BAR + result.getLocation();
 	}
 
 	public int countResults() {
 		return countResults(root);
 	}
 
-	public int countResults(File file) {
+	private int countResults(File file) {
 		int count = 0;
 		if (file.isDirectory()) {
 			for (File c : file.listFiles())
 				count += countResults(c);
 		} else {
-			if (getExtension(file).equals("txt")) {
+			if (FileUtils.getExtension(file).equals("txt")) {
 				count++;
 			}
 		}
 		return count;
 	}
 
-	public String getExtension(File file) {
-		int i = file.getName().lastIndexOf('.');
-		if (i > 0) {
-			return file.getName().substring(i + 1);
-		}
-		return "";
-	}
+	
+	
+
 
 }

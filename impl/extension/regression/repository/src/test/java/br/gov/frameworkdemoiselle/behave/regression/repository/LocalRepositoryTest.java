@@ -36,9 +36,12 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression.repository;
 
-import java.io.File;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
-import static junit.framework.Assert.*;
+import java.io.File;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -98,5 +101,39 @@ public class LocalRepositoryTest {
 		assertEquals("Ok2", result.getDetail());
 		assertEquals("r2.png", result.getFile().getName() );
 		assertTrue(result.getFile().exists() );
+	}
+	
+	@Test
+	public void testGetResultNotFound() {
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
+		Result result = repo.get("ubuntu/chromeold", "r2");
+		assertNull(result);		
+	}
+	
+	
+	@Test
+	public void testGetLocations() {
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r3", "mac/safari", "Ok3"));
+		
+		List<String> locations  = repo.getLocations();
+		assertEquals(3, locations.size());
+		assertEquals("ubuntu/chrome", locations.get(0));
+		assertEquals("windows/iexplorer", locations.get(1));
+		assertEquals("mac/safari", locations.get(2));
+	}
+	
+	
+	@Test
+	public void testGetLocationsPosClean() {
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
+		repo.save(new Result("r3", "mac/safari", "Ok3"));
+		repo.clean();		
+		List<String> locations  = repo.getLocations();
+		assertEquals(0, locations.size());
 	}
 }

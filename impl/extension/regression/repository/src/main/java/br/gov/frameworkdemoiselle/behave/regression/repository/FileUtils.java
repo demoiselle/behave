@@ -34,25 +34,69 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.regression;
+package br.gov.frameworkdemoiselle.behave.regression.repository;
 
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 
 /**
  * 
  * @author SERPRO
  *
  */
-public interface Repository {
-
-	public void save(Result result);
-
-	public void clean();
-
-	public int countResults();
-
-	public Result get(String string, String string2);
-
-	public List<String> getLocations();
-
+public class FileUtils {
+	
+	public static void createFolder(String folder) {
+		File _folder = new File(folder);
+		if (!_folder.exists()) {
+			_folder.mkdirs();
+		}
+	}
+	
+	public static String getExtension(File file) {
+		int i = file.getName().lastIndexOf('.');
+		if (i > 0) {
+			return file.getName().substring(i + 1);
+		}
+		return "";
+	}
+	
+	public static String readFile(File detail) {
+		BufferedReader br = null;
+		try {
+			StringBuffer result = new StringBuffer();
+			String line;
+			br = new BufferedReader(new FileReader(detail));
+			while ((line = br.readLine()) != null) {
+				result.append(line).append("\n");
+			}
+			return result.substring(0, result.length() - 1);
+		} catch (IOException e) {
+			throw new BehaveException(e);
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (IOException ex) {
+				throw new BehaveException(ex);
+			}
+		}
+	}
+	
+	public static boolean hasSubFolder(File _file){
+		File[] l = _file.listFiles();
+		if (l == null){
+			return false;
+		}
+		for (File file : l) {
+			if (file.isDirectory())
+				return true;			
+		}
+		return false;
+	}
+	
 }
