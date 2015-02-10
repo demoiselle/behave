@@ -112,7 +112,7 @@ public class LocalRepositoryTest {
 	}
 
 	@Test
-	public void testGetLocations() {
+	public void testGetLocationsInOrder() {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "mac/safari", "Ok3"));
@@ -120,9 +120,8 @@ public class LocalRepositoryTest {
 		List<String> locations = repo.getLocations();
 		assertEquals(3, locations.size());
 		
-		// Pressupondo que a listagem de pastas irá vir em ordem alfabética
-		assertEquals("ubuntu/chrome", locations.get(0));		
-		assertEquals("mac/safari", locations.get(1));
+		assertEquals("mac/safari", locations.get(0));
+		assertEquals("ubuntu/chrome", locations.get(1));
 		assertEquals("windows/iexplorer", locations.get(2));
 	}
 

@@ -39,6 +39,7 @@ package br.gov.frameworkdemoiselle.behave.regression.repository;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -128,7 +129,9 @@ public class LocalRepository implements Repository {
 	}
 	
 	public List<String> getLocations() {
-		return findFolders(root);
+		List<String> r = findFolders(root);
+		Collections.sort(r);
+ 		return r;
 	}
 
 	private List<String> findFolders(File _file) {
