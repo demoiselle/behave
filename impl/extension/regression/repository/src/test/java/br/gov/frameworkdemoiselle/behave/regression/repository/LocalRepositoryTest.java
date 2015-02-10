@@ -50,90 +50,89 @@ import br.gov.frameworkdemoiselle.behave.regression.Repository;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
 
 public class LocalRepositoryTest {
-	
+
 	private Repository repo;
-	
+
 	@Before
-	public void setup(){
+	public void setup() {
 		repo = FactoryRepository.getInstance();
 		repo.clean();
 	}
-	
+
 	@Test
 	public void testSaveAndClean() {
 		repo.save(new Result("login", "ubuntu/firefox", "Ok"));
 		assertEquals(1, repo.countResults());
 		repo.save(new Result("logout", "ubuntu/firefox", "Ok"));
-		assertEquals(2, repo.countResults());		
+		assertEquals(2, repo.countResults());
 		repo.clean();
 		assertEquals(0, repo.countResults());
 	}
-	
+
 	@Test
 	public void testSaveAndCleanFile() {
 		repo.save(new Result("login", "ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
 		assertEquals(1, repo.countResults());
 		repo.save(new Result("logout", "ubuntu/firefox", "Ok", new File("target/test-classes/logo-dbehave.png")));
-		assertEquals(2, repo.countResults());		
+		assertEquals(2, repo.countResults());
 		repo.clean();
 		assertEquals(0, repo.countResults());
 	}
-	
-	
+
 	@Test
 	public void testGetResult() {
-		repo.save(new Result("r1", "ubuntu/chrome", "Ok1"));		
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1"));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2"));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3"));
 		Result result = repo.get("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertNull(result.getFile());
-	}	
-	
+	}
+
 	@Test
 	public void testGetResultFile() {
-		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
 		Result result = repo.get("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
-		assertEquals("r2.png", result.getFile().getName() );
-		assertTrue(result.getFile().exists() );
+		assertEquals("r2.png", result.getFile().getName());
+		assertTrue(result.getFile().exists());
 	}
-	
+
 	@Test
 	public void testGetResultNotFound() {
-		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
 		Result result = repo.get("ubuntu/chromeold", "r2");
-		assertNull(result);		
+		assertNull(result);
 	}
-	
-	
+
 	@Test
 	public void testGetLocations() {
-		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "mac/safari", "Ok3"));
-		
-		List<String> locations  = repo.getLocations();
+
+		List<String> locations = repo.getLocations();
 		assertEquals(3, locations.size());
-		assertEquals("ubuntu/chrome", locations.get(0));
-		assertEquals("windows/iexplorer", locations.get(1));
-		assertEquals("mac/safari", locations.get(2));
+		
+		// Pressupondo que a listagem de pastas irá vir em ordem alfabética
+		assertEquals("ubuntu/chrome", locations.get(0));		
+		assertEquals("mac/safari", locations.get(1));
+		assertEquals("windows/iexplorer", locations.get(2));
 	}
-	
-	
+
 	@Test
 	public void testGetLocationsPosClean() {
-		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));		
+		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "windows/iexplorer", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "mac/safari", "Ok3"));
-		repo.clean();		
-		List<String> locations  = repo.getLocations();
+		repo.clean();
+		List<String> locations = repo.getLocations();
 		assertEquals(0, locations.size());
 	}
 }
