@@ -219,12 +219,12 @@ public class BehaveConfig {
 
 	// URL do proxy
 	public static String getRunner_ProxyURL() {
-		return getProperty("behave.runner.proxy.url");
+		return getProperty("behave.runner.proxy.url", "");
 	}
 
 	// Localização do driver que faz ligação entre o navegador e o webdriver
 	public static String getRunner_ScreenDriverPath() {
-		return getProperty("behave.runner.screen.driverPath");
+		return getProperty("behave.runner.screen.driverPath", "");
 	}
 
 	// Ativa o uso de profile no navegador
@@ -252,11 +252,11 @@ public class BehaveConfig {
 	}
 
 	public static String getRunner_ScreenType() {
-		return getProperty("behave.runner.screen.type");
+		return getProperty("behave.runner.screen.type", "");
 	}
 
 	public static String getRunner_CatchUIException() {
-		return getProperty("behave.runner.catchUIException");
+		return getProperty("behave.runner.catchUIException", "");
 	}
 
 	// Ativa o uso maximizada da janela do navegador

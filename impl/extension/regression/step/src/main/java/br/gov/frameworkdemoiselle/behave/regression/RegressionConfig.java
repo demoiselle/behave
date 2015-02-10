@@ -57,21 +57,15 @@ public class RegressionConfig {
 	}
 
 	public static void setCoreProperty(String key, String value) {
-		if (value != null && !value.equals("")) {
-			properties.setProperty(key, value);
-		}
+		properties.setProperty(key, value);
 	}
 
 	public static void setCoreProperty(String key, Long value) {
-		if (value != null && !value.equals("")) {
-			properties.setProperty(key, value.toString());
-		}
+		properties.setProperty(key, value.toString());
 	}
 
 	public static void setCoreProperty(String key, Boolean value) {
-		if (value != null && !value.equals("")) {
-			properties.setProperty(key, value.toString());
-		}
+		properties.setProperty(key, value.toString());
 	}
 
 	/**
@@ -104,7 +98,7 @@ public class RegressionConfig {
 		RegressionConfig.currentType = currentType;
 
 		// Seta todas as propriedades do core
-		setCoreProperty("behave.runner.screen.maxWait", RegressionConfig.getRunner_ScreenMaxWait());
+		setCoreProperty("behave.runner.screen.maxWait", getRunner_ScreenMaxWait());
 		setCoreProperty("behave.runner.screen.minWait", getRunner_ScreenMinWait());
 		setCoreProperty("behave.runner.proxy.enabled", getRunner_ProxyEnabled());
 		setCoreProperty("behave.runner.proxy.url", getRunner_ProxyURL());
@@ -144,12 +138,12 @@ public class RegressionConfig {
 
 	// URL do proxy
 	public static String getRunner_ProxyURL() {
-		return getProperty("behave.regression." + currentType + ".runner.proxy.url");
+		return getProperty("behave.regression." + currentType + ".runner.proxy.url", "");
 	}
 
 	// Localização do driver que faz ligação entre o navegador e o webdriver
 	public static String getRunner_ScreenDriverPath() {
-		return getProperty("behave.regression." + currentType + ".runner.screen.driverPath");
+		return getProperty("behave.regression." + currentType + ".runner.screen.driverPath", "");
 	}
 
 	// Ativa o uso de profile no navegador
@@ -168,7 +162,7 @@ public class RegressionConfig {
 
 	// Localização do profile
 	public static String getRunner_ProfilePath() {
-		return getProperty("behave.regression." + currentType + ".runner.screen.profilePath");
+		return getProperty("behave.regression." + currentType + ".runner.screen.profilePath", "");
 	}
 
 	// Localização do binário do navegador
@@ -177,7 +171,7 @@ public class RegressionConfig {
 	}
 
 	public static String getRunner_ScreenType() {
-		return getProperty("behave.regression." + currentType + ".runner.screen.type");
+		return getProperty("behave.regression." + currentType + ".runner.screen.type", "");
 	}
 
 	public static String getRunner_CatchUIException() {
