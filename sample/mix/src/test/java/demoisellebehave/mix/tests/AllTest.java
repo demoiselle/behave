@@ -54,5 +54,12 @@ public class AllTest {
 	public void testFileUpload(){
 		eng.run("/stories/primefaces/fileupload.story");
 	}
+	
+	
+	@Test
+	public void testMascara(){
+		eng.run("/stories/mascara/mascara.story");
+	}
+
 
 }
