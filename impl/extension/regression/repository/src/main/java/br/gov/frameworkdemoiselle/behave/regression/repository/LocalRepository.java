@@ -42,10 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
-import br.gov.frameworkdemoiselle.behave.regression.Repository;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
 
 import com.google.common.io.Files;
@@ -55,22 +52,17 @@ import com.google.common.io.Files;
  * @author SERPRO
  *
  */
-public class LocalRepository implements Repository {
-
-	public static String MESSAGEBUNDLE = "demoiselle-regression-repository-bundle";
-	public static char BAR = File.separatorChar;
-	private static BehaveMessage message = new BehaveMessage(FactoryRepository.MESSAGEBUNDLE);
+public class LocalRepository extends AbstractRepository {
 
 	private File root;
+	protected String urlProperties;
 
 	public LocalRepository() {
-		String url = getProperty("behave.regression.url");
-		String folder = getProperty("behave.regression.folder");
-		String urlProperties = System.getProperty(url);
-		if (urlProperties == null || urlProperties.length() == 0) {
+		super();
+		if (System.getProperty(url) == null || System.getProperty(url).length() == 0) {
 			root = new File(url + BAR + folder);
 		} else {
-			root = new File(urlProperties + BAR + folder);
+			root = new File(System.getProperty(url) + BAR + folder);
 		}
 		FileUtils.createFolder(root.getAbsolutePath());
 	}
@@ -108,14 +100,6 @@ public class LocalRepository implements Repository {
 			}	
 		}
 		return r;
-	}
-
-	private String getProperty(String key) {
-		String value = BehaveConfig.getProperty(key);
-		if (value == null || value.length() == 0) {
-			throw new BehaveException(message.getString("exception-properties-not-found", key));
-		}
-		return value;
 	}
 
 	public void save(Result result) {

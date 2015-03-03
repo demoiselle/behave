@@ -85,7 +85,7 @@
 			<plugin>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-regression-report</artifactId>
-				<version>1.4.1-SNAPSHOT</version>				
+				<version>1.4.2-SNAPSHOT</version>				
 				<executions>
 					<execution>
 						<phase>test</phase>

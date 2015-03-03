@@ -36,9 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.regression.repository;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.behave.regression.Repository;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.log4j.Logger;
+
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
 
 /**
@@ -46,18 +51,32 @@ import br.gov.frameworkdemoiselle.behave.regression.Result;
  * @author SERPRO
  *
  */
-public class FTPRepository implements Repository {
+public class FTPRepository extends AbstractRepository {
 
-	@Override
+	private static Logger log = Logger.getLogger(FTPRepository.class);
+
+	private FTPClient ftp;
+
+	public FTPRepository() {
+		super();
+		ftp = new FTPClient();
+		createFolder(super.folder);
+	}
+
 	public void save(Result result) {
-		// TODO Auto-generated method stub
-		
+		try {
+			conect();
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		} finally {
+			logout();
+		}
 	}
 
 	@Override
 	public void clean() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -84,6 +103,82 @@ public class FTPRepository implements Repository {
 		return null;
 	}
 
-	
-	
+	// / FTP Util
+
+	private void conect() {
+		try {
+			log.debug("ftp conect");
+			ftp.connect(url);
+			if (!ftp.login(user, password)) {
+				throw new BehaveException(message.getString("exception-failed-connect-ftp"));
+			}
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-failed-connect-ftp"), e);
+		}
+
+	}
+
+	private void logout() {
+		try {
+			if (ftp.isConnected()) {
+				log.debug("ftp logout");
+				ftp.logout();
+				ftp.disconnect();
+			} else {
+				throw new BehaveException(message.getString("exception-failed-disconnect-ftp-is-open"));
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
+	}
+
+	private  void createFolder(String path) {
+		try {
+			conect();
+			boolean exist = true;
+			String[] folders = path.split(File.separator);
+			for (String dir : folders) {
+				if (!dir.isEmpty()) {
+					if (exist) {
+						exist = ftp.changeWorkingDirectory(dir);
+					}
+					if (!exist) {
+						if (!ftp.makeDirectory(dir)) {
+							throw new BehaveException(message.getString("exception-failed-ftp", "makeDirectory"));
+						}
+						if (!ftp.changeWorkingDirectory(dir)) {
+							throw new BehaveException(message.getString("exception-failed-ftp", "changeWorkingDirectory"));
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		} finally {
+			logout();
+		}
+	}
+
+	public static void main(String[] args) {
+		FTPClient ftp = new FTPClient();
+		try {
+			ftp.connect("10.200.232.59");
+			ftp.login("stct3", "stct3");
+			ftp.changeWorkingDirectory("dbehave-autenticadord");
+			String[] arq = ftp.listNames();
+			System.out.println("Listando arquivos: \n");
+			for (String f : arq) {
+				System.out.println(f);
+			}
+			FileInputStream arqEnviar = new FileInputStream("/home/03397040477/workspace-stct3/prototipo.zip");
+			if (ftp.storeFile("prototipo.zip", arqEnviar)) {
+				System.out.println("Arquivo armazenado com sucesso!");
+			} else {
+				System.out.println("Erro ao armazenar o arquivo.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
