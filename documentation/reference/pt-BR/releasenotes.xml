@@ -14,6 +14,16 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.4.2</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/310">
+					<emphasis>[Bug]</emphasis>
+					Correção de bug da versão 1.4.1 na execução de testes para a plaforma windows
+				</ulink>
+			</listitem>
+		</itemizedlist>			
+			
 		<citetitle>Versão 1.4.1</citetitle>
 
 		<itemizedlist>
