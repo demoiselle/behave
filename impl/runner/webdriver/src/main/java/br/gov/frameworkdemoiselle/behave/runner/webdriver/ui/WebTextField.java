@@ -80,13 +80,6 @@ public class WebTextField extends WebBase implements TextField {
 			
 			// Envia para o elemento
 			elements.get(0).sendKeys(getValueToSend(value));
-
-			// Tempo de processamento do JS
-			try {
-				Thread.sleep(10L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			
 			// Verifica se o elemento já esta com o valor correto
 			if (elements.get(0).getAttribute("value").equals(value))
