@@ -529,7 +529,11 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	public void waitInvisible() {
-		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
+		waitInvisible(0);
+	}
+	
+	public void waitInvisible(int index) {
+		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 		boolean testInvisibility = true;
 		driver = (WebDriver) runner.getDriver();

@@ -176,6 +176,9 @@ public class WebSelect extends WebBase implements Select {
 				}
 			}
 
+			// Aguarda o DIV sumir
+			waitInvisible(1);
+			
 		}
 
 	}
