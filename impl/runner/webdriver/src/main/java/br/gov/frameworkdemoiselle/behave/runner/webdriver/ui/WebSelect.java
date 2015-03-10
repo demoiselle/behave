@@ -176,9 +176,11 @@ public class WebSelect extends WebBase implements Select {
 				}
 			}
 
-			// Aguarda o DIV sumir
-			waitInvisible(1);
-			
+			// Aguarda o DIV sumir se não for seleção multipla, pois na seleção
+			// multipla ele tem o botão de fechar
+			if (!value.contains(","))
+				waitInvisible(1);
+
 		}
 
 	}
