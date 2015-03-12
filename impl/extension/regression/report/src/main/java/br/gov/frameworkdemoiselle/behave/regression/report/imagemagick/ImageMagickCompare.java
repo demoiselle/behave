@@ -2,21 +2,20 @@ package br.gov.frameworkdemoiselle.behave.regression.report.imagemagick;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.maven.plugin.logging.Log;
 
 import br.gov.frameworkdemoiselle.behave.regression.report.ReportConfig;
+import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.BrowserResultColumn;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.ComparisonStrategy;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.ReportBuilder;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.ReportType;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.ResultRow;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.CommandBuilder;
-import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.FileNameComparator;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.Image;
+import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.ImageUtil;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.StreamGobbler;
 
 public class ImageMagickCompare {
@@ -26,6 +25,7 @@ public class ImageMagickCompare {
 	private String resultsFilePath;
 	private ReportBuilder reportBuilder;
 	private Log log;
+
 	// private ReportConfig config;
 
 	public ImageMagickCompare(ReportConfig config, Log log) {
@@ -51,33 +51,55 @@ public class ImageMagickCompare {
 		return resultsFilePath.toString();
 	}
 
-	public void compareAndCaptureResultsWithList(String reportFilename, List<File> actualFilesList, List<File> expectedFilesList) {
-
-		File[] actualFiles = actualFilesList.toArray(new File[actualFilesList.size()]);
-		File[] expectedFiles = expectedFilesList.toArray(new File[expectedFilesList.size()]);
-
-		FileNameComparator fileNameComparator = new FileNameComparator();
-		Arrays.sort(actualFiles, fileNameComparator);
-		Arrays.sort(expectedFiles, fileNameComparator);
-
+	public void compareAndCaptureResultsWithLists(List<String> types, List<List<File>> typesFilesList, String expectedType, List<File> expectedFilesList) {
 		try {
+			// Faz todas as comparações
+			// File[] expectedFiles = expectedFilesList.toArray(new
+			// File[expectedFilesList.size()]);
 
-			for (int i = 0; i < expectedFiles.length; i++) {
-				Image expectedImage = new Image(expectedFiles[i].getAbsolutePath());
-				Image actualImage = new Image(actualFiles[i].getAbsolutePath());
+			for (int i = 0; i < expectedFilesList.size(); i++) {
+				List<BrowserResultColumn> browsersResults = new ArrayList<BrowserResultColumn>();
 
-				CommandBuilder commandBuilder = buildCommand(reportFilename, actualFiles[i], expectedFiles[i], expectedImage, actualImage);
-				String commandOutput = executeCommandAndGetOutput(commandBuilder.getCommandAsArray());
-				ResultRow resultRow = getResultRow(reportFilename, actualFiles[i], expectedFiles[i], expectedImage, actualImage, commandBuilder, commandOutput);
+				// Pega a primeira tela do primeiro navegador
+				for (int j = 0; j < types.size(); j++) {
+					File currentFile = typesFilesList.get(j).get(i);
+
+					Image expectedImage = new Image(expectedFilesList.get(i).getAbsolutePath());
+					Image currentImage = new Image(currentFile.getAbsolutePath());
+
+					diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
+
+					log.info("diffScreenshotPath: " + diffScreenshotPath);
+
+					checkIfDiffFolderExists();
+
+					String pathDiffFile = diffScreenshotPath + File.separator + types.get(j) + "__" + expectedFilesList.get(i).getName();
+
+					try {
+						// Tratamento da imagem
+						ImageUtil.imageConvert(currentFile.getAbsolutePath(), expectedFilesList.get(i).getAbsolutePath());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					CommandBuilder commandBuilder = buildCommand(currentFile, currentImage, expectedFilesList.get(i), expectedImage, pathDiffFile);
+					String commandOutput = executeCommandAndGetOutput(commandBuilder.getCommandAsArray());
+
+					browsersResults.add(new BrowserResultColumn(types.get(j), pathDiffFile, "arquivo gif", expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
+				}
+
+				ResultRow resultRow = getResultRow(expectedType, expectedFilesList.get(i).getAbsolutePath(), browsersResults);
+
 				reportBuilder.addResultRow(resultRow);
-			}
-			reportBuilder.build(reportFilename);
 
+				reportBuilder.build("./target/dbehave/index.html");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	private void checkIfDiffFolderExists() {
@@ -94,32 +116,24 @@ public class ImageMagickCompare {
 		}
 	}
 
-	private ResultRow getResultRow(String reportFilename, File actualFile, File expectedFile, Image expectedImage, Image actualImage, CommandBuilder commandBuilder, String commandOutput) throws IOException {
+	private ResultRow getResultRow(String expectedBrowser, String expectedFileName, List<BrowserResultColumn> browsers) throws IOException {
 		ResultRow resultRow = new ResultRow();
-		resultRow.setReportFileName(reportFilename);
-		resultRow.setExpectedTotalPixels(expectedImage.getTotalPixels());
-		resultRow.setActualTotalPixels(actualImage.getTotalPixels());
-		resultRow.setExpectedFileName(expectedFile.getName());
-		resultRow.setActualFileName(actualFile.getName());
-		resultRow.setCommandExecuted(commandBuilder.toString());
-		resultRow.setStrategyUsed(ComparisonStrategy.getStrategy(commandOutput));
-		captureAndStoreResults(resultRow, commandOutput);
+
+		resultRow.setName(new File(expectedFileName).getName());
+		resultRow.setExpectedBrowser(expectedBrowser);
+		resultRow.setExpectedFileName(expectedFileName);
+		resultRow.setBrowsers(browsers);
+
 		return resultRow;
 	}
 
-	private CommandBuilder buildCommand(String reportFilename, File actualFile, File expectedFile, Image expectedImage, Image actualImage) {
+	private CommandBuilder buildCommand(File currentFile, Image currentImage, File expectedFile, Image expectedImage, String pathDiffImageFile) {
 		CommandBuilder commandBuilder = new CommandBuilder();
 		commandBuilder.setPathToImageMagickCompareBinary(pathToImCompareBinary);
 		commandBuilder.setFirstImagePixels(expectedImage.getTotalPixels());
-		commandBuilder.setSecondImagePixels(actualImage.getTotalPixels());
+		commandBuilder.setSecondImagePixels(expectedImage.getTotalPixels());
 
-		diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
-
-		log.info("diffScreenshotPath: " + diffScreenshotPath);
-
-		checkIfDiffFolderExists();
-
-		commandBuilder.setFilePaths(expectedFile.getAbsolutePath(), actualFile.getAbsolutePath(), diffScreenshotPath + File.separator + expectedFile.getName());
+		commandBuilder.setFilePaths(expectedFile.getAbsolutePath(), currentFile.getAbsolutePath(), pathDiffImageFile);
 		commandBuilder.build();
 		return commandBuilder;
 	}
@@ -132,36 +146,6 @@ public class ImageMagickCompare {
 		System.out.println(errorGobbler.getOutputLine());
 
 		return errorGobbler.getOutputLine();
-	}
-
-	private void captureAndStoreResults(ResultRow resultRow, String output) throws IOException {
-		output = getFinalOutput(resultRow.getStrategyUsed(), output);
-		BigDecimal percentageDeviation;
-		if (resultRow.getExpectedTotalPixels().longValue() > resultRow.getActualTotalPixels().longValue()) {
-			percentageDeviation = calculatePercentageDeviation(resultRow.getExpectedTotalPixels(), output);
-		} else {
-			percentageDeviation = calculatePercentageDeviation(resultRow.getActualTotalPixels(), output);
-		}
-		resultRow.setPercentageDeviation(percentageDeviation);
-		resultRow.setOutput(output);
-	}
-
-	private String getFinalOutput(ComparisonStrategy strategy, String output) {
-		if (strategy.equals(ComparisonStrategy.SUB_IMAGE)) {
-			output = output.replace(output.substring(output.indexOf("@"), output.length()), "").trim();
-		}
-		return output;
-	}
-
-	private BigDecimal calculatePercentageDeviation(BigDecimal totalImagePixels, String output) throws IOException {
-		BigDecimal percentageDeviation;
-		try {
-			BigDecimal pixelDifference = new BigDecimal(output);
-			percentageDeviation = pixelDifference.divide(totalImagePixels, 4, RoundingMode.HALF_UP);
-		} catch (Exception e) {
-			percentageDeviation = BigDecimal.valueOf(-1);
-		}
-		return percentageDeviation.multiply(new BigDecimal(100));
 	}
 
 	private StreamGobbler gobbleStream(Process process) {

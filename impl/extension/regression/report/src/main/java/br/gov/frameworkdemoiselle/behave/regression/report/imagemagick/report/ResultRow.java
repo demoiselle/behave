@@ -1,66 +1,43 @@
 package br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report;
 
-import java.math.BigDecimal;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ResultRow {
-	
-	private String reportFileName;
+
+	private String name;
+	private String expectedBrowser;
 	private String expectedFileName;
-	private String actualFileName;
-	private BigDecimal expectedTotalPixels;
-	private BigDecimal actualTotalPixels;
-	private BigDecimal percentageDeviation;
-	private String output;
 	private ComparisonStrategy strategyUsed;
-	private String notes;
-	private String commandExecuted;
+	private List<BrowserResultColumn> browsers;
 
 	public Map<String, String> getResultsAsMap() {
 		Map<String, String> resultsMap = new LinkedHashMap<String, String>();
-		resultsMap.put("Expected Filename", expectedFileName);
-		resultsMap.put("Actual Filename", actualFileName);
-		resultsMap.put("Total Image Pixels [Expected] (width * height)", expectedTotalPixels.toString());
-		resultsMap.put("Total Image Pixels [Actual] (width * height)", actualTotalPixels.toString());
-		resultsMap.put("Diff Outcome (Pixel Difference)", output);
-		resultsMap.put("Pixel Deviation (%)", percentageDeviation.toString());
-		resultsMap.put("Comparison Strategy Used", strategyUsed.getValue());
-		resultsMap.put("Notes", notes);
-		resultsMap.put("Command Executed", commandExecuted);
+		resultsMap.put("Nome", "Nome");
+		resultsMap.put("Imagem de Referência " + expectedBrowser, "");
+
+		for (BrowserResultColumn browser : browsers) {
+			resultsMap.put("Comparação com " + browser.getName(), "");
+		}
+
 		return resultsMap;
 	}
 
-	public BigDecimal getExpectedTotalPixels() {
-		return expectedTotalPixels;
+	public String getName() {
+		return name;
 	}
 
-	public void setExpectedTotalPixels(BigDecimal expectedTotalPixels) {
-		this.expectedTotalPixels = expectedTotalPixels;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public BigDecimal getActualTotalPixels() {
-		return actualTotalPixels;
+	public String getExpectedBrowser() {
+		return expectedBrowser;
 	}
 
-	public void setActualTotalPixels(BigDecimal actualTotalPixels) {
-		this.actualTotalPixels = actualTotalPixels;
-	}
-
-	public BigDecimal getPercentageDeviation() {
-		return percentageDeviation;
-	}
-
-	public void setPercentageDeviation(BigDecimal percentageDeviation) {
-		this.percentageDeviation = percentageDeviation;
-	}
-
-	public String getReportFileName() {
-		return reportFileName;
-	}
-
-	public void setReportFileName(String reportFileName) {
-		this.reportFileName = reportFileName;
+	public void setExpectedBrowser(String expectedBrowser) {
+		this.expectedBrowser = expectedBrowser;
 	}
 
 	public String getExpectedFileName() {
@@ -71,22 +48,6 @@ public class ResultRow {
 		this.expectedFileName = expectedFileName;
 	}
 
-	public String getActualFileName() {
-		return actualFileName;
-	}
-
-	public void setActualFileName(String actualFileName) {
-		this.actualFileName = actualFileName;
-	}
-
-	public String getOutput() {
-		return output;
-	}
-
-	public void setOutput(String output) {
-		this.output = output;
-	}
-
 	public ComparisonStrategy getStrategyUsed() {
 		return strategyUsed;
 	}
@@ -95,19 +56,12 @@ public class ResultRow {
 		this.strategyUsed = strategyUsed;
 	}
 
-	public String getNotes() {
-		return notes;
+	public List<BrowserResultColumn> getBrowsers() {
+		return browsers;
 	}
 
-	public void setNotes(String notes) {
-		this.notes = notes;
+	public void setBrowsers(List<BrowserResultColumn> browsers) {
+		this.browsers = browsers;
 	}
 
-	public String getCommandExecuted() {
-		return commandExecuted;
-	}
-
-	public void setCommandExecuted(String commandExecuted) {
-		this.commandExecuted = commandExecuted;
-	}
 }

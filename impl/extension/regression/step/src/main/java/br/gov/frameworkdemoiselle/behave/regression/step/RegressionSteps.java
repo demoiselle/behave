@@ -70,4 +70,21 @@ public class RegressionSteps extends CommonSteps {
 		logger.debug("Print Screen gerado");
 
 	}
+	
+	@When("tiro um print screen com o nome \"$name\"")
+	public void print(String name) {
+
+		// Delay de renderização da página, se não tiver esse delay ele tira um
+		// print screen em branco!
+		try {
+			Thread.sleep(500L);
+		} catch (InterruptedException e) {
+		}
+
+		String imageName = countImage++ + "_" + name;
+		FactoryRepository.getInstance().save(new Result(imageName, RegressionConfig.getCurrentType(), currentPageName, runner.saveScreenshot()));
+
+		logger.debug("Print Screen gerado");
+
+	}
 }

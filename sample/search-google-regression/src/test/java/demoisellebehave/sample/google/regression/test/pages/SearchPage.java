@@ -45,10 +45,10 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
 public class SearchPage {
 
-	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "lst-ib")
 	private TextField searchField;
 
-	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
+	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Name, locator = "btnI")
 	private Button buttonLuckSearch;
 
 }

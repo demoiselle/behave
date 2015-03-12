@@ -13,4 +13,4 @@ Então será exibido "frameworkdemoiselle.gov.br"
 Quando tiro um print screen
 Quando limpo o valor do campo "Campo de Busca"
 Então será exibido ""
-Quando tiro um print screen
+Quando tiro um print screen com o nome "Depois de tãáóípo uma cópia de tela"

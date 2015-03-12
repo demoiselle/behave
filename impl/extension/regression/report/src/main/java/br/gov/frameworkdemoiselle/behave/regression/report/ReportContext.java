@@ -10,7 +10,6 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.ImageMagickCompare;
-import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.util.ImageUtil;
 import br.gov.frameworkdemoiselle.behave.regression.repository.FactoryRepository;
 
 public class ReportContext {
@@ -32,11 +31,12 @@ public class ReportContext {
 		String enabled = config.getProperty("behave.regression.enabled");
 		if (enabled != null && Boolean.parseBoolean(enabled)) {
 
-			String defaultType = config.getProperty("behave.regression.defaultType");
+			String defaultType = config.getProperty("behave.regression.defaultType").replaceAll("^/", "");
 			List<Result> defaultTypeResults = FactoryRepository.getInstance().getResulstByLocation(defaultType);
 
 			List<File> expectedFilesList = new ArrayList<File>();
-			List<File> actualFilesList = new ArrayList<File>();
+			ArrayList<List<File>> browserFilesList = new ArrayList<List<File>>();
+			List<String> types = new ArrayList<String>();
 
 			getLog().info("Default Type/Location: " + defaultType);
 			for (Result res : defaultTypeResults) {
@@ -48,9 +48,14 @@ public class ReportContext {
 			List<String> locationsList = FactoryRepository.getInstance().getLocations();
 			for (String location : locationsList) {
 
+				List<File> actualFilesList = new ArrayList<File>();
+				String actualType = location.replaceAll("^/", "");
+
 				// Se for o navegador padrão ele pula
-				if (defaultType.replaceAll("^/", "").equals(location.replaceAll("^/", "")))
+				if (defaultType.equals(actualType))
 					continue;
+
+				types.add(location);
 
 				getLog().info("Location: " + location);
 
@@ -65,20 +70,13 @@ public class ReportContext {
 				if (actualFilesList.size() != expectedFilesList.size())
 					throw new BehaveException("Erro: os arrays não tem a mesma quantidade de cópias de tela! actualFilesList: " + actualFilesList.size() + " / expectedFilesList: " + expectedFilesList.size());
 
-				try {
-					// Tratamento da imagem
-					for (int i = 0; i < actualFilesList.size(); i++) {
-						ImageUtil.imageConvert(actualFilesList.get(i).getAbsolutePath(), expectedFilesList.get(i).getAbsolutePath());
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				browserFilesList.add(actualFilesList);
 
-				ImageMagickCompare comp = new ImageMagickCompare(config, getLog());
-				comp.compareAndCaptureResultsWithList("report-teste-dbehave", actualFilesList, expectedFilesList);
-
-				actualFilesList.clear();
 			}
+
+			// Faz todas as comparações
+			ImageMagickCompare comp = new ImageMagickCompare(config, getLog());
+			comp.compareAndCaptureResultsWithLists(types, browserFilesList, defaultType, expectedFilesList);
 
 		}
 	}

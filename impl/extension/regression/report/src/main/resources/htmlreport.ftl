@@ -1,75 +1,132 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-   <title>Image Comparison report</title>
-       <style type="text/css">
-       	   * {
-       	   		font-size: 11px;
-       	   }
-           body {
-               font-family: Arial;
-           }
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
 
-           table, th, td {
-               border: 1px solid #000000;
-           }
+<title>Relatório de Regressão de Layout</title>
 
-           .ok {
-               background-color: #DFFFA5;
-           }
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-           .slight {
-                background-color: #FFFACD;
-           }
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <link rel="stylesheet"
+	href="http://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/3.2.2/ekko-lightbox.min.css">
+	
+    
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<style>
+* {
+	font-family: 'Lato', sans-serif;
+	font-size: 13px;
+}
 
-           .warning {
-                background-color: #FFE4E1;
-           }
+.table-comparison img {
+	border: 1px solid #ccc;
+	margin: 10px; 
+}
+.btn-group .btn-primary {
 
-           .bigdeviation {
-                background-color: #FF3333
-           }
-       </style>
-
+}
+</style>
 </head>
 
 <body>
-    <h3>Legend:</h3>
-      <p class="ok">No (0%) pixel deviation</p>
-      <p class="slight">&gt; 0% and &lt;=10% pixel deviation</p>
-      <p class="warning">&gt;10% and &lt;=20% pixel deviation</p>
-      <p class="bigdeviation">&gt;20 % pixel deviation</p>
 
-    <table id="results">
-        <thead>
-            <tr>
-                <#list columnHeaders as columnHeader>
-                    <th>${columnHeader}</th>
-                </#list>
-            </tr>
-        </thead>
-        <tbody>
-            <#list resultRows as resultRow>
-                <#assign deviation=resultRow.getPercentageDeviation()>
-                <#if deviation == 0>
-                    <tr class="ok">
-                <#elseif (deviation > 0) && deviation <= 10>
-                    <tr class="slight">
-                <#elseif (deviation > 10) && deviation <= 20>
-                    <tr class="warning">
-                <#elseif (deviation > 20)>
-                    <tr class="bigdeviation">
-                </#if>
-                    <td><a href="./${resultRow.getReportFileName()}/${resultRow.getExpectedFileName()}" target="_blank"><img src="${resultRow.getExpectedFileName()}" width="300"/></a> ${resultRow.getExpectedFileName()}</td>
-                    <td>${resultRow.getActualFileName()}</td>
-                    <td>${resultRow.getExpectedTotalPixels()}</td>
-                    <td>${resultRow.getActualTotalPixels()}</td>
-                    <td>${resultRow.getOutput()}</td>
-                    <td>${resultRow.getPercentageDeviation()}</td>
-                    <td>${resultRow.getStrategyUsed().getValue()}</td>
-                    <td>${resultRow.getNotes()!""}</td>
-                    <td>${resultRow.getCommandExecuted()}</td>
-                </tr>
-            </#list>
-        </tbody>
-    </table>
+	<div class="container-fluid">
+
+		<h1>Relatório de Regressão de Layout</h1>
+
+		<table class="table table-hover table-comparison table-responsive">
+			<thead>
+				<tr>
+					<#list columnHeaders as columnHeader>
+					<th class="text-nowrap">${columnHeader}</th> </#list>
+				</tr>
+			</thead>
+			<tbody>
+				<#list resultRows as resultRow>
+				<tr>
+					<td class="text-nowrap">${resultRow.getName()}</td>
+					<td>
+						<a href="${resultRow.getExpectedFileName()}" data-toggle="lightbox" data-gallery="multiimages" data-title="Referência">
+							<img src="${resultRow.getExpectedFileName()}" width="300" />
+						</a>
+					</td>
+					
+					<#list resultRow.getBrowsers() as browser>
+					<td>
+						<div class="row text-center">
+							<a href="${browser.getPngFileName()}" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
+								<img src="${browser.getPngFileName()}" width="250" />
+							</a>
+						</div>
+						<div class="row text-center">
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-primary active">
+							    <input type="radio" name="options" id="option1" autocomplete="off" checked> Original
+							  </label>
+							  <label class="btn btn-primary">
+							    <input type="radio" name="options" id="option1" autocomplete="off"> Stática
+							  </label>
+							  <label class="btn btn-primary">
+							    <input type="radio" name="options" id="option2" autocomplete="off"> Animado
+							  </label>
+							</div>
+							
+							<span id="helpBlock" class="help-block">Diferença com a
+								referência: <strong>${browser.getPercentageDeviation()}%</strong>
+							</span>
+						</div>						
+					</td> 
+					</#list>
+				</tr>
+				</#list>
+			</tbody>
+		</table>
+		
+	</div>
+	<!-- /.container -->
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/3.2.2/ekko-lightbox.min.js"></script>
+	
+	
+	<script>
+	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+		event.preventDefault();
+		return $(this).ekkoLightbox({
+			onShown: function() {
+				if (window.console) {
+					return console.log('Checking our the events huh?');
+				}
+			},
+			onNavigate: function(direction, itemIndex) {
+				if (window.console) {
+					return console.log('Navigating '+direction+'. Current item: '+itemIndex);
+				}
+			}
+		});
+	});
+	</script>
 </body>
+</html>
+
+

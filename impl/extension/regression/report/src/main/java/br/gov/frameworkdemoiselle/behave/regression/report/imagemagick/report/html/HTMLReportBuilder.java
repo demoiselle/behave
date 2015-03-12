@@ -76,6 +76,7 @@ public class HTMLReportBuilder extends ReportBuilder {
 	@Override
 	public void addResultRow(final ResultRow resultRow) {
 		resultRows.add(resultRow);
+		
 		Map<String, String> columnValues = resultRow.getResultsAsMap();
 		if (columnHeaders.size() == 0) {
 			for (String headerValue : columnValues.keySet()) {
