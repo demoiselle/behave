@@ -29,7 +29,7 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
-		<version>1.4.2-SNAPSHOT</version>
+		<version>1.4.3-SNAPSHOT</version>
 	</parent>
 
 	<name>Demoiselle Behave Sample Google Rgression</name>
@@ -65,7 +65,7 @@
 			<plugin>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-regression-report</artifactId>
-				<version>1.4.2-SNAPSHOT</version>
+				<version>1.4.3-SNAPSHOT</version>				
 				<executions>
 					<execution>
 						<phase>test</phase>

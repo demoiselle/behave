@@ -9,5 +9,5 @@ Desejo acessar o Google
 Cenário: Acesso ao "{sistema}"
 
 Dado que vou para a tela "Tela de Busca"
-Então será exibido "{sistema}"
+Então será exibido "Gmail"
 Quando tiro um print screen

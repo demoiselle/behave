@@ -37,9 +37,6 @@
 package br.gov.frameworkdemoiselle.behave.regression.report;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Execute;
@@ -56,54 +53,12 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Execute(goal = "regression", phase = LifecyclePhase.TEST)
 public class ReportMojo extends AbstractMojo {
 
-
 	@Parameter(defaultValue = "${project.build.directory}", readonly = true)
 	private File target;
-	
-	private Properties properties = new Properties();
 
 	public void execute() {
-		loadBehaveProperties();	
-		String enabled = getProperty("behave.regression.enabled");		
-		if ( enabled != null && Boolean.parseBoolean(enabled)){
-			getLog().info("========================================");
-			getLog().info("REGRESSION");
-			getLog().info("========================================");
-			getLog().info("target:" + target);			
-			getLog().info("behave.properties");
-			getLog().info("type:" + getProperty("behave.regression.enabled"));
-			getLog().info("type:" + getProperty("behave.regression.type"));
-			getLog().info("url:" + getProperty("behave.regression.url"));		
-			getLog().info("user:" + getProperty("behave.regression.user"));
-			getLog().info("password:" + getProperty("behave.regression.password"));
-			
-			getLog().info("types:" + getProperty("behave.regression.types"));
-			getLog().info("defaultType:" + getProperty("behave.regression.defaultType"));			
-			getLog().info("========================================");			
-		}
+		ReportContext c = new ReportContext();
+		c.run(target);
 	}
 
-	public String getProperty(String key){
-		if (properties.containsKey(key)){
-			return properties.getProperty(key);
-		}else{
-			return null;
-		}
-	}
-
-	private void loadBehaveProperties() {
-		String behaveProperties = target + "" + File.separatorChar + "test-classes" + File.separatorChar + "behave.properties";
-		File file = new File(behaveProperties);
-		if (file.exists()) {
-			try {
-				getLog().info("Load: " + behaveProperties);
-				InputStream in = new FileInputStream(new File(behaveProperties));
-				properties.load(in);
-			} catch (Exception e) {
-				getLog().error(e);
-			}
-		} else {
-			getLog().debug(	"File behave.properties not found: " + behaveProperties);
-		}		
-	}	
 }
