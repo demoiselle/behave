@@ -44,6 +44,10 @@ import java.util.List;
  *
  */
 public interface Repository {
+	
+	public void connect();
+	
+	public void disconnect();
 
 	public void save(Result result);
 

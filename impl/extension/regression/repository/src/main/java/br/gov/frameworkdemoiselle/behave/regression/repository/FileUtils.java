@@ -57,6 +57,10 @@ public class FileUtils {
 		}
 	}
 	
+	public static String getExtension(String name) {		
+		return getExtension(new File(name));
+	}
+	
 	public static String getExtension(File file) {
 		int i = file.getName().lastIndexOf('.');
 		if (i > 0) {

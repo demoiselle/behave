@@ -38,9 +38,11 @@ package br.gov.frameworkdemoiselle.behave.regression.repository;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -56,33 +58,122 @@ public class FTPRepository extends AbstractRepository {
 	private static Logger log = Logger.getLogger(FTPRepository.class);
 
 	private FTPClient ftp;
+	private String tmpFolder;
 
 	public FTPRepository() {
 		super();
+		tmpFolder = System.getProperty("java.io.tmpdir") + BAR + folder;
 		ftp = new FTPClient();
-		createFolder(super.folder);
+	}
+
+	@Override
+	public void connect() {
+		super.connect();
+		try {
+			log.debug("ftp conect");
+			ftp.connect(url);
+			if (!ftp.login(user, password)) {
+				throw new BehaveException(message.getString("exception-failed-connect-ftp"));
+			}
+			createFolder(super.folder);
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-failed-connect-ftp"), e);
+		}
+	}
+
+	@Override
+	public void disconnect() {
+		super.disconnect();
+		try {
+			if (ftp.isConnected()) {
+				log.debug("ftp logout");
+				ftp.logout();
+				ftp.disconnect();
+			} else {
+				throw new BehaveException(message.getString("exception-failed-disconnect-ftp-is-open"));
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
 	}
 
 	public void save(Result result) {
 		try {
-			conect();
+			String resultFolder = super.folder + BAR + result.getLocation();
+			String tmpFile = tmpFolder + BAR + result.getId() + ".txt";
+			createFolder(resultFolder);
+			FileUtils.createFolder(tmpFolder);
+			PrintWriter writer = new PrintWriter(tmpFile, "UTF-8");
+			writer.println(result.getDetail());
+			writer.close();
+			FileInputStream fis = new FileInputStream(tmpFile);
+			ftp.storeFile(result.getId() + ".txt", fis);
+			fis.close();
 		} catch (Exception e) {
 			throw new BehaveException(e);
-		} finally {
-			logout();
 		}
 	}
 
 	@Override
 	public void clean() {
-		// TODO Auto-generated method stub
-
+		try {
+			goHome();
+			if (changeWorkingDirectory(super.folder)) {
+				FTPFile[] files = ftp.listFiles();
+				for (FTPFile ftpFile : files) {
+					countAndRemove(ftpFile, true);
+				}
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
 	}
 
 	@Override
 	public int countResults() {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			goHome();
+			if (changeWorkingDirectory(super.folder)) {
+				FTPFile[] files = ftp.listFiles();
+				for (FTPFile ftpFile : files) {
+					result += countAndRemove(ftpFile, false);
+				}
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
+		return result;
+	}
+
+	private int countAndRemove(FTPFile ftpFile, boolean remove) {
+		int result = 0;
+		try {
+			if (ftpFile.isFile() && FileUtils.getExtension(ftpFile.getName()).equals("txt")) {
+				if (remove && !ftp.deleteFile(ftpFile.getName())) {
+					throw new BehaveException(message.getString("exception-erro-remove-file", ftpFile.getName()));
+				}
+				return 1;
+			} else {
+				if (ftp.changeWorkingDirectory(ftpFile.getName())) {
+					FTPFile[] files = ftp.listFiles();
+					for (FTPFile _ftpFile : files) {
+						result += countAndRemove(_ftpFile, remove);
+					}
+					if (!ftp.changeToParentDirectory()) {
+						throw new BehaveException(message.getString("exception-erro-change-folder", ".."));
+					}
+					if (remove && !ftp.removeDirectory(ftpFile.getName())) {
+						throw new BehaveException(message.getString("exception-erro-remove-folder", ftpFile.getName()));
+					}
+				} else {
+					throw new BehaveException(message.getString("exception-erro-change-folder", ftpFile.getName()));
+				}
+			}
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
+		return result;
 	}
 
 	@Override
@@ -103,38 +194,9 @@ public class FTPRepository extends AbstractRepository {
 		return null;
 	}
 
-	// / FTP Util
-
-	private void conect() {
+	private void createFolder(String path) {
 		try {
-			log.debug("ftp conect");
-			ftp.connect(url);
-			if (!ftp.login(user, password)) {
-				throw new BehaveException(message.getString("exception-failed-connect-ftp"));
-			}
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-failed-connect-ftp"), e);
-		}
-
-	}
-
-	private void logout() {
-		try {
-			if (ftp.isConnected()) {
-				log.debug("ftp logout");
-				ftp.logout();
-				ftp.disconnect();
-			} else {
-				throw new BehaveException(message.getString("exception-failed-disconnect-ftp-is-open"));
-			}
-		} catch (Exception e) {
-			throw new BehaveException(e);
-		}
-	}
-
-	private  void createFolder(String path) {
-		try {
-			conect();
+			goHome();
 			boolean exist = true;
 			String[] folders = path.split(File.separator);
 			for (String dir : folders) {
@@ -154,31 +216,28 @@ public class FTPRepository extends AbstractRepository {
 			}
 		} catch (Exception e) {
 			throw new BehaveException(e);
-		} finally {
-			logout();
 		}
 	}
 
-	public static void main(String[] args) {
-		FTPClient ftp = new FTPClient();
+	private void goHome() {
 		try {
-			ftp.connect("10.200.232.59");
-			ftp.login("stct3", "stct3");
-			ftp.changeWorkingDirectory("dbehave-autenticadord");
-			String[] arq = ftp.listNames();
-			System.out.println("Listando arquivos: \n");
-			for (String f : arq) {
-				System.out.println(f);
-			}
-			FileInputStream arqEnviar = new FileInputStream("/home/03397040477/workspace-stct3/prototipo.zip");
-			if (ftp.storeFile("prototipo.zip", arqEnviar)) {
-				System.out.println("Arquivo armazenado com sucesso!");
-			} else {
-				System.out.println("Erro ao armazenar o arquivo.");
+			ftp.changeWorkingDirectory(super.home);
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
+	}
+
+	private boolean changeWorkingDirectory(String path) {
+		try {
+			String[] folders = path.split(File.separator);
+			for (String dir : folders) {
+				if (!ftp.changeWorkingDirectory(dir)) {
+					return false;
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new BehaveException(e);
 		}
+		return true;
 	}
-
 }

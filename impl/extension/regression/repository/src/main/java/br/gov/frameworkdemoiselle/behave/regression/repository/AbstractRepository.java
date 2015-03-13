@@ -56,15 +56,20 @@ public abstract class AbstractRepository implements Repository {
 
 	protected String url;
 	protected String folder;
+	protected String home;
 	protected String user;
 	protected String password;
 
 	public AbstractRepository() {
 		message = new BehaveMessage(MESSAGEBUNDLE);
-		url = getProperty("behave.regression.url");
+		String[] tokens = getProperty("behave.regression.url").split(":");
+		if (tokens.length==2){			
+			home = tokens[1];
+		}
+		url = tokens[0];
 		folder = getProperty("behave.regression.folder");
 		user = getProperty("behave.regression.user");
-		password = getProperty("behave.regression.password");
+		password = getProperty("behave.regression.password");		
 	}
 
 	protected String getProperty(String key) {
@@ -78,4 +83,9 @@ public abstract class AbstractRepository implements Repository {
 	public abstract void clean();
 	
 	
+	public void connect() {
+	}
+
+	public void disconnect() {
+	}	
 }

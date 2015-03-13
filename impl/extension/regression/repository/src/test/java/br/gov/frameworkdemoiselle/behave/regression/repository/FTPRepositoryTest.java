@@ -68,28 +68,43 @@ public class FTPRepositoryTest {
 	public void testSaveAndClean() {
         
 		mockStatic(BehaveConfig.class);
-                
-        expect( BehaveConfig.getProperty("behave.regression.type")).andReturn( "ftp" );
-        expect( BehaveConfig.getProperty("behave.message.locale", "pt")).andReturn( "pt" );
-        expect( BehaveConfig.getProperty("behave.regression.url")).andReturn( "10.200.232.59" );
-        expect( BehaveConfig.getProperty("behave.regression.folder")).andReturn( "dbehave/regression" );
-        expect( BehaveConfig.getProperty("behave.message.locale", "pt")).andReturn( "pt" );
-        expect( BehaveConfig.getProperty("behave.regression.user")).andReturn( "stct3" );
-        expect( BehaveConfig.getProperty("behave.regression.password")).andReturn( "stct3" );
-        
-        replayAll();
-        repo = FactoryRepository.getInstance();
-        
-        assertTrue(repo instanceof FTPRepository);
-        
+		expect(BehaveConfig.getProperty("behave.regression.type")).andReturn("ftp");		
+		expect(BehaveConfig.getProperty("behave.regression.url")).andReturn("10.200.232.59:/home/stct3");
+		expect(BehaveConfig.getProperty("behave.regression.folder")).andReturn("dbehave/regression");				
+		expect(BehaveConfig.getProperty("behave.message.locale", "pt")).andReturn("pt");
+		expect(BehaveConfig.getProperty("behave.message.locale", "pt")).andReturn("pt");
+		expect(BehaveConfig.getProperty("behave.regression.user")).andReturn("stct3");
+		expect(BehaveConfig.getProperty("behave.regression.password")).andReturn("stct3");
+
+		replayAll();
+
+		repo = FactoryRepository.getInstance();
+		repo.connect();
+		
+		repo.clean();
+
+		assertTrue(repo instanceof FTPRepository);
+
 		repo.save(new Result("login", "ubuntu/firefox", "Ok"));
-//		Assert.assertEquals(1, repo.countResults());
-		repo.save(new Result("logout", "ubuntu/firefox", "Ok"));
-//		Assert.assertEquals(2, repo.countResults());
+		Assert.assertEquals(1, repo.countResults());
+		repo.save(new Result("logout", "ubuntu/firefox", "Ok"));		
+		Assert.assertEquals(2, repo.countResults());
+		
+		
+		repo.save(new Result("screen-01", "windows/firefox", "screen-01"));
+		repo.save(new Result("screen-02", "windows/firefox", "screen-02"));
+		
+		repo.save(new Result("screen-01", "windows/iexplorer", "screen-01"));
+		repo.save(new Result("screen-02", "windows/iexplorer", "screen-02"));
+		
+		Assert.assertEquals(6, repo.countResults());
+		
 		repo.clean();
 		Assert.assertEquals(0, repo.countResults());
-		
+		repo.disconnect();
+
 		verifyAll();
 		resetAll();
+
 	}
 }
