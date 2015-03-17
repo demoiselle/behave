@@ -38,7 +38,11 @@ package br.gov.frameworkdemoiselle.behave.regression.repository;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -103,12 +107,21 @@ public class FTPRepository extends AbstractRepository {
 			String tmpFile = tmpFolder + BAR + result.getId() + ".txt";
 			createFolder(resultFolder);
 			FileUtils.createFolder(tmpFolder);
+			// send text
 			PrintWriter writer = new PrintWriter(tmpFile, "UTF-8");
 			writer.println(result.getDetail());
 			writer.close();
 			FileInputStream fis = new FileInputStream(tmpFile);
 			ftp.storeFile(result.getId() + ".txt", fis);
 			fis.close();
+			// send image
+			if (result.getFile() != null) {
+				fis = new FileInputStream(result.getFile());
+				ftp.storeFile(result.getId() + "." + FileUtils.getExtension(result.getFile()), fis);
+				fis.close();
+			}
+			(new File(tmpFile)).delete();
+
 		} catch (Exception e) {
 			throw new BehaveException(e);
 		}
@@ -117,13 +130,15 @@ public class FTPRepository extends AbstractRepository {
 	@Override
 	public void clean() {
 		try {
-			goHome();
-			if (changeWorkingDirectory(super.folder)) {
-				FTPFile[] files = ftp.listFiles();
-				for (FTPFile ftpFile : files) {
-					countAndRemove(ftpFile, true);
-				}
+			cdHome();
+			cd(super.folder);
+			FTPFile[] files = ftp.listFiles();
+			for (FTPFile ftpFile : files) {
+				countAndRemove(ftpFile, true);
 			}
+			(new File(tmpFolder)).mkdirs();
+			FileUtils.clean(new File(tmpFolder), message);
+			(new File(tmpFolder)).mkdirs();
 		} catch (Exception e) {
 			throw new BehaveException(e);
 		}
@@ -133,12 +148,11 @@ public class FTPRepository extends AbstractRepository {
 	public int countResults() {
 		int result = 0;
 		try {
-			goHome();
-			if (changeWorkingDirectory(super.folder)) {
-				FTPFile[] files = ftp.listFiles();
-				for (FTPFile ftpFile : files) {
-					result += countAndRemove(ftpFile, false);
-				}
+			cdHome();
+			cd(super.folder);
+			FTPFile[] files = ftp.listFiles();
+			for (FTPFile ftpFile : files) {
+				result += countAndRemove(ftpFile, false);
 			}
 		} catch (Exception e) {
 			throw new BehaveException(e);
@@ -149,11 +163,17 @@ public class FTPRepository extends AbstractRepository {
 	private int countAndRemove(FTPFile ftpFile, boolean remove) {
 		int result = 0;
 		try {
-			if (ftpFile.isFile() && FileUtils.getExtension(ftpFile.getName()).equals("txt")) {
+			// if (ftpFile.isFile() &&
+			// FileUtils.getExtension(ftpFile.getName()).equals("txt")) {
+			if (ftpFile.isFile()) {
 				if (remove && !ftp.deleteFile(ftpFile.getName())) {
 					throw new BehaveException(message.getString("exception-erro-remove-file", ftpFile.getName()));
 				}
-				return 1;
+				if (FileUtils.getExtension(ftpFile.getName()).equals("txt")) {
+					return 1;
+				} else {
+					return 0;
+				}
 			} else {
 				if (ftp.changeWorkingDirectory(ftpFile.getName())) {
 					FTPFile[] files = ftp.listFiles();
@@ -178,14 +198,98 @@ public class FTPRepository extends AbstractRepository {
 
 	@Override
 	public List<String> getLocations() {
-		// TODO Auto-generated method stub
-		return null;
+		try {			
+			cdHome();
+			cd(super.folder);
+			List<String> result = new ArrayList<String>();
+			for (FTPFile ftpFile : getFolders()) {
+				for(String folder : findFolders(ftpFile)){
+					result.add(folder);
+				}
+			}
+			Collections.sort(result);
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private List<FTPFile> getFolders() throws IOException {
+		List<FTPFile> list = new ArrayList<FTPFile>();
+		for (FTPFile file : ftp.listFiles()){
+			if (file.isDirectory()){
+				list.add(file);
+			}
+		}
+		return list;
+	}
+
+	private List<String> findFolders(FTPFile ftpFile) {
+		try {
+			cd(ftpFile.getName());
+			List<String> result = new ArrayList<String>();			
+			List<FTPFile> files =  getFolders();
+			if (files.size() == 0){
+				result.add( subPath(ftp.printWorkingDirectory()));				
+			}else{
+				for(FTPFile file : files){
+					for(String path : findFolders(file)){
+						result.add(path);
+					}
+				}
+			}
+			ftp.changeToParentDirectory();
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private String subPath(String path) {
+		String root = this.home + BAR + this.folder + BAR;		
+		path = path.substring(root.length(), path.length());
+		return path;
 	}
 
 	@Override
-	public Result getResul(String id, String location) {
-		// TODO Auto-generated method stub
-		return null;
+	public Result getResult(String location, String id) {
+		try {
+			cdHome();
+			cd(super.folder);
+			cd(location);
+			FTPFile[] files;
+			String localFolder = tmpFolder + BAR + location;
+			files = ftp.listFiles();
+			String imageType = null;
+			for (FTPFile ftpFile : files) {
+				if (ftpFile.getName().startsWith(id + ".")) {
+					(new File(localFolder)).mkdirs();
+					String extension = FileUtils.getExtension(ftpFile.getName());
+					if (!extension.equals("txt")) {
+						imageType = extension;
+					}
+					FileOutputStream fos = new FileOutputStream(localFolder + BAR + id + "." + extension);
+					ftp.setBufferSize(1024);
+					ftp.enterLocalPassiveMode();
+					ftp.enterLocalActiveMode();
+					ftp.retrieveFile(ftpFile.getName(), fos);
+					fos.close();
+				}
+			}
+			Result result = new Result();
+			result.setLocation(location);
+			result.setId(id);
+			File detail = new File(localFolder + BAR + id + ".txt");
+			if (detail.exists() && detail.isFile()) {
+				result.setDetail(FileUtils.readFile(detail));
+			}
+			if (imageType != null) {
+				result.setFile(new File(localFolder + BAR + id + "." + imageType));
+			}
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -196,7 +300,7 @@ public class FTPRepository extends AbstractRepository {
 
 	private void createFolder(String path) {
 		try {
-			goHome();
+			cdHome();
 			boolean exist = true;
 			String[] folders = path.split(File.separator);
 			for (String dir : folders) {
@@ -219,25 +323,27 @@ public class FTPRepository extends AbstractRepository {
 		}
 	}
 
-	private void goHome() {
+	private void cdHome() {
 		try {
-			ftp.changeWorkingDirectory(super.home);
+			if (!ftp.changeWorkingDirectory(super.home)) {
+				throw new BehaveException(message.getString("exception-erro-change-folder", super.home));
+			}
 		} catch (Exception e) {
 			throw new BehaveException(e);
 		}
 	}
 
-	private boolean changeWorkingDirectory(String path) {
+	private void cd(String path) {
 		try {
 			String[] folders = path.split(File.separator);
 			for (String dir : folders) {
+				dir = ftp.printWorkingDirectory() + BAR + dir;
 				if (!ftp.changeWorkingDirectory(dir)) {
-					return false;
+					throw new BehaveException(message.getString("exception-erro-change-folder", dir));
 				}
 			}
 		} catch (Exception e) {
 			throw new BehaveException(e);
 		}
-		return true;
 	}
 }

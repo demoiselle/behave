@@ -68,17 +68,7 @@ public class LocalRepository extends AbstractRepository {
 	}
 
 	public void clean() {
-		clean(root);
-	}
-
-	public void clean(File file) {
-		if (file.isDirectory()) {
-			for (File c : file.listFiles())
-				clean(c);
-		}
-		if (!file.delete()) {
-			throw new BehaveException(message.getString("exception-error-delete-file", file.getAbsoluteFile()));
-		}
+		FileUtils.clean(root, message);
 	}
 	
 	public List<Result> getResulstByLocation(String location) {
@@ -94,7 +84,7 @@ public class LocalRepository extends AbstractRepository {
 		Collections.sort(ids);
 		List<Result> r = new ArrayList<Result>();
 		for (String id : ids) {
-			Result result = getResul(location, id);
+			Result result = getResult(location, id);
 			if (result != null){
 				r.add(result);
 			}	
@@ -117,7 +107,7 @@ public class LocalRepository extends AbstractRepository {
 		}
 	}
 
-	public Result getResul(String location, String id) {
+	public Result getResult(String location, String id) {
 		Result result = new Result();
 		result.setLocation(location);
 		result.setId(id);
