@@ -79,6 +79,7 @@ public class FTPRepository extends AbstractRepository {
 			if (!ftp.login(user, password)) {
 				throw new BehaveException(message.getString("exception-failed-connect-ftp"));
 			}
+			super.home = ftp.printWorkingDirectory();
 			createFolder(super.folder);
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-failed-connect-ftp"), e);
@@ -163,8 +164,6 @@ public class FTPRepository extends AbstractRepository {
 	private int countAndRemove(FTPFile ftpFile, boolean remove) {
 		int result = 0;
 		try {
-			// if (ftpFile.isFile() &&
-			// FileUtils.getExtension(ftpFile.getName()).equals("txt")) {
 			if (ftpFile.isFile()) {
 				if (remove && !ftp.deleteFile(ftpFile.getName())) {
 					throw new BehaveException(message.getString("exception-erro-remove-file", ftpFile.getName()));
@@ -198,7 +197,7 @@ public class FTPRepository extends AbstractRepository {
 
 	@Override
 	public List<String> getLocations() {
-		try {			
+		try {
 			cdHome();
 			cd(super.folder);
 			List<String> result = new ArrayList<String>();
@@ -227,13 +226,13 @@ public class FTPRepository extends AbstractRepository {
 	private List<String> findFolders(FTPFile ftpFile) {
 		try {
 			cd(ftpFile.getName());
-			List<String> result = new ArrayList<String>();			
-			List<FTPFile> files =  getFolders();
-			if (files.size() == 0){
-				result.add( subPath(ftp.printWorkingDirectory()));				
-			}else{
-				for(FTPFile file : files){
-					for(String path : findFolders(file)){
+			List<String> result = new ArrayList<String>();
+			List<FTPFile> files = getFolders();
+			if (files.size() == 0) {
+				result.add(subPath(ftp.printWorkingDirectory()));
+			} else {
+				for (FTPFile file : files) {
+					for (String path : findFolders(file)) {
 						result.add(path);
 					}
 				}
@@ -246,7 +245,7 @@ public class FTPRepository extends AbstractRepository {
 	}
 
 	private String subPath(String path) {
-		String root = this.home + BAR + this.folder + BAR;		
+		String root = this.home + BAR + this.folder + BAR;
 		path = path.substring(root.length(), path.length());
 		return path;
 	}
@@ -294,8 +293,29 @@ public class FTPRepository extends AbstractRepository {
 
 	@Override
 	public List<Result> getResulstByLocation(String location) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			cdHome();
+			cd(super.folder);
+			cd(location);
+			List<String> ids = new ArrayList<String>();
+			for(FTPFile file : ftp.listFiles()){
+				if (FileUtils.getExtension(file.getName()).equalsIgnoreCase("txt")){	
+					ids.add(file.getName().substring(0, file.getName().length()-4));
+				}
+			}
+			Collections.sort(ids);
+			List<Result> r = new ArrayList<Result>();
+			for (String id : ids) {
+				Result result = getResult(location, id);
+				if (result != null){
+					r.add(result);
+				}	
+			}
+			return r;
+			
+		} catch (Exception e) {
+			throw new BehaveException(e);
+		}
 	}
 
 	private void createFolder(String path) {
