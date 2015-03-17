@@ -171,11 +171,12 @@
 	<xi:include href="releasenotes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="screenmapping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="estoria.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="historia.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="desktop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="configuracaotestes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="execucao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="dados.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="regressao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="colaboracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </book>
