@@ -77,8 +77,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	private WebDriver driver;
 	Logger log = Logger.getLogger(WebBase.class);
 
-	static ElementMap loadingMap = null;
-	static boolean alreadySearchLoadingMap = false;
+	public static ElementMap loadingMap = null;
+	public static boolean alreadySearchLoadingMap = false;
 
 	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
@@ -263,6 +263,14 @@ public class WebBase extends MappedElement implements BaseUI {
 			}
 
 			if (existeLoading) {
+
+				// Força esperar o loading aparecer quando o elemento utilizado
+				// tem a propriedade forWaitLoading na anotação @ElementMap
+				if (getElementMap().forceWaitLoading()) {
+					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+					wait.until(ExpectedConditions.visibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
+				}
+
 				// Aguardo o LOADING desaparecer!
 				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
@@ -320,7 +328,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				String readonlyAttribute = e.getAttribute("readonly");
 				String disabledAttribute = e.getAttribute("disabled");
 
-				// SE não estiver visivel OU (não possuir o attr DISABLED E não possuir o attr READONLY) ENTÃO de erro!
+				// SE não estiver visivel OU (não possuir o attr DISABLED E não
+				// possuir o attr READONLY) ENTÃO de erro!
 				if (!e.isDisplayed() || (disabledAttribute == null && readonlyAttribute == null)) {
 					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 				}
@@ -531,7 +540,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitInvisible() {
 		waitInvisible(0);
 	}
-	
+
 	public void waitInvisible(int index) {
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
