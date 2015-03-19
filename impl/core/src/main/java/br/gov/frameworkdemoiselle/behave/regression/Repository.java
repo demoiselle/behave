@@ -57,7 +57,7 @@ public interface Repository {
 
 	public List<String> getLocations();
 	
-	public Result getResul(String location, String id);
+	public Result getResult(String location, String id);
 
 	public List<Result> getResulstByLocation(String location);
 

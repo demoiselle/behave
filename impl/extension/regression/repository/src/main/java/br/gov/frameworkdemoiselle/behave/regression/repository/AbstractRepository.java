@@ -62,11 +62,7 @@ public abstract class AbstractRepository implements Repository {
 
 	public AbstractRepository() {
 		message = new BehaveMessage(MESSAGEBUNDLE);
-		String[] tokens = getProperty("behave.regression.url").split(":");
-		if (tokens.length==2){			
-			home = tokens[1];
-		}
-		url = tokens[0];
+		url = getProperty("behave.regression.url");		
 		folder = getProperty("behave.regression.folder");
 		user = getProperty("behave.regression.user");
 		password = getProperty("behave.regression.password");		

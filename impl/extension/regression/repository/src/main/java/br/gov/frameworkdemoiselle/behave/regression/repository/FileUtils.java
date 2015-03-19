@@ -42,6 +42,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -67,6 +68,17 @@ public class FileUtils {
 			return file.getName().substring(i + 1);
 		}
 		return "";
+	}
+	
+	
+	public static void clean(File file,  BehaveMessage message) {
+		if (file.isDirectory()) {
+			for (File _file : file.listFiles())
+				clean(_file, message);
+		}
+		if (!file.delete()) {
+			throw new BehaveException(message.getString("exception-error-delete-file", file.getAbsoluteFile()));
+		}
 	}
 	
 	public static String readFile(File detail) {
@@ -102,5 +114,6 @@ public class FileUtils {
 		}
 		return false;
 	}
+
 	
 }

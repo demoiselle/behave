@@ -84,7 +84,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1"));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2"));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3"));
-		Result result = repo.getResul("ubuntu/chrome", "r2");
+		Result result = repo.getResult("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertNull(result.getFile());
@@ -95,7 +95,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
-		Result result = repo.getResul("ubuntu/chrome", "r2");
+		Result result = repo.getResult("ubuntu/chrome", "r2");
 		assertEquals("r2", result.getId());
 		assertEquals("Ok2", result.getDetail());
 		assertEquals("r2.png", result.getFile().getName());
@@ -107,7 +107,7 @@ public class LocalRepositoryTest {
 		repo.save(new Result("r1", "ubuntu/chrome", "Ok1", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r2", "ubuntu/chrome", "Ok2", new File("target/test-classes/logo-dbehave.png")));
 		repo.save(new Result("r3", "ubuntu/chrome", "Ok3", new File("target/test-classes/logo-dbehave.png")));
-		Result result = repo.getResul("ubuntu/chromeold", "r2");
+		Result result = repo.getResult("ubuntu/chromeold", "r2");
 		assertNull(result);
 	}
 
