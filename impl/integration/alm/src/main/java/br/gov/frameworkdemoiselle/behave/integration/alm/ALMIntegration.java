@@ -116,9 +116,9 @@ public class ALMIntegration implements Integration {
 			}
 
 			// Tenta obter dados de conexao com o ALM via hash
-			urlServer = getHash(result, "urlServer", BehaveConfig.getIntegration_UrlServices());
-			urlServerAuth = getHash(result, "urlServerAuth", BehaveConfig.getIntegration_UrlSecurity());
-			projectAreaAlias = getHash(result, "projectAreaAlias", BehaveConfig.getIntegration_ProjectArea());
+			urlServer = getHash(result, "urlServer", BehaveConfig.getIntegration_UrlServices()).trim();
+			urlServerAuth = getHash(result, "urlServerAuth", BehaveConfig.getIntegration_UrlSecurity()).trim();
+			projectAreaAlias = getHash(result, "projectAreaAlias", BehaveConfig.getIntegration_ProjectArea()).trim();
 
 			// Para evitar problemas com encodings em projetos nós sempre
 			// fazemos o decoding e depois encoding
@@ -158,40 +158,40 @@ public class ALMIntegration implements Integration {
 				if (responseTestCase.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestCase.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 					throw new BehaveException(message.getString("exception-create-test-case", responseTestCase.getStatusLine().toString()));
 				}
-
-				// Verifica se a auto associação esta habilitada
-				if (BehaveConfig.getIntegration_AutoAssociateTestCaseInPlan()) {
-					// --------------------------- Test Plan (GET)
-					// Conexão HTTPS
-					client = HttpsClient.getNewHttpClient(ENCODING);
-					// Login
-					login(client);
-
-					Testplan plan;
-
-					String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
-					HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
-					if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-						throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
-					} else {
-						plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
-					}
-
-					// --------------------------- Test Plan (PUT)
-					// Conexão HTTPS
-					client = HttpsClient.getNewHttpClient(ENCODING);
-					// Login
-					login(client);
-
-					// TestPlan
-					log.debug(message.getString("message-send-test-plan"));
-					HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
-					if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-						throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
-					}
-				}
 			} else {
 				testCaseName = "urn:com.ibm.rqm:testcase:" + testCaseId;
+			}
+
+			// Verifica se a auto associação esta habilitada
+			if (BehaveConfig.getIntegration_AutoAssociateTestCaseInPlan()) {
+				// --------------------------- Test Plan (GET)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
+
+				Testplan plan;
+
+				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
+				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
+				if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
+				} else {
+					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
+				}
+
+				// --------------------------- Test Plan (PUT)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
+
+				// TestPlan
+				log.debug(message.getString("message-send-test-plan"));
+				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
+				if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+					throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
+				}
 			}
 
 			// --------------------------- Work Item (PUT)
