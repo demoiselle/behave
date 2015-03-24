@@ -266,7 +266,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				// Força esperar o loading aparecer quando o elemento utilizado
 				// tem a propriedade forWaitLoading na anotação @ElementMap
-				if (getElementMap().forceWaitLoading()) {
+				if (getElementMap() != null && getElementMap().forceWaitLoading()) {
 					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 					wait.until(ExpectedConditions.visibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
 				}
