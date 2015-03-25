@@ -36,6 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
 public class WebGrid extends WebBase implements Grid {
@@ -45,4 +46,38 @@ public class WebGrid extends WebBase implements Grid {
 
 	}
 
+	
+	@Override
+	public String findTextInTable(Element element, String l, String c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String findLastLine(Element tabela) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void tableButtonClick(Element element, String l, String c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void tableSelectClick(String value, String l, String c, Element element){
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void tableTextSendKeys(String value, String l, String c,
+			Element element) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }
