@@ -56,7 +56,7 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 public class ScenarioParameter {
 
 	private static final String PARAMETER_PATTERN = "(\"([^\"]*)\")";
-	
+
 	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	/**
@@ -86,7 +86,7 @@ public class ScenarioParameter {
 	 * @return
 	 */
 	public static List<String> replaceCallParameters(String scenarioCall, Scenario scenarioReused) {
-		if(scenarioReused.getIdentification()==null){
+		if (scenarioReused.getIdentification() == null) {
 			throw new BehaveException(bm.getString("exception-scenario-null"));
 		}
 		Map<String, String> parametersCalled = getReusedParameters(scenarioReused.getIdentification(), scenarioCall);
@@ -94,11 +94,11 @@ public class ScenarioParameter {
 			return scenarioReused.getSentences();
 		}
 		List<String> newSentences = new ArrayList<String>();
-		for (String sentence : scenarioReused.getSentences()) {			
+		for (String sentence : scenarioReused.getSentences()) {
 			for (String parameterCall : parametersCalled.keySet()) {
 				sentence = sentence.replace(parameterCall, parametersCalled.get(parameterCall));
-			}			
-			newSentences.add(sentence);			
+			}
+			newSentences.add(sentence);
 		}
 		return newSentences;
 	}
@@ -119,7 +119,7 @@ public class ScenarioParameter {
 			realParameters.add(lParametro);
 		}
 		for (int i = 0; i < formalParameters.size(); i++) {
-			parametersMap.put(formalParameters.get(i), realParameters.get(i));
+			parametersMap.put(formalParameters.get(i).replaceAll("\"", ""), realParameters.get(i).replaceAll("\"", ""));
 		}
 		return parametersMap;
 	}
