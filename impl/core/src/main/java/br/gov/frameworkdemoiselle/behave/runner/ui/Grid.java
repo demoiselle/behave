@@ -54,4 +54,5 @@ public interface Grid extends BaseUI {
 	public void tableSelectClick(String value, String l, String c, Element element);
 	
 	public void tableTextSendKeys(String value, String l,String c,Element element);
+	
 }

@@ -87,35 +87,29 @@ public class DesktopGrid extends DesktopBase implements Grid {
 
 	}
 
-	
 	@Override
-	public String encontraTextoTabela(Element element, String l, String c) {
-		// TODO Auto-generated method stub
+	public String findTextInTable(Element element, String l, String c) {
 		return null;
 	}
 
 	@Override
-	public String encontraUltimaLinha(Element tabela) {
-		// TODO Auto-generated method stub
+	public String findLastLine(Element tabela) {
 		return null;
 	}
 
 	@Override
-	public void clicaBotaoTabela(Element element, String l, String c) {
-		// TODO Auto-generated method stub
-		
+	public void tableButtonClick(Element element, String l, String c) {
+
 	}
 
 	@Override
-	public void clicaSelectTabela(String value, String l, String c, Element element){
-		// TODO Auto-generated method stub
-		
+	public void tableSelectClick(String value, String l, String c, Element element) {
+
 	}
 
 	@Override
-	public void informaTextoTabela(String value, String l, String c,
-			Element element) {
-		// TODO Auto-generated method stub
-		
+	public void tableTextSendKeys(String value, String l, String c, Element element) {
+
 	}
+
 }

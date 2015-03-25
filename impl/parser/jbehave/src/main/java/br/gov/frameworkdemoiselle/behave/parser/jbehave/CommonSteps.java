@@ -88,7 +88,6 @@ public class CommonSteps implements Step {
 	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
-	
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
 	@When("vou para a tela \"$local\"")
@@ -216,20 +215,23 @@ public class CommonSteps implements Step {
 			((Select) element).selectByVisibleText(value);
 		} else if (element instanceof AutoComplete) {
 			((AutoComplete) element).selectByValue(value);
-		}else{
+		} else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
-	
+
 	/**
-	 * Sobrecarga do método inform sobrescrito do CommonSteps, para levar em consideração elementos
-	 * do tipo AutoComplete, que necessitem buscar por um valor no campo de texto, e 
-	 * selecionar um outro valor na lista de opções
+	 * Sobrecarga do método inform sobrescrito do CommonSteps, para levar em
+	 * consideração elementos do tipo AutoComplete, que necessitem buscar por um
+	 * valor no campo de texto, e selecionar um outro valor na lista de opções
 	 * 
 	 * @author Michel Felipe<michel.ferreira@serpro.gov.br>
-	 * @param String value Valor a ser informado
-	 * @param String selectValue Valor a ser procurado na lista de resultados
-	 * @param String fieldName Nome do campo
+	 * @param String
+	 *            value Valor a ser informado
+	 * @param String
+	 *            selectValue Valor a ser procurado na lista de resultados
+	 * @param String
+	 *            fieldName Nome do campo
 	 */
 	@When("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
 	@Then("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
@@ -242,7 +244,7 @@ public class CommonSteps implements Step {
 			this.inform(value, fieldName);
 		}
 	}
-	
+
 	@When("limpo o valor do campo \"$fieldName\"")
 	@Alias("n\u00E3o informo valor para o campo \"$fieldName\"")
 	public void notInform(String fieldName) {
@@ -253,7 +255,7 @@ public class CommonSteps implements Step {
 		} else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
-	}	
+	}
 
 	@When("informo: $table")
 	@Given("informo: $table")
@@ -321,7 +323,7 @@ public class CommonSteps implements Step {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
-			String value = textField.getText();			
+			String value = textField.getText();
 			dataProvider.put(var, value);
 		} else {
 			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
@@ -432,13 +434,13 @@ public class CommonSteps implements Step {
 	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
 		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
 	}
-	
+
 	@When("informo o valor do campo \"$fieldName\"")
 	@Then("informo o valor do campo \"$fieldName\"")
 	public void informWithDataProviderValue(String fieldName) {
 		inform(fieldName, fieldName);
 	}
-	
+
 	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
@@ -446,7 +448,7 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.waitVisibleClickableEnabled();
 	}
-	
+
 	@Given("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
 	@When("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
 	@Then("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
@@ -457,185 +459,205 @@ public class CommonSteps implements Step {
 
 	/**
 	 * 
-	 * Armazena um campo de texto exibido em uma Table no dataProvider 
+	 * Armazena um campo de texto exibido em uma Table no dataProvider
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 * @param container chave no dataProvider para armazenar o texto encontrado
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 * @param container
+	 *            chave no dataProvider para armazenar o texto encontrado
 	 */
 	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void tableTextStore(String l,String c,String tabela, String container){
-		
+	public void tableTextStore(String l, String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
-		
-		
-		dataProvider.put(container, ((Grid)element).findTextInTable(element,l,c));			
-	}
-	
-	/**
-	 * 
-	 * Armazena um campo de texto exibido em uma Table no dataProvider 
-	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 * @param container chave no dataProvider para armazenar o texto encontrado
-	 */
-	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void tableTextStoreLL(String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		tableTextStore(((Grid)element).findLastLine(element),c,tabela, container);
-		
-	}
-	
-	/**
-	 * 
-	 * Compara um campo de texto exibido em uma Table com o texto do dataProvider ou, caso não seja encontrado, 
-	 * com o texto enviado 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 * @param container chave no dataProvider para ler o texto ou texto desejado
-	 */
-	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void tableTextCheck(String l,String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		while (!container.equals(DataProviderUtil.replaceValue(container)))
-	    	container = DataProviderUtil.replaceValue(container);
-	    
-		Assert.assertEquals(container, ((Grid)element).findTextInTable(element,l,c));			
-	
-	}
-	/**
-	 * 
-	 * Compara um campo de texto exibido em uma Table com o texto do dataProvider ou, caso não seja encontrado, 
-	 * com o texto enviado 
-	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 * @param container chave no dataProvider para ler o texto ou texto desejado
-	 */
-	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void tableTextCheckLL(String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		tableTextCheck(((Grid)element).findLastLine(element),c,tabela, container);	
-	
-	}
-	
-	/**
-	 * 
-	 * Clica em um botão (submit ou button), checkbox, radio, expansor de detalhes do prime ou link 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 */
-	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableButtonClick(String l,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).tableButtonClick(element,l,c);
-		
-	}
-	
-	/**
-	 * 
-	 * Clica em um botão (submit ou button), checkbox, radio, expansor de detalhes do prime ou link 
-	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
-	 */
-	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableButtonClickLL(String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		tableButtonClick(((Grid)element).findLastLine(element),c,tabela);	
-	
+		dataProvider.put(container, ((Grid) element).findTextInTable(element, l, c));
 	}
 
 	/**
-	 * Seleciona uma opção pelo texto exibido em um input select do prime em determinada linha e coluna da tabela
+	 * 
+	 * Armazena um campo de texto exibido em uma Table no dataProvider Este
+	 * método utiliza a última linha exibida da tabela, por isso não é informada
+	 * a linha.
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 * @param container
+	 *            chave no dataProvider para armazenar o texto encontrado
+	 */
+	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
+	public void tableTextStoreLL(String c, String tabela, String container) {
+		Element element = runner.getElement(currentPageName, tabela);
+		tableTextStore(((Grid) element).findLastLine(element), c, tabela, container);
+	}
+
+	/**
+	 * 
+	 * Compara um campo de texto exibido em uma Table com o texto do
+	 * dataProvider ou, caso não seja encontrado, com o texto enviado
+	 * 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 * @param container
+	 *            chave no dataProvider para ler o texto ou texto desejado
+	 */
+	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void tableTextCheck(String l, String c, String tabela, String container) {
+		Element element = runner.getElement(currentPageName, tabela);
+		while (!container.equals(DataProviderUtil.replaceValue(container)))
+			container = DataProviderUtil.replaceValue(container);
+		Assert.assertEquals(container, ((Grid) element).findTextInTable(element, l, c));
+
+	}
+
+	/**
+	 * 
+	 * Compara um campo de texto exibido em uma Table com o texto do
+	 * dataProvider ou, caso não seja encontrado, com o texto enviado Este
+	 * método utiliza a última linha exibida da tabela, por isso não é informada
+	 * a linha.
+	 * 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 * @param container
+	 *            chave no dataProvider para ler o texto ou texto desejado
+	 */
+	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void tableTextCheckLL(String c, String tabela, String container) {
+		Element element = runner.getElement(currentPageName, tabela);
+		tableTextCheck(((Grid) element).findLastLine(element), c, tabela, container);
+	}
+
+	/**
+	 * 
+	 * Clica em um botão (submit ou button), checkbox, radio, expansor de
+	 * detalhes do prime ou link
+	 * 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 */
+	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void tableButtonClick(String l, String c, String tabela) {
+		Element element = runner.getElement(currentPageName, tabela);
+		((Grid) element).tableButtonClick(element, l, c);
+
+	}
+
+	/**
+	 * 
+	 * Clica em um botão (submit ou button), checkbox, radio, expansor de
+	 * detalhes do prime ou link Este método utiliza a última linha exibida da
+	 * tabela, por isso não é informada a linha.
+	 * 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
+	 */
+	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
+	public void tableButtonClickLL(String c, String tabela) {
+		Element element = runner.getElement(currentPageName, tabela);
+		tableButtonClick(((Grid) element).findLastLine(element), c, tabela);
+	}
+
+	/**
+	 * Seleciona uma opção pelo texto exibido em um input select do prime em
+	 * determinada linha e coluna da tabela
+	 * 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
 	 */
 	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableSelectClick(String value,String l,String c,String tabela){
-		
+	public void tableSelectClick(String value, String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).tableSelectClick(value,l,c, element);
-		
-		
+		((Grid) element).tableSelectClick(value, l, c, element);
 	}
-	
+
 	/**
 	 * 
-	 * Seleciona uma opção pelo texto exibido em um input select do prime em determinada linha e coluna da tabela
-	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * Seleciona uma opção pelo texto exibido em um input select do prime em
+	 * determinada linha e coluna da tabela Este método utiliza a última linha
+	 * exibida da tabela, por isso não é informada a linha.
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
 	 */
 	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableSelectClickLL(String value,String c,String tabela){
-		
+	public void tableSelectClickLL(String value, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
-		
-		tableSelectClick(value,((Grid)element).findLastLine(element),c,tabela);	
-	   
+		tableSelectClick(value, ((Grid) element).findLastLine(element), c, tabela);
 	}
-	
+
 	/**
 	 * 
 	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
 	 */
-	
+
 	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableTextSendKeys(String value, String l,String c,String tabela){
-		
+	public void tableTextSendKeys(String value, String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).tableTextSendKeys(value,l,c, element);
-		
-		
+		((Grid) element).tableTextSendKeys(value, l, c, element);
 	}
-	
+
 	/**
 	 * 
 	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
-	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * Este método utiliza a última linha exibida da tabela, por isso não é
+	 * informada a linha.
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l linha da tabela
-	 * @param c coluna da tabela
-	 * @param tabela tabela a ser lida
+	 * @param l
+	 *            linha da tabela
+	 * @param c
+	 *            coluna da tabela
+	 * @param tabela
+	 *            tabela a ser lida
 	 */
 	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableTextSendKeysLL(String value,String c,String tabela){
-		
+	public void tableTextSendKeysLL(String value, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
-		
-		tableTextSendKeys(value,((Grid)element).findLastLine(element),c,tabela);	
-	
+		tableTextSendKeys(value, ((Grid) element).findLastLine(element), c, tabela);
 	}
- }
+}
