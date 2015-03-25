@@ -45,13 +45,13 @@ public interface Grid extends BaseUI {
 
 	public void clickRow(String reference);
 	
-	public String encontraTextoTabela(Element element, String l, String c);
+	public String findTextInTable(Element element, String l, String c);
 	
-	public String encontraUltimaLinha(Element tabela);
+	public String findLastLine(Element tabela);
 	
-	public void clicaBotaoTabela(Element element, String l, String c);
+	public void tableButtonClick(Element element, String l, String c);
 	
-	public void clicaSelectTabela(String value, String l, String c, Element element);
+	public void tableSelectClick(String value, String l, String c, Element element);
 	
-	public void informaTextoTabela(String value, String l,String c,Element element);
+	public void tableTextSendKeys(String value, String l,String c,Element element);
 }

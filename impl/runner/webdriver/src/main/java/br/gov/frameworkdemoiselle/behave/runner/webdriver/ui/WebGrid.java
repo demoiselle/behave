@@ -48,32 +48,32 @@ public class WebGrid extends WebBase implements Grid {
 
 	
 	@Override
-	public String encontraTextoTabela(Element element, String l, String c) {
+	public String findTextInTable(Element element, String l, String c) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String encontraUltimaLinha(Element tabela) {
+	public String findLastLine(Element tabela) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void clicaBotaoTabela(Element element, String l, String c) {
+	public void tableButtonClick(Element element, String l, String c) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void clicaSelectTabela(String value, String l, String c, Element element){
+	public void tableSelectClick(String value, String l, String c, Element element){
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void informaTextoTabela(String value, String l, String c,
+	public void tableTextSendKeys(String value, String l, String c,
 			Element element) {
 		// TODO Auto-generated method stub
 		

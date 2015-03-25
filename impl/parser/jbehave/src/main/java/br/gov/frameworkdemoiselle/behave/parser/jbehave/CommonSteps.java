@@ -88,101 +88,6 @@ public class CommonSteps implements Step {
 	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
-		
-	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void armazenaTextoTabela(String l,String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		
-		dataProvider.put(container, ((Grid)element).encontraTextoTabela(element,l,c));			
-	}
-	
-	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void armazenaTextoTabelaUL(String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		armazenaTextoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela, container);
-		
-	}
-	
-	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void comparaTextoTabela(String l,String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		while (!container.equals(DataProviderUtil.replaceValue(container)))
-	    	container = DataProviderUtil.replaceValue(container);
-	    
-		Assert.assertEquals(container, ((Grid)element).encontraTextoTabela(element,l,c));			
-	
-	}
-	
-	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void comparaTextoTabelaUL(String c,String tabela, String container){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		comparaTextoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela, container);	
-	
-	}
-	
-	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void clicaBotaoTabela(String l,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).clicaBotaoTabela(element,l,c);
-		
-	}
-	
-	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
-	public void clicaBotaoTabelaUL(String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		clicaBotaoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela);	
-	
-	}
-	
-	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void clicaSelectTabela(String value,String l,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).clicaSelectTabela(value,l,c, element);
-		
-		
-	}
-	
-	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void clicaSelectTabelaUL(String value,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		clicaSelectTabela(value,((Grid)element).encontraUltimaLinha(element),c,tabela);	
-	   
-	}
-	
-	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void informaTextoTabela(String value, String l,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		((Grid)element).informaTextoTabela(value,l,c, element);
-		
-		
-	}
-	
-	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void informaTextAreaTabelaUL(String value,String c,String tabela){
-		
-		Element element = runner.getElement(currentPageName, tabela);
-		
-		informaTextoTabela(value,((Grid)element).encontraUltimaLinha(element),c,tabela);	
-	
-	}
 	
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
@@ -549,5 +454,188 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.isVisibleDisabled();
 	}
+
+	/**
+	 * 
+	 * Armazena um campo de texto exibido em uma Table no dataProvider 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 * @param container chave no dataProvider para armazenar o texto encontrado
+	 */
+	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
+	public void armazenaTextoTabela(String l,String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		
+		dataProvider.put(container, ((Grid)element).findTextInTable(element,l,c));			
+	}
 	
+	/**
+	 * 
+	 * Armazena um campo de texto exibido em uma Table no dataProvider 
+	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 * @param container chave no dataProvider para armazenar o texto encontrado
+	 */
+	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
+	public void armazenaTextoTabelaUL(String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		armazenaTextoTabela(((Grid)element).findLastLine(element),c,tabela, container);
+		
+	}
+	
+	/**
+	 * 
+	 * Compara um campo de texto exibido em uma Table com o texto do dataProvider ou, caso não seja encontrado, 
+	 * com o texto enviado 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 * @param container chave no dataProvider para ler o texto ou texto desejado
+	 */
+	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void comparaTextoTabela(String l,String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		while (!container.equals(DataProviderUtil.replaceValue(container)))
+	    	container = DataProviderUtil.replaceValue(container);
+	    
+		Assert.assertEquals(container, ((Grid)element).findTextInTable(element,l,c));			
+	
+	}
+	/**
+	 * 
+	 * Compara um campo de texto exibido em uma Table com o texto do dataProvider ou, caso não seja encontrado, 
+	 * com o texto enviado 
+	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 * @param container chave no dataProvider para ler o texto ou texto desejado
+	 */
+	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void comparaTextoTabelaUL(String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		comparaTextoTabela(((Grid)element).findLastLine(element),c,tabela, container);	
+	
+	}
+	
+	/**
+	 * 
+	 * Clica em um botão (submit ou button), checkbox, radio, expansor de detalhes do prime ou link 
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void clicaBotaoTabela(String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).tableButtonClick(element,l,c);
+		
+	}
+	
+	/**
+	 * 
+	 * Clica em um botão (submit ou button), checkbox, radio, expansor de detalhes do prime ou link 
+	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
+	public void clicaBotaoTabelaUL(String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		clicaBotaoTabela(((Grid)element).findLastLine(element),c,tabela);	
+	
+	}
+
+	/**
+	 * Seleciona uma opção pelo texto exibido em um input select do prime em determinada linha e coluna da tabela
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void clicaSelectTabela(String value,String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).tableSelectClick(value,l,c, element);
+		
+		
+	}
+	
+	/**
+	 * 
+	 * Seleciona uma opção pelo texto exibido em um input select do prime em determinada linha e coluna da tabela
+	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	public void clicaSelectTabelaUL(String value,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		clicaSelectTabela(value,((Grid)element).findLastLine(element),c,tabela);	
+	   
+	}
+	
+	/**
+	 * 
+	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	
+	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void informaTextoTabela(String value, String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).tableTextSendKeys(value,l,c, element);
+		
+		
+	}
+	
+	/**
+	 * 
+	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
+	 * Este método utiliza a última linha exibida da tabela, por isso não é informada a linha.
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param l linha da tabela
+	 * @param c coluna da tabela
+	 * @param tabela tabela a ser lida
+	 */
+	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	public void informaTextAreaTabelaUL(String value,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		informaTextoTabela(value,((Grid)element).findLastLine(element),c,tabela);	
+	
+	}
  }
