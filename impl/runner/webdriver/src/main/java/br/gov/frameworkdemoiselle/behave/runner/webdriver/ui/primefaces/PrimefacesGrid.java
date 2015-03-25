@@ -152,24 +152,14 @@ public class PrimefacesGrid extends WebBase implements Grid{
 
 	@Override
 	public void tableTextSendKeys(String value, String l, String c, Element element) {
-
-		String xpathTabela = preparaXPath(element,l, c);
-	    
-		String xpathTabelaBase = xpathTabela;
-	    
-	    xpathTabela = xpathTabela.concat("//textarea");
-	    
-	    xpathTabela = xpathTabela.concat("|");
-	    
-	    xpathTabela = xpathTabela.concat(xpathTabelaBase);
-	    
-	    xpathTabela = xpathTabela.concat("//input[@type='text']");
-	    
-		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
-	    
-	    myElement.sendKeys(value);
-		
+		String xpathTabela = preparaXPath(element,l, c);	    
+		String xpathTabelaBase = xpathTabela;	    
+	    xpathTabela = xpathTabela.concat("//textarea");	    
+	    xpathTabela = xpathTabela.concat("|");	    
+	    xpathTabela = xpathTabela.concat(xpathTabelaBase);	    
+	    xpathTabela = xpathTabela.concat("//input[@type='text']");	    
+		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));	    
+	    myElement.sendKeys(value);		
 	}
-
 	
 }
