@@ -48,6 +48,7 @@ import org.fest.swing.data.TableCell;
 import org.fest.swing.exception.ActionFailedException;
 import org.fest.swing.fixture.JTableFixture;
 
+import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
 public class DesktopGrid extends DesktopBase implements Grid {
@@ -84,5 +85,37 @@ public class DesktopGrid extends DesktopBase implements Grid {
 
 		}
 
+	}
+
+	
+	@Override
+	public String encontraTextoTabela(Element element, String l, String c) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String encontraUltimaLinha(Element tabela) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clicaBotaoTabela(Element element, String l, String c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clicaSelectTabela(String value, String l, String c, Element element){
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void informaTextoTabela(String value, String l, String c,
+			Element element) {
+		// TODO Auto-generated method stub
+		
 	}
 }

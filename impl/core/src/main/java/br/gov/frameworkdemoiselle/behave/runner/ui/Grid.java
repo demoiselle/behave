@@ -44,5 +44,14 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 public interface Grid extends BaseUI {
 
 	public void clickRow(String reference);
-
+	
+	public String encontraTextoTabela(Element element, String l, String c);
+	
+	public String encontraUltimaLinha(Element tabela);
+	
+	public void clicaBotaoTabela(Element element, String l, String c);
+	
+	public void clicaSelectTabela(String value, String l, String c, Element element);
+	
+	public void informaTextoTabela(String value, String l,String c,Element element);
 }

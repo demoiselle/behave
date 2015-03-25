@@ -40,7 +40,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
 import junit.framework.Assert;
 
 import org.apache.commons.lang.StringUtils;
@@ -82,7 +81,6 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
  */
 public class CommonSteps implements Step {
 
-	//Teste
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	protected DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);
@@ -90,6 +88,102 @@ public class CommonSteps implements Step {
 	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
+		
+	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
+	public void armazenaTextoTabela(String l,String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		
+		dataProvider.put(container, ((Grid)element).encontraTextoTabela(element,l,c));			
+	}
+	
+	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
+	public void armazenaTextoTabelaUL(String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		armazenaTextoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela, container);
+		
+	}
+	
+	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void comparaTextoTabela(String l,String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		while (!container.equals(DataProviderUtil.replaceValue(container)))
+	    	container = DataProviderUtil.replaceValue(container);
+	    
+		Assert.assertEquals(container, ((Grid)element).encontraTextoTabela(element,l,c));			
+	
+	}
+	
+	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
+	public void comparaTextoTabelaUL(String c,String tabela, String container){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		comparaTextoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela, container);	
+	
+	}
+	
+	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void clicaBotaoTabela(String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).clicaBotaoTabela(element,l,c);
+		
+	}
+	
+	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
+	public void clicaBotaoTabelaUL(String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		clicaBotaoTabela(((Grid)element).encontraUltimaLinha(element),c,tabela);	
+	
+	}
+	
+	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void clicaSelectTabela(String value,String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).clicaSelectTabela(value,l,c, element);
+		
+		
+	}
+	
+	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	public void clicaSelectTabelaUL(String value,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		clicaSelectTabela(value,((Grid)element).encontraUltimaLinha(element),c,tabela);	
+	   
+	}
+	
+	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	public void informaTextoTabela(String value, String l,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		((Grid)element).informaTextoTabela(value,l,c, element);
+		
+		
+	}
+	
+	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	public void informaTextAreaTabelaUL(String value,String c,String tabela){
+		
+		Element element = runner.getElement(currentPageName, tabela);
+		
+		informaTextoTabela(value,((Grid)element).encontraUltimaLinha(element),c,tabela);	
+	
+	}
+	
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
 	@When("vou para a tela \"$local\"")
