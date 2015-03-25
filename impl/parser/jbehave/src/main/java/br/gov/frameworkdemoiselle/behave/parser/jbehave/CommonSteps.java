@@ -82,6 +82,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
  */
 public class CommonSteps implements Step {
 
+	//Teste
 	protected Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	protected DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
 	protected DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);
