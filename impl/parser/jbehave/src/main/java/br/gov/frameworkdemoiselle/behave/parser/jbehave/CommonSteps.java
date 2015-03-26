@@ -36,20 +36,12 @@
  */
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import junit.framework.Assert;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
-import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.model.ExamplesTable;
 
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
@@ -64,9 +56,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.AutoComplete;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
-import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
@@ -257,30 +247,7 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@When("informo: $table")
-	@Given("informo: $table")
-	public void setDataProvideTable(ExamplesTable table) {
-		for (Map<String, String> row : table.getRows()) {
-			Iterator<String> it = row.keySet().iterator();
-			while (it.hasNext()) {
-				String key = (String) it.next();
-
-				setDataProvider(key, row.get(key));
-			}
-		}
-	}
-
-	@When("informo o campo: $table")
-	@Alias("informo os campos: $table")
-	public void informFields(ExamplesTable table) {
-		for (Map<String, String> row : table.getRows()) {
-			Iterator<String> it = row.keySet().iterator();
-			while (it.hasNext()) {
-				String key = (String) it.next();
-				inform(row.get(key), key);
-			}
-		}
-	}
+	
 
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
@@ -315,132 +282,7 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, elementName);
 		element.waitInvisible();
 	}
-
-	@When("obtenho \"$var\" do campo \"$fieldName\"")
-	@Given("obtenho \"$var\" do campo \"$fieldName\"")
-	@Then("obtenho \"$var\" do campo \"$fieldName\"")
-	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
-		if (element instanceof TextField) {
-			TextField textField = (TextField) element;
-			String value = textField.getText();
-			dataProvider.put(var, value);
-		} else {
-			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
-		}
-	}
-
-	@When("informo \"$key\" com valor \"$value\"")
-	@Given("informo \"$key\" com valor \"$value\"")
-	@Then("informo \"$key\" com valor \"$value\"")
-	@Aliases(values = { "defino a variável \"$key\" com valor \"$value\"" })
-	public void setDataProvider(String key, String value) {
-		dataProvider.put(key, value);
-	}
-
-	@When("movo o mouse sobre \"$element\"")
-	public void moverMouse(String elementName) {
-		Element element = runner.getElement(currentPageName, elementName);
-		if (element instanceof Menu) {
-			((Menu) element).mouseOver();
-		} else if (element instanceof MenuItem) {
-			((MenuItem) element).mouseOver();
-		} else if (element instanceof Button) {
-			((Button) element).mouseOver();
-		} else if (element instanceof Link) {
-			((Link) element).mouseOver();
-		}
-	}
-
-	@When("clico na linha da tabela \"$table\" referente a \"$reference\"")
-	public void clickRowTable(String table, String reference) {
-		Element element = runner.getElement(currentPageName, table);
-		if (element instanceof Grid) {
-			((Grid) element).clickRow(reference);
-		} else {
-			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
-		}
-	}
-
-	@When("confirmo a caixa de di\u00E1logo")
-	@Given("confirmo a caixa de di\u00E1logo")
-	@Then("confirmo a caixa de di\u00E1logo")
-	public void acceptDialog() {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		dialog.accept();
-	}
-
-	@When("cancelo a caixa de di\u00E1logo")
-	@Given("cancelo a caixa de di\u00E1logo")
-	@Then("cancelo a caixa de di\u00E1logo")
-	public void cancelDialog() {
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		dialog.cancel();
-	}
-
-	@When("informo na caixa de di\u00E1logo \"$value\"")
-	@Given("informo na caixa de di\u00E1logo \"$value\"")
-	@Then("informo na caixa de di\u00E1logo \"$value\"")
-	public void sendKeysDialog(String value) {
-		value = DataProviderUtil.replaceValue(value);
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		dialog.sendKeys(value);
-	}
-
-	@Then("ser\u00E1 exibido na caixa de di\u00E1logo \"$value\"")
-	public void getTextDialog(String value) {
-		value = DataProviderUtil.replaceValue(value);
-		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
-		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
-	}
-
-	@Given("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
-	@When("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
-	@Then("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
-	public void informoUmNumeroRandomicoComDigitoInicial(String prefix, String fieldName) {
-		Integer numeroRandomico = (new Random()).nextInt();
-		if (numeroRandomico < 0) {
-			numeroRandomico = numeroRandomico * (-1);
-		}
-		String stringNumeroRandomico = Integer.toString(numeroRandomico);
-		if (StringUtils.isBlank(prefix)) {
-			prefix = "";
-		}
-		inform(prefix + stringNumeroRandomico, fieldName);
-	}
-
-	@When("informo um n\u00FAmero randomico no campo \"$fieldName\"")
-	public void informoUmNumeroRandomicoNoCampo(String fieldName) {
-		Integer numeroRandomico = (new Random()).nextInt();
-		if (numeroRandomico < 0) {
-			numeroRandomico = numeroRandomico * (-1);
-		}
-		String stringNumeroRandomico = Integer.toString(numeroRandomico);
-		inform(stringNumeroRandomico, fieldName);
-	}
-
-	@When("imprimo no console o valor da vari\u00E1vel \"$var\"")
-	@Then("imprimo no console o valor da vari\u00E1vel \"$var\"")
-	public void printVarValueInLog(String var) {
-		String value = (String) dataProvider.get(var);
-		if (value == null)
-			value = "";
-		String msg = "\t" + var + " = " + "|" + value + "|";
-		logger.info(msg);
-	}
-
-	@Given("selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
-	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
-	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
-		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
-	}
-
-	@When("informo o valor do campo \"$fieldName\"")
-	@Then("informo o valor do campo \"$fieldName\"")
-	public void informWithDataProviderValue(String fieldName) {
-		inform(fieldName, fieldName);
-	}
-
+	
 	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
@@ -457,207 +299,5 @@ public class CommonSteps implements Step {
 		element.isVisibleDisabled();
 	}
 
-	/**
-	 * 
-	 * Armazena um campo de texto exibido em uma Table no dataProvider
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 * @param container
-	 *            chave no dataProvider para armazenar o texto encontrado
-	 */
-	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void tableTextStore(String l, String c, String tabela, String container) {
-		Element element = runner.getElement(currentPageName, tabela);
-		dataProvider.put(container, ((Grid) element).findTextInTable(element, l, c));
-	}
-
-	/**
-	 * 
-	 * Armazena um campo de texto exibido em uma Table no dataProvider Este
-	 * método utiliza a última linha exibida da tabela, por isso não é informada
-	 * a linha.
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 * @param container
-	 *            chave no dataProvider para armazenar o texto encontrado
-	 */
-	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
-	public void tableTextStoreLL(String c, String tabela, String container) {
-		Element element = runner.getElement(currentPageName, tabela);
-		tableTextStore(((Grid) element).findLastLine(element), c, tabela, container);
-	}
-
-	/**
-	 * 
-	 * Compara um campo de texto exibido em uma Table com o texto do
-	 * dataProvider ou, caso não seja encontrado, com o texto enviado
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 * @param container
-	 *            chave no dataProvider para ler o texto ou texto desejado
-	 */
-	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void tableTextCheck(String l, String c, String tabela, String container) {
-		Element element = runner.getElement(currentPageName, tabela);
-		while (!container.equals(DataProviderUtil.replaceValue(container)))
-			container = DataProviderUtil.replaceValue(container);
-		Assert.assertEquals(container, ((Grid) element).findTextInTable(element, l, c));
-
-	}
-
-	/**
-	 * 
-	 * Compara um campo de texto exibido em uma Table com o texto do
-	 * dataProvider ou, caso não seja encontrado, com o texto enviado Este
-	 * método utiliza a última linha exibida da tabela, por isso não é informada
-	 * a linha.
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 * @param container
-	 *            chave no dataProvider para ler o texto ou texto desejado
-	 */
-	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
-	public void tableTextCheckLL(String c, String tabela, String container) {
-		Element element = runner.getElement(currentPageName, tabela);
-		tableTextCheck(((Grid) element).findLastLine(element), c, tabela, container);
-	}
-
-	/**
-	 * 
-	 * Clica em um botão (submit ou button), checkbox, radio, expansor de
-	 * detalhes do prime ou link
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableButtonClick(String l, String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		((Grid) element).tableButtonClick(element, l, c);
-
-	}
-
-	/**
-	 * 
-	 * Clica em um botão (submit ou button), checkbox, radio, expansor de
-	 * detalhes do prime ou link Este método utiliza a última linha exibida da
-	 * tabela, por isso não é informada a linha.
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableButtonClickLL(String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		tableButtonClick(((Grid) element).findLastLine(element), c, tabela);
-	}
-
-	/**
-	 * Seleciona uma opção pelo texto exibido em um input select do prime em
-	 * determinada linha e coluna da tabela
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableSelectClick(String value, String l, String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		((Grid) element).tableSelectClick(value, l, c, element);
-	}
-
-	/**
-	 * 
-	 * Seleciona uma opção pelo texto exibido em um input select do prime em
-	 * determinada linha e coluna da tabela Este método utiliza a última linha
-	 * exibida da tabela, por isso não é informada a linha.
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableSelectClickLL(String value, String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		tableSelectClick(value, ((Grid) element).findLastLine(element), c, tabela);
-	}
-
-	/**
-	 * 
-	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-
-	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
-	public void tableTextSendKeys(String value, String l, String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		((Grid) element).tableTextSendKeys(value, l, c, element);
-	}
-
-	/**
-	 * 
-	 * Preenche o conteúdo de um input text ou textarea localizado em uma tabela
-	 * Este método utiliza a última linha exibida da tabela, por isso não é
-	 * informada a linha.
-	 * 
-	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
-	 * @param l
-	 *            linha da tabela
-	 * @param c
-	 *            coluna da tabela
-	 * @param tabela
-	 *            tabela a ser lida
-	 */
-	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
-	public void tableTextSendKeysLL(String value, String c, String tabela) {
-		Element element = runner.getElement(currentPageName, tabela);
-		tableTextSendKeys(value, ((Grid) element).findLastLine(element), c, tabela);
-	}
+	
 }
