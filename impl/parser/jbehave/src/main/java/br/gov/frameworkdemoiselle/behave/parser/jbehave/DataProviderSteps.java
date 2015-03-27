@@ -47,30 +47,16 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 
-import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
 public class DataProviderSteps extends CommonSteps{
 
 	
-	protected Runner runner;
-	protected DataProvider dataProvider;
-	protected DatasetProvider datasetProvider;
-	protected static String currentPageName;
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);	
 	
-	public DataProviderSteps() {
-		super();
-		this.runner = super.runner;
-		this.dataProvider = super.dataProvider;
-		this.datasetProvider = super.datasetProvider;
-		
-	}
 	
 	@When("informo: $table")
 	@Given("informo: $table")

@@ -45,25 +45,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
-
 public class DataGenerationSteps extends CommonSteps{
 
-	
-	protected Runner runner;
-	protected DataProvider dataProvider;
-	protected DatasetProvider datasetProvider;
-	protected static String currentPageName;
-		
-	public DataGenerationSteps() {
-		super();
-		this.runner = super.runner;
-		this.dataProvider = super.dataProvider;
-		this.datasetProvider = super.datasetProvider;
-		
-	}
 	
 	@Given("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
 	@When("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")

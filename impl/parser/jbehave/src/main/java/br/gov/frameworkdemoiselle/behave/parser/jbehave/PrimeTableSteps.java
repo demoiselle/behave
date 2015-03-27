@@ -41,29 +41,13 @@ import junit.framework.Assert;
 
 import org.jbehave.core.annotations.Then;
 
-import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
 public class PrimeTableSteps extends CommonSteps{
 
 	
-	protected Runner runner;
-	protected DataProvider dataProvider;
-	protected DatasetProvider datasetProvider;
-	protected static String currentPageName;
-		
-	
-	public PrimeTableSteps() {
-		super();
-		this.runner = super.runner;
-		this.dataProvider = super.dataProvider;
-		this.datasetProvider = super.datasetProvider;
-		
-	}
 	
 	/**
 	 * 

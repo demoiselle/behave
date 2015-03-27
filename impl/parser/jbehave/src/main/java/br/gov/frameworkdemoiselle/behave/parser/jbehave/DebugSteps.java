@@ -42,26 +42,10 @@ import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
-
 public class DebugSteps extends CommonSteps{
 
 	
-	protected Runner runner;
-	protected DataProvider dataProvider;
-	protected DatasetProvider datasetProvider;
-	protected static String currentPageName;
 	private Logger logger = Logger.getLogger(DebugSteps.class);
-	
-	public DebugSteps() {
-		super();
-		this.runner = super.runner;
-		this.dataProvider = super.dataProvider;
-		this.datasetProvider = super.datasetProvider;
-		
-	}
 	
 	@When("imprimo no console o valor da vari\u00E1vel \"$var\"")
 	@Then("imprimo no console o valor da vari\u00E1vel \"$var\"")

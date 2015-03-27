@@ -46,29 +46,12 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 
-import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.dataprovider.DatasetProvider;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
-import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 
 public class DialogSteps extends CommonSteps{
 
-	
-	protected Runner runner;
-	protected DataProvider dataProvider;
-	protected DatasetProvider datasetProvider;
-	protected static String currentPageName;
-		
-	
-	public DialogSteps() {
-		super();
-		this.runner = super.runner;
-		this.dataProvider = super.dataProvider;
-		this.datasetProvider = super.datasetProvider;
-		
-	}
 	
 	@When("confirmo a caixa de di\u00E1logo")
 	@Given("confirmo a caixa de di\u00E1logo")
