@@ -176,6 +176,13 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 		if (BehaveConfig.getParser_CommonsStepsEnabled()) {
 			steps.add(new CommonSteps());
+			steps.add(new PrimeTableSteps());
+			steps.add(new DataProviderSteps());
+			steps.add(new DialogSteps());
+			steps.add(new DebugSteps());
+			steps.add(new TableSteps());
+			steps.add(new MouseControlSteps());
+			steps.add(new DataGenerationSteps());
 		}
 
 		return new InstanceStepsFactory(configuration(), steps.toArray());

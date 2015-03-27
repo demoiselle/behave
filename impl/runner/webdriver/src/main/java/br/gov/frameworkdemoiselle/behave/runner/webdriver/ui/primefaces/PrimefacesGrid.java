@@ -88,9 +88,10 @@ public class PrimefacesGrid extends WebBase implements Grid {
 		xpathTabela = xpathTabela.concat("|");
 		xpathTabela = xpathTabela.concat(xpathTabelaBase);
 		xpathTabela = xpathTabela.concat("//a");
-		xpathTabela = xpathTabela.concat("|");
+		xpathTabela = xpathTabela.concat("|(");
 	    xpathTabela = xpathTabela.concat(xpathTabelaBase);
-	    xpathTabela = xpathTabela.concat("//div[@class='ui-radiobutton ui-widget']");
+	    xpathTabela = xpathTabela.concat(")");
+	    xpathTabela = xpathTabela.concat("/div/div[2]");
 
 		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 		myElement.click();
