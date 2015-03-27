@@ -45,10 +45,8 @@ import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
-public class PrimeTableSteps extends CommonSteps{
+public class PrimeTableSteps extends CommonSteps {
 
-	
-	
 	/**
 	 * 
 	 * Armazena um campo de texto exibido em uma Table no dataProvider
@@ -252,5 +250,5 @@ public class PrimeTableSteps extends CommonSteps{
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextSendKeys(value, ((Grid) element).findLastLine(element), c, tabela);
 	}
-	
+
 }

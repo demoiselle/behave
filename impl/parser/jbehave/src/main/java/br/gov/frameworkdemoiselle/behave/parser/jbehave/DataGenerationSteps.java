@@ -37,7 +37,6 @@
 
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-
 import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
@@ -45,9 +44,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-public class DataGenerationSteps extends CommonSteps{
+public class DataGenerationSteps extends CommonSteps {
 
-	
 	@Given("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
 	@When("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
 	@Then("informo um n\u00FAmero randomico com prefixo \"$prefix\" no campo \"$fieldName\"")
@@ -72,4 +70,5 @@ public class DataGenerationSteps extends CommonSteps{
 		String stringNumeroRandomico = Integer.toString(numeroRandomico);
 		inform(stringNumeroRandomico, fieldName);
 	}
+	
 }

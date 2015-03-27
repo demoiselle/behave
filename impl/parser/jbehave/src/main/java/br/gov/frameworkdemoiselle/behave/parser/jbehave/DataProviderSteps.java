@@ -52,12 +52,10 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
-public class DataProviderSteps extends CommonSteps{
+public class DataProviderSteps extends CommonSteps {
 
-	
-	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);	
-	
-	
+	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+
 	@When("informo: $table")
 	@Given("informo: $table")
 	public void setDataProvideTable(ExamplesTable table) {
@@ -81,20 +79,20 @@ public class DataProviderSteps extends CommonSteps{
 				inform(row.get(key), key);
 			}
 		}
-	}	
-	
+	}
+
 	@Given("selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
 		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
 	}
-	
+
 	@When("informo o valor do campo \"$fieldName\"")
 	@Then("informo o valor do campo \"$fieldName\"")
 	public void informWithDataProviderValue(String fieldName) {
 		inform(fieldName, fieldName);
 	}
-	
+
 	@When("informo \"$key\" com valor \"$value\"")
 	@Given("informo \"$key\" com valor \"$value\"")
 	@Then("informo \"$key\" com valor \"$value\"")
@@ -116,4 +114,5 @@ public class DataProviderSteps extends CommonSteps{
 			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
 		}
 	}
+	
 }

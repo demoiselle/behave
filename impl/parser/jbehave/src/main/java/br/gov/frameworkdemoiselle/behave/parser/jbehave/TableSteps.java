@@ -37,7 +37,6 @@
 
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
@@ -45,13 +44,10 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 
-public class TableSteps extends CommonSteps{
+public class TableSteps extends CommonSteps {
 
-	
-	
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
-	
-	
+
 	@When("clico na linha da tabela \"$table\" referente a \"$reference\"")
 	public void clickRowTable(String table, String reference) {
 		Element element = runner.getElement(currentPageName, table);
@@ -61,4 +57,5 @@ public class TableSteps extends CommonSteps{
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
+	
 }

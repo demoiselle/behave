@@ -37,7 +37,6 @@
 
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
@@ -46,11 +45,8 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 
-public class MouseControlSteps extends CommonSteps{
+public class MouseControlSteps extends CommonSteps {
 
-	
-	
-	
 	@When("movo o mouse sobre \"$element\"")
 	public void moverMouse(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
@@ -64,4 +60,5 @@ public class MouseControlSteps extends CommonSteps{
 			((Link) element).mouseOver();
 		}
 	}
+	
 }

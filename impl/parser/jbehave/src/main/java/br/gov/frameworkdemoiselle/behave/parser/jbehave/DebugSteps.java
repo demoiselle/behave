@@ -37,16 +37,14 @@
 
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-public class DebugSteps extends CommonSteps{
+public class DebugSteps extends CommonSteps {
 
-	
 	private Logger logger = Logger.getLogger(DebugSteps.class);
-	
+
 	@When("imprimo no console o valor da vari\u00E1vel \"$var\"")
 	@Then("imprimo no console o valor da vari\u00E1vel \"$var\"")
 	public void printVarValueInLog(String var) {
@@ -56,4 +54,5 @@ public class DebugSteps extends CommonSteps{
 		String msg = "\t" + var + " = " + "|" + value + "|";
 		logger.info(msg);
 	}
+	
 }

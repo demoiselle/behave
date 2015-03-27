@@ -37,22 +37,18 @@
 
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
-
 import junit.framework.Assert;
-
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 
-public class DialogSteps extends CommonSteps{
+public class DialogSteps extends CommonSteps {
 
-	
 	@When("confirmo a caixa de di\u00E1logo")
 	@Given("confirmo a caixa de di\u00E1logo")
 	@Then("confirmo a caixa de di\u00E1logo")
@@ -84,4 +80,5 @@ public class DialogSteps extends CommonSteps{
 		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
 		Assert.assertEquals(value.replace("\r\n", "").replace("\n", ""), dialog.getText().replace("\r\n", "").replace("\n", ""));
 	}
+	
 }
