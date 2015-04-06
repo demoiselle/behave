@@ -193,8 +193,8 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	@When("informo \"$value\" no campo \"$fieldName\"")
-	@Then("informo \"$value\" no campo \"$fieldName\"")
+	@When(value = "informo \"$value\" no campo \"$fieldName\"", priority = 1)
+	@Then(value = "informo \"$value\" no campo \"$fieldName\"", priority = 1)
 	public void inform(String value, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
@@ -223,8 +223,8 @@ public class CommonSteps implements Step {
 	 * @param String
 	 *            fieldName Nome do campo
 	 */
-	@When("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
-	@Then("informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"")
+	@When(value = "informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"", priority = 10)
+	@Then(value = "informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"", priority = 10)
 	public void inform(String value, String selectValue, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
