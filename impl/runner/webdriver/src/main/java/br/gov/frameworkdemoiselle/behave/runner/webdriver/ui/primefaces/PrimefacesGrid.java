@@ -66,7 +66,22 @@ public class PrimefacesGrid extends WebBase implements Grid {
 	public String findTextInTable(Element element, String l, String c) {
 		String xpathTabela = preparaXPath(element, l, c);
 		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
-		return myElement.getText();
+		
+		String str = "";
+		
+		try {
+			str = myElement.getText();
+		}
+		catch(Exception ex){
+			
+		}
+		
+		if (str==null || str.isEmpty()){
+			xpathTabela = xpathTabela.concat("//input[@type='text']");
+			myElement =  ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
+			str =  myElement.getAttribute("value");
+		}
+		return str;
 	}
 
 	@Override
