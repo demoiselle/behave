@@ -65,8 +65,7 @@ public class PrimefacesGrid extends WebBase implements Grid {
 	@Override
 	public String findTextInTable(Element element, String l, String c) {
 		String xpathTabela = preparaXPath(element, l, c);
-		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver())
-				.findElement(By.xpath(xpathTabela));
+		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 		String str = "";
 		try {
 			str = myElement.getText();
@@ -74,8 +73,7 @@ public class PrimefacesGrid extends WebBase implements Grid {
 		}
 		if (str == null || str.isEmpty()) {
 			xpathTabela = xpathTabela.concat("//input[@type='text']");
-			myElement = ((WebDriver) runner.getDriver()).findElement(By
-					.xpath(xpathTabela));
+			myElement = ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 			str = myElement.getAttribute("value");
 		}
 		return str;
@@ -90,8 +88,7 @@ public class PrimefacesGrid extends WebBase implements Grid {
 	public void tableButtonClick(Element element, String l, String c) {
 		String xpathTabela = preparaXPath(element, l, c);
 		String xpathTabelaBase = xpathTabela;
-		xpathTabela = xpathTabela
-				.concat("//button[@type='submit' or @type='button']");
+		xpathTabela = xpathTabela.concat("//button[@type='submit' or @type='button']");
 		xpathTabela = xpathTabela.concat("|");
 		xpathTabela = xpathTabela.concat(xpathTabelaBase);
 		xpathTabela = xpathTabela.concat("//input[@type='checkbox']");
@@ -106,18 +103,15 @@ public class PrimefacesGrid extends WebBase implements Grid {
 		xpathTabela = xpathTabela.concat(")");
 		xpathTabela = xpathTabela.concat("/div/div[2]");
 
-		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver())
-				.findElement(By.xpath(xpathTabela));
+		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 		myElement.click();
 	}
 
 	@Override
-	public void tableSelectClick(String value, String l, String c,
-			Element element) {
+	public void tableSelectClick(String value, String l, String c, Element element) {
 		String xpathTabela = preparaXPath(element, l, c);
 		xpathTabela = xpathTabela.concat("//label");
-		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver())
-				.findElement(By.xpath(xpathTabela));
+		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 		String selectId = myElement.getAttribute("id");
 		selectId = selectId.substring(0, selectId.length() - 6);
 		myElement.click();
@@ -128,23 +122,19 @@ public class PrimefacesGrid extends WebBase implements Grid {
 			e.printStackTrace();
 		}
 
-		WebElement myElement2 = (WebElement) ((WebDriver) runner.getDriver())
-				.findElement(By.xpath("//div[@id='" + selectId.toString()
-						+ "_panel']/div/ul/li[text()='" + value + "']"));
+		WebElement myElement2 = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath("//div[@id='" + selectId.toString() + "_panel']/div/ul/li[text()='" + value + "']"));
 		myElement2.click();
 	}
 
 	@Override
-	public void tableTextSendKeys(String value, String l, String c,
-			Element element) {
+	public void tableTextSendKeys(String value, String l, String c, Element element) {
 		String xpathTabela = preparaXPath(element, l, c);
 		String xpathTabelaBase = xpathTabela;
 		xpathTabela = xpathTabela.concat("//textarea");
 		xpathTabela = xpathTabela.concat("|");
 		xpathTabela = xpathTabela.concat(xpathTabelaBase);
 		xpathTabela = xpathTabela.concat("//input[@type='text']");
-		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver())
-				.findElement(By.xpath(xpathTabela));
+		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
 		myElement.sendKeys(value);
 	}
 
