@@ -48,6 +48,7 @@ public class SwitchDriver {
 	private WebDriver driver;
 	private List<Node> nodes;
 	private int nextFrame = 0;
+	private int frameIndex = 0;
 
 	public SwitchDriver(WebDriver driver) {
 		this.driver = driver;
@@ -75,20 +76,27 @@ public class SwitchDriver {
 	}
 
 	private void bindNodes(Node _parent) {
-		bindNodes(_parent, "(<frame(.*?)src=\"(.*?)\"(.*?)\\>)");
-		bindNodes(_parent, "(<iframe(.*?)src=\"(.*?)\"(.*?)\\>)");
+		bindNodes(_parent, "(<frame(.*?)>)");
+		bindNodes(_parent, "(<iframe(.*?)>)");
 	}
 
 	private void bindNodes(Node _parent, String regex) {
 		_parent.switchDriver();
-		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 		String pageSource = driver.getPageSource();
 		Matcher matcher = pattern.matcher(pageSource);
 		int index = -1;
 		while (matcher.find()) {
-			Node frame = new Node(_parent, ++index, matcher.group(3));
-			nodes.add(frame);
-			bindNodes(frame);
+
+			// Continua contando os índices mesmo não adicionando
+			int indexAux = ++index;
+
+			// Somente adiciona os frames que possuem SRC
+			if (matcher.group().toLowerCase().contains("scr")) {
+				Node frame = new Node(_parent, indexAux, "" + frameIndex++);
+				nodes.add(frame);
+				bindNodes(frame);
+			}
 		}
 	}
 

@@ -85,6 +85,7 @@ public class PrimeTableSteps extends CommonSteps {
 	public void tableTextStoreLL(String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextStore(((Grid) element).findLastLine(element), c, tabela, container);
+		
 	}
 
 	/**
