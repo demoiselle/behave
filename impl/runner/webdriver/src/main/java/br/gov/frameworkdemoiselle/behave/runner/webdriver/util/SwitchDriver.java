@@ -76,8 +76,8 @@ public class SwitchDriver {
 	}
 
 	private void bindNodes(Node _parent) {
-		bindNodes(_parent, "(<frame(.*?)>)");
-		bindNodes(_parent, "(<iframe(.*?)>)");
+		bindNodes(_parent, "(<frame (.*?)>)");
+		bindNodes(_parent, "(<iframe (.*?)>)");
 	}
 
 	private void bindNodes(Node _parent, String regex) {
@@ -92,7 +92,7 @@ public class SwitchDriver {
 			int indexAux = ++index;
 
 			// Somente adiciona os frames que possuem SRC
-			if (matcher.group().toLowerCase().contains("scr")) {
+			if (matcher.group().toLowerCase().contains("src=\"")) {
 				Node frame = new Node(_parent, indexAux, "" + frameIndex++);
 				nodes.add(frame);
 				bindNodes(frame);
