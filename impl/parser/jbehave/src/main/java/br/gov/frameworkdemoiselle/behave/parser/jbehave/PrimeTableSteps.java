@@ -85,7 +85,6 @@ public class PrimeTableSteps extends CommonSteps {
 	public void tableTextStoreLL(String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextStore(((Grid) element).findLastLine(element), c, tabela, container);
-		
 	}
 
 	/**
@@ -229,6 +228,8 @@ public class PrimeTableSteps extends CommonSteps {
 	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
 	public void tableTextSendKeys(String value, String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
+		while (!value.equals(DataProviderUtil.replaceValue(value)))
+			value = DataProviderUtil.replaceValue(value);
 		((Grid) element).tableTextSendKeys(value, l, c, element);
 	}
 

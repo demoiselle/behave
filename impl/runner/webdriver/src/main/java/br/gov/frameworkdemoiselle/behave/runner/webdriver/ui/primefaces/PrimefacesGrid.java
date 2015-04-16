@@ -135,6 +135,7 @@ public class PrimefacesGrid extends WebBase implements Grid {
 		xpathTabela = xpathTabela.concat(xpathTabelaBase);
 		xpathTabela = xpathTabela.concat("//input[@type='text']");
 		WebElement myElement = (WebElement) ((WebDriver) runner.getDriver()).findElement(By.xpath(xpathTabela));
+		myElement.clear();
 		myElement.sendKeys(value);
 	}
 
