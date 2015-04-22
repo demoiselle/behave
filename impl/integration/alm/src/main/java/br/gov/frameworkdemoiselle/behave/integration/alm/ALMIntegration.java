@@ -70,6 +70,7 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
@@ -144,6 +145,22 @@ public class ALMIntegration implements Integration {
 
 			// Somente cria e associa o caso de teste quando ele não é informado
 			if (testCaseId == null) {
+				String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
+				testCaseName = "testcase" + testCaseIdentification;
+				
+				// --------------------------- TestCase (GET)
+				// Conexão HTTPS
+				client = HttpsClient.getNewHttpClient(ENCODING);
+				// Login
+				login(client);
+
+				Testcase testCase = new Testcase();
+
+				HttpResponse responseTestCaseGet = getRequest(client, "testcase", testCaseName);
+				if (responseTestCaseGet.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+					testCase = GenerateXMLString.getTestCaseObject(responseTestCaseGet);
+				}
+				
 				// --------------------------- TestCase (PUT)
 				// Conexão HTTPS
 				client = HttpsClient.getNewHttpClient(ENCODING);
@@ -152,9 +169,7 @@ public class ALMIntegration implements Integration {
 
 				// TestCase
 				log.debug(message.getString("message-send-test-case"));
-				String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
-				testCaseName = "testcase" + testCaseIdentification;
-				HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString()));
+				HttpResponse responseTestCase = sendRequest(client, "testcase", testCaseName, GenerateXMLString.getTestcaseString(urlServer, projectAreaAlias, ENCODING, result.get("name").toString(), result.get("steps").toString(), testCase));
 				if (responseTestCase.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestCase.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 					throw new BehaveException(message.getString("exception-create-test-case", responseTestCase.getStatusLine().toString()));
 				}

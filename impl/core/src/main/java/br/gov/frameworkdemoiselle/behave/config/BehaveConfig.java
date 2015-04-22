@@ -200,6 +200,11 @@ public class BehaveConfig {
 		return Boolean.parseBoolean(getProperty("behave.integration.alm.autoAssociateTestCaseInPlan", "true"));
 	}
 
+	// valor da categoria "Tipo de Execução" do caso de teste
+	public static String getIntegration_CategoryTipoExecucao() {
+		return getProperty("behave.integration.alm.categoryTipoExecucao", "Automática");
+	}
+
 	/** RUNNER Properties **/
 
 	// Tempo máximo de espera em uma ação na tela

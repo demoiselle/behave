@@ -36,6 +36,9 @@
  */
 package br.gov.frameworkdemoiselle.behave.integration.alm.objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -67,6 +70,13 @@ public class Testcase {
 
 	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
 	private TestplanLink testplan;
+
+	@XmlElement(namespace = "http://jazz.net/xmlns/alm/qm/v0.1/")
+	private List<TestcaseCategory> category;
+
+	public Testcase() {
+		setCategory(new ArrayList<TestcaseCategory>());
+	}
 
 	public String getTitle() {
 		return title;
@@ -122,6 +132,14 @@ public class Testcase {
 
 	public void setTestplan(TestplanLink testplan) {
 		this.testplan = testplan;
+	}
+
+	public List<TestcaseCategory> getCategory() {
+		return category;
+	}
+
+	public void setCategory(List<TestcaseCategory> category) {
+		this.category = category;
 	}
 
 }

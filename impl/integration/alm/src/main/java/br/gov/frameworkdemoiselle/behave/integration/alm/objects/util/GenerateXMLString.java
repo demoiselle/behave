@@ -54,12 +54,14 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
+import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseCategory;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
@@ -111,7 +113,7 @@ public class GenerateXMLString {
 		return testPlanString.toString();
 	}
 
-	public static String getTestcaseString(String urlServer, String projectAreaAlias, String encoding, String name, String steps) throws JAXBException {
+	public static String getTestcaseString(String urlServer, String projectAreaAlias, String encoding, String name, String steps, Testcase oldTestCase) throws JAXBException {
 		Priority priority = new Priority();
 		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
 		priority.setValue("literal.priority.101");
@@ -127,6 +129,31 @@ public class GenerateXMLString {
 		testcase.setWeight(100);
 		testcase.setTestCaseDesign(design);
 
+		// Valor da Categoria
+		String categoryTipoExecucao =  BehaveConfig.getIntegration_CategoryTipoExecucao();
+		
+		// Verifica se no caso de teste vindo da ALM existe a caregoria
+		// "Tipo de Execução", se não existe cria.
+		boolean objExists = false;
+		for (TestcaseCategory c : oldTestCase.getCategory()) {
+			if (c.getTerm().toLowerCase().trim().equals("tipo de execução")) {
+				objExists = true;				
+				// Altera para "Automática"
+				c.setValue(categoryTipoExecucao);				
+				break;
+			}		
+		}
+		
+		if (!objExists) {
+			TestcaseCategory newC = new TestcaseCategory();
+			newC.setTerm("Tipo de Execução");
+			newC.setValue(categoryTipoExecucao);
+			oldTestCase.getCategory().add(newC);
+		}
+
+		// Adiciona as categorias
+		testcase.setCategory(oldTestCase.getCategory());
+
 		JAXBContext jaxb = JAXBContext.newInstance(Testcase.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -135,6 +162,35 @@ public class GenerateXMLString {
 		marshaller.marshal(testcase, testCaseString);
 
 		return testCaseString.toString();
+	}
+
+	public static Testcase getTestCaseObject(HttpResponse response) throws IOException, JAXBException {
+
+		Testcase testcase = null;
+		StringBuffer xmlString = new StringBuffer();
+		HttpEntity entity = response.getEntity();
+		if (entity != null) {
+			InputStream instream = entity.getContent();
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+				String line = "";
+				while ((line = reader.readLine()) != null) {
+					xmlString.append(line);
+				}
+			} finally {
+				instream.close();
+			}
+		}
+
+		if (!xmlString.equals("")) {
+			JAXBContext jaxbContext = JAXBContext.newInstance(Testcase.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			StringReader reader = new StringReader(xmlString.toString());
+			testcase = (Testcase) unmarshaller.unmarshal(reader);
+		}
+
+		return testcase;
+
 	}
 
 	public static String getExecutionworkitemString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, String testPlanId) throws JAXBException {
