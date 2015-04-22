@@ -202,7 +202,7 @@ public class BehaveConfig {
 
 	// valor da categoria "Tipo de Execução" do caso de teste
 	public static String getIntegration_CategoryTipoExecucao() {
-		return getProperty("behave.integration.alm.categoryTipoExecucao", "Automática");
+		return getProperty("behave.integration.alm.categoryTipoExecucao", "Automatizado");
 	}
 
 	/** RUNNER Properties **/
