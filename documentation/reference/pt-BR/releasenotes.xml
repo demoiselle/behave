@@ -14,7 +14,67 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.4.3</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/329">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na integração com a ALM, agora os testes automatizados selecionarão o "Tipo de Execução" 
+					com valor "Automatizado" no Caso de Teste, ou o que for informado na propriedade behave.integration.alm.categoryTipoExecucao 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/322">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado suporte a input text para a frase de armazenagem de texto
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/321">
+					<emphasis>[Melhoria]</emphasis>
+					Reorganização dos passos em classes distintas
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/320">
+					<emphasis>[Melhoria]</emphasis>
+					Adição do suporte a radio button na frase de "clique no elemento..."
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/319">
+					<emphasis>[Melhoria]</emphasis>
+					Novos passos para manipulação de Grids do Primefaces
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/318">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na parametrização de cenários
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/316">
+					<emphasis>[Melhoria]</emphasis>
+					Novo atributo forceWaitLoading no ElementMap que força o dbehave a aguardar o Loading aparecer
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/315">
+					<emphasis>[Melhoria]</emphasis>
+					Agora mesmo utilizando o Meta @casodeteste o caso de teste será associado ao plano
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/314">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização da versão do WebDriver de 2.44 para a 2.45
+				</ulink>
+			</listitem>
+		</itemizedlist>		
+	
 		<citetitle>Versão 1.4.2</citetitle>
+		
 		<itemizedlist>
 			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/310">

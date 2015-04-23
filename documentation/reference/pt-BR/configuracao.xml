@@ -256,6 +256,15 @@
 					<emphasis>true</emphasis>
 					.
 				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.categoryTipoExecucao</citetitle>
+					: propriedade do valor informado no "Tipo de Execução" quando um Caso de Teste é enviado para a ALM.  
+					O valor padrão
+					é
+					<emphasis>Automatizado</emphasis>
+					.
+				</listitem>
+				 
 			</itemizedlist>
 		</para>
 	</section>

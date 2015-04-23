@@ -298,5 +298,13 @@ private <citetitle>Loading</citetitle> loading;</programlisting>
 				O problema que este componente resolve pode ocorrer de forma aleatória em sistemas com AJAX e que possuam a image/texto de "Carregando..." nas ações. Quando ocorre uma lentidão no sistema a imagem/texto é mantida mais tempo que o normal impedindo que o próximo passo seja executado.
 			</para>
 		</tip>
+		
+		<para>
+			A partir da versão <citetitle>1.4.3</citetitle> a anotação @ElementMap possui um atributo forceWaitLoading que por padrão é false. 
+			Em casos muito específicos ele tem como objetivo forçar a espera do elemento de loading mapeado aparacer, ou seja, quando o elemento estiver com esta propriedade forceWaitLoading = true o dbehave irá aguardar pelo maxWait o loading aparecer e em seguinda desaparecer antes de executar a próxima ação.
+			Abaixo esta um exemplo de utilização:			
+		</para>
+		<programlisting>@ElementMap(name = "NOME DO ELEMENTO NA HISTÓRIA", <citetitle>forceWaitLoading = true,</citetitle> locatorType = ElementLocatorType.Id, locator = "ID DO ELEMENTO")
+private <citetitle>TextField</citetitle> field;</programlisting>
 	</section>
 </chapter>
