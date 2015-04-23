@@ -190,13 +190,7 @@ Então será exibido "Seja bem vindo"</programlisting>
 			Parâmetros devem ser utilizados nos cenários quando os dados
 			utilizados nos testes não forem constantes. A sintaxe de um
 			parâmetro
-			é "{nome_do_parametro}".
-			O
-			<emphasis>nome_do_parametro</emphasis>
-			deve ser o mesmo
-			definido no atributo "name" da anotação @ElementMap,
-			na
-			classe de mapeamento da tela.
+			é "{nome_do_parametro}".			
 		</para>
 		<programlisting>Cenário: Acessar o sistema com usuário "{usuario}" e senha "{senha}"
 Dado que estou na página "Login"
