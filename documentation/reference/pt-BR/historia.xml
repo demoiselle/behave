@@ -134,6 +134,24 @@ E informo "behave" no campo "Senha:"
 Quando clico em "Entrar"
 Então será exibido "Seja bem vindo"</programlisting>
 	</section>
+	
+		<section>
+		<title>Frases pré-definidas pelo framework para manipulação de Grids</title>
+		<para>		
+			<itemizedlist>
+				<listitem><para>[Quando] armazeno a célula "&lt;linha&gt;","&lt;coluna&gt;" da tabela "&lt;tabela&gt;" em "&lt;container&gt;</para></listitem>
+				<listitem><para>[Quando] armazeno a coluna "&lt;coluna&gt;" da tabela "&lt;tabela&gt;" em "&lt;container&gt;"</para></listitem>
+				<listitem><para>[Quando] comparo o texto da célula "&lt;linha&gt;","&lt;c&gt;" da tabela "&lt;tabela&gt;" com "&lt;container&gt;"</para></listitem>
+				<listitem><para>[Quando] comparo o texto da coluna "&lt;coluna&gt;" da tabela "&lt;tabela&gt;" com "&lt;container&gt;"</para></listitem>
+				<listitem><para>[Quando] clico na célula "&lt;linha&gt;","&lt;coluna&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+				<listitem><para>[Quando] clico na coluna "&lt;coluna&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+				<listitem><para>[Quando] escolho a opção "&lt;value&gt;" na célula "&lt;l&gt;","&lt;c&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+				<listitem><para>[Quando] escolho a opção "&lt;value&gt;" na coluna "&lt;c&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+				<listitem><para>[Quando] informo o texto "&lt;value&gt;" na célula "&lt;l&gt;","&lt;c&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+				<listitem><para>[Quando] informo o texto "&lt;value&gt;" na coluna "&lt;c&gt;" da tabela "&lt;tabela&gt;"</para></listitem>
+			</itemizedlist>
+		</para>
+	</section>
 
 	<section>
 		<title>Escrevendo um cenário</title>
