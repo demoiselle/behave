@@ -28,32 +28,27 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 
 	@Override
 	public void waitText(String text) {
-		// TODO Auto-generated method stub
-
+		throw new BehaveException("Método não implementado.");
 	}
 
 	@Override
 	public void waitTextInElement(String text) {
-		// TODO Auto-generated method stub
-
+		throw new BehaveException("Método não implementado.");
 	}
 
 	@Override
 	public void waitInvisible() {
-		// TODO Auto-generated method stub
-
+		throw new BehaveException("Método não implementado.");
 	}
 
 	@Override
 	public void waitVisibleClickableEnabled() {
-		// TODO Auto-generated method stub
-
+		throw new BehaveException("Método não implementado.");
 	}
 
 	@Override
 	public void isVisibleDisabled() {
-		// TODO Auto-generated method stub
-
+		throw new BehaveException("Método não implementado.");
 	}
 
 }
