@@ -258,14 +258,13 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Verifica se existe o LOADING
 				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
 				existeLoading = true;
+				
+				log.debug(message.getString("message-loading-visible"));
 			} catch (Exception e) {
 				existeLoading = false;
 			}
 
 			if (existeLoading) {
-
-				log.debug(message.getString("message-loading-visible"));
-				
 				// Força esperar o loading aparecer quando o elemento utilizado
 				// tem a propriedade forWaitLoading na anotação @ElementMap
 				if (getElementMap() != null && getElementMap().forceWaitLoading()) {
