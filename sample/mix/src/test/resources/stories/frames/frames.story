@@ -5,11 +5,20 @@ Para obter o javadoc da classe Cache
 Como um visitante
 Desejo acessar a documentacao do hibernate
 
-Cenário: Acesso ao JavaDoc da classe Cache
+Cenário: Acesso a Frames
 
-Dado que vou para a tela "Javadoc do Hibernate"
-Então será exibido "Hibernate JavaDoc (3.5.6-Final)"
-Quando clico em "org.hibernate"
-Então será exibido "Cache"
-Quando clico em "Cache"
-Então será exibido "Provides an API for querying/managing the second level cache regions"
+Dado que vou para a tela "Teste de Frame"
+Então será exibido "Topo"
+Então será exibido "Menu"
+Então será exibido "Rodape"
+Então será exibido "Sitema de Produtos"
+
+Quando clico em "Carros"
+Então será exibido "Carro 1"
+
+Quando clico em "Motos"
+Então será exibido "Moto 1"
+
+E será exibido "Moto 2"
+Quando clico em "Sistema"
+Então será exibido "Sitema de Produtos"

@@ -5,10 +5,16 @@ import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
 import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 
-@ScreenMap(name = "Principal", location = "http://pic.dhe.ibm.com/infocenter/clmhelp/v4r0m4/index.jsp")
+@ScreenMap(name = "Teste de IFrame", location = "http://demoiselle.sourceforge.net/docs/components/behave/samples/iframe/iframe.html")
 public class IFramePage {
 
-	@ElementMap(name = "Rational Reporting 4.0.4", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Rational Reporting 4.0.4']")
-	private Link link1;
+	@ElementMap(name = "Sistema", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='Sistema']")
+	private Link sistema;
+	
+	@ElementMap(name = "Carros", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='--->Carros']")
+	private Link carros;
+
+	@ElementMap(name = "Motos", locatorType = ElementLocatorType.XPath, locator = "//a[./text()='--->Motos']")
+	private Link motos;
 
 }
