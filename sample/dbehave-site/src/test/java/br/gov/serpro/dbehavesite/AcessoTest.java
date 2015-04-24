@@ -34,10 +34,27 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.config;
+package br.gov.serpro.dbehavesite;
 
-public class Config {
+import java.util.Arrays;
 
-	public final static String URLBASE = "dbehave.url";
+import org.apache.log4j.Logger;
+import org.junit.Test;
+
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+
+public class AcessoTest {
+
+	private BehaveContext eng = BehaveContext.getInstance();
+
+	Logger log = Logger.getLogger(AcessoTest.class);
+
+	public AcessoTest() {
+	}
+
+	@Test
+	public void testAllAcesso() throws Throwable {
+		eng.run(Arrays.asList("/stories/acesso.story"));
+	}
 	
 }

@@ -34,10 +34,10 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.config;
+package br.gov.serpro.dbehavesite.config;
 
 public class Config {
 
-	public final static String URLBASE = "dbehave.url";
+	public final static String URLBASE = "treino.url";
 	
 }

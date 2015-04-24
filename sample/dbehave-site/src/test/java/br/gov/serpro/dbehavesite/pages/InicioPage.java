@@ -34,10 +34,18 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package demoisellebehave.serpro.treino.config;
+package br.gov.serpro.dbehavesite.pages;
 
-public class Config {
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.serpro.dbehavesite.config.Config;
 
-	public final static String URLBASE = "dbehave.url";
-	
+@ScreenMap(name = "Tela de Início", base = Config.URLBASE, location = "/")
+public class InicioPage {
+
+	@ElementMap(name = "Documentação", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
+	private Button botaoEnviar;
+
 }
