@@ -38,6 +38,6 @@ package demoisellebehave.serpro.treino.config;
 
 public class Config {
 
-	public final static String URLBASE = "dbehave.url";
+	public final static String URLBASE = "treino.url";
 	
 }
