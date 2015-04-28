@@ -45,5 +45,11 @@ public class WebCheckBox extends WebBase implements CheckBox {
 
 		getElements().get(0).click();
 	}
+	
+	public Boolean isSelected() {
+		waitVisibleClickableEnabled();
+		
+		return getElements().get(0).isSelected();
+	}
 
 }

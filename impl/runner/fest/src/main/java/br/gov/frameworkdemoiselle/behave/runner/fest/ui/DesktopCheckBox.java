@@ -51,4 +51,9 @@ public class DesktopCheckBox extends DesktopBase implements CheckBox {
 		checkBoxFix.click();
 	}
 
+	@Override
+	public Boolean isSelected() {
+		return null;
+	}
+
 }

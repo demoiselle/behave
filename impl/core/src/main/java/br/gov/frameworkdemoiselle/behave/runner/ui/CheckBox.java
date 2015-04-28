@@ -46,4 +46,6 @@ public interface CheckBox extends BaseUI {
 
 	public void click();
 	
+	public Boolean isSelected();
+	
 }
