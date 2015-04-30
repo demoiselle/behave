@@ -37,6 +37,7 @@
 package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
@@ -295,55 +296,51 @@ public class CommonSteps implements Step {
 		element.waitTextNotInElement(text);
 	}
 
-	@Given("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
-	@When("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
-	@Then("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@Given(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
+	@When(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
+	@Then(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
 	public void elementNotVisible(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
 		element.waitInvisible();
 	}
 	
-	@Given("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
-	@When("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
-	@Then("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@Given(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
+	@When(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
+	@Then(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
 	public void elementWithParametersNotVisible(String elementName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);		
 		element.waitInvisible();
 	}
 	
-	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@Alias("\"$fieldName\" est\u00E1 habilitado")
+	@Given(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
+	@When(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
+	@Then(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
 	public void elementVisibleClicableEnable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.waitVisibleClickableEnabled();
 	}
 	
-	@Given("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@When("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@Then("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
-	@Alias("\"$fieldName\" referente a \"$locatorParameters\" est\u00E1 habilitado")
+	@Given(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
+	@When(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
+	@Then(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
 	public void elementWithParametersVisibleClicableEnable(String fieldName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.setLocatorParameters(locatorParameters);
 		element.waitVisibleClickableEnabled();
 	}
 
-	@Given("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
-	@When("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
-	@Then("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
-	@Alias("\"$fieldName\" est\u00E1 desabilitado")
+	@Given(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
+	@When(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
+	@Then(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
 	public void elementVisibleDisable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.isVisibleDisabled();
 	}
 
-	@Given("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
-	@When("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
-	@Then("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
-	@Alias("\"$fieldName\" referente a \"$locatorParameters\" est\u00E1 desabilitado")
+	@Given(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
+	@When(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
+	@Then(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
 	public void elementWithParametersVisibleDisable(String fieldName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.setLocatorParameters(locatorParameters);
