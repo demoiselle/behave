@@ -420,7 +420,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitText(String text) {
 		waitVisibleText(text);
 	}
-
+	
 	private SwitchDriver getSwitchDriver(WebDriver driver) {
 		frame = new SwitchDriver(driver);
 		return frame;
@@ -504,6 +504,85 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 
 	}
+	
+	/**
+	 * Neste método waitText estamos forçando que seja verificado dentro do body
+	 * através de um loop controlado por nós e não pelo implicityWait do
+	 * Webdriver. Por isso zeramos o implicityWait e depois voltamos para o
+	 * valor padrão das propriedades.
+	 * 
+	 * Método que busca o texto visível SOMENTE dentro do body do HTML.
+	 */
+	public void waitNotVisibleText(String text) {
+
+		// Flag utilizada para o segundo laço
+		boolean found = false;
+
+		driver = (WebDriver) runner.getDriver();
+		frame = getSwitchDriver(driver);
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		By by = By.tagName("body");
+
+		while (true) {
+
+			try {
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+				// Busca o texto no body
+				List<WebElement> elementsFound = driver.findElements(by);
+				if (elementsFound.size() > 0) {
+					for (WebElement element : elementsFound) {
+						if (element.getText().contains(text)) {
+							found = true;
+							break;
+						}
+					}
+				}
+
+				// Se não encontrar nada sem frames busca nos frames
+				if (!found) {
+					frame.bind();
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+
+						// Busca o texto no body
+						elementsFound = driver.findElements(by);
+						if (elementsFound.size() > 0) {
+							for (WebElement element : elementsFound) {
+								if (element.getText().contains(text)) {
+									found = true;
+									break;
+								}
+							}
+						}
+					}
+					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				}
+
+			} catch (BehaveException be) {
+				throw be;
+			} catch (StaleElementReferenceException ex) {
+				// Ignore this exception
+			} catch (NoSuchFrameException ex) {
+				throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+			} catch (Exception e) {
+				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			} finally {
+				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+			}
+
+			if (!found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+				Assert.fail(message.getString("message-text-found", text));
+			}
+
+		}
+
+	}
 
 	/**
 	 * Método que busca o texto dentro de um elemento.
@@ -531,7 +610,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					Assert.fail(message.getString("message-text-not-found", text));
+					Assert.fail(message.getString("message-text-found", text));
 				}
 
 			}
@@ -585,5 +664,44 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void blur() {
 		driver = (WebDriver) runner.getDriver();
 		driver.findElement(By.tagName("body")).click();
+	}
+
+	@Override
+	public void waitNotText(String text) {
+		waitNotVisibleText(text);
+	}
+
+	@Override
+	public void waitTextNotInElement(String text) {
+		try {
+			driver = (WebDriver) runner.getDriver();
+			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+
+			while (true) {
+
+				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				/*
+				 * Busca o texto dentro do elemento, atentar para o método
+				 * getText, ele não é o getText do WebDriver e sim do Element do
+				 * framework (WebTextField, WebSelect...)
+				 */
+				if (!getText().contains(text)) {
+					break;
+				}
+
+				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-found", text));
+				}
+			}
+		} catch (BehaveException be) {
+			throw be;
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+		}
 	}
 }

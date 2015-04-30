@@ -57,7 +57,11 @@ public interface Element {
 
 	public void waitText(String text);
 	
+	public void waitNotText(String text);
+	
 	public void waitTextInElement(String text);
+	
+	public void waitTextNotInElement(String text);
 
 	public void waitInvisible();
 	

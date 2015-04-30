@@ -247,13 +247,18 @@ public class CommonSteps implements Step {
 		}
 	}
 
-	
-
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
 		Element element = (Element) runner.getScreen();
 		text = DataProviderUtil.replaceValue(text);
 		element.waitText(text);
+	}
+	
+	@Then("n\u00E3o ser\u00E1 exibido \"$text\"")
+	public void textNotVisible(String text) {
+		Element element = (Element) runner.getScreen();
+		text = DataProviderUtil.replaceValue(text);
+		element.waitNotText(text);
 	}
 
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
@@ -263,6 +268,14 @@ public class CommonSteps implements Step {
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
 	}
+	
+	@Then("n\u00E3o ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
+	@Alias("n\u00E3o ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
+	public void textNotVisibleInElement(String elementName, String text) {
+		Element element = (Element) runner.getElement(currentPageName, elementName);
+		text = DataProviderUtil.replaceValue(text);
+		element.waitTextNotInElement(text);
+	}
 
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
@@ -270,9 +283,16 @@ public class CommonSteps implements Step {
 		element.setLocatorParameters(locatorParameters);
 
 		text = DataProviderUtil.replaceValue(text);
-		if (!element.getText().contains(text)) {
-			throw new BehaveException(message.getString("exception-text-not-found", elementName));
-		}
+		element.waitTextInElement(text);
+	}
+	
+	@Then("n\u00E3o ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
+	public void textNotVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
+		Element element = (Element) runner.getElement(currentPageName, elementName);
+		element.setLocatorParameters(locatorParameters);
+
+		text = DataProviderUtil.replaceValue(text);
+		element.waitTextNotInElement(text);
 	}
 
 	@Given("\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel")
@@ -283,21 +303,51 @@ public class CommonSteps implements Step {
 		element.waitInvisible();
 	}
 	
+	@Given("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@When("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
+	@Then("\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel")
+	public void elementWithParametersNotVisible(String elementName, List<String> locatorParameters) {
+		Element element = runner.getElement(currentPageName, elementName);
+		element.setLocatorParameters(locatorParameters);		
+		element.waitInvisible();
+	}
+	
 	@Given("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@When("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
 	@Then("aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@Alias("\"$fieldName\" est\u00E1 habilitado")
 	public void elementVisibleClicableEnable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
+		element.waitVisibleClickableEnabled();
+	}
+	
+	@Given("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@When("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@Then("aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado")
+	@Alias("\"$fieldName\" referente a \"$locatorParameters\" est\u00E1 habilitado")
+	public void elementWithParametersVisibleClicableEnable(String fieldName, List<String> locatorParameters) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.setLocatorParameters(locatorParameters);
 		element.waitVisibleClickableEnabled();
 	}
 
 	@Given("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
 	@When("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
 	@Then("o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado")
+	@Alias("\"$fieldName\" est\u00E1 desabilitado")
 	public void elementVisibleDisable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.isVisibleDisabled();
 	}
 
+	@Given("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
+	@When("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
+	@Then("o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado")
+	@Alias("\"$fieldName\" referente a \"$locatorParameters\" est\u00E1 desabilitado")
+	public void elementWithParametersVisibleDisable(String fieldName, List<String> locatorParameters) {
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.setLocatorParameters(locatorParameters);
+		element.isVisibleDisabled();
+	}
 	
 }
