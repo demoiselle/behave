@@ -51,6 +51,7 @@ public class RichTextEditor extends WebBase implements TextField {
 	}
 
 	public void sendKeysWithTries(CharSequence... keysToSend) {
+		sendKeys(keysToSend);
 	}
 
 	public void clear() {
