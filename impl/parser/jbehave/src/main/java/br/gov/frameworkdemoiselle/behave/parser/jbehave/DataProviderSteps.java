@@ -47,14 +47,9 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 
-import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
 public class DataProviderSteps extends CommonSteps {
-
-	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@When("informo: $table")
 	@Given("informo: $table")
@@ -106,13 +101,8 @@ public class DataProviderSteps extends CommonSteps {
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
 		Element element = (Element) runner.getElement(currentPageName, fieldName);
-		if (element instanceof TextField) {
-			TextField textField = (TextField) element;
-			String value = textField.getText();
-			dataProvider.put(var, value);
-		} else {
-			throw new BehaveException(message.getString("exception-invalid-operation", fieldName));
-		}
+		String value = element.getText();
+		dataProvider.put(var, value);
 	}
 	
 }
