@@ -74,6 +74,14 @@
 
 	<repositories>
 		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</repository>
+		<repository>
+			<id>demoiselle.sourceforge.net-snapshot</id>
+			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
+		</repository>	
+		<repository>
 			<id>repo1.maven</id>
 			<name>Repo1 Maven</name>
 			<url>http://repo1.maven.org/maven2</url>
@@ -101,6 +109,17 @@
 			</releases>
 		</repository>
 	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>demoiselle.sourceforge.net-snapshot</id>
+			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
+		</pluginRepository>
+	</pluginRepositories>	
 
 	<distributionManagement>
 		<snapshotRepository>
