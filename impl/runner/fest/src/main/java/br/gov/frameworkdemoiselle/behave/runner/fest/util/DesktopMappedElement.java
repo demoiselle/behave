@@ -9,6 +9,7 @@ import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
 public class DesktopMappedElement extends MappedElement implements DesktopElement {
 
 	protected ElementIndex elementIndex;
+	private List<String> locatorParameters;
 
 	public String getText() {
 		throw new BehaveException("Método não implementado, ele deve ser implementado pelo componente Desktop.");
@@ -22,43 +23,47 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 		this.elementIndex = elementIndex;
 	}
 
-	public void setLocatorParameters(List<String> Parameters) {
-		throw new BehaveException("Método não implementado.");
+	public List<String> getLocatorParameter() {
+		return locatorParameters;
+	}
+
+	public void setLocatorParameters(List<String> locatorParameter) {
+		this.locatorParameters = locatorParameter;
 	}
 
 	@Override
 	public void waitText(String text) {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitText).");
 	}
 
 	@Override
 	public void waitTextInElement(String text) {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitTextInElement).");
 	}
 
 	@Override
 	public void waitInvisible() {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitInvisible).");
 	}
 
 	@Override
 	public void waitVisibleClickableEnabled() {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitVisibleClickableEnabled).");
 	}
 
 	@Override
 	public void isVisibleDisabled() {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (isVisibleDisabled).");
 	}
 
 	@Override
 	public void waitNotText(String text) {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitNotText).");
 	}
 
 	@Override
 	public void waitTextNotInElement(String text) {
-		throw new BehaveException("Método não implementado.");
+		throw new BehaveException("Método não implementado (waitTextNotInElement).");
 	}
 
 }

@@ -36,15 +36,58 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
+import java.util.GregorianCalendar;
+
 import javax.swing.JLabel;
 
+import org.fest.swing.fixture.JLabelFixture;
+import org.junit.Assert;
+
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
 
 public class DesktopLabel extends DesktopBase implements Label {
 
+	private static BehaveMessage message = new BehaveMessage(FestRunner.MESSAGEBUNDLE);
+
 	@Override
 	public String getText() {
 		return ((JLabel) getElement()).getText();
+	}
+
+	@Override
+	public void waitTextInElement(String text) {
+
+		// Pega o elemento
+		JLabelFixture textFix = new JLabelFixture(runner.robot, (JLabel) getElement());
+
+		boolean found = false;
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+
+		while (true) {
+
+			try {
+				if (textFix.text().equals(text))
+					found = true;
+			} catch (BehaveException be) {
+				throw be;
+			} catch (Exception e) {
+				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			}
+
+			if (found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+				Assert.fail(message.getString("message-text-not-found", text));
+			}
+
+		}
 	}
 
 }
