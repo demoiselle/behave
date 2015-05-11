@@ -51,4 +51,14 @@ public class DesktopMappedElement extends MappedElement implements DesktopElemen
 		throw new BehaveException("Método não implementado.");
 	}
 
+	@Override
+	public void waitNotText(String text) {
+		throw new BehaveException("Método não implementado.");
+	}
+
+	@Override
+	public void waitTextNotInElement(String text) {
+		throw new BehaveException("Método não implementado.");
+	}
+
 }
