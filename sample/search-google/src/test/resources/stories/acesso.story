@@ -9,7 +9,7 @@ Desejo acessar o Google
 Cenário: Acesso ao "{sistema}"
 
 Dado que vou para a tela "Tela de Busca"
-Então aguardo o elemento "Logotipo" referente a "{sistema}" estar visível, clicável e habilitado
+Então aguardo o elemento "Logotipo {sistema}" estar visível, clicável e habilitado
 Então aguardo o elemento "Campo de Busca" estar visível, clicável e habilitado
 Então aguardo o elemento "Estou com sorte" estar visível, clicável e habilitado
 
