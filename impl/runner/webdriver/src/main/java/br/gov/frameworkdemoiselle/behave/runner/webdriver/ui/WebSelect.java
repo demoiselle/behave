@@ -91,7 +91,7 @@ public class WebSelect extends WebBase implements Select {
 			return lSelect.getFirstSelectedOption().getText();
 		} else {
 			WebElement element = elements.get(0);
-			if (element.getAttribute("class").contains("ui-selectonemenu")) {
+			if (element.getAttribute("class").contains("ui-selectonemenu") && !element.getAttribute("class").contains("ui-selectonemenu-label")) {
 				org.openqa.selenium.support.ui.Select lSelectInnerElement = new org.openqa.selenium.support.ui.Select(element.findElement(By.tagName("select")));
 				return lSelectInnerElement.getFirstSelectedOption().getAttribute("innerHTML");
 			} else {
