@@ -14,6 +14,22 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.4.4</citetitle>
+		<itemizedlist>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/332">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na verificação de valor selecionado de Select do Primefaces
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/259">
+					<emphasis>[Melhoria]</emphasis>
+					Criação de passos para validação de visibilidade ou não de texto, componentes e componentes parâmetrizados
+				</ulink>
+			</listitem>
+		</itemizedlist>		
+	
 		<citetitle>Versão 1.4.3</citetitle>
 		<itemizedlist>
 			<listitem>

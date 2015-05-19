@@ -124,8 +124,26 @@ Então será exibida a página de boas vindas</programlisting>
 								
 				<listitem><para>[Quando | Então] imprimo no console o valor da variável "&lt;nome da variável&gt;"</para></listitem>
 				
-				<listitem><para>[Quando] seleciono "&lt;registro do conjunto de dados&gt;" do conjunto de dados "nome do conunto de dados"</para></listitem>												
+				<listitem><para>[Quando] seleciono "&lt;registro do conjunto de dados&gt;" do conjunto de dados "nome do conunto de dados"</para></listitem>
 				
+				<listitem><para>[Então] não será exibido "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Então] não será exibido na "&lt;elemento&gt;" o valor "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Então] não será exibido no "&lt;elemento&gt;" o valor "&lt;texto&gt;"</para></listitem>
+				
+				<listitem><para>[Então] não será exibido o valor "&lt;texto&gt;" em "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;"</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;" não está visível</para></listitem>
+				
+				<listitem><para>[Então] "&lt;elemento&gt;" está visível</para></listitem>
+				
+				<listitem><para>[Então] "&lt;elemento&gt;" está desabilitado</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] aguardo o elemento "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;" estar visível, clicável e habilitado</para></listitem>
+				
+				<listitem><para>[Dado que | Quando | Então] o elemento "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;" está visível e desabilitado</para></listitem>
+															
 			</itemizedlist>
 		</para>
 		<programlisting>Dado que estou na tela "Login"
