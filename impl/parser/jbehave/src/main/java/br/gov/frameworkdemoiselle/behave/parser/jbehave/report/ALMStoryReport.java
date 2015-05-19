@@ -114,7 +114,14 @@ public class ALMStoryReport extends DefaultStoryReport {
 
 		// Reinicia as variáveis
 		startDateScenario.put(scenarioTitle, GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT-03:00")).getTime());
-		failedScenario.put(scenarioTitle, false);
+
+		// Se o nome do cenário for igual ao anterior e ele não tiver falhado
+		// pode zerar, se não deixa com erro
+		if ((failedScenario.get(scenarioTitle) != null && !failedScenario.get(scenarioTitle)) || failedScenario.get(scenarioTitle) == null) {
+			failedScenario.put(scenarioTitle, false);
+			stateScenario.put(scenarioTitle, ScenarioState.PASSED);
+		} 
+
 		stepsScenario.put(scenarioTitle, "");
 		details.put(scenarioTitle, "");
 	}
@@ -127,7 +134,7 @@ public class ALMStoryReport extends DefaultStoryReport {
 	@Override
 	public void beforeStep(String step) {
 		super.beforeStep(step);
-		
+
 		String newString = stepsScenario.get(currentScenarioTitle) + "<br/>" + getNewStep(step);
 		stepsScenario.put(currentScenarioTitle, newString);
 	}
@@ -165,7 +172,13 @@ public class ALMStoryReport extends DefaultStoryReport {
 	@Override
 	public void successful(String step) {
 		super.successful(step);
-		stateScenario.put(currentScenarioTitle, ScenarioState.PASSED);
+
+		// Se o nome do cenário for igual ao anterior e ele não tiver falhado
+		// pode zerar, se não deixa com erro
+		if (failedScenario.get(currentScenarioTitle) != null && !failedScenario.get(currentScenarioTitle)) {
+			failedScenario.put(currentScenarioTitle, false);
+			stateScenario.put(currentScenarioTitle, ScenarioState.PASSED);
+		}
 	}
 
 	@Override
