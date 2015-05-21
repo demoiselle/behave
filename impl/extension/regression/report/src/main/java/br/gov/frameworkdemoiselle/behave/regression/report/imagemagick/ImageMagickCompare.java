@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.logging.Log;
+
+import com.google.common.io.Files;
 
 import br.gov.frameworkdemoiselle.behave.regression.report.ReportConfig;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.report.BrowserResultColumn;
@@ -22,15 +25,26 @@ public class ImageMagickCompare {
 
 	private String diffScreenshotPath;
 	private String pathToImCompareBinary;
+	private String pathToImConvertBinary;
 	private String resultsFilePath;
 	private ReportBuilder reportBuilder;
 	private Log log;
+
+	private String prefixDiffPng = "pngdiff";
+	private String prefixDiffGif = "gifdiff";
+	private String prefixExpected = "expected";
+	private String prefixOriginal = "orig";
 
 	// private ReportConfig config;
 
 	public ImageMagickCompare(ReportConfig config, Log log) {
 
-		this.pathToImCompareBinary = "/usr/local/bin/compare";
+		// this.pathToImCompareBinary = "/usr/local/bin/compare";
+		// this.pathToImConvertBinary = "/usr/local/bin/convert";
+
+		this.pathToImCompareBinary = "compare";
+		this.pathToImConvertBinary = "convert";
+
 		this.log = log;
 
 		ReportType reportType = ReportType.HTML;
@@ -57,38 +71,65 @@ public class ImageMagickCompare {
 			// File[] expectedFiles = expectedFilesList.toArray(new
 			// File[expectedFilesList.size()]);
 
+			diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
+
 			for (int i = 0; i < expectedFilesList.size(); i++) {
 				List<BrowserResultColumn> browsersResults = new ArrayList<BrowserResultColumn>();
 
+				// Arquivo original do navegador de referencia
+				File expectedFile = expectedFilesList.get(i);
+
+				String pathExpectedFile = diffScreenshotPath + File.separator + prefixExpected + "_" + expectedType + "__" + expectedFilesList.get(i).getName();
+				if (!new File(pathExpectedFile).exists()) {
+					File newFileExpected = new File(pathExpectedFile);
+					Files.copy(expectedFile, newFileExpected);
+				}
+
 				// Pega a primeira tela do primeiro navegador
 				for (int j = 0; j < types.size(); j++) {
+
 					File currentFile = typesFilesList.get(j).get(i);
+
+					String currentTypeName = types.get(j).replaceAll("^/", "");
 
 					Image expectedImage = new Image(expectedFilesList.get(i).getAbsolutePath());
 					Image currentImage = new Image(currentFile.getAbsolutePath());
-
-					diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
 
 					log.info("diffScreenshotPath: " + diffScreenshotPath);
 
 					checkIfDiffFolderExists();
 
-					String pathDiffFile = diffScreenshotPath + File.separator + types.get(j) + "__" + expectedFilesList.get(i).getName();
+					// Arquivo original do navegador atual
+					String pathOrigFile = diffScreenshotPath + File.separator + prefixOriginal + "_" + currentTypeName + "__" + expectedFilesList.get(i).getName();
+					File newFileOriginal = new File(pathOrigFile);
+					Files.copy(currentFile, newFileOriginal);
 
+					// Trata o tamanho da imagem antes de rodar os comandos do
+					// Image Magick
 					try {
-						// Tratamento da imagem
-						ImageUtil.imageConvert(currentFile.getAbsolutePath(), expectedFilesList.get(i).getAbsolutePath());
+						ImageUtil.imageConvert(currentFile.getAbsolutePath(), expectedFile.getAbsolutePath());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
-					CommandBuilder commandBuilder = buildCommand(currentFile, currentImage, expectedFilesList.get(i), expectedImage, pathDiffFile);
+					// Diff em PNG
+					String pathDiffFile = diffScreenshotPath + File.separator + prefixDiffPng + "_" + currentTypeName + "__" + expectedFilesList.get(i).getName();
+
+					CommandBuilder commandBuilder = buildCommand(currentFile, currentImage, expectedFile, expectedImage, pathDiffFile);
 					String commandOutput = executeCommandAndGetOutput(commandBuilder.getCommandAsArray());
 
-					browsersResults.add(new BrowserResultColumn(types.get(j), pathDiffFile, "arquivo gif", expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
+					// Diff em GIF
+					String pathDiffFileGif = diffScreenshotPath + File.separator + prefixDiffGif + "_" + currentTypeName + "__" + FilenameUtils.removeExtension(expectedFilesList.get(i).getName()) + ".gif";
+					CommandBuilder commandBuilderGif = buildCommandForGif(currentFile, currentImage, expectedFile, expectedImage, pathDiffFileGif);
+
+					// String commandOutputGif =
+					executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
+
+					// Linha do relatório
+					browsersResults.add(new BrowserResultColumn(types.get(j), pathOrigFile, pathDiffFile, pathDiffFileGif, expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
 				}
 
-				ResultRow resultRow = getResultRow(expectedType, expectedFilesList.get(i).getAbsolutePath(), browsersResults);
+				ResultRow resultRow = getResultRow(expectedType, pathExpectedFile, browsersResults);
 
 				reportBuilder.addResultRow(resultRow);
 
@@ -129,12 +170,20 @@ public class ImageMagickCompare {
 
 	private CommandBuilder buildCommand(File currentFile, Image currentImage, File expectedFile, Image expectedImage, String pathDiffImageFile) {
 		CommandBuilder commandBuilder = new CommandBuilder();
-		commandBuilder.setPathToImageMagickCompareBinary(pathToImCompareBinary);
+		commandBuilder.setPathToImageMagickCommandBinary(pathToImCompareBinary);
 		commandBuilder.setFirstImagePixels(expectedImage.getTotalPixels());
 		commandBuilder.setSecondImagePixels(expectedImage.getTotalPixels());
 
-		commandBuilder.setFilePaths(expectedFile.getAbsolutePath(), currentFile.getAbsolutePath(), pathDiffImageFile);
+		commandBuilder.setFilePaths(currentFile.getAbsolutePath(), expectedFile.getAbsolutePath(), pathDiffImageFile);
 		commandBuilder.build();
+		return commandBuilder;
+	}
+
+	private CommandBuilder buildCommandForGif(File currentFile, Image currentImage, File expectedFile, Image expectedImage, String pathDiffImageFile) {
+		CommandBuilder commandBuilder = new CommandBuilder();
+		commandBuilder.setPathToImageMagickCommandBinary(pathToImConvertBinary);
+		commandBuilder.setFilePaths(currentFile.getAbsolutePath(), expectedFile.getAbsolutePath(), pathDiffImageFile);
+		commandBuilder.buildForGif();
 		return commandBuilder;
 	}
 

@@ -71,6 +71,12 @@
 			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-core</artifactId>
 		</dependency>
+		
+		      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+      </dependency>
+		
 		<!-- mojo dependencies -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -93,6 +99,11 @@
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 			<artifactId>demoiselle-behave-regression-repository</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.directory.studio</groupId>
+			<artifactId>org.apache.commons.io</artifactId>
+			<version>2.4</version>
 		</dependency>
 	</dependencies>
 

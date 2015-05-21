@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandBuilder {
-    private String pathToImageMagickCompareBinary;
+    private String pathToImageMagickCommandBinary;
     private final String METRIC_PARAMETER = "-metric";
     private final String METRIC_OPTION = "AE";
     private final String SUBIMAGE_SEARCH_OPTION = "-subimage-search";
@@ -24,8 +24,8 @@ public class CommandBuilder {
         this.metrics = new ArrayList<String>();
     }
 
-    public void setPathToImageMagickCompareBinary(String pathToImageMagickCompareBinary) {
-        this.pathToImageMagickCompareBinary = pathToImageMagickCompareBinary;
+    public void setPathToImageMagickCommandBinary(String pathToImageMagickCommandBinary) {
+        this.pathToImageMagickCommandBinary = pathToImageMagickCommandBinary;
     }
 
     public void setMetricParameters(String... parameters) {
@@ -82,7 +82,7 @@ public class CommandBuilder {
     }
     
     public void build() {
-        this.commands.add(pathToImageMagickCompareBinary);
+        this.commands.add(pathToImageMagickCommandBinary);
         setImageMetricParameters();
         this.commands.addAll(metrics);
         if(secondImagePixels.longValue() > firstImagePixels.longValue()) {
@@ -92,6 +92,24 @@ public class CommandBuilder {
             this.commands.add(scapeWhiteSpaces(pathToFirstImage));
             this.commands.add(scapeWhiteSpaces(pathToSecondImage));
         }
+        this.commands.add(scapeWhiteSpaces(pathToDiffFile));
+    }
+    
+    public void buildForGif() {
+        this.commands.add(pathToImageMagickCommandBinary);
+        
+        this.commands.add("-delay");
+        this.commands.add("100");
+        
+        this.commands.add("-dispose");
+        this.commands.add("None");
+        
+        this.commands.add(scapeWhiteSpaces(pathToFirstImage));
+        this.commands.add(scapeWhiteSpaces(pathToSecondImage));
+        
+        this.commands.add("-loop");
+        this.commands.add("0");
+        
         this.commands.add(scapeWhiteSpaces(pathToDiffFile));
     }
 

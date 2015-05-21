@@ -14,7 +14,6 @@ public class ImageUtil {
 
 		if (src.getHeight() > target.getHeight()) {
 			cropImage(srcImage, src, src.getWidth(), target.getHeight(), 0, 0);
-
 		} else if (target.getHeight() > src.getHeight()) {
 			cropImage(targetImage, target, target.getWidth(), src.getHeight(), 0, 0);
 		}

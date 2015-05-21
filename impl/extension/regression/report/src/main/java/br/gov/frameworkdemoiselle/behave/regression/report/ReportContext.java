@@ -9,6 +9,7 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.regression.Result;
+import br.gov.frameworkdemoiselle.behave.regression.report.exception.BehaveRegressionReportException;
 import br.gov.frameworkdemoiselle.behave.regression.report.imagemagick.ImageMagickCompare;
 import br.gov.frameworkdemoiselle.behave.regression.repository.FactoryRepository;
 
@@ -31,7 +32,33 @@ public class ReportContext {
 		String enabled = config.getProperty("behave.regression.enabled");
 		if (enabled != null && Boolean.parseBoolean(enabled)) {
 
-			String defaultType = config.getProperty("behave.regression.defaultType").replaceAll("^/", "");
+			String defaultType = config.getProperty("behave.regression.defaultType");
+
+			if (defaultType == null)
+				throw new BehaveRegressionReportException("Deve ser informado um navegador (Type) padrão para comparação.");
+
+			// Verifica se o defaultType existe nos Locations
+			List<String> locationsListForVerifyDefault = FactoryRepository.getInstance().getLocations();
+			
+			defaultType = (defaultType.indexOf("/") == -1) ? "/" + defaultType : defaultType;
+			
+//			getLog().info("--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
+//			
+//			getLog().info(defaultType);
+//			
+//			getLog().info("---");
+//			
+//			for (String s : locationsListForVerifyDefault) {
+//				getLog().info(s);
+//			}
+//			
+//			getLog().info("--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
+			
+			if (locationsListForVerifyDefault.indexOf(defaultType) == -1)
+				throw new BehaveRegressionReportException("O navegador parão (Default Type) deve existir nos Locations para comparação.");
+
+			defaultType = defaultType.replaceAll("^/", "");
+
 			List<Result> defaultTypeResults = FactoryRepository.getInstance().getResulstByLocation(defaultType);
 
 			List<File> expectedFilesList = new ArrayList<File>();
@@ -52,7 +79,7 @@ public class ReportContext {
 				String actualType = location.replaceAll("^/", "");
 
 				// Se for o navegador padrão ele pula
-				if (defaultType.equals(actualType))
+				if (defaultType != null && defaultType.equals(actualType))
 					continue;
 
 				types.add(location);
@@ -80,5 +107,4 @@ public class ReportContext {
 
 		}
 	}
-
 }

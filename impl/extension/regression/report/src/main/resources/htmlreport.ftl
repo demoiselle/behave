@@ -26,6 +26,11 @@
     
 <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <style>
+body, .main-container {
+	padding: 0px;
+	margin: 0px;
+}
+
 * {
 	font-family: 'Lato', sans-serif;
 	font-size: 13px;
@@ -43,7 +48,7 @@
 
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid main-container">
 
 		<h1>Relatório de Regressão de Layout</h1>
 
@@ -51,7 +56,8 @@
 			<thead>
 				<tr>
 					<#list columnHeaders as columnHeader>
-					<th class="text-nowrap">${columnHeader}</th> </#list>
+					<th class="text-nowrap">${columnHeader}</th> 
+					</#list>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,19 +73,27 @@
 					<#list resultRow.getBrowsers() as browser>
 					<td>
 						<div class="row text-center">
-							<a href="${browser.getPngFileName()}" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
+							<a href="${browser.getOriginalFileName()}" id="${browser.getName()}-original" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
+								<img src="${browser.getOriginalFileName()}" width="250" />
+							</a>
+							
+							<a href="${browser.getPngFileName()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}" style="display: none;">
 								<img src="${browser.getPngFileName()}" width="250" />
+							</a>
+							
+							<a href="${browser.getGifFileName()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}" style="display: none;">
+								<img src="${browser.getGifFileName()}" width="250" />
 							</a>
 						</div>
 						<div class="row text-center">
-							<div class="btn-group" data-toggle="buttons">
-							  <label class="btn btn-primary active">
-							    <input type="radio" name="options" id="option1" autocomplete="off" checked> Original
+							<div class="btn-group btn-radios" data-toggle="buttons">
+							  <label class="btn btn-primary active btn-sm" id="${browser.getName()}-original_btn">
+							    <input type="radio" name="options" id="option1" autocomplete="off"> Original
 							  </label>
-							  <label class="btn btn-primary">
+							  <label class="btn btn-primary btn-sm" id="${browser.getName()}-png_btn">
 							    <input type="radio" name="options" id="option1" autocomplete="off"> Stática
 							  </label>
-							  <label class="btn btn-primary">
+							  <label class="btn btn-primary btn-sm" id="${browser.getName()}-gif_btn">
 							    <input type="radio" name="options" id="option2" autocomplete="off"> Animado
 							  </label>
 							</div>
@@ -110,20 +124,34 @@
 	
 	
 	<script>
-	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-		event.preventDefault();
-		return $(this).ekkoLightbox({
-			onShown: function() {
-				if (window.console) {
-					return console.log('Checking our the events huh?');
+	$(document).ready(function() {
+		$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+			event.preventDefault();
+			return $(this).ekkoLightbox({
+				onShown: function() {
+					if (window.console) {
+						return console.log('Checking our the events huh?');
+					}
+				},
+				onNavigate: function(direction, itemIndex) {
+					if (window.console) {
+						return console.log('Navigating '+direction+'. Current item: '+itemIndex);
+					}
 				}
-			},
-			onNavigate: function(direction, itemIndex) {
-				if (window.console) {
-					return console.log('Navigating '+direction+'. Current item: '+itemIndex);
-				}
-			}
+			});
 		});
+		
+		$(".btn-radios .btn").click(function() {
+				var str = $(this).attr("id").split("_");
+				var idImageHide = str[0];
+				var idImageShow = str[0] + "_" +  str[1];
+								
+				var mainObj = $(this).parent().parent().parent();
+
+				mainObj.find("a[id^='" + idImageHide + "']").hide();
+				mainObj.find("a[id^='" + idImageShow + "']").show();
+		});
+		
 	});
 	</script>
 </body>

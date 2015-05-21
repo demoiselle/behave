@@ -7,6 +7,7 @@ import java.math.RoundingMode;
 public class BrowserResultColumn {
 
 	private String name;
+	private String originalFileName;
 	private String pngFileName;
 	private String gifFileName;
 	private BigDecimal expectedTotalPixels;
@@ -14,13 +15,10 @@ public class BrowserResultColumn {
 	private String consoleOutput;
 	private ComparisonStrategy strategy;
 
-	public String getName() {
-		return name;
-	}
-
-	public BrowserResultColumn(String name, String pngFileName, String gifFileName, BigDecimal expectedTotalPixels, BigDecimal actualTotalPixels, String consoleOutput, ComparisonStrategy strategy) {
+	public BrowserResultColumn(String name, String originalFileName, String pngFileName, String gifFileName, BigDecimal expectedTotalPixels, BigDecimal actualTotalPixels, String consoleOutput, ComparisonStrategy strategy) {
 		super();
 		this.name = name;
+		this.originalFileName = originalFileName;
 		this.pngFileName = pngFileName;
 		this.gifFileName = gifFileName;
 		this.expectedTotalPixels = expectedTotalPixels;
@@ -29,8 +27,20 @@ public class BrowserResultColumn {
 		this.strategy = strategy;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
 	}
 
 	public String getPngFileName() {
