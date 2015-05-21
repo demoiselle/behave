@@ -77,11 +77,11 @@ body, .main-container {
 								<img src="${browser.getOriginalFileName()}" width="250" />
 							</a>
 							
-							<a href="${browser.getPngFileName()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}" style="display: none;">
+							<a href="${browser.getPngFileName()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="Imagem comparativa do ${browser.getName()}" style="display: none;">
 								<img src="${browser.getPngFileName()}" width="250" />
 							</a>
 							
-							<a href="${browser.getGifFileName()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}" style="display: none;">
+							<a href="${browser.getGifFileName()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="Animação comparativa do ${browser.getName()}" style="display: none;">
 								<img src="${browser.getGifFileName()}" width="250" />
 							</a>
 						</div>

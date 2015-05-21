@@ -76,20 +76,19 @@ public class ImageMagickCompare {
 			for (int i = 0; i < expectedFilesList.size(); i++) {
 				List<BrowserResultColumn> browsersResults = new ArrayList<BrowserResultColumn>();
 
-				// Arquivo original do navegador de referencia
-				File expectedFile = expectedFilesList.get(i);
-
+				// Arquivo original do navegador de referencia, sempre copia pois pode ter sido modificado
+				File expectedFileOriginal = expectedFilesList.get(i);				
 				String pathExpectedFile = diffScreenshotPath + File.separator + prefixExpected + "_" + expectedType + "__" + expectedFilesList.get(i).getName();
-				if (!new File(pathExpectedFile).exists()) {
-					File newFileExpected = new File(pathExpectedFile);
-					Files.copy(expectedFile, newFileExpected);
-				}
 
 				// Pega a primeira tela do primeiro navegador
 				for (int j = 0; j < types.size(); j++) {
+					
+					// Reinicia a imagem de referencia por causa dos redimensionamentos
+					File expectedFile = new File(pathExpectedFile);
+					Files.copy(expectedFileOriginal, expectedFile);					
 
+					// Arquivo atual
 					File currentFile = typesFilesList.get(j).get(i);
-
 					String currentTypeName = types.get(j).replaceAll("^/", "");
 
 					Image expectedImage = new Image(expectedFilesList.get(i).getAbsolutePath());
@@ -114,14 +113,12 @@ public class ImageMagickCompare {
 
 					// Diff em PNG
 					String pathDiffFile = diffScreenshotPath + File.separator + prefixDiffPng + "_" + currentTypeName + "__" + expectedFilesList.get(i).getName();
-
 					CommandBuilder commandBuilder = buildCommand(currentFile, currentImage, expectedFile, expectedImage, pathDiffFile);
 					String commandOutput = executeCommandAndGetOutput(commandBuilder.getCommandAsArray());
 
 					// Diff em GIF
 					String pathDiffFileGif = diffScreenshotPath + File.separator + prefixDiffGif + "_" + currentTypeName + "__" + FilenameUtils.removeExtension(expectedFilesList.get(i).getName()) + ".gif";
 					CommandBuilder commandBuilderGif = buildCommandForGif(currentFile, currentImage, expectedFile, expectedImage, pathDiffFileGif);
-
 					// String commandOutputGif =
 					executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
 
