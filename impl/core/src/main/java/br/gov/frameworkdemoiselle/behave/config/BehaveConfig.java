@@ -86,13 +86,13 @@ public class BehaveConfig {
 	 */
 	public static String getProperty(String key, String defaultValue) {
 		if (!properties.containsKey(key)) {
-			return defaultValue;
+			return defaultValue.trim();
 		} else {
 			String value = System.getProperty(key);
 			if (value != null) {
 				properties.setProperty(key, value);
 			}
-			return properties.getProperty(key, defaultValue);
+			return properties.getProperty(key, defaultValue).trim();
 		}
 	}
 
