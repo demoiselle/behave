@@ -24,11 +24,11 @@ public class ReportConfig {
 		log.info("========================================");
 		log.info("target:" + target);
 		log.info("behave.properties");
-		log.info("type:" + getProperty("behave.regression.enabled"));
-		log.info("type:" + getProperty("behave.regression.type"));
-		log.info("url:" + getProperty("behave.regression.url"));
-		log.info("user:" + getProperty("behave.regression.user"));
-		log.info("password:" + getProperty("behave.regression.password"));
+		log.info("enabled:" + getProperty("behave.regression.enabled"));
+		log.info("repository type:" + getProperty("behave.regression.type"));
+		log.info("repository url:" + getProperty("behave.regression.url"));
+		log.info("repository user:" + getProperty("behave.regression.user"));
+		log.info("repository password:" + getProperty("behave.regression.password"));
 
 		log.info("types:" + getProperty("behave.regression.types"));
 		log.info("defaultType:" + getProperty("behave.regression.defaultType"));
