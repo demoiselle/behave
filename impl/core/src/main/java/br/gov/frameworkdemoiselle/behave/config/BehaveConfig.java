@@ -269,6 +269,11 @@ public class BehaveConfig {
 		return Boolean.parseBoolean(getProperty("behave.runner.window.maximize.enabled", "false"));
 	}
 
+	// Níves de zoom out que o framework realizará antes de capturar a tela
+	 public static int getRunner_screenShotZoomout() {
+		return Integer.parseInt(getProperty("behave.runner.screen.screenshot.zoomout", "0"));
+	 }
+	 
 	/*
 	 * Configurações especificas para testes Desktop
 	 */
