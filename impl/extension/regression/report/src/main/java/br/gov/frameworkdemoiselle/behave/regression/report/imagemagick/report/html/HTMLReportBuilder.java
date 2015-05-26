@@ -26,7 +26,7 @@ public class HTMLReportBuilder extends ReportBuilder {
 		super(pathToHtmlReport);
 	}
 
-	public void build(String reportFilename) {
+	public void build(String reportPath) {
 		Writer file = null;
 		Configuration configuration = new Configuration();
 
@@ -48,7 +48,7 @@ public class HTMLReportBuilder extends ReportBuilder {
 				outStream.close();
 			}
 
-			configuration.setDirectoryForTemplateLoading(new File("target/dbehave"));
+			configuration.setDirectoryForTemplateLoading(new File(reportPath));
 
 			Template template = configuration.getTemplate("htmlreport.ftl");
 			Map<String, Object> input = new HashMap<String, Object>();

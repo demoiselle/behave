@@ -174,7 +174,11 @@
 				<listitem>
 					<citetitle>behave.runner.window.maximize.enabled</citetitle>
 					: ativa o uso maximizado da janela do navegador, o valor padrão é <emphasis>false</emphasis>.
-				</listitem>				
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.screenshot.zoomout</citetitle>
+					: níves de zoom out que o framework realizará antes de capturar a tela, o valor padrão é <emphasis>0</emphasis>.
+				</listitem>	
 			</itemizedlist>
 		</para>
 	</section>

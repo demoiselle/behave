@@ -35,8 +35,6 @@ public class ImageMagickCompare {
 	private String prefixExpected = "expected";
 	private String prefixOriginal = "orig";
 
-	// private ReportConfig config;
-
 	public ImageMagickCompare(ReportConfig config, Log log) {
 
 		// this.pathToImCompareBinary = "/usr/local/bin/compare";
@@ -56,7 +54,7 @@ public class ImageMagickCompare {
 		String extension = ReportType.getFileExtension(reportType);
 		StringBuilder resultsFilePath = new StringBuilder();
 		resultsFilePath.append(new File("target/dbehave").getAbsolutePath());
-		resultsFilePath.append(File.separator + "report");
+		resultsFilePath.append(File.separator + "index");
 		resultsFilePath.append(".");
 		resultsFilePath.append(extension);
 
@@ -67,11 +65,9 @@ public class ImageMagickCompare {
 
 	public void compareAndCaptureResultsWithLists(List<String> types, List<List<File>> typesFilesList, String expectedType, List<File> expectedFilesList) {
 		try {
-			// Faz todas as comparações
-			// File[] expectedFiles = expectedFilesList.toArray(new
-			// File[expectedFilesList.size()]);
-
 			diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
+			
+			checkIfDiffFolderExists();
 
 			for (int i = 0; i < expectedFilesList.size(); i++) {
 				List<BrowserResultColumn> browsersResults = new ArrayList<BrowserResultColumn>();
@@ -84,8 +80,8 @@ public class ImageMagickCompare {
 				for (int j = 0; j < types.size(); j++) {
 					
 					// Reinicia a imagem de referencia por causa dos redimensionamentos
-					File expectedFile = new File(pathExpectedFile);
-					Files.copy(expectedFileOriginal, expectedFile);					
+					File expectedFile = new File(pathExpectedFile);					
+					Files.copy(expectedFileOriginal, expectedFile);
 
 					// Arquivo atual
 					File currentFile = typesFilesList.get(j).get(i);
@@ -95,8 +91,6 @@ public class ImageMagickCompare {
 					Image currentImage = new Image(currentFile.getAbsolutePath());
 
 					log.info("diffScreenshotPath: " + diffScreenshotPath);
-
-					checkIfDiffFolderExists();
 
 					// Arquivo original do navegador atual
 					String pathOrigFile = diffScreenshotPath + File.separator + prefixOriginal + "_" + currentTypeName + "__" + expectedFilesList.get(i).getName();
@@ -126,16 +120,16 @@ public class ImageMagickCompare {
 					browsersResults.add(new BrowserResultColumn(types.get(j), pathOrigFile, pathDiffFile, pathDiffFileGif, expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
 				}
 
-				ResultRow resultRow = getResultRow(expectedType, pathExpectedFile, browsersResults);
+				ResultRow resultRow = getResultRow(FilenameUtils.removeExtension(expectedFilesList.get(i).getName()), expectedType, pathExpectedFile, browsersResults);
 
 				reportBuilder.addResultRow(resultRow);
 
-				reportBuilder.build("./target/dbehave/index.html");
+				reportBuilder.build(diffScreenshotPath);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 
 	}
@@ -150,14 +144,14 @@ public class ImageMagickCompare {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 
-	private ResultRow getResultRow(String expectedBrowser, String expectedFileName, List<BrowserResultColumn> browsers) throws IOException {
+	private ResultRow getResultRow(String nameStep, String expectedBrowser, String expectedFileName, List<BrowserResultColumn> browsers) throws IOException {
 		ResultRow resultRow = new ResultRow();
 
-		resultRow.setName(new File(expectedFileName).getName());
+		resultRow.setName(nameStep);
 		resultRow.setExpectedBrowser(expectedBrowser);
 		resultRow.setExpectedFileName(expectedFileName);
 		resultRow.setBrowsers(browsers);
