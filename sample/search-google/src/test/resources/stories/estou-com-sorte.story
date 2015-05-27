@@ -7,6 +7,6 @@ Desejo clicar em um botão
 
 Cenário: Utilização da funcionalidade estou com sorte
 
-Acesso ao "Google"
+Acesso ao Google
 Quando clico em "Estou com sorte"
 Então será exibido "Sobre"
