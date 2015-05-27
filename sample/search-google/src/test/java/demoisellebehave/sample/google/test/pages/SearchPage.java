@@ -46,7 +46,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 @ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
 public class SearchPage {
 
-	@ElementMap(name = "Logotipo Google", locatorType = ElementLocatorType.XPath, locator = "//div[@id='hplogo']/a/img")
+	@ElementMap(name = "Logotipo Google", locatorType = ElementLocatorType.XPath, locator = "//div[@id='hplogo']")
 	private Image logotipo;
 	
 	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Name, locator = "q")
