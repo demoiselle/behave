@@ -407,6 +407,6 @@
 	</build>
 
   <scm>
-    <tag>demoiselle-behave-build-1.5.0-BETA2</tag>
+    <tag>1.5.0-BETA2</tag>
   </scm>
 </project>
