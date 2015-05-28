@@ -3,6 +3,12 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
+		<revnumber>1.5.0</revnumber>
+		<date>29/05/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Nova funcionalidade de Teste de Regressão de Layout, melhorias e correções no framework.</revremark>
+	</revision>
+	<revision>
 		<revnumber>1.4.4</revnumber>
 		<date>19/05/2015</date>
 		<authorinitials>Vanderson, Julian</authorinitials>

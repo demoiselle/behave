@@ -3,26 +3,230 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <chapter id="behave-regression">
 
-	<title>Testes de Regressão</title>
+	<title>Testes de Regressão de Layout</title>
 	<para>
-		Neste capítulo ....
+		Neste capítulo será apresentada a funcionalidade que permite a comparação de layout entre navegadores diferentes a partir de histórias desenvolvidas em projetos do dbehave.
+		<warning>
+			<para>
+				Esta funcionalidade está disponível a partir da versão <citetitle>1.5.0</citetitle> do dbehave.
+			</para>
+		</warning>
 	</para>
 	<section>
 		<title>Conceito</title>
 		<para>
-			...
+			A ideia principal da funcionalidade é permitir a equipe do projeto ter uma visibilidade, por meio de imagens e números, das diferenças de design entre os diversos navegadores que são, ou serão, suportados pelo sistema.  
 		</para>		
+		<para>
+			O processo de navegação no sistema deve ser feito por meio das histórias do dbehave, que em alguns casos já existem, e a partir de imagens capturadas durante o processo seja gerado um relatório ao final do teste, comparando os navegadores selecionados com um que deve ser o navegador de referência.
+		</para>
 	</section>
 	<section>
-		<title>Como Usar</title>
+		<title>Pré Requisitos</title>
 		<para>
-			...						
+			Para que o teste de regressão de layout funcione corretamente são necessárias outras tecnologias que serão utilziadas no processo. 
 		</para>
+		
+		<section>
+			<title>Java</title>
+			<para>
+				É necessário ter o Java (JDK) instalado para que o processo funcione, normalmente as máquinas que já rodam o dbehave já possuem a versão necessária.
+
+				Para verificar se a JDK está instalada corretamente rode o seguinte comando:		
+			</para>
+			<programlisting>java -version</programlisting>
+			<para>A saída do console deverá ser parecida com esta:</para>
+			<programlisting>java version "1.6.0_35"
+OpenJDK Runtime Environment (IcedTea6 1.13.7) (6b35-1.13.7-1ubuntu0.12.04.2)
+OpenJDK Server VM (build 23.25-b01, mixed mode)</programlisting>
+		</section>	
+		
+		<section>
+			<title>Image Magick</title>
+			<para>
+				Para que o processo de comparação dos layouts funcione corretamente é necessário que a biclioteca Image Magick (http://www.imagemagick.org) seja instalada.
+
+				A instalação desta biblioteca em muitas distribuições Linux, como a Ubuntu 12.04, pode ser feita através do seguinte comando:	
+			</para>
+			<programlisting>sudo apt-get install imagemagick</programlisting>
+			<para>Após a instalação acesse o Promp/Terminar do computador que irá rodar os testes e rode o seguinte comando:</para>
+			<programlisting>compare --version</programlisting>
+			<para>E o resultado deverá ser algo como o seguinte texto:</para>
+			<programlisting>Version: ImageMagick 6.9.0-0 Q16 i686 2014-11-24 http://www.imagemagick.org
+Copyright: Copyright (C) 1999-2014 ImageMagick Studio LLC
+Features: DPC OpenMP
+Delegates (built-in): png x zlib</programlisting>
+		</section>	
+		
+		<section>
+			<title>Projeto dbehave</title>
+			<para>
+				O teste de regressão tem como pré requisito inicial um projeto dbehave já criado, caso ainda não tenha criado um basta seguir o <ulink url="http://demoiselle.sourceforge.net/docs/components/behave/reference/lastversion/html/behave-quickstart.html">Roteiro Rápido</ulink> do manual do dbehave. 				
+			</para>			
+		</section>		
+		
+		<section>
+			<title>Maven</title>
+			<para>
+				Para que o teste rode corretamente é necessário que a máquina tenha instalado o Maven, para saber se ele esta funcionando corretamente rode o seguinte comando no prompt/terminal:	
+			</para>	
+			<programlisting>mvn --version</programlisting>
+			<para>A saída do console deverá ser algo parecido com o seguinte:</para>
+			<programlisting>Apache Maven 2.2.1 (rdebian-8)
+Java version: 1.6.0_33
+Java home: /usr/lib/jvm/java-6-serpro-1.6.0.33/jre
+Default locale: pt_BR, platform encoding: UTF-8
+OS name: "linux" version: "3.2.0-58-generic-pae" arch: "i386" Family: "unix"</programlisting>
+		</section>	
 	</section>	
 	<section>
-		<title>Relatório</title>
+		<title>Configuração do Projeto dbehave</title>
 		<para>
-			...						
+			Esta sessão descreve como o projeto dbehave deve ser configurado para que o teste de regressão rode.
+		</para>	
+		
+		<section>
+			<title>Configurações Básicas do pom.xml</title>
+			<para>
+			Esta funcionalidade possui basicamente 2 inclusões no pom.xml:
+			<itemizedlist>
+				<listitem>1. Passos personalizados para capturar as telas a serem comparadas</listitem>
+				<listitem>2. Plugin maven que faz as comparações e gera o relatório</listitem>
+			</itemizedlist>
+			Para adicionar os passos personalizados basta adicionar uma nova dependência ao pom.xml na tag dependencies como segue abaixo:
+		</para>
+		<programlisting><![CDATA[<dependency>
+    <groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+    <artifactId>demoiselle-behave-regression-step</artifactId>
+    <scope>test</scope>
+</dependency>]]></programlisting>
+		<para>
+			E a outra configuração é a inclusão do plugin maven dentro da tag build/plugins como abaixo:
+		</para>
+		<programlisting><![CDATA[<build>
+    <plugins>
+        <plugin>
+            <groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+            <artifactId>demoiselle-behave-regression-report</artifactId>
+            <version>1.5.0</version>                
+            <executions>
+                <execution>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>regression</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>]]></programlisting>
+		</section>
+
+		<section>
+			<title>Configurações do behave.properties</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						Configurações Gerais
+						<para>...</para>
+						<programlisting>behave.regression.enabled=true
+behave.regression.types=linux1204_Firefox,linux1204_Chrome,windows7_FF,windows7_Chrome,windows7_IE9
+behave.regression.defaultType=linux1204_Firefox</programlisting>					
+					</listitem>
+					<listitem>
+						Configuração dos Navegadores
+						<para>...</para>
+						<programlisting>behave.regression.linux1204_Firefox.runner.screen.type=MozillaFirefox
+behave.regression.linux1204_Firefox.runner.window.maximize.enabled=true
+	
+behave.regression.linux1204_Chrome.runner.screen.type=GoogleChrome
+behave.regression.linux1204_Chrome.runner.window.maximize.enabled=true
+behave.regression.linux1204_Chrome.runner.screen.driverPath=//path//do//driver//chromedriver
+	
+behave.regression.windows7_IE9.runner.screen.type=RemoteWeb
+behave.regression.windows7_IE9.runner.window.maximize.enabled=true
+behave.regression.windows7_IE9.runner.screen.remote.name=internetExplorer
+behave.regression.windows7_IE9.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub
+	
+behave.regression.windows7_Chrome.runner.screen.type=RemoteWeb
+behave.regression.windows7_Chrome.runner.window.maximize.enabled=true
+behave.regression.windows7_Chrome.runner.screen.remote.name=chrome
+behave.regression.windows7_Chrome.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub</programlisting>					
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		
+		<section>
+			<title>Repositório Local de Imagens</title>
+			<para>Para o repositório local ele irá usar o diretório home do usuário como padrão, por exemplo, no Linux ele irá ficar em <citetitle>/home/NOME_DO_USUARIO/.dbehave/</citetitle>.</para>
+			<para>A configuração é bem simples, basta selecionar a seguinte propriedade:</para>
+			<programlisting>behave.regression.type=local</programlisting>
+		</section>
+		
+		<section>
+			<title>Repositório FTP de Imagens</title>
+			<para>
+			</para>
+		</section>		
+
+	</section>	
+	<section>
+		<title>Pontos de Comparação</title>
+		<para>Para que as novas frases de captura funcionem é necessário adicionar os passos ao dbehave por meio do seguinte comando:</para>		
+		<programlisting>BehaveContext.getInstance().addSteps(new RegressionSteps());</programlisting>
+		<para>Para que as telas sejam capturadas basta utilizar uma das seguinte frases:</para>
+		<programlisting>Quando tiro um print screen
+Quando tiro um print screen com o nome "NOME DA CAPTURA QUE APARECERÁ NO RELATÓRIO"</programlisting>
+	</section>	
+	<section>
+		<title>Rodando o Teste de Regressão</title>
+		<para>
+			Mostrar o comando maven e a saída do console e o relatório.
+			O resultado final será criado na pasta <citetitle>/target/dbehave</citetitle> do seu projeto dbehave.
+			É recomendado que sejam criados novos métodos JUnit com o seguinte código:		
+		</para>		
+		<programlisting>@Test // Anotação JUnit
+public void testRegressaoLayout() throws Throwable {
+
+    // Laço de repetição para testar com todos os navagedores
+    for (String browser : RegressionConfig.getTypes()) {
+        RegressionConfig.setCurrentType(browser);  // Seleciona o navegador atual
+
+        eng.addStoriesReuse("/stories/XXXX.story"); // Histórias de reuso
+        eng.addStories("/stories/XXXXX.story"); // Histórias que irão rodar
+
+        eng.addSteps(new MySteps());  // Passos customizados
+        eng.addSteps(new RegressionSteps()); // Passos de captura
+
+        // Roda o teste para o navegador atual selecionado no setCurrentType
+        eng.run();
+    }
+
+}</programlisting>
+	</section>	
+	<section>
+		<title>Relatório Gerado</title>
+		<warning>
+			<para>
+				O relatório só será gerado se, somente se, os testes passarem.
+			</para>
+		</warning>
+		
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+				<imagedata fileref="images/regression-report.png" align="center"
+					format="PNG" scalefit="1" width="50%" />
+			</imageobject>
+			<imageobject role="html">
+				<imagedata fileref="images/regression-report.png" align="center"
+					format="PNG" scalefit="1" width="50%" />
+			</imageobject>	
+				<caption>
+					<para>Exemplo de Relatório de Teste de Regressão de Layout</para>
+				</caption>
+			</mediaobject>								
 		</para>		
 	</section>	
 </chapter>
