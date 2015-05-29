@@ -57,7 +57,7 @@ public class HTMLReportBuilder extends ReportBuilder {
 
 			file = new FileWriter(new File(pathToReport));
 
-			System.out.println("REPORT: " + pathToReport);
+			// ("REPORT: " + pathToReport);
 
 			template.process(input, file);
 			file.flush();

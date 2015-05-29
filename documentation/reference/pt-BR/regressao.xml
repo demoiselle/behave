@@ -249,7 +249,7 @@ public void testRegressaoLayout() throws Throwable {
 		<title>Relatório Gerado</title>
 		<warning>
 			<para>
-				O relatório só será gerado se os testes funcionais passarem.
+				O relatório só será gerado se os testes funcionais passarem e quando for executado via maven (mvn package), pois o relatório é gerado por meio de um plugin.
 			</para>
 		</warning>
 		

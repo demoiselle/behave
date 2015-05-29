@@ -57,7 +57,7 @@ public class ReportMojo extends AbstractMojo {
 	private File target;
 
 	public void execute() {
-		ReportContext c = new ReportContext();
+		ReportContext c = new ReportContext();		
 		c.run(target);
 	}
 

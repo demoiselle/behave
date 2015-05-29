@@ -90,7 +90,7 @@ public class ImageMagickCompare {
 					Image expectedImage = new Image(expectedFilesList.get(i).getAbsolutePath());
 					Image currentImage = new Image(currentFile.getAbsolutePath());
 
-					log.info("diffScreenshotPath: " + diffScreenshotPath);
+					// log.info("diffScreenshotPath: " + diffScreenshotPath);
 
 					// Arquivo original do navegador atual
 					String pathOrigFile = diffScreenshotPath + File.separator + prefixOriginal + "_" + currentTypeName + "__" + expectedFilesList.get(i).getName();
@@ -181,9 +181,9 @@ public class ImageMagickCompare {
 	private String executeCommandAndGetOutput(String[] command) throws IOException, InterruptedException {
 		Process process = Runtime.getRuntime().exec(command);
 		StreamGobbler errorGobbler = gobbleStream(process);
-		System.out.println("Exit Value: " + process.waitFor());
-
-		System.out.println(errorGobbler.getOutputLine());
+		
+		//System.out.println("Exit Value: " + process.waitFor());
+		//System.out.println(errorGobbler.getOutputLine());
 
 		return errorGobbler.getOutputLine();
 	}

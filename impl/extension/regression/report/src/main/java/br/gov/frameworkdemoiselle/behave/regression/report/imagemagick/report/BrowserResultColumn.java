@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class BrowserResultColumn {
 
 	private String name;
@@ -38,6 +40,10 @@ public class BrowserResultColumn {
 	public String getOriginalFileName() {
 		return originalFileName;
 	}
+	
+	public String getOriginalFileNameReport() {
+		return FilenameUtils.getName(originalFileName);
+	}
 
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
@@ -46,6 +52,10 @@ public class BrowserResultColumn {
 	public String getPngFileName() {
 		return pngFileName;
 	}
+	
+	public String getPngFileNameReport() {
+		return FilenameUtils.getName(pngFileName);
+	}
 
 	public void setPngFileName(String pngFileName) {
 		this.pngFileName = pngFileName;
@@ -53,6 +63,10 @@ public class BrowserResultColumn {
 
 	public String getGifFileName() {
 		return gifFileName;
+	}
+	
+	public String getGifFileNameReport() {
+		return FilenameUtils.getName(gifFileName);
 	}
 
 	public void setGifFileName(String gifFileName) {

@@ -65,7 +65,7 @@ body, .main-container {
 				<tr>
 					<td class="text-nowrap">${resultRow.getName()}</td>
 					<td>
-						<a href="${resultRow.getExpectedFileName()}" data-toggle="lightbox" data-gallery="multiimages" data-title="Referência">
+						<a href="${resultRow.getExpectedFileNameReport()}" data-toggle="lightbox" data-gallery="multiimages" data-title="Referência">
 							<img src="${resultRow.getExpectedFileName()}" width="300" />
 						</a>
 					</td>
@@ -73,15 +73,15 @@ body, .main-container {
 					<#list resultRow.getBrowsers() as browser>
 					<td>
 						<div class="row text-center">
-							<a href="${browser.getOriginalFileName()}" id="${browser.getName()}-original" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
+							<a href="${browser.getOriginalFileNameReport()}" id="${browser.getName()}-original" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
 								<img src="${browser.getOriginalFileName()}" width="250" />
 							</a>
 							
-							<a href="${browser.getPngFileName()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="Imagem comparativa do ${browser.getName()}" style="display: none;">
+							<a href="${browser.getPngFileNameReport()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="Imagem comparativa do ${browser.getName()}" style="display: none;">
 								<img src="${browser.getPngFileName()}" width="250" />
 							</a>
 							
-							<a href="${browser.getGifFileName()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="Animação comparativa do ${browser.getName()}" style="display: none;">
+							<a href="${browser.getGifFileNameReport()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="Animação comparativa do ${browser.getName()}" style="display: none;">
 								<img src="${browser.getGifFileName()}" width="250" />
 							</a>
 						</div>

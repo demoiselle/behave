@@ -42,18 +42,6 @@ public class ReportContext {
 			
 			defaultType = (defaultType.indexOf("/") == -1) ? "/" + defaultType : defaultType;
 			
-//			getLog().info("--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
-//			
-//			getLog().info(defaultType);
-//			
-//			getLog().info("---");
-//			
-//			for (String s : locationsListForVerifyDefault) {
-//				getLog().info(s);
-//			}
-//			
-//			getLog().info("--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
-			
 			if (locationsListForVerifyDefault.indexOf(defaultType) == -1)
 				throw new BehaveRegressionReportException("O navegador parão (Default Type) deve existir nos Locations para comparação.");
 
@@ -105,6 +93,8 @@ public class ReportContext {
 			ImageMagickCompare comp = new ImageMagickCompare(config, getLog());
 			comp.compareAndCaptureResultsWithLists(types, browserFilesList, defaultType, expectedFilesList);
 
+		} else {
+			getLog().info("Funcionalidade de teste de regressão de layout desativada.");
 		}
 	}
 }

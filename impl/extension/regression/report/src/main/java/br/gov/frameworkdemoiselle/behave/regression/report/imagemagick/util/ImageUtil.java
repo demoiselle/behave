@@ -29,7 +29,6 @@ public class ImageUtil {
 		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File(fileLocation));
-//			System.out.println("Image Read. Image Dimension: " + img.getWidth() + "w X " + img.getHeight() + "h");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,15 +37,7 @@ public class ImageUtil {
 
 	public static void cropImage(String filepath, BufferedImage img, int cropWidth, int cropHeight, int cropStartX, int cropStartY) throws Exception {
 		BufferedImage clipped = null;
-
-//		System.out.println("Crop Width " + cropWidth);
-//		System.out.println("Crop Height " + cropHeight);
-//		System.out.println("Crop Location " + "(" + cropStartX + "," + cropStartY + ")");
-
 		clipped = img.getSubimage(cropStartX, cropStartY, cropWidth, cropHeight);
-
-		System.out.println("Image Cropped. New Image Dimension: " + clipped.getWidth() + "w X " + clipped.getHeight() + "h");
-
 		File outputfile = new File(filepath);
 		ImageIO.write(clipped, "png", outputfile);
 

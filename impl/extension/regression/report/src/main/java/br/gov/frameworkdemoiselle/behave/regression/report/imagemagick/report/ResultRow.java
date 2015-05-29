@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class ResultRow {
 
 	private String name;
@@ -42,6 +44,10 @@ public class ResultRow {
 
 	public String getExpectedFileName() {
 		return expectedFileName;
+	}
+	
+	public String getExpectedFileNameReport() {
+		return FilenameUtils.getName(expectedFileName);
 	}
 
 	public void setExpectedFileName(String expectedFileName) {
