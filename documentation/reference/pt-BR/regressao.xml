@@ -24,7 +24,7 @@
 	<section>
 		<title>Pré Requisitos</title>
 		<para>
-			Para que o teste de regressão de layout funcione corretamente são necessárias outras tecnologias que serão utilziadas no processo. 
+			Para que o teste de regressão de layout funcione corretamente são necessárias algumas tecnologias durante o processo, seguem elas. 
 		</para>
 		
 		<section>
@@ -125,33 +125,72 @@ OS name: "linux" version: "3.2.0-58-generic-pae" arch: "i386" Family: "unix"</pr
 		<section>
 			<title>Configurações do behave.properties</title>
 			<para>
+				<para>Para que as capturas de tela e relatório seja gerado são necessárias algumas configurações no <citetitle>behave.properties</citetitle> </para>
+			
 				<itemizedlist>
 					<listitem>
 						Configurações Gerais
-						<para>...</para>
-						<programlisting>behave.regression.enabled=true
-behave.regression.types=linux1204_Firefox,linux1204_Chrome,windows7_FF,windows7_Chrome,windows7_IE9
-behave.regression.defaultType=linux1204_Firefox</programlisting>					
+						<para>Propriedade que ativa a funcionalidade de regressão no dbehave.</para>
+						<programlisting>behave.regression.enabled=true</programlisting>					
+
+						<para>Propriedade utilizada pelo método RegressionConfig.getTypes() para fazer o laço de repetição da execução dos testes e geração do relatório. São os navegadores que serão utilizados.</para>
+						<programlisting>behave.regression.types=linux1204_Firefox30,linux1204_Chrome33,windows7_IE9,windows7_Chrome35</programlisting>
+						
+						<para>Propriedade que define o navegador que será utilizado como referência para as comparações:</para>
+						<programlisting>behave.regression.defaultType=linux1204_Firefox</programlisting>					
 					</listitem>
 					<listitem>
 						Configuração dos Navegadores
-						<para>...</para>
-						<programlisting>behave.regression.linux1204_Firefox.runner.screen.type=MozillaFirefox
-behave.regression.linux1204_Firefox.runner.window.maximize.enabled=true
+						
+						<para>Para cada navegador listado na propriedade <emphasis>behave.regression.types</emphasis> deverá existir um conjunto de propriedades que são definidas com o seguinte padrão:</para>
+						<programlisting>behave.regression.<citetitle>NOME_DO_NAVEGADOR</citetitle>.runner.<citetitle>PROPRIEDADE</citetitle></programlisting>
+						
+						<tip>
+							<para>
+								Utilize um nome legível e que determine o Sistema Operacional e Navegador e suas respectivas versões no <citetitle>NOME_DO_NAVEGADOR</citetitle> das propriedades, pois é este nome que será utilizado nos
+								relatórios de comparação. 
+							</para>
+						</tip>
+						
+						<para>Abaixo estão as possíveis propriedades a serem usadas na configuração de cada navegador:</para>
+						
+						<itemizedlist>
+							<listitem>...runner.screen.maxWait</listitem>
+							<listitem>...runner.screen.minWait</listitem>
+							<listitem>...runner.proxy.enabled</listitem>
+							<listitem>...runner.proxy.url</listitem>
+							<listitem>...runner.screen.driverPath</listitem>
+							<listitem>...runner.profile.enabled</listitem>
+							<listitem>...runner.screen.remote.url</listitem>
+							<listitem>...runner.screen.remote.name</listitem>
+							<listitem>...runner.screen.profilePath</listitem>
+							<listitem>...runner.screen.binaryPath</listitem>
+							<listitem>...runner.screen.type</listitem>
+							<listitem>...runner.catchUIException</listitem>
+							<listitem>...runner.window.maximize.enabled</listitem>
+						</itemizedlist>
+						
+						<para>Exemplo de configuração de navegadores:</para>
+						<programlisting>// Navegador Firefox na própria máquina
+behave.regression.linux1204_Firefox30.runner.screen.type=MozillaFirefox
+behave.regression.linux1204_Firefox30.runner.window.maximize.enabled=true
+
+// Navegador Chrome na própria máquina
+behave.regression.linux1204_Chrome33.runner.screen.type=GoogleChrome
+behave.regression.linux1204_Chrome33.runner.window.maximize.enabled=true
+behave.regression.linux1204_Chrome33.runner.screen.driverPath=//path//do//driver//chromedriver
 	
-behave.regression.linux1204_Chrome.runner.screen.type=GoogleChrome
-behave.regression.linux1204_Chrome.runner.window.maximize.enabled=true
-behave.regression.linux1204_Chrome.runner.screen.driverPath=//path//do//driver//chromedriver
-	
+// Navegador Internet Explorer 9 em uma máquina remota
 behave.regression.windows7_IE9.runner.screen.type=RemoteWeb
 behave.regression.windows7_IE9.runner.window.maximize.enabled=true
 behave.regression.windows7_IE9.runner.screen.remote.name=internetExplorer
 behave.regression.windows7_IE9.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub
-	
-behave.regression.windows7_Chrome.runner.screen.type=RemoteWeb
-behave.regression.windows7_Chrome.runner.window.maximize.enabled=true
-behave.regression.windows7_Chrome.runner.screen.remote.name=chrome
-behave.regression.windows7_Chrome.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub</programlisting>					
+
+// Navegador Chrome em uma máquina remota
+behave.regression.windows7_Chrome35.runner.screen.type=RemoteWeb
+behave.regression.windows7_Chrome35.runner.window.maximize.enabled=true
+behave.regression.windows7_Chrome35.runner.screen.remote.name=chrome
+behave.regression.windows7_Chrome35.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub</programlisting>					
 					</listitem>
 				</itemizedlist>
 			</para>
@@ -164,12 +203,13 @@ behave.regression.windows7_Chrome.runner.screen.remote.url=http://127.0.0.1:4449
 			<programlisting>behave.regression.type=local</programlisting>
 		</section>
 		
+		<!-- 
 		<section>
 			<title>Repositório FTP de Imagens</title>
 			<para>
 			</para>
 		</section>		
-
+ 		-->
 	</section>	
 	<section>
 		<title>Pontos de Comparação</title>
@@ -209,7 +249,7 @@ public void testRegressaoLayout() throws Throwable {
 		<title>Relatório Gerado</title>
 		<warning>
 			<para>
-				O relatório só será gerado se, somente se, os testes passarem.
+				O relatório só será gerado se os testes funcionais passarem.
 			</para>
 		</warning>
 		
