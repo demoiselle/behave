@@ -8,7 +8,7 @@ public class ReportMain {
 
 	public static void main(String[] args) {
 
-		File target = new File("/home/00968514901/Demoiselle Behave/workspace/behave/sample/search-google-regression/target/");
+		File target = new File("/home/xxx/Demoiselle Behave/workspace/behave/sample/search-google-regression/target/");
 
 		ReportContext c = new ReportContext();
 		c.run(target);
