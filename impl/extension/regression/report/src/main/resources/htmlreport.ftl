@@ -101,7 +101,8 @@ body, .main-container {
 							<span id="helpBlock" class="help-block">Diferença com a
 								referência: <strong>${browser.getPercentageDeviation()}%</strong>
 							</span>
-						</div>						
+						</div>		
+						<div style="display:none">Saída do Console: ${browser.getConsoleOutput()}</div>		
 					</td> 
 					</#list>
 				</tr>

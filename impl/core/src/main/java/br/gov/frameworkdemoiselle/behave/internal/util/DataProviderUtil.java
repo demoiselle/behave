@@ -39,12 +39,18 @@ package br.gov.frameworkdemoiselle.behave.internal.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 public class DataProviderUtil {
 	
 	private static DataProvider dataProvider = (DataProvider) InjectionManager.getInstance().getInstanceDependecy(DataProvider.class);
+	private static Logger logger = Logger.getLogger(DataProviderUtil.class);
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 	
 	public static List<String> replaceDataProvider(List<String> valueList){
 		List<String> newValueList = new ArrayList<String>();		
@@ -55,7 +61,12 @@ public class DataProviderUtil {
 	}
 	
 	public static String replaceValue(String value){
-		return dataProvider.containsKey(value) ? (String) dataProvider.get(value) : value;
+		if (dataProvider.containsKey(value)) {			
+			logger.debug(bm.getString("message-dataprovider-found", value));			
+			return (String) dataProvider.get(value); 
+		} else {
+			return value;
+		}
 	}
 
 }

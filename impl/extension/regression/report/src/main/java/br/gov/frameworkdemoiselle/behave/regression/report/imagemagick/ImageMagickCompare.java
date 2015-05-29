@@ -113,8 +113,7 @@ public class ImageMagickCompare {
 					// Diff em GIF
 					String pathDiffFileGif = diffScreenshotPath + File.separator + prefixDiffGif + "_" + currentTypeName + "__" + FilenameUtils.removeExtension(expectedFilesList.get(i).getName()) + ".gif";
 					CommandBuilder commandBuilderGif = buildCommandForGif(currentFile, currentImage, expectedFile, expectedImage, pathDiffFileGif);
-					// String commandOutputGif =
-					executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
+					commandOutput += " / " + executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
 
 					// Linha do relatório
 					browsersResults.add(new BrowserResultColumn(types.get(j), pathOrigFile, pathDiffFile, pathDiffFileGif, expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
@@ -182,8 +181,8 @@ public class ImageMagickCompare {
 		Process process = Runtime.getRuntime().exec(command);
 		StreamGobbler errorGobbler = gobbleStream(process);
 		
-		//System.out.println("Exit Value: " + process.waitFor());
-		//System.out.println(errorGobbler.getOutputLine());
+		// log.debug("Saída do comando do Image Magic: " + process.waitFor());
+		// log.debug("Saída de erro do comando do Image Magic: " + errorGobbler.getOutputLine());
 
 		return errorGobbler.getOutputLine();
 	}

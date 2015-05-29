@@ -118,7 +118,7 @@ public class CommandBuilder {
     	for(String command : getCommandAsArray())
     		commandRepresentation += (command + " ");
     	
-    	System.out.println("COMMAND: " + commandRepresentation);
+    	// System.out.println("COMMAND: " + commandRepresentation);
     	
         return commandRepresentation.trim();
     }
