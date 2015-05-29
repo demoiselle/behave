@@ -184,13 +184,13 @@ behave.regression.linux1204_Chrome33.runner.screen.driverPath=//path//do//driver
 behave.regression.windows7_IE9.runner.screen.type=RemoteWeb
 behave.regression.windows7_IE9.runner.window.maximize.enabled=true
 behave.regression.windows7_IE9.runner.screen.remote.name=internetExplorer
-behave.regression.windows7_IE9.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub
+behave.regression.windows7_IE9.runner.screen.remote.url=http://X.X.X.X:4444/wd/hub
 
 // Navegador Chrome em uma máquina remota
 behave.regression.windows7_Chrome35.runner.screen.type=RemoteWeb
 behave.regression.windows7_Chrome35.runner.window.maximize.enabled=true
 behave.regression.windows7_Chrome35.runner.screen.remote.name=chrome
-behave.regression.windows7_Chrome35.runner.screen.remote.url=http://127.0.0.1:4449/wd/hub</programlisting>					
+behave.regression.windows7_Chrome35.runner.screen.remote.url=http://X.X.X.X:4444/wd/hub</programlisting>					
 					</listitem>
 				</itemizedlist>
 			</para>
@@ -252,6 +252,22 @@ public void testRegressaoLayout() throws Throwable {
 				O relatório só será gerado se os testes funcionais passarem.
 			</para>
 		</warning>
+		
+		<para>O relatório final será criado na pasta <citetitle>/target/dbehave</citetitle> do seu projeto dbehave e possuirá as seguintes características.</para>
+		
+		<itemizedlist>
+			<listitem>Na primeira coluna será mostrada o texto do nome da tela que foi feita a captura ou o nome fornecido, dependendo de qual frase foi utilizada.</listitem>
+			<listitem>Na segunda coluna é exibido a imagem de referência capturada do navegador de referência.</listitem>
+			<listitem>				
+				Nas pŕoximas colunas serão exibidas as imagens e informações sobre a comparação com os navegadores
+				<itemizedlist>
+					<listitem>Imagem Original (opção que vem selecionada) do navegador que será comparado.</listitem>
+					<listitem>Imagem Estática que mostra a diferença entre os 2 navegadores na cor vermelha.</listitem>
+					<listitem>Imagem Dinâmica que mostra a diferença entre os navegadores por meio de um GIF que alterna entre os 2 navegadores.</listitem>
+					<listitem>Percentual de diferença entre os 2 navegadores.</listitem>
+				</itemizedlist>
+			</listitem>
+		</itemizedlist>
 		
 		<para>
 			<mediaobject>

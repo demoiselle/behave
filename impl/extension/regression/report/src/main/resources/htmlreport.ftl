@@ -91,10 +91,10 @@ body, .main-container {
 							    <input type="radio" name="options" id="option1" autocomplete="off"> Original
 							  </label>
 							  <label class="btn btn-primary btn-sm" id="${browser.getName()}-png_btn">
-							    <input type="radio" name="options" id="option1" autocomplete="off"> Stática
+							    <input type="radio" name="options" id="option1" autocomplete="off"> Estática
 							  </label>
 							  <label class="btn btn-primary btn-sm" id="${browser.getName()}-gif_btn">
-							    <input type="radio" name="options" id="option2" autocomplete="off"> Animado
+							    <input type="radio" name="options" id="option2" autocomplete="off"> Dinâmica
 							  </label>
 							</div>
 							
