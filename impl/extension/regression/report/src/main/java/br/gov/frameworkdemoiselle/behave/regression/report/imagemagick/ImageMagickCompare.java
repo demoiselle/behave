@@ -66,21 +66,23 @@ public class ImageMagickCompare {
 	public void compareAndCaptureResultsWithLists(List<String> types, List<List<File>> typesFilesList, String expectedType, List<File> expectedFilesList) {
 		try {
 			diffScreenshotPath = new File("target/dbehave").getAbsolutePath();
-			
+
 			checkIfDiffFolderExists();
 
 			for (int i = 0; i < expectedFilesList.size(); i++) {
 				List<BrowserResultColumn> browsersResults = new ArrayList<BrowserResultColumn>();
 
-				// Arquivo original do navegador de referencia, sempre copia pois pode ter sido modificado
-				File expectedFileOriginal = expectedFilesList.get(i);				
+				// Arquivo original do navegador de referencia, sempre copia
+				// pois pode ter sido modificado
+				File expectedFileOriginal = expectedFilesList.get(i);
 				String pathExpectedFile = diffScreenshotPath + File.separator + prefixExpected + "_" + expectedType + "__" + expectedFilesList.get(i).getName();
 
 				// Pega a primeira tela do primeiro navegador
 				for (int j = 0; j < types.size(); j++) {
-					
-					// Reinicia a imagem de referencia por causa dos redimensionamentos
-					File expectedFile = new File(pathExpectedFile);					
+
+					// Reinicia a imagem de referencia por causa dos
+					// redimensionamentos
+					File expectedFile = new File(pathExpectedFile);
 					Files.copy(expectedFileOriginal, expectedFile);
 
 					// Arquivo atual
@@ -113,7 +115,7 @@ public class ImageMagickCompare {
 					// Diff em GIF
 					String pathDiffFileGif = diffScreenshotPath + File.separator + prefixDiffGif + "_" + currentTypeName + "__" + FilenameUtils.removeExtension(expectedFilesList.get(i).getName()) + ".gif";
 					CommandBuilder commandBuilderGif = buildCommandForGif(currentFile, currentImage, expectedFile, expectedImage, pathDiffFileGif);
-					commandOutput += " / " + executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
+					executeCommandAndGetOutput(commandBuilderGif.getCommandAsArray());
 
 					// Linha do relatório
 					browsersResults.add(new BrowserResultColumn(types.get(j), pathOrigFile, pathDiffFile, pathDiffFileGif, expectedImage.getTotalPixels(), currentImage.getTotalPixels(), commandOutput, ComparisonStrategy.ONE_TO_ONE));
@@ -180,9 +182,10 @@ public class ImageMagickCompare {
 	private String executeCommandAndGetOutput(String[] command) throws IOException, InterruptedException {
 		Process process = Runtime.getRuntime().exec(command);
 		StreamGobbler errorGobbler = gobbleStream(process);
-		
-		// log.debug("Saída do comando do Image Magic: " + process.waitFor());
-		// log.debug("Saída de erro do comando do Image Magic: " + errorGobbler.getOutputLine());
+
+		// Saídas do console
+		log.debug("Saída do comando (Image Magick): " + process.waitFor());
+		log.debug("Saída alternativa do comando (Image Magick): " + errorGobbler.getOutputLine());
 
 		return errorGobbler.getOutputLine();
 	}

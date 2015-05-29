@@ -66,7 +66,7 @@ body, .main-container {
 					<td class="text-nowrap">${resultRow.getName()}</td>
 					<td>
 						<a href="${resultRow.getExpectedFileNameReport()}" data-toggle="lightbox" data-gallery="multiimages" data-title="Referência">
-							<img src="${resultRow.getExpectedFileName()}" width="300" />
+							<img src="${resultRow.getExpectedFileNameReport()}" width="300" />
 						</a>
 					</td>
 					
@@ -74,15 +74,15 @@ body, .main-container {
 					<td>
 						<div class="row text-center">
 							<a href="${browser.getOriginalFileNameReport()}" id="${browser.getName()}-original" data-toggle="lightbox" data-gallery="multiimages" data-title="${browser.getName()}">
-								<img src="${browser.getOriginalFileName()}" width="250" />
+								<img src="${browser.getOriginalFileNameReport()}" width="250" />
 							</a>
 							
 							<a href="${browser.getPngFileNameReport()}" id="${browser.getName()}-png" data-toggle="lightbox" data-gallery="multiimages" data-title="Imagem comparativa do ${browser.getName()}" style="display: none;">
-								<img src="${browser.getPngFileName()}" width="250" />
+								<img src="${browser.getPngFileNameReport()}" width="250" />
 							</a>
 							
 							<a href="${browser.getGifFileNameReport()}" id="${browser.getName()}-gif" data-toggle="lightbox" data-gallery="multiimages" data-title="Animação comparativa do ${browser.getName()}" style="display: none;">
-								<img src="${browser.getGifFileName()}" width="250" />
+								<img src="${browser.getGifFileNameReport()}" width="250" />
 							</a>
 						</div>
 						<div class="row text-center">
@@ -101,8 +101,7 @@ body, .main-container {
 							<span id="helpBlock" class="help-block">Diferença com a
 								referência: <strong>${browser.getPercentageDeviation()}%</strong>
 							</span>
-						</div>		
-						<div style="display:none">Saída do Console: ${browser.getConsoleOutput()}</div>		
+						</div>				
 					</td> 
 					</#list>
 				</tr>
