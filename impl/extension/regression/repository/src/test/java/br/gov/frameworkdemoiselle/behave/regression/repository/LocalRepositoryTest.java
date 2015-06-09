@@ -120,9 +120,9 @@ public class LocalRepositoryTest {
 		List<String> locations = repo.getLocations();
 		assertEquals(3, locations.size());
 		
-		assertEquals("mac/safari", locations.get(0));
-		assertEquals("ubuntu/chrome", locations.get(1));
-		assertEquals("windows/iexplorer", locations.get(2));
+		assertEquals("mac" + File.separatorChar + "safari", locations.get(0));
+		assertEquals("ubuntu" + File.separatorChar + "chrome", locations.get(1));
+		assertEquals("windows" + File.separatorChar + "iexplorer", locations.get(2));
 	}
 
 	@Test
