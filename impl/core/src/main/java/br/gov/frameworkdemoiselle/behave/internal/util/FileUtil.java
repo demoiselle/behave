@@ -78,16 +78,6 @@ public class FileUtil {
 		return stringBuilder.toString();
 	}
 
-
-	public static String createTempDir(String dir) {
-		String tempDirName = dir;
-		File file = new File(getAbsolutePath(), tempDirName);
-		if (!file.exists()) {
-			file.mkdir();
-		}
-		return file.getAbsolutePath();
-	}
-
 	public static String getAbsolutePath() {
 		try {
 			ClassLoader loader = Thread.currentThread().getContextClassLoader();
