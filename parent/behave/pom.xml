@@ -212,15 +212,8 @@
 			<dependency>
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-core</artifactId>
-				<version>3.8</version>
-			</dependency>
-			<!-- downgrade temporario
-			<dependency>
-				<groupId>org.jbehave</groupId>
-				<artifactId>jbehave-core</artifactId>
-				<version>3.9.5</version>
-			</dependency>
-			 -->
+				<version>4.0.1</version>
+			</dependency>			
 			<dependency>
 				<groupId>org.jbehave.web</groupId>
 				<artifactId>jbehave-web-selenium</artifactId>
