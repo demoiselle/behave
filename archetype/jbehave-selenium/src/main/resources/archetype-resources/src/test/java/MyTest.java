@@ -6,10 +6,9 @@ import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
 public class MyTest {
 
-	private BehaveContext eng = null;
+	private BehaveContext eng = BehaveContext.getInstance();
 
 	public MyTest() {
-		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
 	}
 

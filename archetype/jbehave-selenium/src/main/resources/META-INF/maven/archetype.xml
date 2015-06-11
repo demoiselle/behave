@@ -3,11 +3,11 @@
 	<testSources>
 		<source>src/test/java/MyTest.java</source>
 		<source>src/test/java/MySteps.java</source>
-		<source>src/test/java/MyPage.java</source>
+		<source>src/test/java/MyPages.java</source>
 	</testSources>
 	<testResources>
 		<resource>src/test/resources/behave.properties</resource>
 		<resource>src/test/resources/log4j.xml</resource>
-		<resource>src/test/resources/stories/search.story</resource>
+		<resource>src/test/resources/stories/dbehave.story</resource>
 	</testResources>
 </archetype>
