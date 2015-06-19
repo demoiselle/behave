@@ -15,20 +15,33 @@
 
 	<para>
 		<citetitle>Versão 1.5.0</citetitle>
-		<itemizedlist>				
+		<itemizedlist>
 			<listitem>
-				<ulink url="https://github.com/demoiselle/behave/issues/1">
+				<ulink url="https://github.com/demoiselle/behave/issues/345">
 					<emphasis>[Melhoria]</emphasis>
-					XXXX
+					Nova propriedade para zoom out para screenshot
 				</ulink>
 			</listitem>
 			<listitem>
-				<ulink url="https://github.com/demoiselle/behave/issues/1">
+				<ulink url="https://github.com/demoiselle/behave/issues/344">
 					<emphasis>[Melhoria]</emphasis>
-					XXX 
+					Melhorias no primefaces grid e novo parâmetro para a captura da tela nos erros
+				</ulink>
+			</listitem>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/341">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na integração ALM, agora um cenário falha quando uma ou mais linhas dos exemplos falha
 				</ulink>
 			</listitem>
-		</itemizedlist>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/309">
+					<emphasis>[Melhoria]</emphasis>
+					Integração com Image Magick para testes de regressão de layout
+				</ulink>
+			</listitem>
+			
+		</itemizedlist>
 	
 		<citetitle>Versão 1.4.4</citetitle>
 		<itemizedlist>				
