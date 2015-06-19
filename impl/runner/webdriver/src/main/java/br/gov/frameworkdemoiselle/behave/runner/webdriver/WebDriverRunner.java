@@ -49,7 +49,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -194,30 +193,36 @@ public class WebDriverRunner implements Runner {
 		File screenshotFile = new File(fileName);
 
 		screenshotFile.getParentFile().mkdirs();
-		
-		Dimension d = driver.manage().window().getSize();
-		
-		driver.manage().window().maximize();
-		WebElement html = driver.findElement(By.tagName("html"));
-		
-		for (int x=0; x< BehaveConfig.getRunner_screenShotZoomout();x++){
-			html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
-		}
-		
-		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		
-		driver.manage().window().setSize(d);
-		html.sendKeys(Keys.chord(Keys.CONTROL, "0"));
-		
-		try {
-			FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
 
-			if (generateSource) {
-				writeHtmlFile(screenshotFile.getAbsolutePath());
+		driver.manage().window().maximize();
+
+		File screenshot = null;
+
+		if (BehaveConfig.getRunner_screenShotZoomout() != 0) {
+			WebElement html = driver.findElement(By.tagName("html"));
+
+			for (int x = 0; x < BehaveConfig.getRunner_screenShotZoomout(); x++) {
+				html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
 			}
-		} catch (IOException e) {
-			throw new BehaveException(message.getString("exception-save-screenshot"), e);
+
+			screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			html.sendKeys(Keys.chord(Keys.CONTROL, "0"));
+		} else {
+			screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		}
+
+		if (screenshot != null) {
+			try {
+				FileUtils.copyFile(screenshot, new File(screenshotFile.getAbsolutePath()));
+
+				if (generateSource) {
+					writeHtmlFile(screenshotFile.getAbsolutePath());
+				}
+			} catch (IOException e) {
+				throw new BehaveException(message.getString("exception-save-screenshot"), e);
+			}
+		}
+
 		return screenshotFile;
 	}
 
