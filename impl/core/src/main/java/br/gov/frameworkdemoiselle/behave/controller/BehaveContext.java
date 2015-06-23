@@ -222,7 +222,7 @@ public class BehaveContext {
 		this.fail = fail;
 	}
 
-	public void cleanAllOriginalStories() {
+	public void clearAllOriginalStories() {
 		allOriginalStoriesPath.clear();
 	}
 
