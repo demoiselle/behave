@@ -62,7 +62,8 @@ public class FileUtil {
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
-	public static String loadFile(String pFilePath) throws IOException {
+	public static String loadFile(String pFilePath) throws IOException {		
+		pFilePath = pFilePath.replaceAll("%20", " "); // Correção de problemas com espaços		
 		StringBuilder stringBuilder = new StringBuilder();
 		FileInputStream fileInputStream = new FileInputStream(new File(pFilePath));
 		try {
@@ -114,7 +115,7 @@ public class FileUtil {
 	}
 
 	public static List<String> getFilesInFolder(String folderRoot, Boolean includeSubfolder) {
-
+		folderRoot = folderRoot.replaceAll("%20", " ");
 		List<String> fileNames = new ArrayList<String>();
 		File folder = new File(folderRoot);
 		if (!folder.exists()) {

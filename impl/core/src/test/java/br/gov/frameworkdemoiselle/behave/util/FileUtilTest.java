@@ -55,7 +55,8 @@ public class FileUtilTest {
 	@Test
 	public void testLoadFile() {
 		try {			 
-			String content = FileUtil.loadFile(FileUtilTest.class.getResource("/files/filesample.txt").getPath());
+			String path = FileUtilTest.class.getResource("/files/filesample.txt").getPath();
+			String content = FileUtil.loadFile(path);
 			Assert.assertEquals("content\n", content);
 		} catch (IOException e) {
 			Assert.fail(e.getMessage());
