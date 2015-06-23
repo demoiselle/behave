@@ -138,10 +138,8 @@ public class BehaveContext {
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
 			// Cria um novo array contendo somente as histórias atuais
-			// Correção de bug: Quando a história é explicitamente enviada
-			// novamente ao run ela tem que rodar
-			// Correção de bug: Quando existe reutilização de história ele
-			// alterava a ordem da execução atual de acordo com a reutilização
+			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
+			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
 			List<String> finalArray = new ArrayList<String>();
 			for (String storyFile : listNewPaths) {
 				for (String storyFileC : allStoriesConverted) {
@@ -168,8 +166,8 @@ public class BehaveContext {
 			storyOrScenarioFilter = null;
 			storiesPath.clear();
 			storiesReusePath.clear();
-			steps.clear();			
-			
+			steps.clear();
+
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
@@ -222,6 +220,10 @@ public class BehaveContext {
 	public void fail(String step, Throwable fail) {
 		this.failStep = step;
 		this.fail = fail;
+	}
+
+	public void cleanAllOriginalStories() {
+		allOriginalStoriesPath.clear();
 	}
 
 	// Seleciona o filtro para História OU Cenário
