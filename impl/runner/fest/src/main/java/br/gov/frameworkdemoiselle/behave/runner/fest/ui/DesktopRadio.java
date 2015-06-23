@@ -50,5 +50,10 @@ public class DesktopRadio extends DesktopBase implements Radio {
 		
 		radioFix.click();
 	}
+	
+	@Override
+	public Boolean isSelected() {
+		return ((JRadioButton) getElement()).isSelected();
+	}
 
 }

@@ -45,4 +45,6 @@ public interface Radio extends BaseUI {
 
 	public void click();
 	
+	public Boolean isSelected();
+	
 }

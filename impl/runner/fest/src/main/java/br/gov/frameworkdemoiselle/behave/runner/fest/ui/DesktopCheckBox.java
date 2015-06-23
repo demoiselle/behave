@@ -53,7 +53,7 @@ public class DesktopCheckBox extends DesktopBase implements CheckBox {
 
 	@Override
 	public Boolean isSelected() {
-		return null;
+		return ((JCheckBox) getElement()).isSelected();
 	}
 
 }

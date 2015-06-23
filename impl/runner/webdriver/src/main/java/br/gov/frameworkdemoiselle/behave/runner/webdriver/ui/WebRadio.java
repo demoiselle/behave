@@ -46,4 +46,10 @@ public class WebRadio extends WebBase implements Radio {
 		getElements().get(0).click();
 	}
 
+	public Boolean isSelected() {
+		waitVisibleClickableEnabled();
+		
+		return getElements().get(0).isSelected();
+	}
+
 }
