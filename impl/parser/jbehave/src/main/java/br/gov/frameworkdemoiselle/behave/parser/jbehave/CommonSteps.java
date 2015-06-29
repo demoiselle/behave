@@ -77,7 +77,7 @@ public class CommonSteps implements Step {
 	protected DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);
 	private Logger logger = Logger.getLogger(CommonSteps.class);
 	protected static String currentPageName;
-	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
+	protected static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
