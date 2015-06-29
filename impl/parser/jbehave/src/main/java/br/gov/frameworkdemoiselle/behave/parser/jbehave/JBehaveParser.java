@@ -1,6 +1,6 @@
 /*
  * Demoiselle Framework
- * Copyright (C) 2013 SERPRO
+ * Copyright (C) 2015 SERPRO
  * ----------------------------------------------------------------------------
  * This file is part of Demoiselle Framework.
  * 
@@ -183,6 +183,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			steps.add(new TableSteps());
 			steps.add(new MouseControlSteps());
 			steps.add(new DataGenerationSteps());
+			steps.add(new PrimeFacesSteps());
+			steps.add(new PrimeFacesCheckBoxSteps());
 		}
 
 		return new InstanceStepsFactory(configuration(), steps.toArray());
