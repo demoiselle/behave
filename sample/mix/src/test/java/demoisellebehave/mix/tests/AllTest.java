@@ -61,5 +61,9 @@ public class AllTest {
 		eng.run("/stories/mascara/mascara.story");
 	}
 
+	@Test
+	public void testPrimeEditor(){
+		eng.run("/stories/primefaces/test_primefaces_showcase_Editor.story");
+	}
 
 }
