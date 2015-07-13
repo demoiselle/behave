@@ -111,16 +111,6 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
 			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(storyReporter).withFormats(getFormats()).withPathResolver(new ResolveReportPathFix()));
 
-			// Controls
-			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
-			embedderControls.doGenerateViewAfterStories(true);
-			embedderControls.doIgnoreFailureInStories(true);
-			embedderControls.doIgnoreFailureInView(true);
-			embedderControls.doSkip(false);
-			embedderControls.doVerboseFailures(true);
-			embedderControls.useStoryTimeouts(Long.toString(BehaveConfig.getParser_StoryTimeout() * 60));
-			embedderControls.useThreads(1);
-
 		} catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
@@ -142,10 +132,20 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	public void run() {
 		logger.info(message.getString("message-parser-started"));
-		Embedder embedder = new Embedder(); 
-		embedder.useConfiguration(configuration);
 		
-		// Sempre seleciona o steps factory 
+		// Timeouts
+		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+		embedderControls.useStoryTimeouts(BehaveConfig.getParser_StoryTimeout());
+		
+		Embedder embedder = new Embedder();
+
+		// Seleciona os Embedder Controls				
+		embedder.useEmbedderControls(embedderControls);
+		
+		// Seleciona as configurações
+		embedder.useConfiguration(configuration);	
+		
+		// Sempre seleciona o steps factory
 		embedder.useStepsFactory(stepsFactory());
 		
 		try {
