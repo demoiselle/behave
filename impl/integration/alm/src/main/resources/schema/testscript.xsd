@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/v0.1/testscript/v0.1/" version="1.0" xmlns="http://jazz.net/xmlns/alm/qm/v0.1/testscript/v0.1/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:vega="http://schema.ibm.com/vega/2008/" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.ibm.rqm.xml.bind"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	
+	<xs:import namespace="http://schema.ibm.com/vega/2008/" schemaLocation="./vega.xsd"/>
+	<xs:element name="step">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A section of a manual test representing a gesture or set of gestures.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A name given to the step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="title" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A name given to the step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="description">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">An XHTML account of the step.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="expectedResult">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The XHTML condition the environment is expected to be in after executing the step.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="comment" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Any comment about the step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="compare" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Compare data of the step e.g. expected data:actual data</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="property">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="attachment">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A link to an attachment referenced by the step.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="link">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A link referenced by the step.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="step">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A sub step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="requirement">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The requirement associated with the test step</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:anyURI" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The URL of the requirement.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="summary" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] An optional label for the title of requirement that was provided by RM provider at the time the link was created. There is no guarantee that this label corresponds to the current title of the requirement in RM provider; The current title of the requirement is only available from the RM provider.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+            </xs:sequence>
+			<xs:attribute name="stepIndex" type="xs:int">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The one-based order index of this step within a group of steps.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The type of step.  Will be either "execution" or "reporting".</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute ref="vega:id">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The UUID of the step.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

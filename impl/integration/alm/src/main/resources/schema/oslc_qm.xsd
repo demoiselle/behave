@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://open-services.net/ns/qm#" version="1.0" xmlns="http://open-services.net/ns/qm#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:oslc="http://open-services.net/ns/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.oslc_qm"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="./rdf.xsd"/>
+	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="./dcterms.xsd"/>
+    <xs:import namespace="http://open-services.net/ns/core#" schemaLocation="./oslc.xsd"/>
+	
+	<xs:element name="usesTestCase">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element ref="TestCase"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:resource"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="reportsOnTestCase">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element ref="TestCase"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:resource"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="reportsOnTestPlan">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element ref="TestPlan"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:resource"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="executesTestScript">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element ref="TestScript"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:resource"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="producedByTestExecutionRecord">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element ref="TestExecutionRecord"/>
+            </xs:sequence>
+            <xs:attribute ref="rdf:resource"/>
+        </xs:complexType>
+    </xs:element>
+	
+	<xs:element name="TestPlan" substitutionGroup="rdf:typedNode" type="TestPlan"/>
+    <xs:complexType name="TestPlan">
+      <xs:complexContent>
+      <xs:extension base="rdf:typedNodeType">
+			<xs:sequence>
+				<xs:element ref="dcterms:title"/>
+				<xs:element ref="dcterms:description"/>
+				<xs:element ref="oslc:shortId"/>
+				<xs:element ref="dcterms:created"/>
+				<xs:element ref="dcterms:modified"/>
+                <xs:element ref="dcterms:creator"/>
+                <xs:element ref="dcterms:contributor"/>
+			</xs:sequence>
+      </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+	
+    <xs:element name="TestCase" substitutionGroup="rdf:typedNode" type="TestCase"/>
+    <xs:complexType name="TestCase">
+      <xs:complexContent>
+      <xs:extension base="rdf:typedNodeType">
+			<xs:sequence>
+				<xs:element ref="dcterms:title"/>
+				<xs:element ref="dcterms:description"/>
+				<xs:element ref="oslc:shortId"/>
+				<xs:element ref="dcterms:created"/>
+				<xs:element ref="dcterms:modified"/>
+                <xs:element ref="dcterms:creator"/>
+                <xs:element ref="dcterms:contributor"/>
+			</xs:sequence>
+      </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:element name="TestScript" substitutionGroup="rdf:typedNode" type="TestScript"/>
+    <xs:complexType name="TestScript">
+      <xs:complexContent>
+      <xs:extension base="rdf:typedNodeType">
+			<xs:sequence>
+				<xs:element ref="dcterms:title"/>
+				<xs:element ref="dcterms:description"/>
+				<xs:element ref="oslc:shortId"/>
+				<xs:element ref="dcterms:created"/>
+				<xs:element ref="dcterms:modified"/>
+                <xs:element ref="dcterms:creator"/>
+                <xs:element ref="dcterms:contributor"/>
+			</xs:sequence>
+      </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:element name="TestExecutionRecord" substitutionGroup="rdf:typedNode" type="TestExecutionRecord"/>
+    <xs:complexType name="TestExecutionRecord">
+      <xs:complexContent>
+      <xs:extension base="rdf:typedNodeType">
+			<xs:sequence>
+				<xs:element ref="dcterms:title"/>
+				<xs:element ref="oslc:shortId"/>
+				<xs:element ref="dcterms:created"/>
+				<xs:element ref="dcterms:modified"/>
+                <xs:element ref="dcterms:creator"/>
+                <xs:element ref="dcterms:contributor"/>
+			</xs:sequence>
+      </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    
+</xs:schema>

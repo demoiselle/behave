@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/prod/jazz/rqm/process/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:qm_process="http://jazz.net/xmlns/prod/jazz/rqm/process/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="./rdf.xsd"/>
+	<xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="./dc.xsd"/>
+
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.processinfo"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+  
+    <xs:element name="ProcessInfo">
+    	<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Process information from the process specification</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element maxOccurs="unbounded" ref="qm_process:hasWorkflowState"/>
+                <xs:element maxOccurs="unbounded" ref="qm_process:hasStateGroup"/>
+                <xs:element maxOccurs="unbounded" ref="qm_process:hasPriority"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasWorkflowState">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="qm_process:WorkflowState"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="WorkflowState">
+    	<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] A workflow state definition which applies to a test artifact.  This represents the state of the artifact in the workflow process.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+			<xs:choice maxOccurs="5">
+               <xs:element ref="dc:title">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The name of the workflow state</xs:documentation>
+					</xs:annotation>               
+               </xs:element>
+               <xs:element ref="dc:identifier">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The id of the workflow state</xs:documentation>
+					</xs:annotation>                
+               </xs:element>
+               <xs:element ref="qm_process:category">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The category of the group for which this state is related</xs:documentation>
+					</xs:annotation>                
+               </xs:element>
+               <xs:element ref="qm_process:stateGroup">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The group resource reference for this state</xs:documentation>
+					</xs:annotation>                
+               </xs:element>
+               <xs:element ref="qm_process:projectArea">	
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The project area of the workflow state</xs:documentation>
+					</xs:annotation>                
+               </xs:element>		
+			</xs:choice>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasStateGroup">
+	    <xs:complexType>
+	        <xs:choice>
+	            <xs:element ref="qm_process:StateGroup"/>
+	        </xs:choice>
+	    </xs:complexType>
+    </xs:element>
+    <xs:element name="StateGroup">
+    	<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Group definition of workflow states.  States are members of state groups.</xs:documentation>
+			<xs:appinfo>
+				<jaxb:class name="StateGroupResource"/>
+			</xs:appinfo>			
+		</xs:annotation>		
+        <xs:complexType>
+            <xs:choice maxOccurs="4">
+                <xs:element ref="dc:identifier">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The name of the workflow state group</xs:documentation>
+					</xs:annotation>                 
+                </xs:element>
+                <xs:element ref="dc:title">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The id of the workflow state group</xs:documentation>
+					</xs:annotation>                 
+                </xs:element>
+                <xs:element ref="qm_process:category">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The category of the workflow state group</xs:documentation>
+					</xs:annotation>                 
+                </xs:element>
+                <xs:element ref="qm_process:projectArea">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The prjoect area of the workflow state group</xs:documentation>
+					</xs:annotation>                 
+                </xs:element>
+            </xs:choice>
+            <xs:attribute ref="rdf:about" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="category">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Fixed set of categories which are assigned to state groups. ( DRAFT | UNDERREVIEW | REVIEWED | APPROVED | CLOSED )</xs:documentation>
+		</xs:annotation>    
+        <xs:complexType mixed="true">
+            <xs:attribute ref="rdf:datatype" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="stateGroup">
+    	<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Group to which the workflow state is associated</xs:documentation>
+		</xs:annotation>    
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>    
+    <xs:element name="projectArea">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Project area of this process item</xs:documentation>
+		</xs:annotation>     
+        <xs:complexType>
+            <xs:attribute ref="rdf:resource" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="hasPriority">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="qm_process:Priority"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Priority">
+    	<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Define literals for test artifact's priority</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="0" name="default" type="xs:boolean">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] This field will be set to true if the literal is default priority literal</xs:documentation>
+					</xs:annotation>
+               </xs:element>
+				<xs:element ref="dc:title">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Name of the priority literal</xs:documentation>
+					</xs:annotation>
+               </xs:element>
+               <xs:element ref="dc:identifier">
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Identifier of the priority literal</xs:documentation>
+					</xs:annotation>
+               </xs:element>
+               <xs:element ref="qm_process:projectArea">	
+			    	<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The project area of the workflow state</xs:documentation>
+					</xs:annotation>                
+               </xs:element>		
+			</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

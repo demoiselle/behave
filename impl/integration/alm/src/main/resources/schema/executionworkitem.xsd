@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/v0.1/executionworkitem/v0.1" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.executionworkitem"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="./rdf.xsd"/>
+	
+	<xs:element name="frequency" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The number of times the test is scheduled to run.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="weight" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The relative weight of the test case.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="priority">
+	    <xs:annotation>
+			<xs:documentation xml:lang="en">The priority literal value associated with the test artifact. Possible priority literal values (project area defaults) include: literal.priority.101 (Unassigned: default), literal.priority.110 (Low), literal.priority.120 (Medium), and literal.priority.130 (High).  Note, project areas may be configured with a default priority and custom priority values for test artifacts in the project area.  To resolve the associated custom priority literal value, set the custom priority value in the test artifact editor and read the test artifact using the RQM Reportable REST API (https://jazz.net/wiki/bin/view/Main/RqmApi#ReadResource).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The priority literal value.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the priority.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+ 	</xs:element>
+	<xs:element name="legacydata" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Migrated data.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="tags" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Search-able strings associated with the test.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="regression" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicator that this is a regression test.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="notes" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Comments associated with the test execution record.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+</xs:schema>

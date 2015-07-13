@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/prod/jazz/process/0.6/" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.jazz.process"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	
+	<xs:element name="team-area">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A group of contributors defined for a project area.</xs:documentation>
+		</xs:annotation>
+		
+    	<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="1" name="url" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The absolute URL of the team area.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+  	</xs:element>
+  	
+</xs:schema>

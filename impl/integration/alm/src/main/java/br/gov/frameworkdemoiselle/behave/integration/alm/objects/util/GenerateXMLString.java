@@ -42,9 +42,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -53,118 +50,97 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ApprovalState;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionresult;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Executionworkitem;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.ExecutionworkitemLink;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Priority;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseCategory;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestcaseLink;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcasedesign;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.TestplanLink;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
+
+import com.ibm.rqm.xml.bind.Details;
+import com.ibm.rqm.xml.bind.Executionresult;
+import com.ibm.rqm.xml.bind.Executionworkitem;
+import com.ibm.rqm.xml.bind.Richtext;
+import com.ibm.rqm.xml.bind.State;
+import com.ibm.rqm.xml.bind.Testcase;
+import com.ibm.rqm.xml.bind.Testplan;
 
 public class GenerateXMLString {
 
-	public static String getTestPlanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan oldPlan) throws JAXBException {
+	private static Logger log = Logger.getLogger(GenerateXMLString.class);
+
+	public static String getTestplanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan currentPlan) throws JAXBException {
 
 		// Adiciona o novo test case se não existir
 		boolean exists = false;
 		String newTestCaseId = urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId;
 
-		if (oldPlan.getTestcase() != null) {
-			for (TestcaseLink link : oldPlan.getTestcase()) {
+		if (currentPlan.getTestcase() != null) {
+			for (com.ibm.rqm.xml.bind.Testplan.Testcase link : currentPlan.getTestcase()) {
 				if (link.getHref().equals(newTestCaseId)) {
 					exists = true;
 					break;
 				}
 			}
-		} else {
-			oldPlan.setTestcase(new ArrayList<TestcaseLink>());
 		}
 
 		if (!exists) {
-			TestcaseLink testcase = new TestcaseLink();
+			com.ibm.rqm.xml.bind.Testplan.Testcase testcase = new com.ibm.rqm.xml.bind.Testplan.Testcase();
 			testcase.setHref(newTestCaseId);
-
-			oldPlan.getTestcase().add(testcase);
+			currentPlan.getTestcase().add(testcase);
 		}
-
-		Testplan plan = new Testplan();
-		plan.setTestcase(oldPlan.getTestcase());
-
-		// Adiciona as categorias
-		plan.setCategory(oldPlan.getCategory());
-
-		// Adiciona os aprovadores
-		plan.setApprovals(oldPlan.getApprovals());
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testplan.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
 		StringWriter testPlanString = new StringWriter();
-		marshaller.marshal(plan, testPlanString);
+		marshaller.marshal(currentPlan, testPlanString);
 
 		return testPlanString.toString();
 	}
 
-	public static String getTestcaseString(String urlServer, String projectAreaAlias, String encoding, String name, String steps, Testcase oldTestCase) throws JAXBException {
-		Priority priority = new Priority();
-		priority.setResource(urlServer + "process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
-		priority.setValue("literal.priority.101");
+	public static String getTestcaseString(String urlServer, String projectAreaAlias, String encoding, String name, String steps, Testcase currentTestCase) throws JAXBException {
 
-		Testcasedesign design = new Testcasedesign();
-		design.setExtensionDisplayName("RQM-KEY-TC-DESIGN-TITLE");
-		design.setValue(escapeHTMLForAlm(steps));
+		Richtext textDesgin = new Richtext();
+		textDesgin.getContent().add(escapeHTMLForAlm(steps));
 
-		Testcase testcase = new Testcase();
-		testcase.setTitle(name);
-		testcase.setPriority(priority);
-		testcase.setSuspect(false);
-		testcase.setWeight(100);
-		testcase.setTestCaseDesign(design);
+		currentTestCase.setTitle(name);
+		currentTestCase.setSuspect(false);
+		currentTestCase.setWeight(100);
+		currentTestCase.setComIbmRqmPlanningEditorSectionTestCaseDesign(textDesgin);
 
 		// Valor da Categoria
-		String categoryTipoExecucao =  BehaveConfig.getIntegration_CategoryTipoExecucao();
-		
-		// Verifica se no caso de teste vindo da ALM existe a caregoria
+		String categoryTipoExecucao = BehaveConfig.getIntegration_CategoryTipoExecucao();
+
+		// Verifica se no caso de teste vindo da ALM existe a categoria
 		// "Tipo de Execução", se não existe cria.
 		boolean objExists = false;
-		for (TestcaseCategory c : oldTestCase.getCategory()) {
+		for (Testcase.Category c : currentTestCase.getCategory()) {
 			if (c.getTerm().toLowerCase().trim().equals("tipo de execução")) {
-				objExists = true;				
+				objExists = true;
 				// Altera para "Automática"
-				c.setValue(categoryTipoExecucao);				
+				c.setValue(categoryTipoExecucao);
 				break;
-			}		
-		}
-		
-		if (!objExists) {
-			TestcaseCategory newC = new TestcaseCategory();
-			newC.setTerm("Tipo de Execução");
-			newC.setValue(categoryTipoExecucao);
-			oldTestCase.getCategory().add(newC);
+			}
 		}
 
-		// Adiciona as categorias
-		testcase.setCategory(oldTestCase.getCategory());
+		if (!objExists) {
+			Testcase.Category newC = new Testcase.Category();
+			newC.setTerm("Tipo de Execução");
+			newC.setValue(categoryTipoExecucao);
+			currentTestCase.getCategory().add(newC);
+		}
 
 		JAXBContext jaxb = JAXBContext.newInstance(Testcase.class);
 		Marshaller marshaller = jaxb.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
 		StringWriter testCaseString = new StringWriter();
-		marshaller.marshal(testcase, testCaseString);
+		marshaller.marshal(currentTestCase, testCaseString);
 
 		return testCaseString.toString();
 	}
 
-	public static Testcase getTestCaseObject(HttpResponse response) throws IOException, JAXBException {
+	public static Testcase getTestcaseObject(HttpResponse response) throws IOException, JAXBException {
 
 		Testcase testcase = null;
 		StringBuffer xmlString = new StringBuffer();
@@ -194,19 +170,18 @@ public class GenerateXMLString {
 	}
 
 	public static String getExecutionworkitemString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, String testPlanId) throws JAXBException {
-		Priority priority = new Priority();
-		priority.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/priority/literal.priority.101");
-		priority.setValue("literal.priority.101");
 
-		TestcaseLink workTest = new TestcaseLink();
+		// Workitem
+		com.ibm.rqm.xml.bind.Executionworkitem.Testcase workTest = new com.ibm.rqm.xml.bind.Executionworkitem.Testcase();
 		workTest.setHref(urlServer + "resources/" + projectAreaAlias + "/testcase/" + testCaseId);
 
-		TestplanLink testPlan = new TestplanLink();
+		// Testplan
+		com.ibm.rqm.xml.bind.Executionworkitem.Testplan testPlan = new com.ibm.rqm.xml.bind.Executionworkitem.Testplan();
 		testPlan.setHref(urlServer + "resources/" + projectAreaAlias + "/testplan/urn:com.ibm.rqm:testplan:" + testPlanId);
 
+		// Criação do Execution Work Item
 		Executionworkitem work = new Executionworkitem();
 		work.setFrequency("Once");
-		work.setPriority(priority);
 		work.setRegression(false);
 		work.setTitle("Registro de Execução Automatizado - Plano de Teste " + testPlanId);
 		work.setWeight(100);
@@ -223,38 +198,30 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, Date _startDate, Date _endDate, String details) throws JAXBException {
-		Date startDate = (Date) _startDate.clone();
-		Date endDate = (Date) _endDate.clone();
-		ApprovalState state = new ApprovalState();
-		state.setResource(urlServer + "/process-info/_EX3W1K3iEeKZTtTZfLxNXw/workflowstate/com.ibm.rqm.process.testcaseresult.workflow/com.ibm.rqm.planning.common.new");
-		state.setValue("com.ibm.rqm.planning.common.new");
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, String details) throws JAXBException {
 
-		ExecutionworkitemLink workTest = new ExecutionworkitemLink();
+		com.ibm.rqm.xml.bind.Executionresult.Executionworkitem workTest = new com.ibm.rqm.xml.bind.Executionresult.Executionworkitem();
 		workTest.setHref(executionWorkItemUrl);
 
+		State state = new State();
 		Executionresult result = new Executionresult();
 		if (stateOf.equals(ScenarioState.FAILED)) {
-			result.setState("com.ibm.rqm.execution.common.state.failed");
+			state.setContent("com.ibm.rqm.execution.common.state.failed");
 		} else {
 			if (stateOf.equals(ScenarioState.PENDING)) {
-				result.setState("com.ibm.rqm.execution.common.state.blocked");
+				state.setContent("com.ibm.rqm.execution.common.state.blocked");
 			} else {
-				result.setState("com.ibm.rqm.execution.common.state.passed");
+				state.setContent("com.ibm.rqm.execution.common.state.passed");
 			}
 		}
-		result.setApprovalstate(state);
+
+		result.setState(state);
 		result.setExecutionworkitem(workTest);
 
-		// Adiciona 3 horas (3 * 60 * 60 * 1000)
-		startDate.setTime(startDate.getTime() + 10800000L);
-		endDate.setTime(endDate.getTime() + 10800000L);
-
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-		result.setStarttime(format.format(startDate));
-		result.setEndtime(format.format(endDate));
-		result.setDetails(details);
+		// Details
+		Details d = new Details();
+		d.getContent().add(details);
+		result.setDetails(d);
 
 		JAXBContext jaxb = JAXBContext.newInstance(Executionresult.class);
 		Marshaller marshaller = jaxb.createMarshaller();
@@ -285,6 +252,10 @@ public class GenerateXMLString {
 		}
 
 		if (!xmlString.equals("")) {
+
+			log.debug("Saída Plano: ");
+			log.debug(xmlString);
+
 			JAXBContext jaxbContext = JAXBContext.newInstance(Testplan.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(xmlString.toString());

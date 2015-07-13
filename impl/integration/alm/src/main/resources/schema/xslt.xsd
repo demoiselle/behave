@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" jaxb:version="2.1" targetNamespace="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns="http://www.w3.org/1999/XSL/Transform" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:qm="http://jazz.net/xmlns/alm/qm/v0.1/" xmlns:styleinfo="http://jazz.net/xmlns/alm/qm/styleinfo/v0.1/" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.stylesheet"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+	<xs:import namespace="http://jazz.net/xmlns/alm/qm/v0.1/" schemaLocation="./qm.xsd"/>
+	<xs:import namespace="http://jazz.net/xmlns/alm/qm/styleinfo/v0.1/" schemaLocation="./styleinfo.xsd"/>
+	
+	<xs:element name="stylesheet">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+				The stylesheet for an artifact.
+			</xs:documentation>
+		</xs:annotation>
+		
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="qm:sections"/>
+				<xs:element ref="styleinfo:preferences"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

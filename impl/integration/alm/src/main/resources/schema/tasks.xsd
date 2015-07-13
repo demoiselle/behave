@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/qmadapter/task/v0.1" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.tasks"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+
+	<xs:element name="selectedAdapterId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">ID of the adapter that this task was destined for.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="type" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The type of the task to be performed. Permissible values are EXECUTE, IMPORT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="progress" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Shows how far the task has been processed. This is a number between 0 and 100.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="taken" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if the task has been taken for processing by any adapter or is still hasnt started to be processed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="managedbyadapter" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if the executable resource is one thats managed by the adapter and can be accessed locally by the adapter or is one thats managed by the test management system and needs to serve it.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fullpath" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] The path to the resource in the case where it is managed by the adapter (i.e. managedbyadapter is true).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="shareprefix" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Leading part of the path to the resource in the case where its managed by the test management solution (i.e. managedbyadapter is false).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="relativepath" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Trailing part of the path to the resource in the case where its managed by the test management solution (i.e. managedbyadapter is false).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ewi">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The test execution record whose execution lead to the creation of this task.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The URL of the test execution record.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="updateURL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] An update task.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the update.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="recordingURL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Used for recording task for adapter to POST the recorded script.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] URL where adapter should POST recorded script.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resultURL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] The result of the execution for this task.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the result.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="suiteLogURL">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] A link to the suite log.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the suite log.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="message">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about the task.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="statusCode" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">[READ-ONLY] The code associated with the message.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="properties">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A set of data associated with the task.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="property">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Data associated with the task.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="propertyName" type="xs:string">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] The name of the property.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="propertyType" type="xs:string">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] The data type of the property.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="propertyValue" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] The value of the porperty.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

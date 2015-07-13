@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/v0.1/catalog/v0.1" version="1.0" xmlns:catalog="http://jazz.net/xmlns/alm/qm/v0.1/catalog/v0.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+    
+    <xs:annotation>
+        <xs:appinfo>    
+            <jaxb:schemaBindings>
+              <jaxb:package name="com.ibm.rqm.xml.bind"/>
+            </jaxb:schemaBindings>
+        </xs:appinfo>   
+    </xs:annotation>
+    
+    <xs:element name="attributePath">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] The path to the attribute from the root of the labresource.  This consists of an ordered list of components and the id for the root of the path.  For backwards compatibility if the root type id is not specified the first item in the list of components must be the name of the first type. All other components must be the name of a visible attribute on its preceding component.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="2" name="orderedComponent">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A component in the attribute path.  The first component in the path refers to a lab resource type, and all subsequent components refer to a chain of attributes.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="true">
+                        <xs:attribute name="href" type="xs:anyURI">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="en">[READ-ONLY] The URL of the catalog type. This will only be used for the first element in the path as it refers to a lab resource type and the others refer to attributes. If this is not supplied for the first element the contents of this element will be used to identify the type via external id.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+  				</xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="type">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] An object residing in the catalog.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="catalog:type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A sub type of the object.</xs:documentation>
+					</xs:annotation>
+  				</xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="attribute">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] An attribute that resides on the type.</xs:documentation>
+					</xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:choice id="typeChoice" maxOccurs="1" minOccurs="1">
+                                <xs:element name="primitiveType">
+                                    <xs:annotation>
+                                        <xs:documentation xml:lang="en">[READ-ONLY] An attribute may have one of the following primitive types: String, Integer, Date/Time, User (disallowed for custom attributes), and Group (disallowed for custom attributes)</xs:documentation>
+                                    </xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="StringType"/>
+                                            <xs:enumeration value="NumericType"/>            
+                                            <xs:enumeration value="TimeStampType"/>
+                                            <xs:enumeration value="UserType"/>
+                                            <xs:enumeration value="GroupType"/>                                    
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="referenceType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] An attribute can be a reference to a type.  The referenceType must be one of the "root" types - i.e. it must be one of the top-most elements in the enclosing catalog element, and circular references are not allowed.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType mixed="true">
+				                        <xs:attribute name="href" type="xs:anyURI">
+				                            <xs:annotation>
+				                                <xs:documentation xml:lang="en">[READ-ONLY] The URL of the catalog type. If this is not supplied, the contents of this element will be used to identify the reference type by external id.</xs:documentation>
+				                            </xs:annotation>
+				                        </xs:attribute>
+				                    </xs:complexType>
+								</xs:element>
+                            </xs:choice>
+                            <xs:element name="cardinality">    
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">[READ-ONLY] An attribute may have one of the following cardinalities (1 and 1:n cardinalities are reserved for use by RQM only): 0:1, 0:n, 1, and 1:n</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="ZERO_OR_ONE"/>
+                                        <xs:enumeration value="ZERO_OR_MORE"/>            
+                                        <xs:enumeration value="ONE"/>
+                                        <xs:enumeration value="ONE_OR_MORE"/>            
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="hidden" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] Indicates that the attribute is hidden and will not appear in the RQM Web UI.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+                        <xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The name of the type.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="enumeration">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A set of enumerated values for the type.</xs:documentation>
+					</xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="value" type="xs:string">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">[READ-ONLY] The value of the enumeration..</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The name of the attribute that has the enumeration.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="catalog:attributePath">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The path to the attributes on the type.</xs:documentation>
+					</xs:annotation>
+  				</xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="testPlanCoverageType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] This is an indicator that the type will be used in the Test Environment generation tool in the RQM Web UI.</xs:documentation>
+					</xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" ref="catalog:attributePath">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">[READ-ONLY] The path to the attribute referencing the type.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The type name that will appear in the RQM Web UI.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+                    </xs:complexType>
+                </xs:element>                
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The name of the type.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="externalId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">[READ-ONLY] The external id of the type.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+			<xs:attribute name="typeId" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">[READ-ONLY] The id of the type.  When creating a new type, users should populate this field with a unique id in the range of negative numbers (less than 0).  This can then be referenced when a reference attribute is created at the same time.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="hidden" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] Indicates if the type should show up as selectable in the RQM Web UI.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

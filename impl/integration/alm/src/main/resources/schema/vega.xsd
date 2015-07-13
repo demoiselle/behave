@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://schema.ibm.com/vega/2008/" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+	<xs:attribute name="id" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The UUID of the associated resource.</xs:documentation>
+		</xs:annotation>
+  	</xs:attribute>
+</xs:schema>
