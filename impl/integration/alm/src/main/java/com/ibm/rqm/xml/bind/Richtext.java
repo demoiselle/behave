@@ -53,7 +53,7 @@ public class Richtext {
 
 	/*
 	 * Alteração necessária para que o LABEL do campo customizado da ALM não
-	 * SUMA!
+	 * SEJAM PERDIDOS!
 	 */
 	@XmlAttribute
 	public String extensionDisplayName;
