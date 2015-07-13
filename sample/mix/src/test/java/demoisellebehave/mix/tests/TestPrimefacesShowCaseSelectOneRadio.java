@@ -38,9 +38,8 @@ package demoisellebehave.mix.tests;
 
 import org.junit.Test;
 
-import demoisellebehave.mix.steps.MySteps;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
-import br.gov.frameworkdemoiselle.behave.parser.jbehave.PrimeFacesCheckBoxSteps;
+import demoisellebehave.mix.steps.MySteps;
 
 public class TestPrimefacesShowCaseSelectOneRadio {
 
@@ -49,7 +48,7 @@ public class TestPrimefacesShowCaseSelectOneRadio {
 	public TestPrimefacesShowCaseSelectOneRadio() {
 		eng = BehaveContext.getInstance();
 		eng.addSteps(new MySteps());
-		eng.addSteps(new PrimeFacesCheckBoxSteps());
+		
 	}
 
 	@Test
