@@ -42,15 +42,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
@@ -65,7 +69,7 @@ import com.ibm.rqm.xml.bind.Testplan;
 
 public class GenerateXMLString {
 
-	private static Logger log = Logger.getLogger(GenerateXMLString.class);
+	// private static Logger log = Logger.getLogger(GenerateXMLString.class);
 
 	public static String getTestplanString(String urlServer, String projectAreaAlias, String encoding, String testCaseId, Testplan currentPlan) throws JAXBException {
 
@@ -198,7 +202,10 @@ public class GenerateXMLString {
 		return resourceString.toString();
 	}
 
-	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, String details) throws JAXBException {
+	public static String getExecutionresultString(String urlServer, String projectAreaAlias, String encoding, String executionWorkItemUrl, ScenarioState stateOf, Date _startDate, Date _endDate, String details) throws JAXBException, DatatypeConfigurationException {
+
+		Date startDate = (Date) _startDate.clone();
+		Date endDate = (Date) _endDate.clone();
 
 		com.ibm.rqm.xml.bind.Executionresult.Executionworkitem workTest = new com.ibm.rqm.xml.bind.Executionresult.Executionworkitem();
 		workTest.setHref(executionWorkItemUrl);
@@ -217,6 +224,16 @@ public class GenerateXMLString {
 
 		result.setState(state);
 		result.setExecutionworkitem(workTest);
+
+		// Datas de início e fim do teste
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(startDate);
+		XMLGregorianCalendar startDateXml = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		result.setStarttime(startDateXml);
+
+		c.setTime(endDate);
+		XMLGregorianCalendar endDateXml = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		result.setEndtime(endDateXml);
 
 		// Details
 		Details d = new Details();
@@ -252,10 +269,6 @@ public class GenerateXMLString {
 		}
 
 		if (!xmlString.equals("")) {
-
-			log.debug("Saída Plano: ");
-			log.debug(xmlString);
-
 			JAXBContext jaxbContext = JAXBContext.newInstance(Testplan.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(xmlString.toString());

@@ -43,6 +43,7 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
@@ -251,7 +252,7 @@ public class ALMIntegration implements Integration {
 				executionWorkItemUrl = workItemName;
 			}
 
-			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, ((ScenarioState) result.get("state")), (String) result.get("details")));
+			HttpResponse responseResult = sendRequest(client, "executionresult", resultName, GenerateXMLString.getExecutionresultString(urlServer, projectAreaAlias, ENCODING, executionWorkItemUrl, ((ScenarioState) result.get("state")), (Date) result.get("startDate"), (Date) result.get("endDate"), (String) result.get("details")));
 			if (responseResult.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
 				throw new BehaveException(message.getString("exception-send-result", responseResult.getStatusLine().toString()));
 			}
