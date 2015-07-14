@@ -73,19 +73,16 @@ public enum WebBrowser {
 			BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 			try {
 				if (BehaveConfig.getRunner_RemoteName().equals("")) {
-					throw new BehaveException(message.getString("exception-property-not-found",
-							"behave.runner.screen.remote.name"));
+					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.name"));
 				}
 				if (BehaveConfig.getRunner_RemoteUrl().equals("")) {
-					throw new BehaveException(message.getString("exception-property-not-found",
-							"behave.runner.screen.remote.url"));
+					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
 				}
 				DesiredCapabilities capability = new DesiredCapabilities();
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
 			} catch (MalformedURLException e) {
-				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()),
-						e);
+				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()), e);
 			}
 		}
 	},
@@ -99,11 +96,11 @@ public enum WebBrowser {
 		public WebDriver getWebDriver() {
 			System.setProperty("webdriver.ghost.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			DesiredCapabilities caps = new DesiredCapabilities();
-			
-			String[] cli_args = new String[]{ "--ignore-ssl-errors=true" };
-			//DesiredCapabilities caps = DesiredCapabilities.phantomjs();
-			caps.setCapability( PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cli_args );
-			
+
+			String[] cli_args = new String[] { "--ignore-ssl-errors=true" };
+			// DesiredCapabilities caps = DesiredCapabilities.phantomjs();
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cli_args);
+
 			caps.setJavascriptEnabled(true);
 			caps.setCapability("takesScreenshot", true);
 			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "/usr/local/bin/phantomjs");
@@ -127,12 +124,9 @@ public enum WebBrowser {
 				return new FirefoxDriver(capabilities);
 			}
 
-			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(
-					BehaveConfig.getRunner_BinaryPath()));
+			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath()));
 
-			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(
-					BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
-
+			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
 			profile.setEnableNativeEvents(true);
 
 			FirefoxDriver driver = binary == null ? new FirefoxDriver(profile) : new FirefoxDriver(binary, profile);
@@ -156,6 +150,7 @@ public enum WebBrowser {
 			System.setProperty("webdriver.safari.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new SafariDriver();
 		}
+		
 	},
 	InternetExplorer {
 
