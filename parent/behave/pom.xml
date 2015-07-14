@@ -40,7 +40,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 	<artifactId>demoiselle-behave-parent</artifactId>
-	<version>1.5.1-BETA1</version>
+	<version>1.5.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -67,7 +67,7 @@
 	</organization>
 
 	<properties>
-		<behave.release.version>1.5.1-BETA1</behave.release.version>
+		<behave.release.version>1.5.1-SNAPSHOT</behave.release.version>
 		<release.goals>deploy wagon:upload site site:deploy</release.goals>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -399,8 +399,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-  <scm>
-    <tag>1.5.1-BETA1</tag>
-  </scm>
 </project>
