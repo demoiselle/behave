@@ -48,6 +48,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -59,7 +61,7 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public enum WebBrowser {
-	
+
 	RemoteWeb {
 		@Override
 		public String toString() {
@@ -69,21 +71,45 @@ public enum WebBrowser {
 		@Override
 		public WebDriver getWebDriver() {
 			BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
-			try {				
-				if (BehaveConfig.getRunner_RemoteName().equals("")){
-					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.name"));
+			try {
+				if (BehaveConfig.getRunner_RemoteName().equals("")) {
+					throw new BehaveException(message.getString("exception-property-not-found",
+							"behave.runner.screen.remote.name"));
 				}
-				if (BehaveConfig.getRunner_RemoteUrl().equals("")){
-					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
-				}	
+				if (BehaveConfig.getRunner_RemoteUrl().equals("")) {
+					throw new BehaveException(message.getString("exception-property-not-found",
+							"behave.runner.screen.remote.url"));
+				}
 				DesiredCapabilities capability = new DesiredCapabilities();
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
 			} catch (MalformedURLException e) {
-				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()), e);
+				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()),
+						e);
 			}
 		}
-	},	
+	},
+	GhostDriver {
+		@Override
+		public String toString() {
+			return "Ghost Driver";
+		}
+
+		@Override
+		public WebDriver getWebDriver() {
+			System.setProperty("webdriver.ghost.driver", BehaveConfig.getRunner_ScreenDriverPath());
+			DesiredCapabilities caps = new DesiredCapabilities();
+			
+			String[] cli_args = new String[]{ "--ignore-ssl-errors=true" };
+			//DesiredCapabilities caps = DesiredCapabilities.phantomjs();
+			caps.setCapability( PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cli_args );
+			
+			caps.setJavascriptEnabled(true);
+			caps.setCapability("takesScreenshot", true);
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "/usr/local/bin/phantomjs");
+			return new PhantomJSDriver(caps);
+		}
+	},
 	MozillaFirefox {
 		@Override
 		public String toString() {
@@ -92,7 +118,7 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			if (!BehaveConfig.getRunner_ProxyURL().equals("")) {			
+			if (!BehaveConfig.getRunner_ProxyURL().equals("")) {
 				Proxy proxy = new Proxy();
 				proxy.setProxyType(Proxy.ProxyType.PAC);
 				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunner_ProxyURL());
@@ -100,15 +126,17 @@ public enum WebBrowser {
 				capabilities.setCapability(CapabilityType.PROXY, proxy);
 				return new FirefoxDriver(capabilities);
 			}
-			
-			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath()));
-			
-			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
-			
+
+			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(
+					BehaveConfig.getRunner_BinaryPath()));
+
+			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(
+					BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
+
 			profile.setEnableNativeEvents(true);
-			
+
 			FirefoxDriver driver = binary == null ? new FirefoxDriver(profile) : new FirefoxDriver(binary, profile);
-			
+
 			return driver;
 		}
 	},
