@@ -132,22 +132,27 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 
 	public void run() {
 		logger.info(message.getString("message-parser-started"));
-		
-		// Timeouts
+
+		// Embedded controls
 		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
 		embedderControls.useStoryTimeouts(BehaveConfig.getParser_StoryTimeout());
-		
+		embedderControls.doGenerateViewAfterStories(true);
+		embedderControls.doIgnoreFailureInStories(true);
+		embedderControls.doIgnoreFailureInView(true);
+		embedderControls.doSkip(false);
+		embedderControls.doVerboseFailures(true);
+
 		Embedder embedder = new Embedder();
 
-		// Seleciona os Embedder Controls				
+		// Seleciona os Embedder Controls
 		embedder.useEmbedderControls(embedderControls);
-		
+
 		// Seleciona as configurações
-		embedder.useConfiguration(configuration);	
-		
+		embedder.useConfiguration(configuration);
+
 		// Sempre seleciona o steps factory
 		embedder.useStepsFactory(stepsFactory());
-		
+
 		try {
 			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
