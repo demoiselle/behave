@@ -94,16 +94,13 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.ghost.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			DesiredCapabilities caps = new DesiredCapabilities();
 
-			String[] cli_args = new String[] { "--ignore-ssl-errors=true" };
-			// DesiredCapabilities caps = DesiredCapabilities.phantomjs();
-			caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cli_args);
-
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[] { "--ignore-ssl-errors=true" });
 			caps.setJavascriptEnabled(true);
 			caps.setCapability("takesScreenshot", true);
-			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "/usr/local/bin/phantomjs");
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, BehaveConfig.getRunner_ScreenDriverPath());
+			
 			return new PhantomJSDriver(caps);
 		}
 	},
