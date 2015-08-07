@@ -14,6 +14,64 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.5.1</citetitle>
+		<itemizedlist>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/363">
+					<emphasis>[Melhoria]</emphasis>
+					Inclusão do navegador GhostDriver em modo experimental  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/362">
+					<emphasis>[Bug]</emphasis>
+					Correção de um problema que não permitia aumentar o timeout padrão  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/361">
+					<emphasis>[Bug]</emphasis>
+					Refatoração completa do código da integração com a ALM corrigindo um problema de limpeza de diversos dados  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/360">
+					<emphasis>[Melhoria]</emphasis>
+					Novo componente de UI para trabalhar com o p:editor do primefaces 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/355">
+					<emphasis>[Bug]</emphasis>
+					Correção de bug que limpava alguns dados quando a integração com a ALM era feita 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/354">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização da versão do WebDriver para a versão 2.46
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/353">
+					<emphasis>[Melhoria]</emphasis>
+					Padronização dos comportamentos de Radio e do Checkbox
+				</ulink>
+			</listitem>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/351">
+					<emphasis>[Melhoria]</emphasis>
+					Melhorias na manipuação de elementos Primefaces Radio e Check
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/348">
+					<emphasis>[Melhoria]</emphasis>
+					Atualização da versão do JBehave para a versão 4
+				</ulink>
+			</listitem>			
+		</itemizedlist>
+	
 		<citetitle>Versão 1.5.0</citetitle>
 		<itemizedlist>
 			<listitem>
@@ -39,8 +97,7 @@
 					<emphasis>[Melhoria]</emphasis>
 					Integração com Image Magick para testes de regressão de layout
 				</ulink>
-			</listitem>
-			
+			</listitem>			
 		</itemizedlist>
 	
 		<citetitle>Versão 1.4.4</citetitle>
