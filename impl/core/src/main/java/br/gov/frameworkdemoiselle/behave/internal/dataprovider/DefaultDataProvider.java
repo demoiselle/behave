@@ -38,7 +38,12 @@ package br.gov.frameworkdemoiselle.behave.internal.dataprovider;
 
 import java.util.Hashtable;
 
+import org.apache.log4j.Logger;
+
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
+import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
  * 
@@ -48,7 +53,9 @@ import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
 public class DefaultDataProvider implements DataProvider {
 	
 	private static Hashtable<String, Object> data;
-
+	private static Logger logger = Logger.getLogger(DefaultDataProvider.class);
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
+	
 	public DefaultDataProvider() {
 		data = new Hashtable<String, Object>();
 	}
@@ -56,6 +63,7 @@ public class DefaultDataProvider implements DataProvider {
 	public void put(String key, Object value) {
 		key = key.trim();
 		data.put(key, value);
+		logger.debug(bm.getString("message-dataprovider-found", key+":"+data.get(key).toString()));
 	}
 	
 	public Object get(String key) {
