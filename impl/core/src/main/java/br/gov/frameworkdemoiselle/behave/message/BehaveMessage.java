@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.message;
 
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
@@ -59,7 +60,11 @@ public class BehaveMessage {
 	}
 	
 	public BehaveMessage(String baseName, Locale locale) {
-		rb = ResourceBundle.getBundle(baseName, locale);
+		try {
+			rb = ResourceBundle.getBundle(baseName, locale);
+		} catch (MissingResourceException ex) {	
+			rb = ResourceBundle.getBundle(baseName, new Locale(BehaveConfig.getProperty("behave.message.locale", "pt")));
+		}
 	}
 
 	/**
