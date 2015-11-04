@@ -43,6 +43,7 @@ import java.net.URL;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -164,7 +165,21 @@ public enum WebBrowser {
 		@Override
 		public WebDriver getWebDriver() {
 			System.setProperty("webdriver.chrome.driver", BehaveConfig.getRunner_ScreenDriverPath());
-			return new ChromeDriver();
+
+			//Nova configuração necessária para funcionar o Profile no Chromium
+			ChromeOptions chromeOptions = new ChromeOptions();
+			if (BehaveConfig.getRunner_ProfileEnabled()){
+				String profile = "user-data-dir=".concat(BehaveConfig.getRunner_ProfilePath());
+				chromeOptions.addArguments(profile);
+			}
+			
+			//Nova configuração necessária para definir o caminho do browser a ser executado. 
+			//Podemos dessa forma executar o Chrome ou o Chromium instalados na mesma máquina.
+			if (!BehaveConfig.getRunner_BinaryPath().equals("")){
+				chromeOptions.setBinary(BehaveConfig.getRunner_BinaryPath());
+			}
+						
+			return new ChromeDriver(chromeOptions);
 		}
 	},
 	HtmlUnit {
