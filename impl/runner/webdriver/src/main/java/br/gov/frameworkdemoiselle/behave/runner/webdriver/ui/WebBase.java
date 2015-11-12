@@ -610,7 +610,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					Assert.fail(message.getString("message-text-found", text));
+					Assert.fail(message.getString("message-text-not-found", text));
 				}
 
 			}
