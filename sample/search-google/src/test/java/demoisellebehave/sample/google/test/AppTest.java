@@ -47,7 +47,7 @@ public class AppTest {
 	
 	public AppTest() {
 		// Instância o motor de testes
-		eng = BehaveContext.getInstance();
+		eng = BehaveContext.getInstance();		
 		
 		// Adiciona passos (sentenças) específicas
 		eng.addSteps(new MySteps());
@@ -59,6 +59,10 @@ public class AppTest {
 
 	@Test
 	public void testBDD() throws Throwable {
+		
+		// Limpa as histórias antigas
+		eng.clearAllOriginalStories();
+		
 		// Adiciona histórias que serão executadas
 		eng.addStories("/stories/estou-com-sorte.story");
 		eng.addStories("/stories/pesquisa-simples.story");
@@ -69,9 +73,13 @@ public class AppTest {
 	
 	@Test
 	public void testPlusBDD() throws Throwable {
+		
+		// Limpa as histórias antigas
+		eng.clearAllOriginalStories();
+		
 		// Adiciona histórias que serão executadas
 		eng.addStories("/stories/pesquisa-simples.story");
-		eng.addStories("/stories/estou-com-sorte.story");		
+		eng.addStories("/stories/estou-com-sorte.story");
 		
 		// Roda as histórias incluída
 		eng.run();
