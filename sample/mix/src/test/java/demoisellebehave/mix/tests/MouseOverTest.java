@@ -4,18 +4,16 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class PrimeFacesEditorTest {
+public class MouseOverTest {
 
 	private BehaveContext eng = null;
 
-	public PrimeFacesEditorTest() {
+	public MouseOverTest() {
 		eng = BehaveContext.getInstance();
 	}
 
-
 	@Test
-	public void testPrimeEditor(){
-		eng.run("/stories/primefaces/test_primefaces_showcase_Editor.story");
+	public void testTree() throws Throwable {
+		eng.run("/stories/movemouse/");
 	}
-
 }

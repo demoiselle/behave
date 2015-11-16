@@ -4,22 +4,16 @@ import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
-public class PrimeFacesAutocompleteTest {
+public class PopupTest {
 
 	private BehaveContext eng = null;
 
-	public PrimeFacesAutocompleteTest() {
+	public PopupTest() {
 		eng = BehaveContext.getInstance();
 	}
 
 	@Test
 	public void testTree() throws Throwable {
-		eng.run("/stories/primefaces/autocomplete.story");
+		eng.run("/stories/popup/");
 	}
-	
-	@Test
-	public void testComponent() throws Throwable {
-		eng.run("/stories/primefaces/autocomplete_component.story");
-	}
-
 }
