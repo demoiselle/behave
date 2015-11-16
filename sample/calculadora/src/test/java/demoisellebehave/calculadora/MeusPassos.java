@@ -49,7 +49,7 @@ import br.gov.frameworkdemoiselle.behave.parser.Step;
 
 public class MeusPassos implements Step {
 	
-	private Calculadora calculadora;
+	protected Calculadora calculadora;
 	
 	@When("Quando inicio a Calculadora")
 	public void goToWithName(String local) {

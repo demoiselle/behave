@@ -46,12 +46,14 @@ public class RegressivaCalculadoraTest {
 
 	public RegressivaCalculadoraTest() {
 		eng = BehaveContext.getInstance();
-		eng.addSteps(new RegressivaMeusPassos());
+		eng.addSteps(new MeusPassos());
+		eng.addSteps(new RegressivaMeusPassos());		
 	}
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run("/stories/regressiva.story");
+		eng.clearAllOriginalStories();
+		eng.run("/stories/");
 	}
 
 }

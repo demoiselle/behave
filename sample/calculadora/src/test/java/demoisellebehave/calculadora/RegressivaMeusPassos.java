@@ -41,26 +41,21 @@ import static org.junit.Assert.assertEquals;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import br.gov.frameworkdemoiselle.behave.parser.Step;
+public class RegressivaMeusPassos extends MeusPassos {
 
-public class RegressivaMeusPassos implements Step {
-	
-	private Calculadora calculadora;
-	
 	@When("Quando inicio a Calculadora")
 	public void goToWithName(String local) {
 	}
-	
+
 	@When("inicio a Calculadora")
 	public void whenInicioACalculadora() {
 		calculadora = new Calculadora();
-		calculadora.soma(999);
+		// calculadora.soma(999);
 	}
-	
+
 	@Then("seu valor ser\u00E1 \"$valor\"")
 	public void thenSeuValorSera(double valor) {
-	  assertEquals(valor, calculadora.resultado(), 0.0);
+		assertEquals(valor, calculadora.resultado(), 0.0);
 	}
-	
-	
+
 }
