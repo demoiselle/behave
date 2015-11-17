@@ -184,13 +184,16 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.chrome.driver", BehaveConfig.getRunner_ScreenDriverPath());
+			String driver = BehaveConfig.getRunner_ScreenDriverPath();
+			System.setProperty("webdriver.chrome.driver", driver);
 
 			//Nova configuração necessária para funcionar o Profile no Chromium
 			ChromeOptions chromeOptions = new ChromeOptions();
 			if (BehaveConfig.getRunner_ProfileEnabled()){
 				String profile = "user-data-dir=".concat(BehaveConfig.getRunner_ProfilePath());
 				chromeOptions.addArguments(profile);
+			} else {
+				chromeOptions.addArguments("--disable-extensions");
 			}
 			
 			//Nova configuração necessária para definir o caminho do browser a ser executado. 
