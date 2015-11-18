@@ -47,9 +47,9 @@ import java.lang.reflect.Field;
 import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.fest.swing.core.BasicComponentPrinter;
@@ -151,7 +151,7 @@ public class FestRunner implements Runner {
 		for (Window w : JDialog.getWindows()) {
 			if (w instanceof JDialog && w.isVisible()) {
 				if (title.trim().equalsIgnoreCase(((JDialog) w).getTitle().trim())) {
-					currentContainer = (JPanel) ((JDialog) w).getRootPane().getContentPane();
+					currentContainer = (JComponent) ((JDialog) w).getRootPane().getContentPane();
 					currentContainer.setFocusTraversalKeysEnabled(true);
 					currentContainer.setVisible(true);
 					currentContainer.setEnabled(true);
