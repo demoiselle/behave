@@ -127,7 +127,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public Keywords getKeywordsLocale() {
-		return new LocalizedKeywords(new Locale("pt"));
+		return new LocalizedKeywords(new Locale(BehaveConfig.getParser_Language()));
 	}
 
 	public void run() {
