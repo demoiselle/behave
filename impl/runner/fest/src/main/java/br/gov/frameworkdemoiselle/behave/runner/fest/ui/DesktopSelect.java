@@ -36,47 +36,56 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
-import javax.swing.text.JTextComponent;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
-import org.fest.swing.fixture.JTextComponentFixture;
+import org.fest.swing.fixture.JComboBoxFixture;
 
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
-import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 
-public class DesktopTextField extends DesktopBase implements TextField {
-
-	public void sendKeys(CharSequence... keysToSend) {
-		JTextComponentFixture textFix = new JTextComponentFixture(runner.robot, (JTextComponent) getElement());
-
-		for (CharSequence cs : keysToSend) {
-			textFix.setText(cs.toString());
-		}
-	}
-
-	public void sendKeysWithTries(CharSequence... keysToSend) {
-		sendKeys(keysToSend);
-	}
-
-	public void clear() {
-		sendKeys("");
-	}
-
-	@Override
-	public String getText() {
-		JTextComponentFixture textFix = new JTextComponentFixture(runner.robot, (JTextComponent) getElement());
-		return textFix.text();
-	}
+public class DesktopSelect extends DesktopBase implements Select {
+	private static BehaveMessage message = new BehaveMessage(FestRunner.MESSAGEBUNDLE);
 
 	@Override
 	public void isVisibleDisabled() {
-		JTextComponent component = (JTextComponent) getElement();
+		JComponent component = (JComponent) getElement();
 		if (component == null) {
 			throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 		} else {
-			//Alguns componentens usam isEditable e outros usam isEnabled
-			if (!component.isVisible() || (component.isEditable() && component.isEnabled())) {
+			if (!component.isVisible() || component.isEnabled()) {
 				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 			}
 		}
 	}
+
+	@Override
+	public String getText() {
+		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
+		if (comboFixture.component() != null && comboFixture.component().getSelectedItem() != null) {
+			return comboFixture.component().getSelectedItem().toString();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public void selectByVisibleText(String value) {
+		selectByValue(value);
+	}
+
+	@Override
+	public void selectByIndex(int index) {
+		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
+		comboFixture.selectItem(index);
+	}
+
+	@Override
+	public void selectByValue(String value) {
+		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
+		comboFixture.selectItem(value);
+	}
+
 }
