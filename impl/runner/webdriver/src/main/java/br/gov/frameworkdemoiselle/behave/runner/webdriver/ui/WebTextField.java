@@ -38,14 +38,18 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
+
 
 public class WebTextField extends WebBase implements TextField {
 
@@ -143,6 +147,61 @@ public class WebTextField extends WebBase implements TextField {
 	public String getText() {
 		waitElementOnlyVisible(0);
 		return getElements().get(0).getAttribute("value");
+	}
+
+	static enum Evento {
+		keyup, onblurJS, onfocus, keyupJS, keyupTAB;
+	    	    
+	}
+	
+	private void triggerEvent(WebDriver driver, WebElement element, int which) throws Exception {
+	    Evento whichEvent = Evento.values()[which]; 
+	    switch(whichEvent) {
+	    case keyup:
+	        new Actions(driver).keyDown(element, Keys.CONTROL).keyUp(element, Keys.CONTROL).perform();
+	        break;
+	    case onblurJS:
+	        doJavascriptOnElement(driver, element, element.getAttribute("onblur"));
+	        break;
+	    case onfocus:
+	        element.click();
+	        break;
+	    case keyupJS: 
+	        doJavascriptOnElement(driver, element, element.getAttribute("onkeyup"));
+	        break;
+	    case keyupTAB:
+	        element.sendKeys(Keys.TAB);
+	        break;
+	    }
+
+	}
+	private void doJavascriptOnElement(WebDriver driver, WebElement element, String javascript) throws Exception {
+	    ((JavascriptExecutor) driver).executeScript(javascript, element);
+
+	}
+	
+	public void sendKeysTriggerEvent(String event, CharSequence... keysToSend) {
+		waitElement(0);
+		
+		String value = charSequenceToString(keysToSend);
+		
+		//para enviar um evento precisa antes clicar no campo de texto
+		getElements().get(0).click();
+		//Envia uma sequencia de char
+		getElements().get(0).sendKeys(value);
+		
+		WebElement we = getElements().get(0);
+		
+		try {
+			triggerEvent(((WebDriver) runner.getDriver()), we, Integer.parseInt(event));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
