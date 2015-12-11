@@ -52,6 +52,7 @@ public class TableSteps extends CommonSteps {
 
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
+	@Then("clico na linha da tabela \"$table\" referente a \"$reference\"")
 	@When("clico na linha da tabela \"$table\" referente a \"$reference\"")
 	public void clickRowTable(String table, String reference) {
 		Element element = runner.getElement(currentPageName, table);
@@ -77,6 +78,7 @@ public class TableSteps extends CommonSteps {
 	 *            chave no dataProvider para armazenar o texto encontrado
 	 */
 	@Then("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
+	@When("armazeno a célula \"$l\",\"$c\" da tabela \"$tabela\" em \"$container\"")
 	public void tableTextStore(String l, String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		dataProvider.put(container, ((Grid) element).findTextInTable(element, l, c));
@@ -97,6 +99,7 @@ public class TableSteps extends CommonSteps {
 	 *            chave no dataProvider para armazenar o texto encontrado
 	 */
 	@Then("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
+	@When("armazeno a coluna \"$c\" da tabela \"$tabela\" em \"$container\"")
 	public void tableTextStoreLL(String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextStore(((Grid) element).findLastLine(element), c, tabela, container);
@@ -118,6 +121,7 @@ public class TableSteps extends CommonSteps {
 	 *            chave no dataProvider para ler o texto ou texto desejado
 	 */
 	@Then("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
+	@When("comparo o texto da célula \"$l\",\"$c\" da tabela \"$tabela\" com \"$container\"")
 	public void tableTextCheck(String l, String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		while (!container.equals(DataProviderUtil.replaceValue(container)))
@@ -144,6 +148,7 @@ public class TableSteps extends CommonSteps {
 	 *            chave no dataProvider para ler o texto ou texto desejado
 	 */
 	@Then("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
+	@When("comparo o texto da coluna \"$c\" da tabela \"$tabela\" com \"$container\"")
 	public void tableTextCheckLL(String c, String tabela, String container) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextCheck(((Grid) element).findLastLine(element), c, tabela, container);
@@ -163,6 +168,7 @@ public class TableSteps extends CommonSteps {
 	 *            tabela a ser lida
 	 */
 	@Then("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	@When("clico na célula \"$l\",\"$c\" da tabela \"$tabela\"")
 	public void tableButtonClick(String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		((Grid) element).tableButtonClick(element, l, c);
@@ -184,6 +190,7 @@ public class TableSteps extends CommonSteps {
 	 *            tabela a ser lida
 	 */
 	@Then("clico na coluna \"$c\" da tabela \"$tabela\"")
+	@When("clico na coluna \"$c\" da tabela \"$tabela\"")
 	public void tableButtonClickLL(String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableButtonClick(((Grid) element).findLastLine(element), c, tabela);
@@ -202,6 +209,7 @@ public class TableSteps extends CommonSteps {
 	 *            tabela a ser lida
 	 */
 	@Then("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	@When("escolho a opção \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
 	public void tableSelectClick(String value, String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		((Grid) element).tableSelectClick(value, l, c, element);
@@ -222,6 +230,7 @@ public class TableSteps extends CommonSteps {
 	 *            tabela a ser lida
 	 */
 	@Then("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	@When("escolho a opção \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
 	public void tableSelectClickLL(String value, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableSelectClick(value, ((Grid) element).findLastLine(element), c, tabela);
@@ -241,6 +250,7 @@ public class TableSteps extends CommonSteps {
 	 */
 
 	@Then("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
+	@When("informo o texto \"$value\" na célula \"$l\",\"$c\" da tabela \"$tabela\"")
 	public void tableTextSendKeys(String value, String l, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		while (!value.equals(DataProviderUtil.replaceValue(value)))
@@ -263,6 +273,7 @@ public class TableSteps extends CommonSteps {
 	 *            tabela a ser lida
 	 */
 	@Then("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
+	@When("informo o texto \"$value\" na coluna \"$c\" da tabela \"$tabela\"")
 	public void tableTextSendKeysLL(String value, String c, String tabela) {
 		Element element = runner.getElement(currentPageName, tabela);
 		tableTextSendKeys(value, ((Grid) element).findLastLine(element), c, tabela);
