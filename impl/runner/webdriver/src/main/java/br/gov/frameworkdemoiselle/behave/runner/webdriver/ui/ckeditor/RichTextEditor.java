@@ -56,4 +56,10 @@ public class RichTextEditor extends WebBase implements TextField {
 
 	public void clear() {
 	}
+
+	@Override
+	public void sendKeysTriggerEvent(String event, CharSequence... keysToSend) {
+		// TODO Auto-generated method stub
+		
+	}
 }

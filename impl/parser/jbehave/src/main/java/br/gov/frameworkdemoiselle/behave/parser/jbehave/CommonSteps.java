@@ -65,6 +65,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 
+
 /**
  * 
  * @author SERPRO
@@ -79,6 +80,8 @@ public class CommonSteps implements Step {
 	protected static String currentPageName;
 	protected static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
+	
+	
 	@Given("vou para a tela \"$local\"")
 	@Then("vou para a tela \"$local\"")
 	@When("vou para a tela \"$local\"")
@@ -346,5 +349,46 @@ public class CommonSteps implements Step {
 		element.setLocatorParameters(locatorParameters);
 		element.isVisibleDisabled();
 	}
+	
+	/**
+	 * 
+	 * Envia um texto para um input text e logo depois dispara um evento neste campo
+	 * 	  
+	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
+	 * @param fieldValue
+	 *            texto que será escrito no campo
+	 * @param fieldName
+	 *            campo que será manipulado
+	 * @param event
+	 *            evento a ser disparado.
+	 *            Os valores suportados são:
+	 *            1 - keyup
+	 *            2 - onblurJS
+	 *            3 - onfocus
+	 *            4 - keyupJS
+	 *            5 - keyupTAB;
+	 * exemplo
+	 *            informo "teste" no campo "nome" e disparo o evento "1"
+	 */
+	
+	@When(value="informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority=2)
+	@Then(value="informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority=2)
+    public void informOnFieldWithEvent(String fieldValue, String fieldName, String event) {
+		
+		while (!fieldValue.equals(DataProviderUtil.replaceValue(fieldValue)))
+			fieldValue = DataProviderUtil.replaceValue(fieldValue);
+		
+		while (!fieldName.equals(DataProviderUtil.replaceValue(fieldName)))
+			fieldName = DataProviderUtil.replaceValue(fieldName);
+		
+		while (!event.equals(DataProviderUtil.replaceValue(event)))
+			event = DataProviderUtil.replaceValue(event);
+		
+		Element element = (Element) runner.getElement(currentPageName, fieldName);
+        ((TextField) element).sendKeysTriggerEvent(event,fieldValue);
+       
+    }
+	
+	
 	
 }
