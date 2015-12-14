@@ -42,7 +42,6 @@ import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.dataprovider.DataProvider;
-import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
