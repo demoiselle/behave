@@ -79,4 +79,10 @@ public class DesktopTextField extends DesktopBase implements TextField {
 			}
 		}
 	}
+
+	@Override
+	public void sendKeysTriggerEvent(String event, CharSequence... keysToSend) {
+		
+	}
+	
 }
