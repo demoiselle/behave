@@ -39,7 +39,9 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
+import org.junit.AfterClass;
 
+import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -48,6 +50,7 @@ import br.gov.frameworkdemoiselle.behave.runner.Runner;
 
 public class BeforeAfterSteps implements Step {
 
+	private BehaveContext behaveContext = (BehaveContext) InjectionManager.getInstance().getInstanceDependecy(BehaveContext.class);
 	private Runner runner = (Runner) InjectionManager.getInstance().getInstanceDependecy(Runner.class);
 	private Logger logger = Logger.getLogger(BeforeAfterSteps.class);
 	private static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
@@ -64,6 +67,12 @@ public class BeforeAfterSteps implements Step {
 		}
 	}
 
+	@AfterClass
+	public void clearClassLists() {
+		behaveContext.getStepsClass().clear();
+		behaveContext.getStoriesClass().clear();
+		behaveContext.getStoriesReuseClass().clear();
+	}
 	@AfterStories
 	public void stopStories() {
 		try {
