@@ -16,11 +16,9 @@ public class ClassScopeManager {
 	public static void clearClassLists() {
 		BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 		if (!BehaveConfig.getRunner_legacyRunner()){
-			System.out.println("*************************limpando as classes***************************");
 			behaveContext.getStepsClass().clear();
 			behaveContext.getStoriesClass().clear();
 			behaveContext.getStoriesReuseClass().clear();
-			System.out.println("*************************limpei as classes***************************");
 		}else{
 			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 		}
