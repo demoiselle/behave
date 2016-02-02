@@ -113,8 +113,7 @@ public class BehaveContext {
 	}
 
 	public void addSteps(Step step) {
-		addStepsMethod(step);
-		//steps.add(step);
+		steps.add(step);
 	}
 
 	public List<Step> getSteps() {
