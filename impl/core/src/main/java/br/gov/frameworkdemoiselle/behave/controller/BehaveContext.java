@@ -118,10 +118,7 @@ public class BehaveContext {
 	}
 
 	public List<Step> getSteps() {
-		if (BehaveConfig.getRunner_legacyRunner())
-			return steps;
-		else
-			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
+		return steps;
 	}
 
 	public void addStepsGlobal(Step step) {
@@ -176,7 +173,23 @@ public class BehaveContext {
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
-
+			
+			// comportamento novo, suporte à escopos
+			if (!BehaveConfig.getRunner_legacyRunner()){
+				
+				steps.addAll(stepsGlobal);
+				steps.addAll(stepsClass);
+				steps.addAll(stepsMethod);
+				
+				storiesFiles.addAll(storiesPathGlobal);
+				storiesFiles.addAll(storiesPathClass);
+				storiesFiles.addAll(storiesPathMethod);
+				
+				storiesFiles.addAll(storiesReusePathGlobal);
+				storiesFiles.addAll(storiesReusePathClass);
+				storiesFiles.addAll(storiesReusePathMethod);
+			}
+			
 			if (storiesFiles == null || storiesFiles.isEmpty()) {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
@@ -201,21 +214,6 @@ public class BehaveContext {
 			// Adiciono as novas historias só para reuso de cenários
 			allOriginalStoriesPath.addAll(listNewPathsReuse);
 
-			// comportamento novo, suporte à escopos
-			if (!BehaveConfig.getRunner_legacyRunner()){
-				
-				steps.addAll(stepsGlobal);
-				steps.addAll(stepsClass);
-				steps.addAll(stepsMethod);
-				
-				allOriginalStoriesPath.addAll(storiesPathGlobal);
-				allOriginalStoriesPath.addAll(storiesPathClass);
-				allOriginalStoriesPath.addAll(storiesPathMethod);
-				
-				allOriginalStoriesPath.addAll(storiesReusePathGlobal);
-				allOriginalStoriesPath.addAll(storiesReusePathClass);
-				allOriginalStoriesPath.addAll(storiesReusePathMethod);
-			}
 			// Faz a conversão
 			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
 
@@ -390,7 +388,10 @@ public class BehaveContext {
 	}
 
 	public void clearAllOriginalStories() {
-		allOriginalStoriesPath.clear();
+		if (BehaveConfig.getRunner_legacyRunner())
+			allOriginalStoriesPath.clear();
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 
 	// Seleciona o filtro para História OU Cenário
