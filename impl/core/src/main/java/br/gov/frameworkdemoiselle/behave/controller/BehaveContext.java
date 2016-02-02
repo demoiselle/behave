@@ -94,8 +94,6 @@ public class BehaveContext {
 
 	private List<String> storiesReusePathMethod = new ArrayList<String>();
 
-	private boolean legacyRunner = true;
-	
 	private Throwable fail;
 
 	private String failStep;
@@ -113,42 +111,66 @@ public class BehaveContext {
 	}
 
 	public void addSteps(Step step) {
-		steps.add(step);
+		if (BehaveConfig.getRunner_legacyRunner())
+			steps.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 
 	public List<Step> getSteps() {
-		return steps;
+		if (BehaveConfig.getRunner_legacyRunner())
+			return steps;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 
 	public void addStepsGlobal(Step step) {
-		stepsGlobal.add(step);
+		if (!BehaveConfig.getRunner_legacyRunner())
+			stepsGlobal.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public List<Step> getStepsGlobal() {
-		return stepsGlobal;
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsGlobal;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public void addStepsClass(Step step) {
-		stepsClass.add(step);
+		if (!BehaveConfig.getRunner_legacyRunner())
+			stepsClass.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public List<Step> getStepsClass() {
-		return stepsClass;
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsClass;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public void addStepsMethod(Step step) {
-		stepsMethod.add(step);
+		if (!BehaveConfig.getRunner_legacyRunner())
+			stepsMethod.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public List<Step> getStepsMethod() {
-		return stepsGlobal;
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsGlobal;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	// Métodos para rodar o teste
 	public void run(List<String> storiesFiles) {
 		
 		// comportamento original, ignora globais , classe e método
-		if (legacyRunner){
+		if (BehaveConfig.getRunner_legacyRunner()){
 			try {
 				log.info("--------------------------------");
 				log.info(bm.getString("message-behave-start"));
@@ -341,60 +363,91 @@ public class BehaveContext {
 	}
 
 	public BehaveContext addStories(String storiesPath) {
-		log.debug("addStories:" + storiesPath);
-		this.storiesPath.add(storiesPath);
-		return this;
+		if (BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStories:" + storiesPath);
+			this.storiesPath.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 	
 	public BehaveContext addStoriesGlobal(String storiesPath) {
-		log.debug("addStoriesGlobal:" + storiesPath);
-		this.storiesPathGlobal.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesGlobal:" + storiesPath);
+			this.storiesPathGlobal.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public BehaveContext addStoriesClass(String storiesPath) {
-		log.debug("addStoriesClass:" + storiesPath);
-		this.storiesPathClass.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesClass:" + storiesPath);
+			this.storiesPathClass.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public List<String> getStoriesClass() {
-		return storiesPathClass;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			return storiesPathClass;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public BehaveContext addStoriesMethod(String storiesPath) {
-		log.debug("addStoriesMethod:" + storiesPath);
-		this.storiesPathMethod.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesMethod:" + storiesPath);
+			this.storiesPathMethod.add(storiesPath);
+			return this;
+
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
-
 	public BehaveContext addStoriesReuse(String storiesPath) {
-		log.debug("addStoriesReuse:" + storiesPath);
-		this.storiesReusePath.add(storiesPath);
-		return this;
+		if (BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuse:" + storiesPath);
+			this.storiesReusePath.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 	
 	public BehaveContext addStoriesReuseGlobal(String storiesPath) {
-		log.debug("addStoriesReuseGlobal:" + storiesPath);
-		this.storiesReusePathGlobal.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuseGlobal:" + storiesPath);
+			this.storiesReusePathGlobal.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public BehaveContext addStoriesReuseClass(String storiesPath) {
-		log.debug("addStoriesReuseClass:" + storiesPath);
-		this.storiesReusePathClass.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuseClass:" + storiesPath);
+			this.storiesReusePathClass.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public List<String> getStoriesReuseClass() {
-		return storiesReusePathClass;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			return storiesReusePathClass;		
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 	
 	public BehaveContext addStoriesReuseMethod(String storiesPath) {
-		log.debug("addStoriesReuseMethod:" + storiesPath);
-		this.storiesReusePathMethod.add(storiesPath);
-		return this;
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuseMethod:" + storiesPath);
+			this.storiesReusePathMethod.add(storiesPath);
+			return this;
+		
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public String getCurrentScenario() {
@@ -435,14 +488,6 @@ public class BehaveContext {
 	@SuppressWarnings("rawtypes")
 	public void setStepsPackage(String name, Class... excludes) {
 		steps.addAll(StepsFilter.scanPackage(name, excludes));
-	}
-
-	public boolean isLegacyRunner() {
-		return legacyRunner;
-	}
-
-	public void setLegacyRunner(boolean legacyRunner) {
-		this.legacyRunner = legacyRunner;
 	}
 
 }
