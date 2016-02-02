@@ -106,6 +106,14 @@ public class BehaveContext {
 		bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 	}
 
+	private void checkClassScopeManagerExtension(){
+		
+		//String classname = sun.reflect.Reflection.getCallerClass(3).getSuperclass().getName();
+		//System.out.println(classname);
+		Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
+		if (!ClassScopeManager.class.isAssignableFrom(myclass))
+			throw new BehaveException(bm.getString("exception-legacyRunner-classScopeManager-missing"));
+	}
 	public static BehaveContext getInstance() {
 		return instance;
 	}
@@ -136,9 +144,10 @@ public class BehaveContext {
 	}
 	
 	public void addStepsClass(Step step) {
-		if (!BehaveConfig.getRunner_legacyRunner())
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();		
 			stepsClass.add(step);
-		else
+		}else
 			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
@@ -306,6 +315,7 @@ public class BehaveContext {
 
 	public BehaveContext addStoriesClass(String storiesPath) {
 		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();
 			log.debug("addStoriesClass:" + storiesPath);
 			this.storiesPathClass.add(storiesPath);
 			return this;
@@ -350,6 +360,7 @@ public class BehaveContext {
 	
 	public BehaveContext addStoriesReuseClass(String storiesPath) {
 		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();
 			log.debug("addStoriesReuseClass:" + storiesPath);
 			this.storiesReusePathClass.add(storiesPath);
 			return this;
