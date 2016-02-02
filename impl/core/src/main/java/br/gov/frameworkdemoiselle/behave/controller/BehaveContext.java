@@ -169,118 +169,45 @@ public class BehaveContext {
 	// Métodos para rodar o teste
 	public void run(List<String> storiesFiles) {
 		
-		// comportamento original, ignora globais , classe e método
-		if (BehaveConfig.getRunner_legacyRunner()){
-			try {
-				log.info("--------------------------------");
-				log.info(bm.getString("message-behave-start"));
-				log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));
-				log.info("--------------------------------");
-	
-				BehaveConfig.logValueProperties();
-	
-				if (storiesFiles == null || storiesFiles.isEmpty()) {
-					throw new BehaveException(bm.getString("exception-empty-story-list"));
-				}
-	
-				// Correção de bug: Substitui as barras por File.separator para
-				// funcionar de acordo com o SO
-				ArrayList<String> listNewPaths = new ArrayList<String>();
-				for (String s : storiesFiles) {
-					listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
-				}
-	
-				// Adiciono as novas histórias no array com TODAS, inclusive as da
-				// execução anterior
-				allOriginalStoriesPath.addAll(listNewPaths);
-	
-				// Lista de historias só para reuso de cenários
-				ArrayList<String> listNewPathsReuse = new ArrayList<String>();
-				for (String s : storiesReusePath) {
-					listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
-				}
-	
-				// Adiciono as novas historias só para reuso de cenários
-				allOriginalStoriesPath.addAll(listNewPathsReuse);
-	
-				// Faz a conversão
-				List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
-	
-				// Cria um novo array contendo somente as histórias atuais
-				// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
-				// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
-				List<String> finalArray = new ArrayList<String>();
-				for (String storyFile : listNewPaths) {
-					for (String storyFileC : allStoriesConverted) {
-						if (storyFileC.contains(storyFile)) {
-							finalArray.add(storyFileC);
-						}
-					}
-				}
-	
-				// Roda o runner com as histórias convertidas
-				parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
-				// parser.setSteps(steps); // Na versão 3.9 do JBehave foi alterada a ordem de carregamento dos steps
-				parser.setStoryPaths(finalArray);
-				parser.run();
-				if (fail != null) {
-					Assert.fail(bm.getString("exception-fail-step", failStep, fail.getMessage()));
-				}
-			} catch (BehaveException ex) {
-				log.error(bm.getString("exception-general"), ex);
-				throw ex;
-			} finally {
-				fail = null;
-				failStep = null;
-				storyOrScenarioFilter = null;
-				storiesPath.clear();
-				storiesReusePath.clear();
-				steps.clear();
-				
-				
-				log.info("--------------------------------");
-				log.info(bm.getString("message-behave-end"));
-				log.info("--------------------------------");
+		try {
+			log.info("--------------------------------");
+			log.info(bm.getString("message-behave-start"));
+			log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));
+			log.info("--------------------------------");
+
+			BehaveConfig.logValueProperties();
+
+			if (storiesFiles == null || storiesFiles.isEmpty()) {
+				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
-		// Comportamento novo aceitando globais e classes e métodos
-		}else{
-			
-			try {
-				log.info("--------------------------------");
-				log.info(bm.getString("message-behave-start"));
-				log.info("Demoiselle Behave " + BehaveConfig.getProperty("behave.version"));
-				log.info("--------------------------------");
-	
-				BehaveConfig.logValueProperties();
-	
+
+			// Correção de bug: Substitui as barras por File.separator para
+			// funcionar de acordo com o SO
+			ArrayList<String> listNewPaths = new ArrayList<String>();
+			for (String s : storiesFiles) {
+				listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
+			}
+
+			// Adiciono as novas histórias no array com TODAS, inclusive as da
+			// execução anterior
+			allOriginalStoriesPath.addAll(listNewPaths);
+
+			// Lista de historias só para reuso de cenários
+			ArrayList<String> listNewPathsReuse = new ArrayList<String>();
+			for (String s : storiesReusePath) {
+				listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
+			}
+
+			// Adiciono as novas historias só para reuso de cenários
+			allOriginalStoriesPath.addAll(listNewPathsReuse);
+
+			// comportamento novo, suporte à escopos
+			if (!BehaveConfig.getRunner_legacyRunner()){
+				
 				steps.addAll(stepsGlobal);
 				steps.addAll(stepsClass);
 				steps.addAll(stepsMethod);
 				
-				if (storiesFiles == null || storiesFiles.isEmpty()) {
-					throw new BehaveException(bm.getString("exception-empty-story-list"));
-				}
-	
-				// Correção de bug: Substitui as barras por File.separator para
-				// funcionar de acordo com o SO
-				ArrayList<String> listNewPaths = new ArrayList<String>();
-				for (String s : storiesFiles) {
-					listNewPaths.add(s.replace("\\", File.separator).replace("/", File.separator));
-				}
-	
-				// Adiciono as novas histórias no array com TODAS, inclusive as da
-				// execução anterior
-				allOriginalStoriesPath.addAll(listNewPaths);
-	
-				// Lista de historias só para reuso de cenários
-				ArrayList<String> listNewPathsReuse = new ArrayList<String>();
-				for (String s : storiesReusePath) {
-					listNewPathsReuse.add(s.replace("\\", File.separator).replace("/", File.separator));
-				}
-	
-				// Adiciono as novas historias só para reuso de cenários
-				allOriginalStoriesPath.addAll(listNewPathsReuse);
-	
 				allOriginalStoriesPath.addAll(storiesPathGlobal);
 				allOriginalStoriesPath.addAll(storiesPathClass);
 				allOriginalStoriesPath.addAll(storiesPathMethod);
@@ -288,54 +215,53 @@ public class BehaveContext {
 				allOriginalStoriesPath.addAll(storiesReusePathGlobal);
 				allOriginalStoriesPath.addAll(storiesReusePathClass);
 				allOriginalStoriesPath.addAll(storiesReusePathMethod);
-				
-				// Faz a conversão
-				List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
-	
-				// Cria um novo array contendo somente as histórias atuais
-				// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
-				// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
-				List<String> finalArray = new ArrayList<String>();
-				for (String storyFile : listNewPaths) {
-					for (String storyFileC : allStoriesConverted) {
-						if (storyFileC.contains(storyFile)) {
-							finalArray.add(storyFileC);
-						}
+			}
+			// Faz a conversão
+			List<String> allStoriesConverted = StoryFileConverter.convertReusedScenarios(allOriginalStoriesPath, BehaveConfig.getParser_OriginalStoryFileExtension(), BehaveConfig.getParser_ConvertedStoryFileExtension(), true);
+
+			// Cria um novo array contendo somente as histórias atuais
+			// Correção de bug: Quando a história é explicitamente enviada novamente ao run ela tem que rodar
+			// Correção de bug: Quando existe reutilização de história ele alterava a ordem da execução atual de acordo com a reutilização
+			List<String> finalArray = new ArrayList<String>();
+			for (String storyFile : listNewPaths) {
+				for (String storyFileC : allStoriesConverted) {
+					if (storyFileC.contains(storyFile)) {
+						finalArray.add(storyFileC);
 					}
 				}
-	
-				// Roda o runner com as histórias convertidas
-				parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
-				// parser.setSteps(steps); // Na versão 3.9 do JBehave foi alterada a ordem de carregamento dos steps
-				parser.setStoryPaths(finalArray);
-				parser.run();
-				if (fail != null) {
-					Assert.fail(bm.getString("exception-fail-step", failStep, fail.getMessage()));
-				}
-			} catch (BehaveException ex) {
-				log.error(bm.getString("exception-general"), ex);
-				throw ex;
-			} finally {
-				fail = null;
-				failStep = null;
-				storyOrScenarioFilter = null;
-				storiesPath.clear();
-				storiesReusePath.clear();
-				steps.clear();
-				
-	
-				allOriginalStoriesPath.clear();
-				
-				
-				stepsMethod.clear();
-				storiesPathMethod.clear();
-				storiesReusePathMethod.clear();
-				
-				
-				log.info("--------------------------------");
-				log.info(bm.getString("message-behave-end"));
-				log.info("--------------------------------");
 			}
+
+			// Roda o runner com as histórias convertidas
+			parser = (Parser) InjectionManager.getInstance().getInstanceDependecy(Parser.class);
+			// parser.setSteps(steps); // Na versão 3.9 do JBehave foi alterada a ordem de carregamento dos steps
+			parser.setStoryPaths(finalArray);
+			parser.run();
+			if (fail != null) {
+				Assert.fail(bm.getString("exception-fail-step", failStep, fail.getMessage()));
+			}
+		} catch (BehaveException ex) {
+			log.error(bm.getString("exception-general"), ex);
+			throw ex;
+		} finally {
+			fail = null;
+			failStep = null;
+			storyOrScenarioFilter = null;
+			storiesPath.clear();
+			storiesReusePath.clear();
+			steps.clear();
+			
+			// comportamento novo, suporte à escopos
+			if (!BehaveConfig.getRunner_legacyRunner()){
+					allOriginalStoriesPath.clear();
+					stepsMethod.clear();
+					storiesPathMethod.clear();
+					storiesReusePathMethod.clear();
+			}
+			
+			
+			log.info("--------------------------------");
+			log.info(bm.getString("message-behave-end"));
+			log.info("--------------------------------");
 		}
 	}
 
