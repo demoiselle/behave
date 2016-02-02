@@ -37,6 +37,7 @@
 package br.gov.frameworkdemoiselle.behave.controller;
 
 import java.io.File;
+import java.rmi.activation.Activator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,8 +111,17 @@ public class BehaveContext {
 		
 		//String classname = sun.reflect.Reflection.getCallerClass(3).getSuperclass().getName();
 		//System.out.println(classname);
-		Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
-		if (!ClassScopeManager.class.isAssignableFrom(myclass))
+		String str = Thread.currentThread().getStackTrace()[3].getClassName();
+		Class myClass = null;
+		try {
+			myClass = Class.forName(str);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	//	System.out.println(str);
+	//	Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
+		if (!ClassScopeManager.class.isAssignableFrom(myClass))
 			throw new BehaveException(bm.getString("exception-legacyRunner-classScopeManager-missing"));
 	}
 	public static BehaveContext getInstance() {
