@@ -119,11 +119,12 @@ public class BehaveContext {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	//	System.out.println(str);
-	//	Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
+		//System.out.println(str);
+		//Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
 		if (!ClassScopeManager.class.isAssignableFrom(myClass))
 			throw new BehaveException(bm.getString("exception-legacyRunner-classScopeManager-missing"));
 	}
+	
 	public static BehaveContext getInstance() {
 		return instance;
 	}
