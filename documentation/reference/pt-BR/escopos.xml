@@ -102,4 +102,5 @@
 		<tip>
 			<para>Importante: ao utilizar o escopo de classes, a sua classe deverá obrigatoriamente estender a classe ClassScopeManager. Caso não estenda, o framework apresentará um erro mostrando a obrigatoriedade do mesmo.</para>
 		</tip>
+	</section>
 </chapter>
