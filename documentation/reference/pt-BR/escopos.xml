@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-scope">
+
+	<title>Escopo de Histórias e Passos</title>
+	<para>
+		Neste capítulo detalharemos como o Dbehave tratava originalmente as histórias que compunham um cenário e como elas serão tratadas a partir da nova versão.
+	</para>
+
+	<section>
+		<title>DBehave Legado</title>
+		<para>
+			Ao trabalhar com o framework, lidamos basicamente com 3 itens, a seguir:
+			<itemizedlist>
+				<listitem>
+					Histórias - context.addStories();
+				</listitem>
+				<listitem>
+					Histórias de reuso - context.addStoriesReuse();
+				</listitem>
+				<listitem>
+					Passos personalizados - context.addSteps().
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Ao executar somente um método de uma classe nenhum problema ocorria, porém ao executar um conjunto de classes ao mesmo tempo, o DBehave apresentava um comportamento diferente para cada um dos itens listados.
+			<itemizedlist>
+				<listitem>
+					Histórias - Eram mantidas em memória durante toda a execução do conjunto de testes;
+				</listitem>
+				<listitem>
+					Histórias de reuso - Eram removidas após a execução de cada método;
+				</listitem>
+				<listitem>
+					Passos personalizados -Eram removidos após a execução de cada método. 
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Este comportamento acarretava em um problema no design dos testes. Ao executar várias classes de teste, tínhamos sempre que em cada método redefinir os passos e reusos, porém não podíamos redefinir as histórias. 
+		</para>
+		<para>
+			Manter todas as histórias em memória também não é uma boa solução do ponto de vista computacional, pois com testes extensos, a tendência é que o framework fique sobrecarregado. 
+		</para>
+		<para>
+			Outro ponto importante que merece destaque é que a execução do JUnit é aleatória, ou seja, a cada execução uma das classes do conjunto é sorteada e essa aleatoriedade vai até o ponto dos métodos.
+		</para>
+		<para>
+		    Como o framework mantinha as histórias em memória, ao programar cada método de teste, para que ficassem corretamente encapsulados, tínhamos que em cada um definir todas as histórias que o compunham. Porém como a história já havia sido adicionada previamente o framework apresentava o erro de duplicidade de um .story.
+		</para>
+		<para>
+		    Desta forma ou definíamos que um conjunto de testes sempre iria executar em conjunto ou individualmente, pois o comportamento errático da ferramenta não permitia um bom design de projeto.
+		</para>
+	</section>
+		
+		<section>
+		<title>DBehave com Suporte à Escopos</title>
+		<para>
+			Para solucionar o problema apresentado no tópico anterior, definimos um conjunto de escopos para cada um dos elementos, permitindo assim que o desenvolvedor defina sua melhor forma de trabalho.
+			<itemizedlist>
+				<listitem>
+					Global - Tudo que for adicionado com o escopo global será mantido em memória durante toda a execução da ferramenta;
+				</listitem>
+				<listitem>
+					Classes - O que for adicionado com o escopo de classes será mantido em memória durante toda execução da classe Java;
+				</listitem>
+				<listitem>
+					Método - Os elementos deste escopo são mantidos apenas durante a execução do método da classe Java.
+				</listitem>
+			</itemizedlist>
+		</para>
+		
+		<para>
+		    Para manter a retrocompatibilidade com os projetos anteriores, a nova versão do DBehave vem automaticamente preparada para o modo Legado.
+		</para>
+		
+		<para>
+		    É necessário no behave.properties alterarmos a configuração behave.runner.legacyRunner=true para false. Desta forma habilitamos a ferramenta para trabalhar com o novo modo de escopos.
+		</para>
+		
+		<para>
+		   A nova API para cada elemento segue:
+		   <itemizedlist>
+				<listitem>
+					Global - context.addStepsGlobal(), context.addStoriesGlobal(), context.addStoriesReuseGlobal();
+				</listitem>
+				<listitem>
+					Classes - context.addStepsClass(), context.addStoriesClass(), context.addStoriesReuseClass();
+				</listitem>
+				<listitem>
+					Método - context.addStepsMethod(), context.addStoriesMethod(), context.addStoriesReuseMethod().
+				</listitem>
+			</itemizedlist>
+		</para>
+		
+		<para>
+		    Lembrando que os modos de execução da ferramenta são exclusivos, ao utilizar a nova versão, os comandos context.addSteps(),context.addStories() e context.addStoriesReuse() não serão permitidos. O mesmo acontece ao utilizar o modo legado e a nova API.  
+		</para>
+		
+		<tip>
+			<para>Importante: ao utilizar o escopo de classes, a sua classe deverá obrigatoriamente estender a classe ClassScopeManager. Caso não estenda, o framework apresentará um erro mostrando a obrigatoriedade do mesmo.</para>
+		</tip>
+</chapter>
