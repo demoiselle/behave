@@ -107,9 +107,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					// Primeiro tenta encontrar na página sem frame sem Timeout
 					List<WebElement> elementsFound = driver.findElements(by);
 					if (elementsFound.size() > 0) {
-						for (WebElement element : elementsFound) {
-							elements.add(element);
-						}
+						elements.addAll(elementsFound);
 					} else {
 						// Se não encontrar nada sem frames busca nos frames
 						elements = getElementsWithFrames(driver, by);
@@ -146,10 +144,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				frame.switchNextFrame();
 				List<WebElement> elementsFound = driver.findElements(by);
 				if (elementsFound.size() > 0) {
-					for (WebElement element : elementsFound) {
-						elements.add(element);
-						found = true;
-					}
+					elements.addAll(elementsFound);
+					found = true;
 					break;
 				}
 			}
@@ -426,6 +422,39 @@ public class WebBase extends MappedElement implements BaseUI {
 		return frame;
 	}
 
+	public void waitVisibleText(String text) {
+		
+		driver = (WebDriver) runner.getDriver();
+			
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		
+		try {
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+		
+			if (elementsFound.size() == 0) {
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
+				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+				if (elementsFound.size() == 0) {
+					Assert.fail(message.getString("message-text-not-found", text));
+				}
+			}
+			
+
+		} catch (BehaveException be) {
+			throw be;
+		} catch (StaleElementReferenceException ex) {
+			// Ignore this exception
+		} catch (NoSuchFrameException ex) {
+			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+		}finally {
+			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+		}
+
+		
+	}
 	/**
 	 * Neste método waitText estamos forçando que seja verificado dentro do body
 	 * através de um loop controlado por nós e não pelo implicityWait do
@@ -434,7 +463,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * 
 	 * Método que busca o texto visível SOMENTE dentro do body do HTML.
 	 */
-	public void waitVisibleText(String text) {
+	public void waitVisibleTextOrg(String text) {
 
 		// Flag utilizada para o segundo laço
 		boolean found = false;
@@ -505,6 +534,43 @@ public class WebBase extends MappedElement implements BaseUI {
 
 	}
 	
+	public void waitNotVisibleText(String text) {
+		
+		driver = (WebDriver) runner.getDriver();
+			
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		
+		try {
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+		
+			if (elementsFound.size() == 0) {
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
+				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+				if (elementsFound.size() > 0) {
+					Assert.fail(message.getString("message-text-found", text));
+				}
+				
+			}else
+				Assert.fail(message.getString("message-text-found", text));
+			
+			
+
+		} catch (BehaveException be) {
+			throw be;
+		} catch (StaleElementReferenceException ex) {
+			// Ignore this exception
+		} catch (NoSuchFrameException ex) {
+			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
+		} catch (Exception e) {
+			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+		}finally {
+			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+		}
+
+		
+	}
+
 	/**
 	 * Neste método waitText estamos forçando que seja verificado dentro do body
 	 * através de um loop controlado por nós e não pelo implicityWait do
@@ -513,7 +579,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * 
 	 * Método que busca o texto visível SOMENTE dentro do body do HTML.
 	 */
-	public void waitNotVisibleText(String text) {
+	public void waitNotVisibleTextOrg(String text) {
 
 		// Flag utilizada para o segundo laço
 		boolean found = false;
