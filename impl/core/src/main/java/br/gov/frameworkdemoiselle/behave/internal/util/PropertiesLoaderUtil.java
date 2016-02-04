@@ -63,8 +63,6 @@ public class PropertiesLoaderUtil implements Serializable {
 
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
-//	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
-
 	private static BehaveMessage bm = null;
 	
 	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
