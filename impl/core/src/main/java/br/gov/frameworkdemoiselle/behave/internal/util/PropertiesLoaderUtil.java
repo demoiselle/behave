@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -62,12 +63,21 @@ public class PropertiesLoaderUtil implements Serializable {
 
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
-	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
+//	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
 
+	private static BehaveMessage bm = null;
+	
 	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
 
 	private PropertiesLoaderUtil() throws IOException {
 		this.allProps = loadProperties();
+		
+		try{
+			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
+		}catch (Exception ex){
+			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, new Locale("pt","BR"));
+			System.out.println(ex.getStackTrace());
+		}
 	}
 
 	public static synchronized PropertiesLoaderUtil getInstance() {
