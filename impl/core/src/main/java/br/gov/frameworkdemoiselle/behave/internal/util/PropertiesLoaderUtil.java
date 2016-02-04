@@ -76,7 +76,6 @@ public class PropertiesLoaderUtil implements Serializable {
 			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
 		}catch (Exception ex){
 			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, new Locale("pt","BR"));
-			System.out.println(ex.getStackTrace());
 		}
 	}
 
