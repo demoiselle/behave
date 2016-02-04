@@ -429,17 +429,20 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
-			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
-		
-			if (elementsFound.size() == 0) {
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
-				if (elementsFound.size() == 0) {
-					Assert.fail(message.getString("message-text-not-found", text));
-				}
-			}
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
 			
+			if (elementsFound.size() == 0) {
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+			
+				if (elementsFound.size() == 0) {
+					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
+					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+					if (elementsFound.size() == 0) {
+						Assert.fail(message.getString("message-text-not-found", text));
+					}
+				}
+			}	
 
 		} catch (BehaveException be) {
 			throw be;
@@ -464,19 +467,23 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
-			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
-		
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+			
 			if (elementsFound.size() == 0) {
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
-				if (elementsFound.size() > 0) {
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+			
+				if (elementsFound.size() == 0) {
+					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
+					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+					if (elementsFound.size() > 0) {
+						Assert.fail(message.getString("message-text-found", text));
+					}
+					
+				}else
 					Assert.fail(message.getString("message-text-found", text));
-				}
-				
 			}else
 				Assert.fail(message.getString("message-text-found", text));
-			
 			
 
 		} catch (BehaveException be) {
