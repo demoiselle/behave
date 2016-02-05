@@ -62,18 +62,14 @@ public class PropertiesLoaderUtil implements Serializable {
 
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
-	private static BehaveMessage bm = null;
+	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
 	
 	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
 
 	private PropertiesLoaderUtil() throws IOException {
 		this.allProps = loadProperties();
 		
-		try{
-			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
-		}catch (Exception ex){
-			bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, new Locale("pt","BR"));
-		}
+		
 	}
 
 	public static synchronized PropertiesLoaderUtil getInstance() {
