@@ -39,7 +39,6 @@ package br.gov.frameworkdemoiselle.behave.parser.jbehave;
 import org.apache.log4j.Logger;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
-
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.internal.spi.InjectionManager;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
@@ -64,6 +63,7 @@ public class BeforeAfterSteps implements Step {
 		}
 	}
 
+	
 	@AfterStories
 	public void stopStories() {
 		try {

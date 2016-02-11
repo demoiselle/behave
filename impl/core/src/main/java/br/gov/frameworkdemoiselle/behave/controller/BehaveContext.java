@@ -76,6 +76,24 @@ public class BehaveContext {
 
 	private List<String> storiesReusePath = new ArrayList<String>();
 
+	private List<Step> stepsGlobal = new ArrayList<Step>();
+
+	private List<String> storiesPathGlobal = new ArrayList<String>();
+
+	private List<String> storiesReusePathGlobal = new ArrayList<String>();
+
+	private List<Step> stepsClass = new ArrayList<Step>();
+
+	private List<String> storiesPathClass = new ArrayList<String>();
+
+	private List<String> storiesReusePathClass = new ArrayList<String>();
+
+	private List<Step> stepsMethod = new ArrayList<Step>();
+
+	private List<String> storiesPathMethod = new ArrayList<String>();
+
+	private List<String> storiesReusePathMethod = new ArrayList<String>();
+
 	private Throwable fail;
 
 	private String failStep;
@@ -88,20 +106,85 @@ public class BehaveContext {
 		bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 	}
 
+	private void checkClassScopeManagerExtension(){
+		
+		//String classname = sun.reflect.Reflection.getCallerClass(3).getSuperclass().getName();
+		//System.out.println(classname);
+		String str = Thread.currentThread().getStackTrace()[3].getClassName();
+		Class<?> myClass = null;
+		try {
+			myClass = Class.forName(str);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println(str);
+		//Class myclass = sun.reflect.Reflection.getCallerClass(3).getSuperclass();
+		if (!ClassScopeManager.class.isAssignableFrom(myClass))
+			throw new BehaveException(bm.getString("exception-legacyRunner-classScopeManager-missing"));
+	}
+	
 	public static BehaveContext getInstance() {
 		return instance;
 	}
 
 	public void addSteps(Step step) {
-		steps.add(step);
+		if (BehaveConfig.getRunner_legacyRunner())
+			steps.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 
 	public List<Step> getSteps() {
 		return steps;
 	}
 
+	public void addStepsGlobal(Step step) {
+		if (!BehaveConfig.getRunner_legacyRunner())
+			stepsGlobal.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+
+	public List<Step> getStepsGlobal() {
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsGlobal;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public void addStepsClass(Step step) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();		
+			stepsClass.add(step);
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+
+	public List<Step> getStepsClass() {
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsClass;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public void addStepsMethod(Step step) {
+		if (!BehaveConfig.getRunner_legacyRunner())
+			stepsMethod.add(step);
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+
+	public List<Step> getStepsMethod() {
+		if (!BehaveConfig.getRunner_legacyRunner())
+			return stepsGlobal;
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
 	// Métodos para rodar o teste
 	public void run(List<String> storiesFiles) {
+		
 		try {
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-start"));
@@ -109,7 +192,23 @@ public class BehaveContext {
 			log.info("--------------------------------");
 
 			BehaveConfig.logValueProperties();
-
+			
+			// comportamento novo, suporte à escopos
+			if (!BehaveConfig.getRunner_legacyRunner()){
+				
+				steps.addAll(stepsGlobal);
+				steps.addAll(stepsClass);
+				steps.addAll(stepsMethod);
+				
+				storiesFiles.addAll(storiesPathGlobal);
+				storiesFiles.addAll(storiesPathClass);
+				storiesFiles.addAll(storiesPathMethod);
+				
+				storiesFiles.addAll(storiesReusePathGlobal);
+				storiesFiles.addAll(storiesReusePathClass);
+				storiesFiles.addAll(storiesReusePathMethod);
+			}
+			
 			if (storiesFiles == null || storiesFiles.isEmpty()) {
 				throw new BehaveException(bm.getString("exception-empty-story-list"));
 			}
@@ -167,7 +266,16 @@ public class BehaveContext {
 			storiesPath.clear();
 			storiesReusePath.clear();
 			steps.clear();
-
+			
+			// comportamento novo, suporte à escopos
+			if (!BehaveConfig.getRunner_legacyRunner()){
+					allOriginalStoriesPath.clear();
+					stepsMethod.clear();
+					storiesPathMethod.clear();
+					storiesReusePathMethod.clear();
+			}
+			
+			
 			log.info("--------------------------------");
 			log.info(bm.getString("message-behave-end"));
 			log.info("--------------------------------");
@@ -198,15 +306,93 @@ public class BehaveContext {
 	}
 
 	public BehaveContext addStories(String storiesPath) {
-		log.debug("addStories:" + storiesPath);
-		this.storiesPath.add(storiesPath);
-		return this;
+		if (BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStories:" + storiesPath);
+			this.storiesPath.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
+	}
+	
+	public BehaveContext addStoriesGlobal(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesGlobal:" + storiesPath);
+			this.storiesPathGlobal.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+
+	public BehaveContext addStoriesClass(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();
+			log.debug("addStoriesClass:" + storiesPath);
+			this.storiesPathClass.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public List<String> getStoriesClass() {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			return storiesPathClass;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public BehaveContext addStoriesMethod(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesMethod:" + storiesPath);
+			this.storiesPathMethod.add(storiesPath);
+			return this;
+
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public BehaveContext addStoriesReuse(String storiesPath) {
-		log.debug("addStoriesReuse:" + storiesPath);
-		this.storiesReusePath.add(storiesPath);
-		return this;
+		if (BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuse:" + storiesPath);
+			this.storiesReusePath.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
+	}
+	
+	public BehaveContext addStoriesReuseGlobal(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuseGlobal:" + storiesPath);
+			this.storiesReusePathGlobal.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public BehaveContext addStoriesReuseClass(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			checkClassScopeManagerExtension();
+			log.debug("addStoriesReuseClass:" + storiesPath);
+			this.storiesReusePathClass.add(storiesPath);
+			return this;
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public List<String> getStoriesReuseClass() {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			return storiesReusePathClass;		
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
+	}
+	
+	public BehaveContext addStoriesReuseMethod(String storiesPath) {
+		if (!BehaveConfig.getRunner_legacyRunner()){
+			log.debug("addStoriesReuseMethod:" + storiesPath);
+			this.storiesReusePathMethod.add(storiesPath);
+			return this;
+		
+		}else
+			throw new BehaveException(bm.getString("exception-legacyRunner-false"));
 	}
 
 	public String getCurrentScenario() {
@@ -223,7 +409,10 @@ public class BehaveContext {
 	}
 
 	public void clearAllOriginalStories() {
-		allOriginalStoriesPath.clear();
+		if (BehaveConfig.getRunner_legacyRunner())
+			allOriginalStoriesPath.clear();
+		else
+			throw new BehaveException(bm.getString("exception-legacyRunner-true"));
 	}
 
 	// Seleciona o filtro para História OU Cenário

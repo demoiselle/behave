@@ -274,6 +274,12 @@ public class BehaveConfig {
 	 public static int getRunner_screenShotZoomout() {
 		return Integer.parseInt(getProperty("behave.runner.screen.screenshot.zoomout", "0"));
 	 }
+	
+	 // Ativa o uso da nova implementação que separa os .story por escopos ou mantém a maneira original sem escopos
+	 public static boolean getRunner_legacyRunner() {
+		return Boolean.parseBoolean(getProperty("behave.runner.legacyRunner", "true"));
+	}
+		
 	 
 	/*
 	 * Configurações especificas para testes Desktop
