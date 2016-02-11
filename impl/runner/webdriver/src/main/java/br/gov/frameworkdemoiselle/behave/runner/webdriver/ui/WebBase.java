@@ -431,15 +431,15 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 			
 			if (elementsFound.size() == 0) {
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+				elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));	
 			
 				if (elementsFound.size() == 0) {
 					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+					elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 					if (elementsFound.size() == 0) {
 						
 						// Se não encontrar nada sem frames busca nos frames
@@ -449,7 +449,7 @@ public class WebBase extends MappedElement implements BaseUI {
 						for (int i = 0; i < frame.countFrames(); i++) {
 							frame.switchNextFrame();
 	
-							 elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+							 elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 							 if (elementsFound.size() > 0) {
 								 found=true;
 								 break;
@@ -485,15 +485,15 @@ public class WebBase extends MappedElement implements BaseUI {
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 			
 			if (elementsFound.size() == 0) {
 				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));	
+				elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));	
 			
 				if (elementsFound.size() == 0) {
 					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+					elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 					if (elementsFound.size() == 0) {
 						
 						// Se não encontrar nada sem frames busca nos frames
@@ -503,7 +503,7 @@ public class WebBase extends MappedElement implements BaseUI {
 						for (int i = 0; i < frame.countFrames(); i++) {
 							frame.switchNextFrame();
 	
-							 elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+							 elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
 							 if (elementsFound.size() > 0) {
 								
 								Assert.fail(message.getString("message-text-found", text));
