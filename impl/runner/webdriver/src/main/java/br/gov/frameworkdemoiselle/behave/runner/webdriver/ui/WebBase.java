@@ -424,8 +424,10 @@ public class WebBase extends MappedElement implements BaseUI {
 
 	public void waitVisibleText(String text) {
 		
+		// Flag utilizada para o segundo laço
+		boolean found = false;
 		driver = (WebDriver) runner.getDriver();
-			
+		frame = getSwitchDriver(driver);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
@@ -439,7 +441,23 @@ public class WebBase extends MappedElement implements BaseUI {
 					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
 					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
 					if (elementsFound.size() == 0) {
-						Assert.fail(message.getString("message-text-not-found", text));
+						
+						// Se não encontrar nada sem frames busca nos frames
+										
+						frame.bind();
+	
+						for (int i = 0; i < frame.countFrames(); i++) {
+							frame.switchNextFrame();
+	
+							 elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+							 if (elementsFound.size() > 0) {
+								 found=true;
+								 break;
+								
+							 }
+						}
+						if (!found)
+							Assert.fail(message.getString("message-text-not-found", text));
 					}
 				}
 			}	
@@ -463,7 +481,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitNotVisibleText(String text) {
 		
 		driver = (WebDriver) runner.getDriver();
-			
+		frame = getSwitchDriver(driver);
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		
 		try {
@@ -476,8 +494,24 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (elementsFound.size() == 0) {
 					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
 					elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
-					if (elementsFound.size() > 0) {
-						Assert.fail(message.getString("message-text-found", text));
+					if (elementsFound.size() == 0) {
+						
+						// Se não encontrar nada sem frames busca nos frames
+						
+						frame.bind();
+	
+						for (int i = 0; i < frame.countFrames(); i++) {
+							frame.switchNextFrame();
+	
+							 elementsFound = driver.findElements(By.xpath("//*[text()[contains(.,'"+text+"')]]"));
+							 if (elementsFound.size() > 0) {
+								
+								Assert.fail(message.getString("message-text-found", text));
+								
+							 }
+							 
+						}
+						
 					}
 					
 				}else
