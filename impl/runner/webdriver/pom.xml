@@ -91,6 +91,16 @@
 			<groupId>com.github.detro</groupId>
 			<artifactId>phantomjsdriver</artifactId>
 			<version>1.2.0</version>
+			<exclusions>
+				<exclusion>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-remote-driver</artifactId>
+				</exclusion>
+				<exclusion>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-java</artifactId>
+				</exclusion>					
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
