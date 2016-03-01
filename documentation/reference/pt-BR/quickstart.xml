@@ -226,9 +226,7 @@
 			</mediaobject>
 		</para>
 		<para>
-			O projeto criado já possui um exemplo que realiza uma consulta
-			no
-			Google. Para executar o teste basta clicar com o botão direito na
+			O projeto criado já possui um exemplo que realiza vários passos no site do Demoiselle Behave. Para executar o teste basta clicar com o botão direito na
 			classe AppTeste e escolher Run as>JUnit Test.
 		</para>
 		<para>
