@@ -88,9 +88,9 @@
 		
 		<!-- Ghost Driver -->
 		<dependency>
-			<groupId>com.github.detro</groupId>
+			<groupId>com.codeborne</groupId>
 			<artifactId>phantomjsdriver</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1</version>
 			<exclusions>
 				<exclusion>
 				<groupId>org.seleniumhq.selenium</groupId>
