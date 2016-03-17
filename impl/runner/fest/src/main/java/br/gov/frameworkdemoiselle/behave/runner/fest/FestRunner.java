@@ -47,7 +47,6 @@ import java.lang.reflect.Field;
 import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
@@ -89,55 +88,60 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void start() {
-
 		logger.info(message.getString("message-fest-started"));
 
 		if (mainFrame == null) {
+
 			mainFrame = getInstance(true);
-			if (mainFrame == null) {
+
+			if (mainFrame == null)
 				mainFrame = getInstance(false);
-			}
-			if (mainFrame == null) {
+
+			if (mainFrame == null)
 				throw new BehaveException(message.getString("exception-properties-not-informed"));
-			}
+
 			JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
 				protected JFrame executeInEDT() {
 					return mainFrame;
 				}
 			});
+
 			mainContainer = frame;
 			mainContainer.setVisible(true);
 
 			mainFixture = new FrameFixture((JFrame) mainContainer);
 			robot = mainFixture.robot;
 		}
+
 		currentContainer = mainContainer;
 	}
 
 	private JFrame getInstance(boolean mainClass) {
 		String clazz = (mainClass) ? BehaveConfig.getProperty("behave.runner.app.mainClass") : BehaveConfig.getProperty("behave.runner.app.startupFrame");
-		logger.info(message.getString("message-fest-started"));
-		try {
-			if (clazz == null || clazz.equals("")) {
-				return null;
-			}
-			logger.info(message.getString("message-fest-class", clazz));
-			Object instance = Class.forName(clazz).newInstance();
-			if (mainClass) {
-				return (JFrame) instance;
-			} else {
-				return ((FestStartup) instance).getFrame();
-			}
-		} catch (InstantiationException e) {
-			throw new BehaveException(e);
-		} catch (IllegalAccessException e) {
-			throw new BehaveException(e);
-		} catch (ClassNotFoundException e) {
-			throw new BehaveException(message.getString("exception-main-class-not-found", clazz), e);
-		} catch (ClassCastException e) {
-			throw new BehaveException(e);
-		}
 
+		try {
+			if (clazz == null || clazz.equals(""))
+				return null;
+
+			logger.info(message.getString("message-fest-class", clazz));
+
+			Object instance = Class.forName(clazz).newInstance();
+			if (mainClass)
+				return (JFrame) instance;
+
+			return ((FestStartup) instance).getFrame();
+		}
+		catch (Exception e) {
+			return null;
+		}
+		/*
+		 * catch (InstantiationException e) { throw new BehaveException(e); }
+		 * catch (IllegalAccessException e) { throw new BehaveException(e); }
+		 * catch (ClassNotFoundException e) { throw new
+		 * BehaveException(message.getString("exception-main-class-not-found",
+		 * clazz), e); } catch (ClassCastException e) { throw new
+		 * BehaveException(e); }
+		 */
 	}
 
 	@Override
@@ -151,7 +155,7 @@ public class FestRunner implements Runner {
 		for (Window w : JDialog.getWindows()) {
 			if (w instanceof JDialog && w.isVisible()) {
 				if (title.trim().equalsIgnoreCase(((JDialog) w).getTitle().trim())) {
-					currentContainer = (JComponent) ((JDialog) w).getRootPane().getContentPane();
+					currentContainer = ((JDialog) w).getRootPane().getContentPane();
 					currentContainer.setFocusTraversalKeysEnabled(true);
 					currentContainer.setVisible(true);
 					currentContainer.setEnabled(true);
@@ -165,9 +169,7 @@ public class FestRunner implements Runner {
 		// Procura por Frames
 		for (Window w : JFrame.getWindows()) {
 			if (w instanceof JFrame && w.isVisible()) {
-
 				JFrame frame = (JFrame) w;
-
 				if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
 					currentContainer = frame;
 					currentContainer.setFocusTraversalKeysEnabled(true);
@@ -179,11 +181,11 @@ public class FestRunner implements Runner {
 				}
 			}
 		}
-		if (currentContainer == null) {
-			throw new BehaveException(message.getString("exception-app-not-loaded"));
-		}
-		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 
+		if (currentContainer == null)
+			throw new BehaveException(message.getString("exception-app-not-loaded"));
+
+		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 	}
 
 	public String getHierarchy() {
@@ -228,7 +230,8 @@ public class FestRunner implements Runner {
 		else if (Element.class.isAssignableFrom(clazz))
 			try {
 				element = (DesktopElement) clazz.newInstance();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				element = null;
 			}
 		else
@@ -309,7 +312,8 @@ public class FestRunner implements Runner {
 			grph.drawImage(img, 0, 0, null);
 			grph.dispose();
 			ImageIO.write(bi, extension, new File(filePath));
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			throw new BehaveException(message.getString("exception-error-resize-image", filePath));
 		}
 	}

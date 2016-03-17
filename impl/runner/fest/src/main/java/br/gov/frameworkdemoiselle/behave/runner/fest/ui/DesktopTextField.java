@@ -46,10 +46,13 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 public class DesktopTextField extends DesktopBase implements TextField {
 
 	public void sendKeys(CharSequence... keysToSend) {
-		JTextComponentFixture textFix = new JTextComponentFixture(runner.robot, (JTextComponent) getElement());
-
-		for (CharSequence cs : keysToSend) {
-			textFix.setText(cs.toString());
+		try {
+			JTextComponentFixture textFix = new JTextComponentFixture(runner.robot, (JTextComponent) getElement());
+			for (CharSequence cs : keysToSend)
+				textFix.setText(cs.toString());
+		}
+		catch (Exception e) {
+			throw new BehaveException(runner.getHierarchy(), e);
 		}
 	}
 
@@ -70,19 +73,18 @@ public class DesktopTextField extends DesktopBase implements TextField {
 	@Override
 	public void isVisibleDisabled() {
 		JTextComponent component = (JTextComponent) getElement();
-		if (component == null) {
+		if (component == null)
 			throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
-		} else {
-			//Alguns componentens usam isEditable e outros usam isEnabled
-			if (!component.isVisible() || (component.isEditable() && component.isEnabled())) {
-				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
-			}
+
+		// Alguns componentens usam isEditable e outros usam isEnabled
+		if (!component.isVisible() || (component.isEditable() && component.isEnabled())) {
+			throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 		}
 	}
 
 	@Override
 	public void sendKeysTriggerEvent(String event, CharSequence... keysToSend) {
-		
+
 	}
-	
+
 }

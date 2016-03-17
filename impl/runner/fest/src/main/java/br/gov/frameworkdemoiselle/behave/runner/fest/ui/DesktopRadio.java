@@ -47,10 +47,9 @@ public class DesktopRadio extends DesktopBase implements Radio {
 	@Override
 	public void click() {
 		JRadioButtonFixture radioFix = new JRadioButtonFixture(runner.robot, (JRadioButton) getElement());
-		
 		radioFix.click();
 	}
-	
+
 	@Override
 	public Boolean isSelected() {
 		return ((JRadioButton) getElement()).isSelected();
