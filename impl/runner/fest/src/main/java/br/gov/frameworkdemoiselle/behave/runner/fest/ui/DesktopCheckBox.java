@@ -47,7 +47,6 @@ public class DesktopCheckBox extends DesktopBase implements CheckBox {
 	@Override
 	public void click() {
 		JCheckBoxFixture checkBoxFix = new JCheckBoxFixture(runner.robot, (JCheckBox) getElement());
-		
 		checkBoxFix.click();
 	}
 
