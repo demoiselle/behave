@@ -53,6 +53,7 @@ import org.jbehave.core.reporters.StoryReporter;
 
 import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.JBehaveParser;
 
@@ -122,7 +123,8 @@ public class DefaultStoryReport implements StoryReporter {
 			log.debug(message.getString("message-parser-delay-between-steps", BehaveConfig.getParser_DelayBetweenSteps()));
 			try {
 				Thread.sleep(BehaveConfig.getParser_DelayBetweenSteps() * 1000);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 			}
 		}
 	}
@@ -136,7 +138,7 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void pending(String step) {
-
+		BehaveContext.getInstance().fail(step, new BehaveException("Passo não encontrado! [" + step + "]"));
 	}
 
 	public void notPerformed(String step) {
@@ -146,7 +148,8 @@ public class DefaultStoryReport implements StoryReporter {
 	public void failed(String step, Throwable cause) {
 		if (cause.getCause() != null && cause.getCause() instanceof AssertionError) {
 			BehaveContext.getInstance().fail(step, cause.getCause());
-		} else {
+		}
+		else {
 			BehaveContext.getInstance().fail(step, cause);
 		}
 	}
@@ -172,6 +175,6 @@ public class DefaultStoryReport implements StoryReporter {
 	}
 
 	public void restartedStory(Story story, Throwable cause) {
-		
+
 	}
 }

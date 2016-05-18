@@ -116,8 +116,25 @@ public class DesktopGrid extends DesktopBase implements Grid {
 	private JTableCellFixture getTableCellFixtureByRowColumn(String l, String c) {
 		JTable table = (JTable) getElement();
 		JTableFixture tableFix = new JTableFixture(runner.robot, table);
-		String columnName = table.getColumnName(Integer.parseInt(c) - 1);
-		TableCellFinder tableCellFinder = TableCellByColumnId.row(Integer.parseInt(l) - 1).columnId(columnName);
+
+		int row = -1;
+		String columnName;
+
+		try {
+			row = Integer.parseInt(l) - 1;
+		}
+		catch (Exception e) {
+			row = tableFix.cell(l).row;
+		}
+
+		try {
+			columnName = table.getColumnName(Integer.parseInt(c) - 1);
+		}
+		catch (Exception e) {
+			columnName = c;
+		}
+
+		TableCellFinder tableCellFinder = TableCellByColumnId.row(row).columnId(columnName);
 		JTableCellFixture cellFix = tableFix.cell(tableCellFinder);
 		return cellFix;
 	}

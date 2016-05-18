@@ -308,20 +308,24 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 		}
 
 		if (component.getClass().getCanonicalName() != null && locatorType == ElementLocatorType.ClassName && component.getClass().getCanonicalName().equalsIgnoreCase(locator)) {
-			if (getElementMap().locator().length > 1) {
-				try {
+			try {
+				Method isShowingMethod = component.getClass().getMethod("isShowing");
+				boolean isShowing = (Boolean) isShowingMethod.invoke(component);
+				if (!isShowing)
+					return false;
+
+				if (getElementMap().locator().length > 1) {
 					Method getInformacaoMethod = component.getClass().getMethod("getText");
 					String resultado = (String) getInformacaoMethod.invoke(component);
 					String locatorAux = getLocatorWithParameters(getElementMap().locator()[1]);
 					return resultado.equalsIgnoreCase(locatorAux);
 				}
-				catch (Exception e) {
-					return false;
-				}
+			}
+			catch (Exception e) {
+				return false;
 			}
 			return true;
 		}
-
 		return false;
 	}
 
