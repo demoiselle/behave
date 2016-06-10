@@ -263,13 +263,14 @@ public class ALMIntegration implements Integration {
 			log.debug(message.getString("message-integration-alm-end", df.format((t1 - t0) / 1000.00)));
 
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			if (e.getCause() instanceof ConnectException) {
 				throw new BehaveException(message.getString("exception-authenticator-inaccessible"), e);
 			} else {
 				throw new BehaveException(e);
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			throw new BehaveException(e);
 		}
 
