@@ -192,7 +192,7 @@ public class ALMIntegration implements Integration {
 				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
 				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
 				if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
+					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias) + ". --> communication failure, status code [" + responseTestPlanGet.getStatusLine().getStatusCode() +"]");
 				} else {
 					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
 				}
@@ -263,17 +263,14 @@ public class ALMIntegration implements Integration {
 			log.debug(message.getString("message-integration-alm-end", df.format((t1 - t0) / 1000.00)));
 
 		} catch (RuntimeException e) {
-			e.printStackTrace();
 			if (e.getCause() instanceof ConnectException) {
 				throw new BehaveException(message.getString("exception-authenticator-inaccessible"), e);
 			} else {
 				throw new BehaveException(e);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new BehaveException(e);
 		}
-
 	}
 
 	/**
