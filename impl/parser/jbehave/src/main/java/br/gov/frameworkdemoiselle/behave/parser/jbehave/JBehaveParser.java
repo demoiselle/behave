@@ -111,7 +111,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
 			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(storyReporter).withFormats(getFormats()).withPathResolver(new ResolveReportPathFix()));
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
 	}
@@ -156,7 +157,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		try {
 			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
-		} finally {
+		}
+		finally {
 			embedder.generateCrossReference();
 		}
 		logger.info(message.getString("message-parser-end"));
@@ -215,13 +217,11 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		// ela possui valor diferente de zero.
 		// No console é necessário fazer: export COLORED_CONSOLE=1
 		String ambiente = System.getenv("COLORED_CONSOLE");
-		if (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {
+		if (BehaveConfig.getParser_ColoredConsoleEnabled() || (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase()))) {
 			console = new ColoredConsoleFormat();
 		}
 
-		Format screenshootingFormat = new ScreenShootingHtmlFormat(getKeywordsLocale());
-
-		return new Format[] { console, screenshootingFormat, Format.STATS };
+		return BehaveConfig.getParser_ScreenshotEnabled() ? new Format[] { console, new ScreenShootingHtmlFormat(getKeywordsLocale()), Format.STATS } : new Format[] { console, Format.STATS };
 	}
 
 }

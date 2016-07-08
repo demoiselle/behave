@@ -58,13 +58,14 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
 import br.gov.frameworkdemoiselle.behave.runner.ui.MenuItem;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Select;
 import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
-
+import br.gov.frameworkdemoiselle.behave.runner.ui.Tree;
 
 /**
  * 
@@ -80,16 +81,38 @@ public class CommonSteps implements Step {
 	protected static String currentPageName;
 	protected static BehaveMessage message = new BehaveMessage(JBehaveParser.MESSAGEBUNDLE);
 
-	
-	
-	@Given("vou para a tela \"$local\"")
-	@Then("vou para a tela \"$local\"")
-	@When("vou para a tela \"$local\"")
+	@Given(value = "vou para a tela \"$local\"", priority = 1)
+	@Then(value = "vou para a tela \"$local\"", priority = 1)
+	@When(value = "vou para a tela \"$local\"", priority = 1)
 	public void goToWithName(String local) {
 		logger.debug("Go to screen " + local);
 		currentPageName = local;
 		String url = ReflectionUtil.getLocation(local);
 		runner.navigateTo(url);
+	}
+
+	@Given(value = "vou para a tela \"$local\" com os parâmetros \"$parametros\"", priority = 10)
+	@Then(value = "vou para a tela \"$local\" com os parâmetros \"$parametros\"", priority = 10)
+	@When(value = "vou para a tela \"$local\" com os parâmetros \"$parametros\"", priority = 10)
+	public void goToWithName(String local, List<String> parametros) {
+		parametros = DataProviderUtil.replaceDataProvider(parametros);
+		logger.debug("Go to screen " + local + " com " + parametros.size() + " parâmetros");
+		currentPageName = local;
+		String url = getUrlWithParameters(ReflectionUtil.getLocation(local), parametros);
+		runner.navigateTo(url);
+	}
+
+	private String getUrlWithParameters(String url, List<String> parametros) {
+		if (url.matches(".*%param[0-9]+%.*")) {
+			int n = 1;
+			for (String parameter : parametros) {
+				String tag = "%param" + n + "%";
+				if (url.contains(tag))
+					url = url.replace(tag, parameter);
+				n++;
+			}
+		}
+		return url;
 	}
 
 	@Given("estou na tela \"$local\"")
@@ -109,13 +132,20 @@ public class CommonSteps implements Step {
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Button) {
 			((Button) element).click();
-		} else if (element instanceof Link) {
+		}
+		else if (element instanceof Link) {
 			((Link) element).click();
-		} else if (element instanceof Menu) {
+		}
+		else if (element instanceof Menu) {
 			((Menu) element).click();
-		} else if (element instanceof MenuItem) {
+		}
+		else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
-		} else {
+		}
+		else if (element instanceof Grid) {
+			((Grid) element).clickRow(locatorParameters.get(0));
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -126,13 +156,17 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, elementName);
 		if (element instanceof Button) {
 			((Button) element).click();
-		} else if (element instanceof Link) {
+		}
+		else if (element instanceof Link) {
 			((Link) element).click();
-		} else if (element instanceof Menu) {
+		}
+		else if (element instanceof Menu) {
 			((Menu) element).click();
-		} else if (element instanceof MenuItem) {
+		}
+		else if (element instanceof MenuItem) {
 			((MenuItem) element).click();
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -145,13 +179,17 @@ public class CommonSteps implements Step {
 		element.setLocatorParameters(locatorParameters);
 		if (element instanceof Radio) {
 			((Radio) element).click();
-		} else if (element instanceof CheckBox) {
+		}
+		else if (element instanceof CheckBox) {
 			((CheckBox) element).click();
-		} else if (element instanceof Link) {
+		}
+		else if (element instanceof Link) {
 			((Link) element).click();
-		} else if (element instanceof Calendar) {
+		}
+		else if (element instanceof Calendar) {
 			((Calendar) element).click();
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -162,13 +200,17 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Radio) {
 			((Radio) element).click();
-		} else if (element instanceof CheckBox) {
+		}
+		else if (element instanceof CheckBox) {
 			((CheckBox) element).click();
-		} else if (element instanceof Link) {
+		}
+		else if (element instanceof Link) {
 			((Link) element).click();
-		} else if (element instanceof Calendar) {
+		}
+		else if (element instanceof Calendar) {
 			((Calendar) element).click();
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -180,7 +222,8 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByIndex(Integer.valueOf(indice));
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -192,7 +235,8 @@ public class CommonSteps implements Step {
 		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof Select) {
 			((Select) element).selectByValue(value);
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
 		}
 	}
@@ -201,15 +245,37 @@ public class CommonSteps implements Step {
 	@Then(value = "informo \"$value\" no campo \"$fieldName\"", priority = 1)
 	public void inform(String value, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			textField.sendKeysWithTries(value);
-		} else if (element instanceof Select) {
+		}
+		else if (element instanceof Select) {
 			((Select) element).selectByVisibleText(value);
-		} else if (element instanceof AutoComplete) {
+		}
+		else if (element instanceof AutoComplete) {
 			((AutoComplete) element).selectByValue(value);
-		} else {
+		}
+		else {
+			throw new BehaveException(message.getString("exception-element-not-found"));
+		}
+	}
+
+	@When(value = "informo \"$value\" no campo \"$fieldName\" referente a \"$locatorParameters\"", priority = 10)
+	@Then(value = "informo \"$value\" no campo \"$fieldName\" referente a \"$locatorParameters\"", priority = 10)
+	public void inform(String value, String fieldName, List<String> locatorParameters) {
+		value = DataProviderUtil.replaceValue(value);
+		locatorParameters = DataProviderUtil.replaceDataProvider(locatorParameters);
+		Element element = runner.getElement(currentPageName, fieldName);
+		element.setLocatorParameters(locatorParameters);
+		if (element instanceof TextField) {
+			TextField textField = (TextField) element;
+			textField.sendKeysWithTries(value);
+		}
+		else if (element instanceof Select) {
+			((Select) element).selectByVisibleText(value);
+		}
+		else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
@@ -231,10 +297,11 @@ public class CommonSteps implements Step {
 	@Then(value = "informo \"$value\" e seleciono \"$selectValue\" no campo \"$fieldName\"", priority = 10)
 	public void inform(String value, String selectValue, String fieldName) {
 		value = DataProviderUtil.replaceValue(value);
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof AutoComplete) {
 			((AutoComplete) element).searchAndSelectValue(value, selectValue);
-		} else {
+		}
+		else {
 			this.inform(value, fieldName);
 		}
 	}
@@ -242,25 +309,26 @@ public class CommonSteps implements Step {
 	@When("limpo o valor do campo \"$fieldName\"")
 	@Alias("n\u00E3o informo valor para o campo \"$fieldName\"")
 	public void notInform(String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		if (element instanceof TextField) {
 			TextField textField = (TextField) element;
 			textField.clear();
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-element-not-found"));
 		}
 	}
 
 	@Then("ser\u00E1 exibido \"$text\"")
 	public void textVisible(String text) {
-		Element element = (Element) runner.getScreen();
+		Element element = runner.getScreen();
 		text = DataProviderUtil.replaceValue(text);
 		element.waitText(text);
 	}
-	
+
 	@Then("n\u00E3o ser\u00E1 exibido \"$text\"")
 	public void textNotVisible(String text) {
-		Element element = (Element) runner.getScreen();
+		Element element = runner.getScreen();
 		text = DataProviderUtil.replaceValue(text);
 		element.waitNotText(text);
 	}
@@ -268,127 +336,130 @@ public class CommonSteps implements Step {
 	@Then("ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
 	}
-	
+
 	@Then("n\u00E3o ser\u00E1 exibido na \"$elementName\" o valor \"$text\"")
 	@Alias("n\u00E3o ser\u00E1 exibido no \"$elementName\" o valor \"$text\"")
 	public void textNotVisibleInElement(String elementName, String text) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextNotInElement(text);
 	}
 
 	@Then("ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextInElement(text);
 	}
-	
+
 	@Then("n\u00E3o ser\u00E1 exibido o valor \"$text\" em \"$elementName\" referente a \"$locatorParameters\"")
 	public void textNotVisibleInElementWithParameters(String text, String elementName, List<String> locatorParameters) {
-		Element element = (Element) runner.getElement(currentPageName, elementName);
+		Element element = runner.getElement(currentPageName, elementName);
 		element.setLocatorParameters(locatorParameters);
 
 		text = DataProviderUtil.replaceValue(text);
 		element.waitTextNotInElement(text);
 	}
 
-	@Given(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
-	@When(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
-	@Then(value="\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority=10)
+	@Given(value = "\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 10)
+	@When(value = "\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 10)
+	@Then(value = "\"$elementName\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 10)
 	public void elementNotVisible(String elementName) {
 		Element element = runner.getElement(currentPageName, elementName);
 		element.waitInvisible();
 	}
-	
-	@Given(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
-	@When(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
-	@Then(value="\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority=11)
+
+	@Given(value = "\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 11)
+	@When(value = "\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 11)
+	@Then(value = "\"$elementName\" referente a \"$locatorParameters\" n\u00E3o est\u00E1 vis\u00EDvel", priority = 11)
 	public void elementWithParametersNotVisible(String elementName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, elementName);
-		element.setLocatorParameters(locatorParameters);		
+		element.setLocatorParameters(locatorParameters);
 		element.waitInvisible();
 	}
-	
-	@Given(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
-	@When(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
-	@Then(value="aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=10)
+
+	@Given(value = "aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 10)
+	@When(value = "aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 10)
+	@Then(value = "aguardo o elemento \"$fieldName\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 10)
 	public void elementVisibleClicableEnable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.waitVisibleClickableEnabled();
 	}
-	
-	@Given(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
-	@When(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
-	@Then(value="aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority=11)
+
+	@Given(value = "aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 11)
+	@When(value = "aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 11)
+	@Then(value = "aguardo o elemento \"$fieldName\" referente a \"$locatorParameters\" estar vis\u00EDvel, clic\u00E1vel e habilitado", priority = 11)
 	public void elementWithParametersVisibleClicableEnable(String fieldName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.setLocatorParameters(locatorParameters);
 		element.waitVisibleClickableEnabled();
 	}
 
-	@Given(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
-	@When(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
-	@Then(value="o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority=10)
+	@Given(value = "o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority = 10)
+	@When(value = "o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority = 10)
+	@Then(value = "o elemento \"$fieldName\" est\u00E1 vis\u00EDvel e desabilitado", priority = 10)
 	public void elementVisibleDisable(String fieldName) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.isVisibleDisabled();
 	}
 
-	@Given(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
-	@When(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
-	@Then(value="o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority=11)
+	@Given(value = "o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority = 11)
+	@When(value = "o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority = 11)
+	@Then(value = "o elemento \"$fieldName\" referente a \"$locatorParameters\" est\u00E1 vis\u00EDvel e desabilitado", priority = 11)
 	public void elementWithParametersVisibleDisable(String fieldName, List<String> locatorParameters) {
 		Element element = runner.getElement(currentPageName, fieldName);
 		element.setLocatorParameters(locatorParameters);
 		element.isVisibleDisabled();
 	}
-	
+
 	/**
 	 * 
-	 * Envia um texto para um input text e logo depois dispara um evento neste campo
-	 * 	  
+	 * Envia um texto para um input text e logo depois dispara um evento neste
+	 * campo
+	 * 
 	 * @author Tiago Tosta Peres<tiago.peres@serpro.gov.br>
 	 * @param fieldValue
 	 *            texto que será escrito no campo
 	 * @param fieldName
 	 *            campo que será manipulado
 	 * @param event
-	 *            evento a ser disparado.
-	 *            Os valores suportados são:
-	 *            1 - keyup
-	 *            2 - onblurJS
-	 *            3 - onfocus
-	 *            4 - keyupJS
-	 *            5 - keyupTAB;
-	 * exemplo
+	 *            evento a ser disparado. Os valores suportados são: 1 - keyup 2
+	 *            - onblurJS 3 - onfocus 4 - keyupJS 5 - keyupTAB; exemplo
 	 *            informo "teste" no campo "nome" e disparo o evento "1"
 	 */
-	
-	@When(value="informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority=2)
-	@Then(value="informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority=2)
-    public void informOnFieldWithEvent(String fieldValue, String fieldName, String event) {
-		
+	@When(value = "informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority = 2)
+	@Then(value = "informo \"$fieldValue\" no campo \"$fieldName\" e disparo o evento \"$evento\"", priority = 2)
+	public void informOnFieldWithEvent(String fieldValue, String fieldName, String event) {
+
 		while (!fieldValue.equals(DataProviderUtil.replaceValue(fieldValue)))
 			fieldValue = DataProviderUtil.replaceValue(fieldValue);
-		
+
 		while (!fieldName.equals(DataProviderUtil.replaceValue(fieldName)))
 			fieldName = DataProviderUtil.replaceValue(fieldName);
-		
+
 		while (!event.equals(DataProviderUtil.replaceValue(event)))
 			event = DataProviderUtil.replaceValue(event);
-		
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
-        ((TextField) element).sendKeysTriggerEvent(event,fieldValue);
-       
-    }
-	
-	
-	
+
+		Element element = runner.getElement(currentPageName, fieldName);
+		((TextField) element).sendKeysTriggerEvent(event, fieldValue);
+
+	}
+
+	@Given("clico na linha \"$row\" da árvore \"$elementName\"")
+	@When("clico na linha \"$row\" da árvore \"$elementName\"")
+	@Then("clico na linha \"$row\" da árvore \"$elementName\"")
+	public void clickTreeRow(String row, String elementName) {
+		Element element = runner.getElement(currentPageName, elementName);
+		if (element instanceof Tree)
+			((Tree) element).clickTreeRow(Integer.parseInt(row));
+		else
+			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+	}
+
 }

@@ -192,7 +192,7 @@ public class ALMIntegration implements Integration {
 				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
 				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
 				if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
+					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias) + ". --> communication failure, status code [" + responseTestPlanGet.getStatusLine().getStatusCode() +"]");
 				} else {
 					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
 				}
@@ -269,10 +269,8 @@ public class ALMIntegration implements Integration {
 				throw new BehaveException(e);
 			}
 		} catch (Exception e) {
-
 			throw new BehaveException(e);
 		}
-
 	}
 
 	/**

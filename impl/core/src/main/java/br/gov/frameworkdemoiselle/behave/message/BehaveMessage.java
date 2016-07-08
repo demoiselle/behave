@@ -63,7 +63,7 @@ public class BehaveMessage {
 		try {
 			rb = ResourceBundle.getBundle(baseName, locale);
 		} catch (MissingResourceException ex) {	
-			rb = ResourceBundle.getBundle(baseName, new Locale(BehaveConfig.getProperty("behave.message.locale", "pt")));
+			rb = ResourceBundle.getBundle(baseName, new Locale("pt","BR"));
 		}
 	}
 

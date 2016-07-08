@@ -45,7 +45,10 @@ import javax.swing.JTable;
 import org.apache.log4j.Logger;
 import org.fest.swing.core.MouseButton;
 import org.fest.swing.data.TableCell;
+import org.fest.swing.data.TableCellByColumnId;
+import org.fest.swing.data.TableCellFinder;
 import org.fest.swing.exception.ActionFailedException;
+import org.fest.swing.fixture.JTableCellFixture;
 import org.fest.swing.fixture.JTableFixture;
 
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
@@ -57,15 +60,14 @@ public class DesktopGrid extends DesktopBase implements Grid {
 
 	@Override
 	public void clickRow(String reference) {
-
 		// Pegar a linha que tenha o texto do parâmetro referente a
 		try {
 			JTable table = (JTable) getElement();
 			JTableFixture tFix = new JTableFixture(runner.robot, table);
 			TableCell cell = tFix.cell(reference);
 			tFix.click(cell, MouseButton.LEFT_BUTTON);
-		} catch (ActionFailedException ex) {
-
+		}
+		catch (ActionFailedException ex) {
 			JTable table = (JTable) getElement();
 			JTableFixture tFix = new JTableFixture(runner.robot, table);
 
@@ -82,34 +84,59 @@ public class DesktopGrid extends DesktopBase implements Grid {
 					}
 				}
 			}
-
 		}
-
-	}
-
-	@Override
-	public String findTextInTable(Element element, String l, String c) {
-		return null;
 	}
 
 	@Override
 	public String findLastLine(Element tabela) {
-		return null;
+		JTable table = (JTable) getElement();
+		return "" + table.getRowCount();
+	}
+
+	@Override
+	public String findTextInTable(Element element, String l, String c) {
+		return getTableCellFixtureByRowColumn(l, c).value();
 	}
 
 	@Override
 	public void tableButtonClick(Element element, String l, String c) {
-
+		getTableCellFixtureByRowColumn(l, c).click();
 	}
 
 	@Override
 	public void tableSelectClick(String value, String l, String c, Element element) {
-
+		getTableCellFixtureByRowColumn(l, c).select().click();
 	}
 
 	@Override
 	public void tableTextSendKeys(String value, String l, String c, Element element) {
+		getTableCellFixtureByRowColumn(l, c).enterValue(value);
+	}
 
+	private JTableCellFixture getTableCellFixtureByRowColumn(String l, String c) {
+		JTable table = (JTable) getElement();
+		JTableFixture tableFix = new JTableFixture(runner.robot, table);
+
+		int row = -1;
+		String columnName;
+
+		try {
+			row = Integer.parseInt(l) - 1;
+		}
+		catch (Exception e) {
+			row = tableFix.cell(l).row;
+		}
+
+		try {
+			columnName = table.getColumnName(Integer.parseInt(c) - 1);
+		}
+		catch (Exception e) {
+			columnName = c;
+		}
+
+		TableCellFinder tableCellFinder = TableCellByColumnId.row(row).columnId(columnName);
+		JTableCellFixture cellFix = tableFix.cell(tableCellFinder);
+		return cellFix;
 	}
 
 }

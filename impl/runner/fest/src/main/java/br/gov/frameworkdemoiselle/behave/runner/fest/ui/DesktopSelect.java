@@ -52,23 +52,18 @@ public class DesktopSelect extends DesktopBase implements Select {
 	@Override
 	public void isVisibleDisabled() {
 		JComponent component = (JComponent) getElement();
-		if (component == null) {
+		if (component == null)
 			throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
-		} else {
-			if (!component.isVisible() || component.isEnabled()) {
-				throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
-			}
-		}
+		if (!component.isVisible() || component.isEnabled())
+			throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 	}
 
 	@Override
 	public String getText() {
 		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
-		if (comboFixture.component() != null && comboFixture.component().getSelectedItem() != null) {
+		if (comboFixture.component() != null && comboFixture.component().getSelectedItem() != null)
 			return comboFixture.component().getSelectedItem().toString();
-		} else {
-			return null;
-		}
+		return null;
 	}
 
 	@Override

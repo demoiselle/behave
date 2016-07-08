@@ -47,9 +47,7 @@ import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
- * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo
- * behave.properties com a recurso de sobrescrita no qual o arquivo do usuário
- * sobrescreve qualquer outra propriedade.
+ * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo behave.properties com a recurso de sobrescrita no qual o arquivo do usuário sobrescreve qualquer outra propriedade.
  * 
  * Caso a propriedade seja informada na JVM está sobrescreverá as demais.
  * 
@@ -72,11 +70,9 @@ public class BehaveConfig {
 	}
 
 	/**
-	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
-	 * uma nova proprieade em seu projeto
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar uma nova proprieade em seu projeto
 	 * 
-	 * Verifica se a propriedade foi setada antes no System.properties. Nesta
-	 * caso o System sobrescreve todas as outras
+	 * Verifica se a propriedade foi setada antes no System.properties. Nesta caso o System sobrescreve todas as outras
 	 * 
 	 * @param key
 	 *            Chave
@@ -87,13 +83,13 @@ public class BehaveConfig {
 	public static String getProperty(String key, String defaultValue) {
 		if (!properties.containsKey(key)) {
 			return defaultValue.trim();
-		} else {
-			String value = System.getProperty(key);
-			if (value != null) {
-				properties.setProperty(key, value);
-			}
-			return properties.getProperty(key, defaultValue).trim();
 		}
+
+		String value = System.getProperty(key);
+		if (value != null) {
+			properties.setProperty(key, value);
+		}
+		return properties.getProperty(key, defaultValue).trim();
 	}
 
 	/**
@@ -107,8 +103,7 @@ public class BehaveConfig {
 	}
 
 	/**
-	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
-	 * uma nova proprieade em seu projeto
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar uma nova proprieade em seu projeto
 	 * 
 	 * @param key
 	 * @return
@@ -157,6 +152,14 @@ public class BehaveConfig {
 
 	public static long getParser_DelayBetweenSteps() {
 		return Long.parseLong(getProperty("behave.parser.delayBetweenSteps", "0"));
+	}
+
+	public static boolean getParser_ScreenshotEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.parser.screenshot.enabled", "true"));
+	}
+
+	public static boolean getParser_ColoredConsoleEnabled() {
+		return Boolean.parseBoolean(getProperty("behave.parser.coloredconsole.enabled", "false"));
 	}
 
 	/** INTEGRATION PROPERTIES **/
@@ -271,10 +274,15 @@ public class BehaveConfig {
 	}
 
 	// Níves de zoom out que o framework realizará antes de capturar a tela
-	 public static int getRunner_screenShotZoomout() {
+	public static int getRunner_screenShotZoomout() {
 		return Integer.parseInt(getProperty("behave.runner.screen.screenshot.zoomout", "0"));
-	 }
-	 
+	}
+
+	// Ativa o uso da nova implementação que separa os .story por escopos ou mantém a maneira original sem escopos
+	public static boolean getRunner_legacyRunner() {
+		return Boolean.parseBoolean(getProperty("behave.runner.legacyRunner", "true"));
+	}
+
 	/*
 	 * Configurações especificas para testes Desktop
 	 */
