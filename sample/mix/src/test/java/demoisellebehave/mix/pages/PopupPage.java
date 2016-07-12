@@ -31,7 +31,7 @@ public class PopupPage {
 	@ScreenMap(name = "demoiselle/behave")
 	public class DBehave {
 
-		@ElementMap(name = "Wiki", locatorType = ElementLocatorType.XPath, locator = "//a/span[./text()='Wiki']")
+		@ElementMap(name = "Wiki", locatorType = ElementLocatorType.XPath, locator = "//a[contains(@data-hotkey, 'g w')]")
 		private Link wiki;
 
 	}

@@ -1,6 +1,6 @@
 /*
  * Demoiselle Framework
- * Copyright (C) 2013 SERPRO
+ * Copyright (C) 2015 SERPRO
  * ----------------------------------------------------------------------------
  * This file is part of Demoiselle Framework.
  * 
@@ -111,17 +111,8 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			configuration.useStoryParser(new RegexStoryParser(configuration.keywords()));
 			configuration.useStoryReporterBuilder(new StoryReporterBuilder().withReporters(storyReporter).withFormats(getFormats()).withPathResolver(new ResolveReportPathFix()));
 
-			// Controls
-			EmbedderControls embedderControls = configuredEmbedder().embedderControls();
-			embedderControls.doGenerateViewAfterStories(true);
-			embedderControls.doIgnoreFailureInStories(true);
-			embedderControls.doIgnoreFailureInView(true);
-			embedderControls.doSkip(false);
-			embedderControls.doVerboseFailures(true);
-			embedderControls.useStoryTimeouts(Long.toString(BehaveConfig.getParser_StoryTimeout() * 60));
-			embedderControls.useThreads(1);
-
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BehaveException(message.getString("exception-init-parser"), e);
 		}
 	}
@@ -137,21 +128,37 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 	}
 
 	public Keywords getKeywordsLocale() {
-		return new LocalizedKeywords(new Locale("pt"));
+		return new LocalizedKeywords(new Locale(BehaveConfig.getParser_Language()));
 	}
 
 	public void run() {
 		logger.info(message.getString("message-parser-started"));
-		Embedder embedder = new Embedder(); 
+
+		// Embedded controls
+		EmbedderControls embedderControls = configuredEmbedder().embedderControls();
+		embedderControls.useStoryTimeouts(BehaveConfig.getParser_StoryTimeout());
+		embedderControls.doGenerateViewAfterStories(true);
+		embedderControls.doIgnoreFailureInStories(true);
+		embedderControls.doIgnoreFailureInView(true);
+		embedderControls.doSkip(false);
+		embedderControls.doVerboseFailures(true);
+
+		Embedder embedder = new Embedder();
+
+		// Seleciona os Embedder Controls
+		embedder.useEmbedderControls(embedderControls);
+
+		// Seleciona as configurações
 		embedder.useConfiguration(configuration);
-		
-		// Sempre seleciona o steps factory 
+
+		// Sempre seleciona o steps factory
 		embedder.useStepsFactory(stepsFactory());
-		
+
 		try {
 			logger.info(message.getString("message-execute-history", storyPaths.toString()));
 			embedder.runStoriesAsPaths(storyPaths);
-		} finally {
+		}
+		finally {
 			embedder.generateCrossReference();
 		}
 		logger.info(message.getString("message-parser-end"));
@@ -183,6 +190,7 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 			steps.add(new TableSteps());
 			steps.add(new MouseControlSteps());
 			steps.add(new DataGenerationSteps());
+			steps.add(new CheckBoxRadioSteps());
 		}
 
 		return new InstanceStepsFactory(configuration(), steps.toArray());
@@ -209,13 +217,11 @@ public class JBehaveParser extends ConfigurableEmbedder implements Parser {
 		// ela possui valor diferente de zero.
 		// No console é necessário fazer: export COLORED_CONSOLE=1
 		String ambiente = System.getenv("COLORED_CONSOLE");
-		if (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase())) {
+		if (BehaveConfig.getParser_ColoredConsoleEnabled() || (!StringUtils.isEmpty(ambiente) && !"0".equals(ambiente.toLowerCase()))) {
 			console = new ColoredConsoleFormat();
 		}
 
-		Format screenshootingFormat = new ScreenShootingHtmlFormat(getKeywordsLocale());
-
-		return new Format[] { console, screenshootingFormat, Format.STATS };
+		return BehaveConfig.getParser_ScreenshotEnabled() ? new Format[] { console, new ScreenShootingHtmlFormat(getKeywordsLocale()), Format.STATS } : new Format[] { console, Format.STATS };
 	}
 
 }

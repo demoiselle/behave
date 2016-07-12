@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1" version="1.0" xmlns:er="http://jazz.net/xmlns/alm/qm/v0.1/executionresult/v0.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:vega="http://schema.ibm.com/vega/2008/" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+
+	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="./rdf.xsd"/>
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	<xs:import namespace="http://schema.ibm.com/vega/2008/" schemaLocation="./vega.xsd"/>
+	<!--
+	<er:stepResults>
+		<er:stepResult itemId="_82374823748" result="com.ibm.rqm.execution.common.state.passed" startTime="2109022" endTime="2109999">
+			<er:properties>
+				<me:property propertyName="something" propertyType="integer" propertyValue="2" xmlns:me="http://jazz.net/xmlns/alm/qm/v0.1/manualexecution/v0.1">555</me:property>
+				<me:property propertyName="somethingelse" propertyType="integer" propertyValue="12" xmlns:me="http://jazz.net/xmlns/alm/qm/v0.1/manualexecution/v0.1"></me:property>
+			</er:properties>
+		</er:stepResult>
+	</er:stepResults>
+	-->
+	<xs:element name="resultItemId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Internal ItemId of the result.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="stepResultItemId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Id of the stepResult, to be used when updating only one stepResult of the result.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="remoteexecution" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if the test was executed in a remote tool.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+				
+	<xs:element name="isCurrent" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if this is the most current result at the current time. This is a calculated property, not supported in ETL mode.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="machine" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The name of the machine that the test was executed on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="buildid" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[DEPRECATED]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="log" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The log for the executed test.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="starttime" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">XML datetime when the execution was started.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="endtime" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">XML datetime when the execution ended.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="weight" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The relative weight of testcase.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointspassed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that passed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsfailed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that failed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsattempted" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were attempted.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsblocked" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were blocked.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsinconclusive" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were inconclusive.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="iterations" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of iterations executed</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="details">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The xhtml representation of the details secion of the execution result.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] Details of the execution result.  May contain rich text.</xs:documentation>
+					</xs:annotation>
+				</xs:any>
+			</xs:sequence>
+		</xs:complexType>
+		
+	</xs:element>
+	<xs:element name="approvalstate">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+	<xs:element name="stepResult">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The results of a step.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="property">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="propertyName" type="xs:string"/>
+											<xs:attribute name="propertyValue" type="xs:string"/>
+											<xs:attribute name="propertyType" type="xs:string"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="testdatarownumber" type="xs:int">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The row number of the datapool for which the step was executed.</xs:documentation>
+					</xs:annotation>
+				</xs:element>					
+				<xs:element maxOccurs="1" minOccurs="0" name="startTime" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">XML datetime for the beginning of this step result.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" name="endTime" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">XML datetime for the end of this step result.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="1" name="result" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The state of the step. Permissible values are those allowed on the execution result state.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="expectedResult">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The expected result of the step.</xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="actualResult">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The actual result of the step agains expected result.</xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="description">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/1999/xhtml" processContents="skip">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The description of the execution step.</xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="stepType" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The type of the step. This is required if stepResultItemId is not mentioned.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" ref="er:tester">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Contributor who has executed this step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="comment" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Any comment about the step.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="compare" type="xs:string">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Compare data of the step execution e.g. a:b</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="stepAttachment">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">An absolute URL to an attachment that is associated to the step result.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:anyURI" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The URL of the attachment.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute ref="vega:id">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] UUID of the attachment.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="1" minOccurs="0" ref="er:stepResults">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Nested StepResults to represent steps of manual keyword.</xs:documentation>
+					</xs:annotation>
+				</xs:element>											
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="defect">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The defect accociated with the test.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:anyURI" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The URL of the defect.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="rel" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] Traceability relationship name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="summary" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] Defect summary</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="requirement">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The requirement accociated with the test step result. NOTE: This field is NOT queryable. User can not filter on this filed. This field is only returned when field parameter (e.g. stepResults/stepResult/requirement) is explicitly specified.  This field is not supported for resource type exeuctionelementresult.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:anyURI" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] The URL of the requirement. Note this is one directional link from RQM to RM provider, that there is no corresponding backlink from RM provider to this test step result.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="summary" type="xs:string">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">[READ-ONLY] An optional label for the title of requirement that was provided by RM provider at the time the link was created. There is no guarantee that this label corresponds to the current title of the requirement in RM provider; The current title of the requirement is only available from the RM provider.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>				
+				
+			</xs:sequence>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the step (execution element result resource).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="stepIndex" type="xs:int">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The one-based order index of this step result within a group of step results.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute ref="vega:id">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The UUID of the step.</xs:documentation>
+					</xs:annotation>
+			</xs:attribute>
+			<xs:anyAttribute processContents="skip">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is a placeholder for any extra attribute in step results.</xs:documentation>
+				</xs:annotation>
+			</xs:anyAttribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="stepResults">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The results of the steps.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="er:stepResult"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="testcasestateatexecution">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state of the Test case at the time of execution</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+	<xs:element name="testplanstateatexecution">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state of the Test plan at the time of execution</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+	<xs:element name="testscriptstateatexecution">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state of the Test script at the time of execution</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+ 	<xs:element name="testedby">
+	 	<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="er:tester">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The contributor who has been involved in executing this test.</xs:documentation>
+					</xs:annotation>
+				</xs:element>					
+			</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+		<xs:element name="tester">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The contributor who has been involved in executing this test.</xs:documentation>
+			</xs:annotation>
+			<xs:complexType mixed="true">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The user ID of the contributor.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:attribute ref="rdf:resource">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] The Jazz Team Server (JTS) URL of the contributor.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:complexType>
+		</xs:element>
+</xs:schema>

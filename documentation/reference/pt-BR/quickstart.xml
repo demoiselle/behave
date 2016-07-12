@@ -226,10 +226,8 @@
 			</mediaobject>
 		</para>
 		<para>
-			O projeto criado já possui um exemplo que realiza uma consulta
-			no
-			Google. Para executar o teste basta clicar com o botão direito na
-			classe AppTeste e escolher Run as>JUnit Test.
+			O projeto criado já possui um exemplo que realiza vários passos no site do Demoiselle Behave. Para executar o teste basta clicar com o botão direito na
+			classe MyTest e escolher Run as>JUnit Test.
 		</para>
 		<para>
 			<mediaobject>
@@ -242,7 +240,7 @@
 						format="PNG" />
 				</imageobject>
 				<caption>
-					<para>Classe AppTest
+					<para>Classe MyTest
 					</para>
 				</caption>
 			</mediaobject>
@@ -268,52 +266,51 @@
 		</para>
 		<para>
 			Abaixo segue a história executada pelo framework:
-			<programlisting>Funcionalidade: Acesso
+			<programlisting>Funcionalidade: Acesso ao Projeto Demoiselle Behave
 
 Narrativa:
-Para obter a tela inicial aparece para mim
-Como um visitante
-Desejo acessar o Google
+Para obter informações sobre o projeto Demoiselle Behave
+Como um visistante
+Desejo ter acesso a documentação, fórum e demais informações sobre o projeto
 
-Cenário: Acesso ao Google
+Cenário: Site do DBehave
+Dado que vou para a tela "dbehave"
+Então será exibido "dbehave - projeto mantido pelo SERPRO"
 
-Dado que vou para a tela "Tela de Busca"
-Então será exibido "Google"
+Cenário: Lendo dúvidas
+Dado que vou para a tela "Github"
+Então será exibido "Demoiselle Behave"
+Então será exibido "http://dbehave.com"
 
-Cenário: Pesquisa Simples
-
-Dado que vou para a tela "Tela de Busca"
-Quando informo "Demoiselle Behave" no campo "Campo de Busca"
-Então será exibido "https://github.com/demoiselle/behave/"</programlisting>
+Quando clico em "Dúvidas e Questões"
+Então será exibido "New issue"</programlisting>
 		</para>
 		<para>
-			O framework associa o campo
-			<emphasis>"Campo de Busca"</emphasis>
-			com o elemento searchField da classe MyPage criada
+			Por exemplo, no segundo cenário, o framework associa o link
+			<emphasis>"Dúvidas e Questões"</emphasis>
+			com o elemento linkIssues da classe MyPages criada
 			de forma a
 			mapear os
-			objetos da tela com o Id procurado. O Elemento
+			objetos da tela. O Elemento
 			locatorType
 			informa o
 			tipo de
 			reconhecimento de objetos que será utilizado
 			no
 			framework. No
-			exemplo, será localizado o elemento cujo Id
-			possui o
-			valor "gbqfq".
+			exemplo, será localizado o elemento cujo XPath seja 
+			"//a//span[./text()='Issues']".
 
 		</para>
-		<programlisting>@ScreenMap(name = "Tela de Busca", location = "http://www.google.com.br")
-public class MyPage {
+		<programlisting>@ScreenMap(name = "Github", location = "https://github.com/demoiselle/behave")
+	public class Main {
 
-	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.Id, locator = "gbqfq")
-	private TextField searchField;
+		@ElementMap(name = "Dúvidas e Questões", locatorType = ElementLocatorType.XPath, locator = "//a//span[./text()='Issues']")
+		private Link linkIssues;
 
-	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.Id, locator = "gbqfbb")
-	private Button buttonLuckSearch;
-
-}</programlisting>
+		@ElementMap(name = "uma dúvida", locatorType = ElementLocatorType.XPath, locator = "(//a[contains(@class, 'issue-title')])[2]")
+		private Link linkIssue;
+	}</programlisting>
 	</section>
 
 </chapter>

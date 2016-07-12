@@ -201,6 +201,7 @@ public class WebSelect extends WebBase implements Select {
 	 */
 	private void itemListClick(WebElement item) {
 		try {
+			waitElement(1);
 			item.click();
 		} catch (Throwable t) {
 			waitElement(1);

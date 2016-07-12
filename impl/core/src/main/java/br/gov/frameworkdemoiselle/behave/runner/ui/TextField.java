@@ -45,6 +45,8 @@ public interface TextField extends BaseUI {
 
 	public void sendKeys(CharSequence... keysToSend);
 
+	public void sendKeysTriggerEvent(String event, CharSequence... keysToSend);
+			
 	public void sendKeysWithTries(CharSequence... keysToSend);
 	
 	public void clear();

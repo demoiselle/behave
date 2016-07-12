@@ -36,6 +36,9 @@
  */
 package demoisellebehave.calculadora;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
@@ -51,7 +54,14 @@ public class CalculadoraTest {
 
 	@Test
 	public void testAllStories() throws Throwable {
-		eng.run("/stories/calculadora.story");
-	}
 
+		eng.clearAllOriginalStories();
+		
+		List<String> h = new ArrayList<String>();
+		h.add("/stories/");
+		// h.add("/stories/calculadora.story");
+
+		eng.run(h);
+		
+	}
 }

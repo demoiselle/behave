@@ -57,8 +57,7 @@ public class DataProviderSteps extends CommonSteps {
 		for (Map<String, String> row : table.getRows()) {
 			Iterator<String> it = row.keySet().iterator();
 			while (it.hasNext()) {
-				String key = (String) it.next();
-
+				String key = it.next();
 				setDataProvider(key, row.get(key));
 			}
 		}
@@ -70,7 +69,7 @@ public class DataProviderSteps extends CommonSteps {
 		for (Map<String, String> row : table.getRows()) {
 			Iterator<String> it = row.keySet().iterator();
 			while (it.hasNext()) {
-				String key = (String) it.next();
+				String key = it.next();
 				inform(row.get(key), key);
 			}
 		}
@@ -100,9 +99,9 @@ public class DataProviderSteps extends CommonSteps {
 	@Given("obtenho \"$var\" do campo \"$fieldName\"")
 	@Then("obtenho \"$var\" do campo \"$fieldName\"")
 	public void getValue(String var, String fieldName) {
-		Element element = (Element) runner.getElement(currentPageName, fieldName);
+		Element element = runner.getElement(currentPageName, fieldName);
 		String value = element.getText();
 		dataProvider.put(var, value);
 	}
-	
+
 }

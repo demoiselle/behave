@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" jaxb:version="2.1" targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:qm_process="http://jazz.net/xmlns/prod/jazz/rqm/process/1.0/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	    
+	<!-- When editing, use schemaLocation='processinfo.xsd' for the editor to correctly pickup the schema.  This must have the full path for use when served to the browser -->
+	<!-- /jazz/secure/service/com.ibm.rqm.integration.service.IIntegrationService/schema/processinfo.xsd -->
+	<import namespace="http://jazz.net/xmlns/prod/jazz/rqm/process/1.0/" schemaLocation="./processinfo.xsd"/>
+	
+	<annotation>
+		<appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.rdf"/>
+			</jaxb:schemaBindings>
+		</appinfo>	
+	</annotation>
+	
+	<element name="RDF">
+		<complexType>
+			<choice>
+				<element maxOccurs="1" ref="qm_process:ProcessInfo">
+			    	<annotation>
+						<documentation xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:lang="en">
+						Process specification information
+						</documentation>
+					</annotation> 				
+				</element>
+			</choice>
+		</complexType>
+	</element>
+	
+<element abstract="true" name="typedNode" type="rdf:typedNodeType"/>
+
+<complexType name="typedNodeType">
+  <sequence maxOccurs="unbounded" minOccurs="0">
+    <element ref="rdf:propertyElt"/>
+  </sequence>
+
+  <attributeGroup ref="rdf:idAboutAttrOpt"/>
+  <!-- ... bagidattr, propattr ... -->
+</complexType>
+
+<element abstract="true" name="propertyElt" type="rdf:propertyEltType"/>
+
+<complexType name="propertyEltType">
+  <attributeGroup ref="rdf:idRefAttrOpt"/>
+  <!-- ... bagIdAttr?, propAttr, etc. ... -->
+</complexType>
+
+<attributeGroup name="idRefAttrOpt">
+  <attribute ref="rdf:resource" use="required"/>
+
+  <!-- ... optional rdf:resource -->
+  <!-- ... bare resource="..."? ISSUE. ...-->
+  <!-- ... idAttrOpt ... -->
+</attributeGroup>
+
+<attributeGroup name="idAboutAttrOpt">
+  <attribute ref="rdf:about" use="required"/>
+  <!-- ... idAttrOpt ... -->
+
+  <!-- ... aboutEachAttr ... -->
+</attributeGroup>
+	
+	<attribute name="resource" type="anyURI"/>
+	<attribute name="about" type="anyURI"/>
+	<attribute name="datatype" type="anyURI"/>
+	
+<element name="Description" substitutionGroup="rdf:typedNode" type="rdf:typedNodeType"/>
+
+<element name="type" substitutionGroup="rdf:propertyElt" type="rdf:propertyEltType"/>
+			
+</schema>

@@ -72,9 +72,11 @@ public class DesktopLabel extends DesktopBase implements Label {
 			try {
 				if (textFix.text().equals(text))
 					found = true;
-			} catch (BehaveException be) {
+			}
+			catch (BehaveException be) {
 				throw be;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 			}
 

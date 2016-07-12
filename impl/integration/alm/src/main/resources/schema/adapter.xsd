@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/qmadapter/v0.1" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.adapter"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+	<xs:element name="type" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The type of this adapter that binds it to a specific test execution tool.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pollinginterval" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The number of seconds stating how frequently the adapter will poll the test management server for instructions.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lastheartbeat" type="xs:long">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Time in milliseconds since the last interaction with the adapter.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="hostname" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The hostname of the machine that the adapter is currently running on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ipaddress" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The IP Address of the machine that the adapter is running on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="macaddress" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The physical address of the machine that the adapter is running on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fqdn" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Fully Qualified Domaion Name of the machine that theadapter is running on.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="capability" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Capability of the adapter - permissible values are EXECUTE, IMPORT</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="instructions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">URL that the adapter can invoke to retrieve instructions for that adapter to handle.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the instructions.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tasks">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] URL that the adapter can invoke to retrieve tasks for that adapter to handle.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the task.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="workavailable" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if there is something for the adapter to do.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="instruction">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] An instruction for the adapter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="type" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The type of instruction.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="taskId" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The ID of the task to be performed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="task">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] A task to be performed by the adapter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:anyURI" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The URL of the task.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

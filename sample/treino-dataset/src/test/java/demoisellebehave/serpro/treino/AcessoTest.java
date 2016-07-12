@@ -61,6 +61,7 @@ public class AcessoTest {
 
 	@Test
 	public void testAllAcesso() throws Throwable {
+		eng.clearAllOriginalStories();
 		eng.run("/stories/acesso/");
 	}
 

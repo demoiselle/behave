@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://jazz.net/xmlns/alm/qm/v0.1/tsl/v0.1/" version="1.0" xmlns:alm="http://jazz.net/xmlns/alm/v0.1/" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:vega="http://schema.ibm.com/vega/2008/" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.testsuitelog"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+		
+	<xs:import namespace="http://schema.ibm.com/vega/2008/" schemaLocation="./vega.xsd"/>
+	<xs:import namespace="http://jazz.net/xmlns/alm/v0.1/" schemaLocation="./alm.xsd"/>
+	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="./rdf.xsd"/>
+	
+	<xs:element name="starttime" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">XML dateTime when suite execution started.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="endtime" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">XML dateTime when suite execution ended.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+					
+	<xs:element name="isCurrent" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Indicates if this is the most current result at the current time. This is a calculated property, not supported in ETL mode.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="weight" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The relative weight of testsuite.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointspassed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that passed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsfailed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that failed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsattempted" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were attempted.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsblocked" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were blocked.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointsinconclusive" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Number of points that were inconclusive.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="testcasestotal" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Total number of test cases associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasespassed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases passed associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesfailed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases failed associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesblocked" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases blocked associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesinconclusive" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases inconclusive associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesinprogress" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases in progress associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesnotstarted" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases not started associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesincomplete" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases incomplete associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasespartiallyblocked" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases partially blocked associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcaseserror" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases with error associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasespermfailed" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases permanently failed associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasesdeferred" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases deferred associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testcasespaused" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">[READ-ONLY] Number of test cases paused associated with the test suite log.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="testsuitestateatexecution">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state of the Test suite at the time of execution</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+	<xs:element name="testplanstateatexecution">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">An ID of the workflow state of the Test plan at the time of execution</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The process definition URI of the process workflow state resource.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute ref="rdf:resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">[READ-ONLY] The process definition URI of the process workflow state resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+  	</xs:element>
+	<xs:element name="suiteelements">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A list of the tests in the suite.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="suiteelement">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">[READ-ONLY] A test in the suite.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="1" minOccurs="0" name="index" type="xs:int">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Index for the suiteelement.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element maxOccurs="1" minOccurs="0" name="adapterid" type="xs:string">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Id of the adapter that manages the testlog.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							
+							<xs:element maxOccurs="1" minOccurs="0" name="executionworkitem">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A reference to a test execution record contained in the executed test suite.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="href" type="xs:anyURI" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The URL of the test execution record.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute ref="vega:id">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">UUID of the test execution record.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="alm:owner">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">[READ-ONLY] The contributor that owns execution of test suite step.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							
+							<xs:choice>
+								<xs:element maxOccurs="1" minOccurs="0" name="testscript">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] A reference to the test script used in the execution.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attribute name="href" type="xs:anyURI" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">[READ-ONLY] The URL os the test script.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute ref="vega:id">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">[READ-ONLY] UUID of the test script.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element maxOccurs="1" minOccurs="0" name="remotescript">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">[READ-ONLY] Reference to a type of test script that references an external tool based script.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attribute name="href" type="xs:anyURI" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">[READ-ONLY] The URL of the remote script.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

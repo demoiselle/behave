@@ -44,14 +44,14 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
 public class DesktopButton extends DesktopBase implements Button {
 
-	public void click() {		
+	public void click() {
 		JButtonFixture buttonFix = new JButtonFixture(runner.robot, (JButton) getElement());
 		buttonFix.click();
 	}
 
 	@Override
 	public void mouseOver() {
-		runner.robot.moveMouse(getElement());		
+		runner.robot.moveMouse(getElement());
 	}
 
 }

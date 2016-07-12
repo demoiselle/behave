@@ -14,6 +14,6 @@ public class DisabledTest {
 
 	@Test
 	public void testTree() throws Throwable {
-		eng.run("/stories/disabled/textfield.story");
+		eng.run("/stories/disabled/");
 	}
 }

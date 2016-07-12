@@ -70,11 +70,12 @@ import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.integration.Integration;
 import br.gov.frameworkdemoiselle.behave.integration.alm.autenticator.AutenticatorClient;
 import br.gov.frameworkdemoiselle.behave.integration.alm.httpsclient.HttpsClient;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testcase;
-import br.gov.frameworkdemoiselle.behave.integration.alm.objects.Testplan;
 import br.gov.frameworkdemoiselle.behave.integration.alm.objects.util.GenerateXMLString;
 import br.gov.frameworkdemoiselle.behave.internal.integration.ScenarioState;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+
+import com.ibm.rqm.xml.bind.Testcase;
+import com.ibm.rqm.xml.bind.Testplan;
 
 @SuppressWarnings("deprecation")
 public class ALMIntegration implements Integration {
@@ -147,20 +148,21 @@ public class ALMIntegration implements Integration {
 			if (testCaseId == null) {
 				String testCaseIdentification = convertToIdentificationString(result.get("name").toString());
 				testCaseName = "testcase" + testCaseIdentification;
-				
+
 				// --------------------------- TestCase (GET)
 				// Conexão HTTPS
 				client = HttpsClient.getNewHttpClient(ENCODING);
 				// Login
 				login(client);
 
+				// Cria um novo caso de teste
 				Testcase testCase = new Testcase();
 
 				HttpResponse responseTestCaseGet = getRequest(client, "testcase", testCaseName);
 				if (responseTestCaseGet.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-					testCase = GenerateXMLString.getTestCaseObject(responseTestCaseGet);
+					testCase = GenerateXMLString.getTestcaseObject(responseTestCaseGet);
 				}
-				
+
 				// --------------------------- TestCase (PUT)
 				// Conexão HTTPS
 				client = HttpsClient.getNewHttpClient(ENCODING);
@@ -190,7 +192,7 @@ public class ALMIntegration implements Integration {
 				String testPlanNameId = "urn:com.ibm.rqm:testplan:" + result.get("testPlanId").toString();
 				HttpResponse responseTestPlanGet = getRequest(client, "testplan", testPlanNameId);
 				if (responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED && responseTestPlanGet.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias));
+					throw new BehaveException(message.getString("exception-test-plan-not-found", result.get("testPlanId").toString(), projectAreaAlias) + ". --> communication failure, status code [" + responseTestPlanGet.getStatusLine().getStatusCode() +"]");
 				} else {
 					plan = GenerateXMLString.getTestPlanObject(responseTestPlanGet);
 				}
@@ -203,7 +205,7 @@ public class ALMIntegration implements Integration {
 
 				// TestPlan
 				log.debug(message.getString("message-send-test-plan"));
-				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestPlanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
+				HttpResponse responseTestPlan = sendRequest(client, "testplan", testPlanNameId, GenerateXMLString.getTestplanString(urlServer, projectAreaAlias, ENCODING, testCaseName, plan));
 				if (responseTestPlan.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 					throw new BehaveException(message.getString("exception-send-test-plan", responseTestPlan.getStatusLine().toString()));
 				}
@@ -267,10 +269,8 @@ public class ALMIntegration implements Integration {
 				throw new BehaveException(e);
 			}
 		} catch (Exception e) {
-
 			throw new BehaveException(e);
 		}
-
 	}
 
 	/**

@@ -43,11 +43,14 @@ import java.net.URL;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -59,7 +62,7 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.WebDriverRunner;
 
 public enum WebBrowser {
-	
+
 	RemoteWeb {
 		@Override
 		public String toString() {
@@ -69,13 +72,13 @@ public enum WebBrowser {
 		@Override
 		public WebDriver getWebDriver() {
 			BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
-			try {				
-				if (BehaveConfig.getRunner_RemoteName().equals("")){
+			try {
+				if (BehaveConfig.getRunner_RemoteName().equals("")) {
 					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.name"));
 				}
-				if (BehaveConfig.getRunner_RemoteUrl().equals("")){
+				if (BehaveConfig.getRunner_RemoteUrl().equals("")) {
 					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
-				}	
+				}
 				DesiredCapabilities capability = new DesiredCapabilities();
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
@@ -83,7 +86,25 @@ public enum WebBrowser {
 				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()), e);
 			}
 		}
-	},	
+	},
+	GhostDriver {
+		@Override
+		public String toString() {
+			return "Ghost Driver";
+		}
+
+		@Override
+		public WebDriver getWebDriver() {
+			DesiredCapabilities caps = new DesiredCapabilities();
+
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, new String[] { "--ignore-ssl-errors=true" });
+			caps.setJavascriptEnabled(true);
+			caps.setCapability("takesScreenshot", true);
+			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, BehaveConfig.getRunner_ScreenDriverPath());
+			
+			return new PhantomJSDriver(caps);
+		}
+	},
 	MozillaFirefox {
 		@Override
 		public String toString() {
@@ -92,7 +113,7 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			if (!BehaveConfig.getRunner_ProxyURL().equals("")) {			
+			if (!BehaveConfig.getRunner_ProxyURL().equals("")) {
 				Proxy proxy = new Proxy();
 				proxy.setProxyType(Proxy.ProxyType.PAC);
 				proxy.setProxyAutoconfigUrl(BehaveConfig.getRunner_ProxyURL());
@@ -100,15 +121,14 @@ public enum WebBrowser {
 				capabilities.setCapability(CapabilityType.PROXY, proxy);
 				return new FirefoxDriver(capabilities);
 			}
-			
+
 			FirefoxBinary binary = BehaveConfig.getRunner_BinaryPath().equals("") ? null : new FirefoxBinary(new File(BehaveConfig.getRunner_BinaryPath()));
-			
+
 			FirefoxProfile profile = BehaveConfig.getRunner_ProfileEnabled() ? new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath())) : new FirefoxProfile();
-			
 			profile.setEnableNativeEvents(true);
-			
+
 			FirefoxDriver driver = binary == null ? new FirefoxDriver(profile) : new FirefoxDriver(binary, profile);
-			
+
 			return driver;
 		}
 	},
@@ -128,6 +148,7 @@ public enum WebBrowser {
 			System.setProperty("webdriver.safari.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new SafariDriver();
 		}
+		
 	},
 	InternetExplorer {
 
@@ -163,8 +184,25 @@ public enum WebBrowser {
 
 		@Override
 		public WebDriver getWebDriver() {
-			System.setProperty("webdriver.chrome.driver", BehaveConfig.getRunner_ScreenDriverPath());
-			return new ChromeDriver();
+			String driver = BehaveConfig.getRunner_ScreenDriverPath();
+			System.setProperty("webdriver.chrome.driver", driver);
+
+			//Nova configuração necessária para funcionar o Profile no Chromium
+			ChromeOptions chromeOptions = new ChromeOptions();
+			if (BehaveConfig.getRunner_ProfileEnabled()){
+				String profile = "user-data-dir=".concat(BehaveConfig.getRunner_ProfilePath());
+				chromeOptions.addArguments(profile);
+			} else {
+				chromeOptions.addArguments("--disable-extensions");
+			}
+			
+			//Nova configuração necessária para definir o caminho do browser a ser executado. 
+			//Podemos dessa forma executar o Chrome ou o Chromium instalados na mesma máquina.
+			if (!BehaveConfig.getRunner_BinaryPath().equals("")){
+				chromeOptions.setBinary(BehaveConfig.getRunner_BinaryPath());
+			}
+						
+			return new ChromeDriver(chromeOptions);
 		}
 	},
 	HtmlUnit {

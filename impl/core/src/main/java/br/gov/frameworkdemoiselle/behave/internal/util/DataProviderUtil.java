@@ -62,7 +62,7 @@ public class DataProviderUtil {
 	
 	public static String replaceValue(String value){
 		if (dataProvider.containsKey(value)) {			
-			logger.debug(bm.getString("message-dataprovider-found", value));			
+			logger.debug(bm.getString("message-dataprovider-found", value+":"+dataProvider.get(value)));			
 			return (String) dataProvider.get(value); 
 		} else {
 			return value;

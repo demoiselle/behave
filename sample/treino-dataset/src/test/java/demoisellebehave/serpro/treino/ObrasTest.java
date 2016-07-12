@@ -59,6 +59,7 @@ public class ObrasTest {
 
 	@Test
 	public void testAllObras() throws Throwable {
+		eng.clearAllOriginalStories();
 		eng.addStories("/stories/obras/");
 		eng.run();
 	}

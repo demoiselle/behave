@@ -63,11 +63,13 @@ public class PropertiesLoaderUtil implements Serializable {
 	private static PropertiesLoaderUtil config;
 	private Properties allProps;
 	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE, Locale.getDefault());
-
+	
 	private static Logger log = Logger.getLogger(PropertiesLoaderUtil.class);
 
 	private PropertiesLoaderUtil() throws IOException {
 		this.allProps = loadProperties();
+		
+		
 	}
 
 	public static synchronized PropertiesLoaderUtil getInstance() {

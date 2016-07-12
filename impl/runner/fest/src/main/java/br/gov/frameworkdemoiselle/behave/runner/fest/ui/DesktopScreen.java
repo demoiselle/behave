@@ -42,15 +42,14 @@ import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class DesktopScreen extends DesktopBase implements Screen {
-	
+
 	private BehaveMessage message = new BehaveMessage(FestRunner.MESSAGEBUNDLE);
-	
+
 	public void waitText(String text) {
 		waitText(text, 0L);
 	}
 
 	public void waitText(String text, Long timeout) {
-		FestRunner runner = (FestRunner) super.runner;
-		Assert.assertTrue(message.getString("exception-text-not-found", text), runner.getHierarchy().contains("text='" + text + "'"));
+		Assert.assertTrue(message.getString("exception-text-not-found", text), super.runner.getHierarchy().contains("text='" + text + "'"));
 	}
 }

@@ -10,6 +10,22 @@
 		podem auxiliar a montagem de um
 		ambiente para execução de testes funcionais.
 	</para>
+	
+	<section>
+		<title>Execução com Ghost Driver (Funcionalidade Experimental)</title>
+		<para>Ghost Driver é um WebDriver remoto que usa PhantomJS como back-end. É uma implementação JavaScript do Protocolo do WebDriver para PhantomJS
+		a fim de rodar testes headless em Selenium.</para>
+		<para>Para ativá-lo informe o driver <citetitle>GhostDriver</citetitle> nas propriedades do dbehave (behave.properties):</para>
+		<programlisting>behave.runner.screen.type=GhostDriver</programlisting>
+		<para>Também é necessário informar o local do binário do <citetitle>PhantmJS</citetitle> na propriedade behave.runner.screen.driverPath:</para>
+		<programlisting>behave.runner.screen.driverPath=/usr/lib/node_modules/phantomjs/lib/phantom/bin/phantomjs</programlisting>
+		<para>Outro caminho possível é:</para>
+		<programlisting>behave.runner.screen.driverPath=/usr/local/bin/phantomjs</programlisting>		
+		<tip>
+			<para>O Phantomjs pode ser instalado pelo comando <citetitle>sudo npm install -g phantomjs.</citetitle></para>
+		</tip>
+	</section>
+	
 	<section>
 		<title>Execução Paralela</title>
 		<para>

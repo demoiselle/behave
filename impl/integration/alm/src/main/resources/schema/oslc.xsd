@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.1" targetNamespace="http://open-services.net/ns/core#" version="1.0" xmlns="http://open-services.net/ns/core#" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+	
+	<xs:annotation>
+		<xs:appinfo>	
+		    <jaxb:schemaBindings>
+			  <jaxb:package name="com.ibm.rqm.xml.bind.oslc"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>	
+	</xs:annotation>
+	
+    <xs:element name="shortId" type="xs:int"/>
+	
+</xs:schema>

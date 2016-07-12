@@ -53,14 +53,23 @@ import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
  * 
  */
 public class StoryFileConverter {
-	
+
 	private static BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	public static List<String> convertReusedScenarios(List<String> originalFolderes, String originalExtension, String convertedExtension, Boolean includeSubFolder) {
 		try {
 			List<String> originalBaseFilesName = new ArrayList<String>();
 			for (String originalFolder : originalFolderes) {
-				originalBaseFilesName.addAll(FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder));
+				List<String> newFiles = FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder);
+				
+				// Verifica se o arquivo de história será incluido somente 1 vez
+				for (String string : newFiles) {
+					if (originalBaseFilesName.indexOf(string) != -1) {
+						throw new BehaveException(bm.getString("exception-duplicate-history-file", string));
+					}
+				}
+
+				originalBaseFilesName.addAll(newFiles);
 			}
 			return convertReusedScenarios(originalBaseFilesName, originalExtension, convertedExtension);
 		} catch (IOException ex) {
