@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-dados">
+
+	<title>Data Set</title>
+	<section>
+		<title>Concept</title>
+		<para>
+			This chapter presents feature of Dataset 
+			, that allows creation of big data sets in 
+			XML format for using into stories. Test sample
+			used aims to register some works into a catalog,
+			so it is needed to inform several data.
+		</para>
+	</section>
+	<section>
+		<title>Creation of Data XML</title>
+		<para>
+			First step for using Dataset is creating 
+			a XML containing data that will be used by stories. Its structure must be  A estrutura deve  
+			like sample below, related to file <emphasis>obras.xml</emphasis>:
+		</para>
+		<programlisting><![CDATA[<DataSet>
+	<dataRecords>
+		<DataRecord id="Olympic Park">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Olympic Park" />
+				<DataItem key="Valor" value="250000000" />
+				<DataItem key="Prazo" value="01/05/2015" />
+			</dataItems>
+		</DataRecord>
+		<DataRecord id="Olympic Village">
+			<dataItems>
+				<DataItem key="Nome Obra" value="Olympic and Paraolympic Village" />
+				<DataItem key="Valor" value="150000000" />
+				<DataItem key="Prazo" value="01/07/2015" />
+			</dataItems>
+		</DataRecord>
+	</dataRecords>
+</DataSet>]]></programlisting>
+	</section>
+	<section>
+		<title>Data Provider Configuration</title>
+		<para>
+			For using XML data file it is needed to give its name before running test according to
+			sample below, related to file <emphasis>ObrasTest.java</emphasis>.
+		</para>
+		<programlisting>public class ObrasTest {
+	private BehaveContext eng = BehaveContext.getInstance();
+	<citetitle>private static DatasetProvider datasetProvider = (DatasetProvider) InjectionManager.getInstance().getInstanceDependecy(DatasetProvider.class);</citetitle>
+
+	public ObrasTest() {
+		<citetitle>datasetProvider.load("obras","/datasets/obras.xml");</citetitle>
+	}
+
+	@Test
+	public void testAllObras() throws Throwable {
+		eng.addStories("/stories/obra.story");
+		eng.run();
+	}
+}</programlisting>
+	</section>	
+	<section>
+		<title>Creation of Story</title>
+		<para>
+			In the story creation (obra.story) were added two scenarios, one 
+			for reuse receiving work parameter, and other that call two times 
+			reuse scenario, with different parameters. Below it is story 
+			that will be used two times.
+		</para>
+		<programlisting>Scenario: add work "{obra}"
+
+Given I am on "Tela Principal"
+Then I go to screen "Lista de Obras"
+When I click on "Adicionar Obra"
+Then will be displayed "Cadastro"
+<citetitle>When I select "{obra}" from dataset "obras"</citetitle>
+When I give value of field "Nome Obra"
+When I give value of field "Valor"
+When I give value of field "Prazo"
+When I click on "Inserir"</programlisting>
+		<para>
+			It is important to see that step <citetitle>When I select "{obra}" from dataset "obras"</citetitle>
+			select record previously created in XML file, that is used by 3 following steps.
+		</para>
+		<para>
+			Reuse scenario created in sample above is called two times in sample below. It is 
+			important to quote that it is called using two different<emphasis>Data Records</emphasis>, first
+			"Olympic Partk" and after "Olympic Village".
+		</para>
+		<programlisting>Scenario: Insertion of works stored into dataset
+
+Given I accessed system
+<citetitle>When I nsert work "Olympic Park"</citetitle>
+Then it will be displayed "Nome Obra"
+<citetitle>When I insert work "Olympic Village"</citetitle>
+Then it will be displayed "Nome Obra"</programlisting>
+	</section>	
+</chapter>

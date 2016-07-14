@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-screenmapping">
+	<title>Classes Mapping</title>
+
+	<para>
+		This section presents a guide to create visual scripts.
+	</para>
+	<section>
+		<title>Capturing screen objects to be used</title>
+		<para>
+			First step to create a script in Demoiselle-Behave is
+			to choose visual objects that
+			will be used.
+			Objects can 
+			be identified by several ways like Id, XPath or CSS. These
+			different ways of finding
+			an object in screen are named
+			locators.
+			This tutorial will use some help tools
+			to choose
+			of objects. In a demonstrating way
+			tutorial
+			will present a
+			example where user will search an information 
+			into page of
+			SERPRO(www.serpro.gov.br).
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/localizadores.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/localizadores.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Locators.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Next step is to use a help tool to choose
+			objects. XPath Checker and FirePath are tools that allow
+			to get Xpath from screen objects
+			(https://addons.mozilla.org/pt-br/firefox/addon/xpath-checker/)(https://addons.mozilla.org/en-US/firefox/addon/firepath/).
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/xpathchecker.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/xpathchecker.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>XPath Checker Tool
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/firepath.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>FirePath Tool
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+
+		<para>
+			After help tools installation must be choosen
+			objects that must interact with screen. For demonstrating
+			the
+			process will be done a search in SERPRO page
+			(www.serpro.gov.br). It will be selected search field and
+			search button.
+			Using firepath will be identified id of search
+			field.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/paginaserproreduzida.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/paginaserproreduzida.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Using firepath to find object xpath
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Once used firepath we discovered that search field xpath
+			has value
+			<emphasis>.//*[@id='searchGadget']</emphasis>
+			and xpath
+			of search button has value
+			<emphasis>.//*[@id='livesearch0']/div/input[1]</emphasis>
+			.
+		</para>
+	</section>
+	<section>
+		<title>Mapping Class</title>
+		<para>
+			Next step will be to implement a class with object
+			mapping to be tested and its identifiers.
+
+		</para>
+		<programlisting>package packageName;
+
+import br.gov.frameworkdemoiselle.behave.annotation.ElementLocatorType;
+import br.gov.frameworkdemoiselle.behave.annotation.ElementMap;
+import br.gov.frameworkdemoiselle.behave.annotation.ScreenMap;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
+import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
+
+@ScreenMap(name = "Tela Inicial", location = "https://www.serpro.gov.br")
+public class MyPage {
+
+	@ElementMap(name = "Campo de Busca", locatorType = ElementLocatorType.XPath, locator = ".//*[@id='searchGadget']")
+	private TextField searchField;
+
+	@ElementMap(name = "Estou com sorte", locatorType = ElementLocatorType.XPath, locator = ".//*[@id='livesearch0']/div/input[1]")
+	private Button button;
+
+}</programlisting>
+		<para>
+			Framework engine automatically chooses which action will be
+			done depending on type of object applied to element
+			of
+			graphical interface. In example above type Button indicates that click
+			action must be done.
+		</para>
+		<para>
+			Other element types are CheckBox, Link, Radio, Screen,
+			Select and TextField.
+			For each visual element was created a interface
+			that is implemented by a class that define how action must be
+			done.
+		</para>
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.base.BaseUI;
+
+public interface Radio extends BaseUI {
+
+	public void click();
+	
+}</programlisting>
+		<para>
+			Following code is an implementation of class Radio for Web using
+			Selenium.
+		</para>
+		<programlisting>package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
+
+import br.gov.frameworkdemoiselle.behave.runner.ui.Radio;
+
+public class WebRadio extends WebBase implements Radio {
+
+	public void click() {
+		waitElement(0);
+
+		getElements().get(0).click();
+	}
+
+}</programlisting>
+		<para>
+			Implementation of class for visual interface is configured
+			using SPI concept in framework.
+			For each interface there is
+			a file that indicates which implementation will be
+			choosen for each
+			interface.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/services.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Choosing archetype jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	
+	<section>
+		<title>Parameterizable Mapping</title>
+		<para>
+			It is possible to parameterize locator by means of pre-defined phrases.
+		</para>
+		<para>
+			For a determined situation will be needed to select a button that is contained by a line that has word "Brasil" at first column, to make easy this task will be created parameterizable locators.
+			First step is creating mapping in class as example below shows.
+		</para>
+		<programlisting>@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, 'tr-identification')][.//text()='<citetitle>%param1%</citetitle>']//button)[1]")
+private Button botao;</programlisting>
+		<para>
+			See that there is a Perceba que no locator existe o trecho <citetitle>%param1%</citetitle>, esse é o identificador para que na história seja passado algum texto para ser inserido neste local, como por exemplo:
+			
+			
+		</para>
+		<programlisting>Quando clico em "Excluir" referente a "<citetitle>Brasil</citetitle>"</programlisting>
+		<para>
+			Também é possível passar mais de um parâmetro para a frase como no exemplo abaixo (os valores devem ser separados por vírgula):			
+		</para>
+		<programlisting>// Mapeamento do Campo
+@ElementMap(name = "Excluir", locatorType = ElementLocatorType.XPath, locator = "(//tr[contains(@id, '<citetitle>%param1%</citetitle>')][.//text()='<citetitle>%param2%</citetitle>']//button)[1]")
+private Button botao;
+
+// Frase na história
+Quando clico em "Excluir" referente a "<citetitle>obra, valor</citetitle>"</programlisting>
+		<para>
+			As seguintes frases permitem a parametrização do texto do locator:
+			<itemizedlist>
+				<listitem>
+					Quando clico em "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando seleciono a opção "Name" referente a "Param1,Param2..."
+				</listitem>
+				<listitem>
+					Quando clico na linha da tabela "Name" referente a "Param1,Param2..."
+				</listitem>				
+			</itemizedlist>
+		</para>
+	</section>
+	
+	<section>
+		<title>Composição de Telas (Embedded Screens)</title>
+		<para>
+			O framework fornece uma anotação (@Embedded) que permite que sejam reutilizadas telas dentro de outras telas.
+			Como exemplo vamos utilizar uma tela de login abaixo:
+		</para>
+		<programlisting>@ScreenMap(name = "Tela de Login", location = "/")
+public class LoginPage {
+
+	@ElementMap(name = "Campo Usuário", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'text')])[1]")
+	private TextField campoUsuario;
+
+	@ElementMap(name = "Campo Senha", locatorType = ElementLocatorType.XPath, locator = "(//input[contains(@id, 'formLogin')][contains(@type, 'password')])[1]")
+	private TextField campoSenha;
+
+	@ElementMap(name = "Entrar", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
+	private Button botaoEnviar;
+
+}</programlisting>
+		<para>
+			For screen login be used in several public parts of system it is enough that in any <citetitle>ScreenMap</citetitle> be created an attribute so: 
+		</para>
+		<programlisting><citetitle>@Embedded</citetitle>
+private LoginPage loginPage;</programlisting>
+		<para>
+			This will be do that login screen be embedded into screen that has attribute with annotation.
+		</para>		
+	</section>
+	
+	<section>
+		<title>Systems with AJAX (Component Loading)</title>
+		<para>
+			Framework provides a screen component called Loading, that helps treatment of AJAX actions that commonly has as default behavior to open an element above content with an image/text "Loading...", preventing access from another screen elements, while image/text is exhibited. 
+			Component aims to wait image disappears to go to next step.
+			
+			For using component, add in some ScreenMap an ElementeMap with type <citetitle>Loading</citetitle> as below:
+		</para>
+		<programlisting>@ElementMap(name = "Carregando", locatorType = ElementLocatorType.XPath, locator = "/HTML/BODY/DIV[2]/DIV[1]/SPAN[@id='ui-dialog-title-j_idt9']")
+private <citetitle>Loading</citetitle> loading;</programlisting>
+		<para>
+			It is enough to add Loading in a ScreenMap for it works for all screens.			
+		</para>		
+		<tip>
+			<para>
+				Problem solved by this component can occurs randomly in systems with AJAX and that have image/text "Loading..." in actions. When there is slow down in system image/text is maintained more time than normal preventing next step be executed.
+			</para>
+		</tip>
+		
+		<para>
+			From version <citetitle>1.4.3</citetitle> annotation @ElementMap has an attribute forceWaitLoading that is false by default. 
+			In some specific cases it aims to force waiting for mapped loading element appears, that is, when element with this property forceWaitLoading = true dbehave will wait for maxWait loading appears and then disappear before to execute next action.
+			Below is a use example:			
+		</para>
+		<programlisting>@ElementMap(name = "ELEMENT NAME IN STORY", <citetitle>forceWaitLoading = true,</citetitle> locatorType = ElementLocatorType.Id, locator = "ELEMENT ID")
+private <citetitle>TextField</citetitle> field;</programlisting>
+	</section>
+</chapter>

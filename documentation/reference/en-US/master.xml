@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<book lang="pt">
+
+	<xi:include href="bookinfo.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+	<!-- prefácio -->
+	<preface>
+		<title>Demoiselle Behave</title>
+		<para>
+			Behavior Driven Development (BDD) is a technique developed by
+			Dan North, in 2003, which goal is making easy collaboration among
+			developers, quality staffs and customers, in a software project.
+			It starts from principle that if you specify user stories, in a appropriate
+			format, they can be used as requirements and as artifact of
+			input for automated tests. She uses an ubiquitous language, which
+			allow that acceptance tests be written in a language 
+			nearest of business.
+		</para>
+		<para>
+			Described tests are interpreted by specialized tools, that
+			exercise system code, for demonstrating if expected behavior
+			was reached. BDD skills include:
+		</para>
+		<para>
+
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						Involve project
+						<emphasis>stakeholders</emphasis>
+						(Wikipedia)
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Use example derivation for describing behavior of an
+						application or of code units.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Automate examples for providing a fast <emphasis>feedback</emphasis> and regression
+						tests;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Use <emphasis>mocks</emphasis> for helping in collaboration among modules and codes that
+						weren't written yet
+					</para>
+				</listitem>
+			</orderedlist>
+		</para>
+		<para>
+			O Demoisele-Behave, commonly called dbehave, is a
+			<emphasis>framework</emphasis>
+			that allows users
+			to automate tests using resources of
+			BDD.
+		</para>
+		<para>
+			Application has four main modules: <emphasis role="bold">Core</emphasis>, <emphasis role="bold">Parser</emphasis>,
+			<emphasis role="bold">Runner</emphasis>
+			and <emphasis role="bold">Integration</emphasis>. <emphasis role="bold">Core</emphasis> is responsible by main
+			interfaces
+			of
+			<emphasis>framework</emphasis>, where class Controller is responsible by orchestration of
+			information among other 3 modules.
+
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/arquitetura.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/arquitetura.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Demoiselle-Behave Architecture Tool.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			<emphasis role="bold">Parser</emphasis> is responsible by component abstraction that
+			will turn story into Java code, for sending to <emphasis role="bold">Runner</emphasis> by  
+			means of default or project specific statements.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/parsertamanhoreduzido.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/parsertamanhoreduzido.png"
+						align="center" format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para><emphasis role="bold">Parser</emphasis> Working Model.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			<emphasis role="bold">Runner</emphasis> is responsible by component abstraction that will
+			handle screen, as Selenium or even directly
+			JUnit. Module <emphasis role="bold">Integration</emphasis> is responsible by component
+			abstraction that will integrate solution and
+			enterprise external tools like ALM (RQM). 
+			<emphasis>Framework</emphasis>
+			ensures that
+			stories written in TXT format be sent to module <emphasis role="bold">Parser</emphasis>
+			and,
+			after, to <emphasis role="bold">Runner</emphasis>, responsible by interaction with
+			Web browser or a Dekstop screen, using
+			respectively			
+			Selenium or
+			Fest
+			<emphasis>framework</emphasis>.
+		</para>
+
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/funcionamento.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/funcionamento.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Demoiselle-Behave Working
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Tool must allow that test draftsmen write
+			stories that can be read and call automated
+			test scripts, created by test developers.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/processo.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/processo.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Demoiselle-Behave Use Model
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</preface>
+
+
+	<!-- índice -->
+	<toc />
+
+	<!-- capítulos -->
+	<xi:include href="releasenotes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="quickstart.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="screenmapping.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="historia.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="configuracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="escopos.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="desktop.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="configuracaotestes.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="execucao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="dados.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="regressao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="colaboracao.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</book>

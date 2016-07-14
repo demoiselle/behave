@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-colaboracao">
+
+	<title>Contribution</title>
+	<para>
+		This chapter presents some guidelines to project
+		contributors, as conventions and code standards.
+	</para>
+	<section>
+		<title>Encoding Templates</title>
+		<para>
+			Encoding templates help to keep code writing standards
+			among project contributors. A standard helps to 
+			read and understand implementations, mainly when there is
+			comparison between code version into pull requests.
+		</para>
+		<para>			
+			Follow is presented encoding template for Eclipse IDE:
+			<ulink url="docs/formatter-profile-demoiselle-behave.xml">Download.</ulink>
+		</para>
+	</section>
+</chapter>

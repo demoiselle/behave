@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE revhistory PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<revhistory>
+	<revision>
+		<revnumber>1.5.1</revnumber>
+		<date>12/08/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Improvement and fixes in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.5.0</revnumber>
+		<date>29/05/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Layout Regression Test, improvements and fixes in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.4</revnumber>
+		<date>19/05/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Improvements and fixes in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.3</revnumber>
+		<date>24/04/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.2</revnumber>
+		<date>03/03/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Bug fix.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.1</revnumber>
+		<date>06/02/2015</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.4.0</revnumber>
+		<date>02/09/2014</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.3.2</revnumber>
+		<date>30/05/2014</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.3.1</revnumber>
+		<date>18/12/2013</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.3.0</revnumber>
+		<date>31/10/2013</date>
+		<authorinitials>Julian</authorinitials>
+		<revremark>New features and improvements in framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.2.0</revnumber>
+		<date>22/08/2013</date>
+		<authorinitials>Julian</authorinitials>
+		<revremark>Change of maven repository, added new chapters
+			related to Desktop tests (FEST) and additional configurations of
+			framework.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.1.0</revnumber>
+		<date>30/06/2013</date>
+		<authorinitials>Vanderson</authorinitials>
+		<revremark>Reference Documentation.</revremark>
+	</revision>
+	<revision>
+		<revnumber>1.0.0</revnumber>
+		<date>15/05/2013</date>
+		<authorinitials>Vanderson, Nauber</authorinitials>
+		<revremark>Fast Guide.</revremark>
+	</revision>
+</revhistory>

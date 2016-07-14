@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-configuracao-testes">
+
+	<title>Tests Configurations</title>	
+	<section>
+		<title>Steps Configuration</title>
+		<para>
+			Package configuration for loading of Step subclasses, including a filter
+			for classes that must be apart from this scanning;
+
+			When a context is initialized, you don't need to instance
+			each one of Step subclasses to be used:
+
+			<programlisting>context = BehaveContext.getInstance();
+context.addSteps(new FirstSteps());
+context.addSteps(new SecondSteps());
+context.addSteps(new ThirdSteps());
+context.addSteps(new FourthSteps());</programlisting>
+
+			It is enough to do:
+
+			<programlisting>context.setStepsPackage("package.where.are.subclasses.of.inferface.step");</programlisting>
+			
+			Also it is possible to use a second parameter for filtering classes that must not be instanced, by a regular expression:
+
+			<programlisting>context.setStepsPackage("package.where.are.subclasses.of.inferface.step", "((First)|(Third))");</programlisting>
+			
+			Or, additionally, by listing of classes:
+
+			<programlisting>context.setStepsPackage("package.where.are.subclasses.of.inferface.step", FirstSteps.class, ThirdSteps.class);</programlisting>
+		</para>
+	</section>
+	<section>
+		<title>Stories and Scenarios Configuration</title>
+		<para>
+			Filter of stories/scenarios to be run, allowing that a developer focus only a story or scenario;
+
+			Given stories:
+		
+		<programlisting>!-- /stories/primeira.story
+Feature: First
+
+Scenario: First of first
+Given context
+When event
+Then result
+
+Scenario: Second of first
+Given context
+When event
+Then result</programlisting>
+
+		<programlisting>!-- /stories/segunda.story
+Feature: Second
+
+Scenario: First of second
+Given context
+When event
+Then result
+
+Scenario: Second of second
+Given context
+When event
+Then result</programlisting>
+
+When running stories/scenarios:
+
+<programlisting>context.run("/stories");</programlisting>
+
+Now it is possible to filter which stories:
+
+<programlisting>context.run("/stories", Filter.story("First"));</programlisting>
+
+Or, which scenarios:
+
+<programlisting>context.run("/stories", Filter.scenario("Second of second"));</programlisting>
+
+remembering that last can be informed using only regular expression:
+
+<programlisting>context.run("/stories", "Second of second");</programlisting>
+
+		</para>
+	</section>
+
+</chapter>

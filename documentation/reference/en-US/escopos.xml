@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-scope">
+
+	<title>Scope and Steps Stories</title>
+	<para>
+		This chapter details how Dbehave formerly deal with stories that compose a scenario and how they will be handled from new version.
+	</para>
+
+	<section>
+		<title>DBehave Legacy</title>
+		<para>
+			When we work with framework, we deal with 3 items, the following:
+			<itemizedlist>
+				<listitem>
+					Stories - context.addStories();
+				</listitem>
+				<listitem>
+					Reuse stories - context.addStoriesReuse();
+				</listitem>
+				<listitem>
+					Custom steps - context.addSteps().
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			When we executed only one method from a class there was no problem, however when we executed a class set at same time, DBehave had a different behavior for each one of listed items.
+			<itemizedlist>
+				<listitem>
+					Stories - They were stored into memory during all tests set running;
+				</listitem>
+				<listitem>
+					Reuse stories - They were removed after each method running;
+				</listitem>
+				<listitem>
+					Custom steps - They were removed after each method running. 
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			This behavior caused a problem for tests design. When we executed several test classes, we always had redefine steps and reuses for each method, however we could not redefine stories. 
+		</para>
+		<para>
+			Storing all stories into memory also is not a good solution from computational point of view, because the trend is that framework gets overloaded with extensive tests. 
+		</para>
+		<para>
+			Another important point that meres to be highlighted is that JUnit running is random, it means that for each class set running one of them is choosen and this randomness reaches methods.
+		</para>
+		<para>
+		    As framework stored stories into memory, when we programmed each test method, for they are properly encapsulated, we had to define all stories composed by each one. However as story already was previously added, framework had a .story duplicity error.
+		</para>
+		<para>
+		    So or we define that a tests set always would run as a set or one by one, because erratic behavior of tool didn't allow a good project design.
+		</para>
+	</section>
+		
+		<section>
+		<title>Scope Support DBehave</title>
+		<para>
+			For soliving problem presented in last topic, we define a scope set for each one of elements, allowing so that developer defines his better way of working.
+			<itemizedlist>
+				<listitem>
+					Global - All that is added to global scope are stored into memory during all tool running;
+				</listitem>
+				<listitem>
+					Classes - What is added to classes scope are stored into memory during all Java class running;
+				</listitem>
+				<listitem>
+					Method - Elements from this scope are stored only during Java class method running.
+				</listitem>
+			</itemizedlist>
+		</para>
+		
+		<para>
+		    For keeping backcompatibility with previous projects, new version of DBehave comes automatically prepared for Legacy mode.
+		</para>
+		
+		<para>
+		    It is necessary to change in behave.properties setting behave.runner.legacyRunner=true to false. So, we enable tool to work with new way of scopes.
+		</para>
+		
+		<para>
+		   A nova API para cada elemento segue:
+		   <itemizedlist>
+				<listitem>
+					Global - context.addStepsGlobal(), context.addStoriesGlobal(), context.addStoriesReuseGlobal();
+				</listitem>
+				<listitem>
+					Classes - context.addStepsClass(), context.addStoriesClass(), context.addStoriesReuseClass();
+				</listitem>
+				<listitem>
+					Método - context.addStepsMethod(), context.addStoriesMethod(), context.addStoriesReuseMethod().
+				</listitem>
+			</itemizedlist>
+		</para>
+		
+		<para>
+		    Remembering that running modes of tool are exclusives, when you use new version, commands context.addSteps(),context.addStories() and context.addStoriesReuse() are not allowed. Same occurs when you use legacy and new API.  
+		</para>
+		
+		<tip>
+			<para>Important: when you use classes scope, your class must mandatorily extend class ClassScopeManager. Else, framework presents an error showing obligatoriness of that.</para>
+		</tip>
+	</section>
+</chapter>

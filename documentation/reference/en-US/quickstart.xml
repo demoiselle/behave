@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-quickstart">
+	<title>Quickstart</title>
+
+	<para>
+		This section presents a quickstart for creation and
+		configuration of a project using Demoiselle Behave framework.
+	</para>
+	<section>
+		<title>Use requirements</title>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					Eclipse 4.2 (Juno) -
+					<ulink
+						url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/juno/SR2/eclipse-jee-juno-SR2-linux-gtk.tar.gz">Link para download
+					</ulink>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Eclipse Maven Plugin or Maven CLI
+					(mvn)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Linux
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JDK 1.6
+				</para>
+			</listitem>
+		</orderedlist>
+	</section>
+	<section>
+		<title>Archetype configuration</title>
+		<para>
+			Demoiselle Behave framework provides a Maven archetype
+			for making easy to create projects.
+			First step in archetype
+			configuration consists of repository configuration. For that you must access menu
+			Windows>Preferences in Eclipse.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/menupreference.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/menupreference.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Preferences Menu.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Next step must be to click on button Add Remote Catalog.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/preferences.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/preferences.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Click on button Add Remote Catalog.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Next step is type following address into field Catalog File url:
+			<emphasis>
+				http://demoiselle.sourceforge.net/repository/archetype-catalog.xml
+			</emphasis>
+			Type into field Description:
+			<emphasis>
+				Framework Demoiselle
+			</emphasis>
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/remotecatalog.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/remotecatalog.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Filling Remote Catalog.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Project Criation</title>
+		<para>
+			First step to create a Demoisele-Behave project is
+			to create a Maven project using appropriate archetype for tests project.
+			This tutorial will use archetype jbehave-selenium-archetype.
+			First step is to choose option File>New>Other>Maven>Maven
+			Project.
+
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/criandoprojeto1.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/criandoprojeto1.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Choosing Maven Project.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Choose catalog Demoisele-Behave and choose archetype
+			Selenium.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/arquetipo.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/arquetipo.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Choosing archetype jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Fill Group Id and Artifact Id and finish project
+			creation.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/criandoprojeto3.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/criandoprojeto3.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Choosing archetype jbehave-selenium-archetype.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Directory structure</title>
+		<para>
+			Project created from archetype has directories
+			src/test/java and src/test/resources. Directory src/test/resource
+			contains user stories. Directory src/test/java
+			contains demoiselle Steps as well objects
+			responsible by identification of screens involved in tests and
+			its objects.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/diretorioprojeto1.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/diretorioprojeto1.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Estrutura de pastas do projeto criado a partir do arquétipo.
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	<section>
+		<title>Running Test</title>
+		<para>
+			Class MyTest is responsible by configuration of folder where
+			are located user stories as well steps
+			to be added to project.
+		</para>
+
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/classeapptest.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/classeapptest.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Class MyTest.</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Created project already has a sample that executes several steps in Demoiselle Behave site. To execute test is enough to click with right button
+			on class MyTest and choose Run as>JUnit Test.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/executandoteste.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/executandoteste.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Class MyTest
+					</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Framework starts Driver and open browser. Stories
+			actions can be seen in IDE console as image below.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/console1.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/console1.png" align="center"
+						format="PNG" />
+				</imageobject>
+				<caption>
+					<para>Console exit</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			Below is story runned by framework:
+			<programlisting>Feature: Access to Demoiselle Behave Project
+
+Narrative:
+In order to get informations about Demoiselle Behave Project
+As a visitor
+I want to have access to documentation, forum and other informaation about project
+
+Scenario: DBehave Site
+Given I go to screen "dbehave"
+Then will be displayed "dbehave - projeto mantido pelo SERPRO"
+
+Scenario: Reading doubts
+Given I go to screen "Github"
+Then will be displayed "Demoiselle Behave"
+Then will be displayed "http://dbehave.com"
+
+When I click on "Dúvidas e Questões"
+Then will be displayed "New issue"</programlisting>
+		</para>
+		<para>
+			For example, in second scenario, framework relates link
+			<emphasis>"Dúvidas e Questões"</emphasis>
+			to element linkIssues of class MyPages created
+			for 
+			mapping
+			screen objects. Element
+			locatorType
+			returns
+			type of
+			object recognition that will be used
+			in
+			framework. In
+			exemplo, will be located element which XPath be 
+			"//a//span[./text()='Issues']".
+
+		</para>
+		<programlisting>@ScreenMap(name = "Github", location = "https://github.com/demoiselle/behave")
+	public class Main {
+
+		@ElementMap(name = "Dúvidas e Questões", locatorType = ElementLocatorType.XPath, locator = "//a//span[./text()='Issues']")
+		private Link linkIssues;
+
+		@ElementMap(name = "uma dúvida", locatorType = ElementLocatorType.XPath, locator = "(//a[contains(@class, 'issue-title')])[2]")
+		private Link linkIssue;
+	}</programlisting>
+	</section>
+
+</chapter>

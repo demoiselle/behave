@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="behave-configuracao">
+
+	<title>Behave Configurations</title>
+	<para>
+		Every module of Demoseille Behave has specific 
+		configurations (Parsers, Runners and Integrations). Most of them have
+		a default value that can be changed into project.
+	</para>
+	<tip>
+		<para>
+			It is possible also to change these configurations using 
+			parameter -D for calling Java virtual machine.
+			For example:
+			-Dbehave.integration.alm.enabled=true
+		</para>
+	</tip>
+	<section>
+		<title>Parser Configurations</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<citetitle>behave.parser.language:</citetitle>
+					property that selects language used by
+					parser. Default is <emphasis>pt</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.identification.scenario.pattern:
+					</citetitle>
+					property that defines regular expression that identify
+					beginning of scenario into story file. Default is
+					<emphasis>^(\\s)*(CEN\u00C1RIO|Cen\u00E1rio|cen\u00E1rio)\:(.*)
+					</emphasis>
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.story.timeout:
+					</citetitle>
+					 Define maximum time in minutes for running stories.
+				</listitem>				
+				<listitem>
+					<citetitle>behave.parser.prefixes.bdd.pattern:
+					</citetitle>
+					property that defines regular expression that identify a 
+					beggining of each step into story file. Default is
+					<emphasis>^(\\s)*(DADO |QUANDO |ENT\u00C3O |E |MAS |Dado |Quando
+						|Ent\u00E3o |Mas |dado |quando |ent\u00E3o |e |mas)(.*)
+					</emphasis>
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.story.extension.original:
+					</citetitle>
+					property that defines extension of former file that will be read
+					default is
+					<emphasis>bdd</emphasis>
+					into core, but for JBehave default is
+					<emphasis>story</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.story.extension.converted:</citetitle>
+					property that defines extension of file generated after pre-processing of framework.
+					Default is <emphasis>story</emphasis>
+					into core, but for JBehave default is <emphasis>storyConverted</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.commonssteps.enabled:
+					</citetitle>
+					property that enables common steps used by
+					parsers. Default is <emphasis>ativado</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.beforeaftersteps.enabled:
+					</citetitle>
+					property that enables previous and next steps of 
+					stories running. For runner WebDriver it take the
+					browser by these steps. Default is <emphasis>ativado</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.parser.delayBetweenSteps:</citetitle>
+					property that define a waiting for each step running. Value 0 (Zero) means that it is disabled.
+					Default is <emphasis>0 (Zero)</emphasis>.
+				</listitem>				
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Runner Configurations</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<citetitle>behave.runner.screen.maxWait</citetitle>
+					: Maximum time for waiting a action in screen. Default value is
+					<emphasis>10000 miliseconds</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.minWait</citetitle>
+					: Maximum time for waiting between screen actions, however this property is used only when framework needs to try more than once to find and execute a action for an element.
+					Default value is
+					<emphasis>100 miliseconds</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.proxy.url</citetitle>
+					: property that, when given, will enable use of proxy for browser.
+					Proxy url default value is <emphasis>void</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.type</citetitle>
+					: Options of
+					WebDriver: MozillaFirefox, InternetExplorer,
+					GoogleChrome. For
+					IE and Chrome are needed additional
+					configurations.
+					Default value is
+					<emphasis>MozillaFirefox</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.remote.name</citetitle>
+					: For remote tests, this property defines
+					which browser will be
+					used. Default value is <emphasis>void</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.remote.url</citetitle>
+					: For remote tests, this property defines
+					URL where Selenium Server is available.
+					Default value is <emphasis>void</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.driverPath</citetitle>
+					: Location of driver that connects
+					browser and
+					webdriver. Default value is <emphasis>void</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.profile.enabled</citetitle>
+					: property that enables or disables use of
+					profile for browser. Default value is <emphasis>disabled</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.profilePath</citetitle>
+					: Location of profile. Default value is
+					<emphasis>void</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.app.mainClass</citetitle>
+					: Main class qualified domain name of
+					application under tests. Default value is <emphasis>void</emphasis>.
+				</listitem>				
+				<listitem>
+					<citetitle>behave.runner.proxy.enabled</citetitle>
+					: enables use of proxy for runner (Browser).
+					Default value is <emphasis>disabled</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.proxy.url</citetitle>
+					: Proxy URL to be used when Proxy option is enabled.
+					 Default value is <emphasis>void</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.binaryPath</citetitle>
+					: location of browser binary when it is desireable to use a specific version (e.g: //home//USER//firefox//firefox-bin).
+					Default value is <emphasis>disabled</emphasis>.
+				</listitem>				
+				<listitem>
+					<citetitle>behave.runner.catchUIException</citetitle>
+					: exceptions to be catched case it occurs a generic error (StaleElementReferenceException). Default value is 
+					<emphasis>org.openqa.selenium.StaleElementReferenceException</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.window.maximize.enabled</citetitle>
+					: enables maximized use of browser window. Default value is <emphasis>false</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.screen.screenshot.zoomout</citetitle>
+					: levels of zoom out that framework will make before to catch screen. Default value is <emphasis>0</emphasis>.
+				</listitem>
+				<listitem>
+					<citetitle>behave.runner.legacyRunner</citetitle>
+					: Enables or disables legacy running mode for backcompatibility. Default value is <emphasis>true</emphasis>.
+				</listitem>		
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Integration Configurations</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<citetitle>behave.integration.alm.enabled</citetitle>
+					: property that enables/disables feature of
+					ALM integration.
+					Default value is
+					<emphasis>disabled</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.url.security</citetitle>
+					: Required field for ALM integration. Complete
+					address of
+					ALM authentication path. 
+					Default value is
+					<emphasis>void</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.url.services</citetitle>
+					: Required field for ALM integration. Complete
+					address of
+					REST services path. 
+					Default value is
+					<emphasis>void</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.projectArea</citetitle>
+					: Required field
+					for ALM integration. Alias of
+					project area.
+					Take carefully 
+					renamed areas, because Alias is 
+					not
+					changed, 
+					Default value is
+					<emphasis>void</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.testPlanId</citetitle>
+					: Campo obrigatório
+					para integração com a ALM. Id do
+					plano de testes
+					que pertence a área de
+					projeto. 
+					O valor padrão é
+					<emphasis>void</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.authenticator.host</citetitle>
+					: Address (IP) of Authenticator. 
+					Default value is
+					<emphasis>localhost</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.authenticator.port</citetitle>
+					: Used
+					port for Authenticator communication. 
+					Default value
+					is
+					<emphasis>9990</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.autoAssociateTestCaseInPlan</citetitle>
+					: property that enables/disables automatic association of Test Cases to RQM Test Plan. 
+					Default value
+					is
+					<emphasis>true</emphasis>
+					.
+				</listitem>
+				<listitem>
+					<citetitle>behave.integration.alm.categoryTipoExecucao</citetitle>
+					: property of given value for "Running Type" when a Test Case is sent to ALM.  
+					Default value
+					is
+					<emphasis>Automatizado</emphasis>
+					.
+				</listitem>
+				 
+			</itemizedlist>
+		</para>
+	</section>
+	<section>
+		<title>Integration Configurations - ALM Authenticator</title>
+		<para>
+			<warning>
+				<para>
+					Authenticator is needed for correct working of ALM
+					integration
+					, that is not possible 
+					without that
+					component.
+					Case Authenticator is not available the following 
+					message will be
+					showed into throwed exception:
+					<citetitle>br.gov.frameworkdemoiselle.behave.exception.BehaveException:
+						Not accessible authenticator. Check if process was started
+					</citetitle>
+				</para>
+			</warning>
+			<section>
+				<title>Installation into Project</title>
+				<para>
+					For using integration module it is enough to add a
+					dependency into project pom.xml.
+					<programlisting><![CDATA[
+<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+	<artifactId>demoiselle-behave-integration-alm</artifactId>
+	<version>1.x.x</version>
+	<scope>test</scope>
+</dependency>]]></programlisting>
+				</para>
+			</section>
+			<section>
+				<title>Motivations</title>
+				<para>
+					<itemizedlist>
+						<listitem>
+							All RQM Rest calls need valid username and
+							password
+							for Jazz platform.
+						</listitem>
+						<listitem>
+							For security we don't recommend to store
+							these information.
+						</listitem>
+						<listitem>
+							Component “demoiselle-behave-integration-alm” provides
+							a secure way
+							of storing tester username and password.
+						</listitem>
+						<listitem>
+							Storing is done into memory using
+							chriptografy
+							and can be accessed only through local workstation
+							of tester
+							along tests running.
+						</listitem>
+					</itemizedlist>
+				</para>
+			</section>
+			<section>
+				<title>Use</title>
+				<para>
+					<itemizedlist>
+						<listitem>
+							For starting service, get authenticator
+							<ulink
+								url="http://demoiselle.sourceforge.net/repository/release/br/gov/frameworkdemoiselle/component/behave/demoiselle-behave-integration-alm/1.5.0/demoiselle-behave-integration-alm-1.5.0.jar">demoiselle-behave-integration-alm-1.5.0.jar</ulink>
+							and run it by following command:
+							<programlisting>java -jar demoiselle-behave-integration-alm-[versao].java</programlisting>
+						</listitem>
+						<listitem>
+							Parameters:
+
+							<programlisting>-p [port] -o [origin-ip]</programlisting>
+						</listitem>
+					</itemizedlist>
+				</para>
+			</section>
+		</para>
+	</section>
+</chapter>

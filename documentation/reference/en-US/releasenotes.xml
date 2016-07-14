@@ -1,0 +1,797 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE authorgroup PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="release">
+
+	<title>Release Notes</title>
+
+	<para>
+		<tip>
+			<para>
+				To report problems, open discussions and get answers use <emphasis>Issues</emphasis> of GitHub - <ulink url="https://github.com/demoiselle/behave/issues">https://github.com/demoiselle/behave/issues</ulink>.
+			</para>
+		</tip>
+	</para>
+
+	<para>
+		<citetitle>Version 1.5.1</citetitle>
+		<itemizedlist>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/363">
+					<emphasis>[Melhoria]</emphasis>
+					Include browser GhostDriver in experimental mode  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/362">
+					<emphasis>[Bug]</emphasis>
+					Correction of a problem that does not allow to increase default timeout  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/361">
+					<emphasis>[Bug]</emphasis>
+					Complete refactoring of ALM integration code fixing a bug that causes cleaning of several data  
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/360">
+					<emphasis>[Improvement]</emphasis>
+					New UI component to work with p:editor of primefaces 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/355">
+					<emphasis>[Bug]</emphasis>
+					Fixing of bug that cleans some data when was stablished integration with ALM 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/354">
+					<emphasis>[Improvement]</emphasis>
+					Update of WebDriver to version 2.46
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/353">
+					<emphasis>[Improvement]</emphasis>
+					Standardization of Radio and Checkbox behavior
+				</ulink>
+			</listitem>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/351">
+					<emphasis>[Improvement]</emphasis>
+					Improvements in handling of Primefaces elements Radio and Check
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/348">
+					<emphasis>[Improvement]</emphasis>
+					Update of JBehave to version 4
+				</ulink>
+			</listitem>			
+		</itemizedlist>
+	
+		<citetitle>Version 1.5.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/345">
+					<emphasis>[Improvement]</emphasis>
+					New zoom out property for screenshot
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/344">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of primefaces grid and new parameter for capturing screen when there are errors
+				</ulink>
+			</listitem>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/341">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of ALM integration, now a scenario fails when one or more lines of examples fail
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/309">
+					<emphasis>[Improvement]</emphasis>
+					Integration with Image Magick for layout regression tests
+				</ulink>
+			</listitem>			
+		</itemizedlist>
+	
+		<citetitle>Version 1.4.4</citetitle>
+		<itemizedlist>				
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/332">
+					<emphasis>[Improvement]</emphasis>
+					Improvement in selected value checking of Primefaces Select
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/259">
+					<emphasis>[Melhoria]</emphasis>
+					Criation of steps to validate visibility of text, components and parameterized components
+				</ulink>
+			</listitem>
+		</itemizedlist>		
+	
+		<citetitle>Version 1.4.3</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/329">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of ALM integration, now automated tests select "Running Type" 
+					with value "Automated" for Test Case, or what is given in property behave.integration.alm.categoryTipoExecucao 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/322">
+					<emphasis>[Improvement]</emphasis>
+					Added support to input text for test storing phrase
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/321">
+					<emphasis>[Improvement]</emphasis>
+					Reorganization of steps for distinct classes
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/320">
+					<emphasis>[Improvement]</emphasis>
+					Added support to radio button in phrase "clique no elemento..."
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/319">
+					<emphasis>[Improvement]</emphasis>
+					New steps to handle Primefaces Grids
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/318">
+					<emphasis>[Improvement]</emphasis>
+					Improvement in scenario parameterization
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/316">
+					<emphasis>[Improvement]</emphasis>
+					New attribute forceWaitLoading in ElementMap forces dbehave to wait Loading appears
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/315">
+					<emphasis>[Improvement]</emphasis>
+					Now even using Meta @casodeteste test case will be associated to plan
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/314">
+					<emphasis>[Improvement]</emphasis>
+					Update of WebDriver from 2.44 to 2.45
+				</ulink>
+			</listitem>
+		</itemizedlist>		
+	
+		<citetitle>Version 1.4.2</citetitle>
+		
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/310">
+					<emphasis>[Bug]</emphasis>
+					Fixes bug of version 1.4.1 to run test for Windows platform
+				</ulink>
+			</listitem>
+		</itemizedlist>			
+			
+		<citetitle>Version 1.4.1</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/301">
+					<emphasis>[Bug]</emphasis>
+					Fixes problem when checks loading presence
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/299">
+					<emphasis>[Improvement]</emphasis>
+					Update of Selenium version to 2.44 (2014-10-23)
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/298">
+					<emphasis>[Bug]</emphasis>
+					Fixes problem of ALM integration - Approvals Override
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/297">
+					<emphasis>[Bug]</emphasis>
+					Fixes problem of ALM integration - Plan Categories Override
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/296">
+					<emphasis>[Bug]</emphasis>
+					Improvement of treatment of IFrames whitout Source
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/290">
+					<emphasis>[Improvement]</emphasis>
+					Adds interface Link as element type for phrase that moves mouse over an element
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/289">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of project documentation
+				</ulink>
+			</listitem>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/287">
+					<emphasis>[Bug]</emphasis>
+					Fixes problem of step to check not editable and visible fields
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/286">
+					<emphasis>[Bug]</emphasis>
+					Fixes problem in phrase that stores elements into Primefaces combos
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/285">
+					<emphasis>[Improvement]</emphasis>
+					New Components WebAutoComplete and WebImage
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/235">
+					<emphasis>[Bug]</emphasis>
+					Error in ALM integration when there are requirements related to test plan
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.4.0</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/284">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of Screenshot in Desktop module (Fest)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/280">
+					<emphasis>[Improvement]</emphasis>
+					New feature of value selecting by index inside Primefaces
+					combo
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/279">
+					<emphasis>[Improvement]</emphasis>
+					Now in integration of ALM with pending scenarios, now they are
+					marked in ALM as blocked
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/278">
+					<emphasis>[Bug]</emphasis>
+					Fixes checking of visible and disabled elements
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/277">
+					<emphasis>[Improvement]</emphasis>
+					Avoid reusable scenarios be runned after used
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/270">
+					<emphasis>[Improvement]</emphasis>
+					New steps to clean fields
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/266">
+					<emphasis>[Improvement]</emphasis>
+					Fixes problems to run on Windows
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/256">
+					<emphasis>[Improvement]</emphasis>
+					Fixes problem that doesn't clean stories correctly at the
+					end of test
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/253">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of fields filling
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/251">
+					<emphasis>[Bug]</emphasis>
+					Fixes error when sends characters of greater than and less than
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/250">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of DataProvider use for common steps
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/248">
+					<emphasis>[Improvement]</emphasis>
+					Added two new features: Steps Configuration
+					and Stories and Scenarios Configuration
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/245">
+					<emphasis>[Improvement]</emphasis>
+					Created new property behave.parser.delayBetweenSteps for 
+					adding a delay between each step running along
+					test
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/240">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of tests running speed, average of tests
+					running slow down 2 times
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/238">
+					<emphasis>[Improvement]</emphasis>
+					New feature that allows use of a external
+					data set into stories XML
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/235">
+					<emphasis>[Improvement]</emphasis>
+					New property behave.integration.alm.autoAssociateTestCaseInPlan
+					that allows to turn off automatic association between Test Cases and
+					Plans in RQM
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/229">
+					<emphasis>[Improvement]</emphasis>
+					Update of training stuff
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.3.2</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/223">
+					<emphasis>[Bug]</emphasis>
+					Fixes a problem that occurred when used meta info
+					@casodeteste in ALM integration
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/221">
+					<emphasis>[Bug]</emphasis>
+					Fixes a problem if JBehave that prevents report
+					generation on Windows
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/165">
+					<emphasis>[Improvement]</emphasis>
+					Inclusion of field values of example table in tests scenarios
+					steps created in ALM
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/169">
+					<emphasis>[Improvement]</emphasis>
+					Saves active window hierarchy into HTML file of JBehave
+					report for Fest
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/173">
+					<emphasis>[Improvement]</emphasis>
+					Allow to use a not default Firefox
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/175">
+					<emphasis>[Improvement]</emphasis>
+					Added new component DesktopLink
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/180">
+					<emphasis>[Improvement]</emphasis>
+					Added new components DesktopRadio and DesktopCheckbox
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/186">
+					<emphasis>[Improvement]</emphasis>
+					Added new component to rich:fileupload
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/187">
+					<emphasis>[Improvement]</emphasis>
+					Added new component to rich:inputNumberSpinner
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/190">
+					<emphasis>[Improvement]</emphasis>
+					Added new step: it will be displayed value "$text" in
+					"$elementName" related to "$locatorParameters"
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/196">
+					<emphasis>[Bug]</emphasis>
+					Fixes bug of fields filling in IE8+ for Windows 7
+					64-bits
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/199">
+					<emphasis>[Improvements]</emphasis>
+					Improvement of ALM integration that allows to define project
+					area with or without url encoding
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/204">
+					<emphasis>[Improvement]</emphasis>
+					Allow use of browser window in maximized mode
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/205">
+					<emphasis>[Improvement]</emphasis>
+					Allow to change window in browser by means of url
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/212">
+					<emphasis>[Improvement]</emphasis>
+					Allow to reuse scenarion of a story without running it
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/214">
+					<emphasis>[Improvement]</emphasis>
+					New property to control timeout of stories in parser
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/215">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of error screenshot file identification
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/219">
+					<emphasis>[Bug]</emphasis>
+					Fixes error 'No selected page' when more than on class
+					inherits of CommonSteps
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/220">
+					<emphasis>[Improvement]</emphasis>
+					Update Selenium component to work with last
+					browsers
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/222">
+					<emphasis>[Improvement]</emphasis>
+					Update of framework properties in documentation
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/177">
+					<emphasis>[Improvement]</emphasis>
+					Update of treino application and inclusion into 
+					folder "sample/treino-app" of GitHub repository
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.3.1</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/101">
+					<emphasis>[Improvement]</emphasis>
+					Treatment of exception StaleElementReferenceException by means of a
+					proxy
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/119">
+					<emphasis>[New Feature]</emphasis>
+					Possibility to configure framework for running remote
+					tests
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/145">
+					<emphasis>[Improvement]</emphasis>
+					Treatment of character # when sends data to ALM
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/147">
+					<emphasis>[Improvement]</emphasis>
+					Tratamento de elementos visíveis mais não clicáveis
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/148">
+					<emphasis>[New Component]</emphasis>
+					New Web screen component RichTextEditor (CKEditor)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/151">
+					<emphasis>[Improvement]</emphasis>
+					Update of framework dependencies
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/152">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of running speed and stability of tests
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/161">
+					<emphasis>[Bug]</emphasis>
+					Treatment of masked fields in Primefaces
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.3.0</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/40">
+					<emphasis>[New Feature]</emphasis>
+					Implementation for locator with parameters using notation:
+					%paramN%
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/125">
+					<emphasis>[New Feature]</emphasis>
+					Implementation of screen composition from annotation @Embedded
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/124">
+					<emphasis>[Improvement]</emphasis>
+					New phrases for Javascript alert treatment
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/74">
+					<emphasis>[Improvement]</emphasis>
+					Treatment of frames in screen objects search
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/121">
+					<emphasis>[Improvement]</emphasis>
+					Implementation of component PrimeFaces Tree
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/71">
+					<emphasis>[Improvement]</emphasis>
+					Internationalization of Framework messages
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/118">
+					<emphasis>[Improvement]</emphasis>
+					Embedding use of keys in reference actions
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/pull/101">
+					<emphasis>[Improvement]</emphasis>
+					Treatment of exception StaleElementReferenceException no WebSelect
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/75">
+					<emphasis>[Bug]</emphasis>
+					Problem with common steps: Fix of phrase "then will be displayed"
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/115">
+					<emphasis>[Bug]</emphasis>
+					Problem with common steps: Fix of phrase "select option"
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.2.0</citetitle>
+
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/11">
+					<emphasis>[R09]</emphasis>
+					Allow running for interface Desktop - (Java Swing)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/14">
+					<emphasis>[R12]</emphasis>
+					Tests running in background mode
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/16">
+					<emphasis>[R14]</emphasis>
+					Control parallel running
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/44">
+					<emphasis>[Bug]</emphasis>
+					Error in ALM integration
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/43">
+					<emphasis>[Bug]</emphasis>
+					Fixes Bug: Problem with keyword
+					Feature
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Improvement]</emphasis>
+					- Training Stuff
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/21">
+					<emphasis>[Improvement]</emphasis>
+					Allow to use parameterized scenarios
+					together
+					scenario reuse
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/20">
+					<emphasis>[Improvement]</emphasis>
+					Improvement of JBehave report with errors Screenshot
+				</ulink>
+			</listitem>
+		</itemizedlist>
+
+	</para>
+
+	<para>
+		<citetitle>Version 1.1.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/4">
+					<emphasis>[R01]</emphasis>
+					Data reuse between stories
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/5">
+					<emphasis>[R03]</emphasis>
+					ALM integration – (RQM, SCM, RTC, Agent Builder)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/8">
+					<emphasis>[R06]</emphasis>
+					Parameterizable running
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/9">
+					<emphasis>[R07]</emphasis>
+					Components reuse for screen interaction
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/12">
+					<emphasis>[R10]</emphasis>
+					Allow to run other tests than graphical interface
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/17">
+					<emphasis>[Improvement]</emphasis>
+					Reference Documentation
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+
+	<para>
+		<citetitle>Version 1.0.0</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/2">
+					<emphasis>[R02]</emphasis>
+					Stories reuse
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/6">
+					<emphasis>[R04]</emphasis>
+					Tests running in continuous integration
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/7">
+					<emphasis>[R05]</emphasis>
+					Integration with approved IDEs
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/10">
+					<emphasis>[R08]</emphasis>
+					Decoupling of reference technologies
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/13">
+					<emphasis>[R11]</emphasis>
+					Allow running debug
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/15">
+					<emphasis>[R13]</emphasis>
+					Simplicity of environment build
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/3">
+					<emphasis>[Improvement]</emphasis>
+					Project Structure - Demoiselle Standard
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	</para>
+</chapter>
+
