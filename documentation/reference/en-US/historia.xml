@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-story">
+
+	<title>How to create a story</title>
+	<para>
+		This chapter describes words, phrases and rules to
+		create and reuse test scenarios runnable by Behave framework.
+	</para>
+
+	<section>
+		<title>Concept</title>
+		<para>
+			In BDD, there is three keywords:
+			<itemizedlist>
+				<listitem>
+					Given
+				</listitem>
+				<listitem>
+					When
+				</listitem>
+				<listitem>
+					Then
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Behave framework extends default vocabulary of BDD,
+			adding
+			new words:
+			<itemizedlist>
+				<listitem>
+					A
+				</listitem>
+				<listitem>
+					But
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			A scenario is a set of phrases that use same
+			keywords
+			described above for describing an expected
+			system
+			behavior.
+		</para>
+		<programlisting>Given I am in login screen system
+When I type user "demoiselle" and password "behave"
+And click on button "Entrar"
+Then will be displayed welcome page</programlisting>
+		<para>
+			A story is a set of scenarios that describe a
+			feature of system, or a part of it.
+		</para>
+	</section>
+
+	<section>
+		<title>Pre-defined phrases of framework</title>
+		<para>
+			Behave framework was built to reduce spent effort
+			to
+			define several test scenarios of a system. Some
+			phrases
+			are embbeded into framework to make easier test
+			classes
+			mapping. They are:
+			<itemizedlist>
+				<listitem><para>[Given | When | Then] I go to screen "&lt;screen title&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I am on screen "&lt;screen title&gt;"</para></listitem>
+				
+				<listitem><para>[When | Then] I click on "&lt;element name&gt;" related to "&lt;parameters list&gt;"</para></listitem>
+				
+				<listitem><para>[When | Then] I click on "&lt;button/link text&gt;"</para></listitem>
+				
+				<listitem><para>[When | Then] I select option "&lt;option text&gt;"</para></listitem>								
+				
+				<listitem><para>[When | Then] I select option with index "&lt;index&gt;" into field "&lt;element name&gt;"</para></listitem>
+				
+				<listitem><para>[When | Then] I select option "&lt;element name&gt;" related to "&lt;parameter list&gt;"</para></listitem>				
+				
+				<listitem><para>[When | Then] I select option with value "&lt;value&gt;" into field "&lt;element name&gt;"</para></listitem>
+								
+				<listitem><para>[Given | When | Then] I type "&lt;value&gt;" into field "&lt;field name&gt;"</para></listitem>
+								
+				<listitem><para>[When] I clear value of field "&lt;field name&gt;"</para></listitem>
+								
+				<listitem><para>[When] I don't type value into field "&lt;field name&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When] I type "&lt;sample table&gt;"</para></listitem>
+				
+				<listitem><para>[When] I type fields "&lt;sample table&gt;"</para></listitem>
+				
+				<listitem><para>[Then] will be displayed "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Then] will be displayed into "&lt;element name&gt;" value "&lt;value&gt;"</para></listitem>
+				
+				<listitem><para>[Then] will be displayed value "&lt;text&gt;" into "&lt;element name&gt;" related to "&lt;parameters list&gt;"</para></listitem>				
+				
+				<listitem><para>[Given | When | Then] "&lt;element name&gt;" is not visible</para></listitem>						
+				
+				<listitem><para>[Given | When | Then] I get "&lt;text&gt;" from field "&lt;field name&gt;"</para></listitem>				
+				
+				<listitem><para>[Given | When | Then] I type "&lt;key&gt;" with value "&lt;field name&gt;"</para></listitem>					
+				
+				<listitem><para>[When] I move mouse over "&lt;element&gt;"</para></listitem>
+				
+				<listitem><para>[When] I click on table row "&lt;table&gt;" related to "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I confirm dialog box</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I cancel dialog box</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I type into dialog box "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Then] will be displayed into dialog box "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I type a random number with prefix "&lt;prefix text&gt;" into field "&lt;field name&gt;"</para></listitem>
+				
+				<listitem><para>[When] I type a random number into field "&lt;field name&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I define variable "&lt;variable name&gt;" with value "&lt;text&gt;"</para></listitem>
+								
+				<listitem><para>[When | Then] I print in console value of variable "&lt;variable name&gt;"</para></listitem>
+				
+				<listitem><para>[When] I select "&lt;record of data set&gt;" of data set "data set name"</para></listitem>
+				
+				<listitem><para>[Then] won't be displayed "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Then] won't be displayed into "&lt;element&gt;" value "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Then] won't be displayed into "&lt;element&gt;" value "&lt;text&gt;"</para></listitem>
+				
+				<listitem><para>[Then] won't be displayed value "&lt;text&gt;" into "&lt;element&gt;" related to "&lt;parameters list&gt;"</para></listitem>
+				
+				<listitem><para>[Given | When | Then] "&lt;element&gt;" related to "&lt;parameters list&gt;" is not visible</para></listitem>
+				
+				<listitem><para>[Then] "&lt;element&gt;" is visible</para></listitem>
+				
+				<listitem><para>[Then] "&lt;element&gt;" is disabled</para></listitem>
+				
+				<listitem><para>[Given | When | Then] I expect element "&lt;element&gt;" related to "&lt;parameters list&gt;" is visible, clickable and enabled</para></listitem>
+				
+				<listitem><para>[Given | When | Then] element "&lt;element&gt;" related to "&lt;parameters list&gt;" is visible and disabled</para></listitem>
+															
+			</itemizedlist>
+		</para>
+		<programlisting>Given I am on screen "Login"
+When I type "demoiselle" into field "Usuário:"
+And type "behave" into field "Senha:" 
+When I click on "Entrar"
+Then will be displayed "Seja bem vindo"</programlisting>
+	</section>
+	
+		<section>
+		<title>Pre-defined framework phrases for handling grids</title>
+		<para>		
+			<itemizedlist>
+				<listitem><para>[When] I store cell "&lt;row&gt;","&lt;column&gt;" of table "&lt;table&gt;" into "&lt;container&gt;</para></listitem>
+				<listitem><para>[When] I store column "&lt;column&gt;" of table "&lt;table&gt;" into "&lt;container&gt;"</para></listitem>
+				<listitem><para>[When] I compare text of cell "&lt;row&gt;","&lt;c&gt;" of table "&lt;table&gt;" with "&lt;container&gt;"</para></listitem>
+				<listitem><para>[When] I compare text of column "&lt;column&gt;" of table "&lt;table&gt;" with "&lt;container&gt;"</para></listitem>
+				<listitem><para>[When] I click on cell "&lt;row&gt;","&lt;column&gt;" of table "&lt;table&gt;"</para></listitem>
+				<listitem><para>[When] I click on column "&lt;column&gt;" of table "&lt;table&gt;"</para></listitem>
+				<listitem><para>[When] I choose option "&lt;value&gt;" in cell "&lt;l&gt;","&lt;c&gt;" of table "&lt;table&gt;"</para></listitem>
+				<listitem><para>[When] I choose option "&lt;value&gt;" in column "&lt;c&gt;" of table "&lt;table&gt;"</para></listitem>
+				<listitem><para>[When] I type text "&lt;value&gt;" in cell "&lt;l&gt;","&lt;c&gt;" of table "&lt;table&gt;"</para></listitem>
+				<listitem><para>[When] I type text "&lt;value&gt;" in column "&lt;c&gt;" of table "&lt;table&gt;"</para></listitem>
+			</itemizedlist>
+		</para>
+	</section>
+
+	<section>
+		<title>Writing a scenario</title>
+		<para>
+			Stories written for Behave must be into files with			
+			extension ".story".
+			Each file ".story" can have several test
+			scenarios.
+			This extension can be changed modifying key value
+			"behave.parser.story.extension.converted" into file
+			behave.properties.
+			Accepted words by framework must be always
+			at start of phrases, even preceded with spaces.
+			Phrases
+			described in scenarios must be each one in a different line.
+			The
+			scenario is, by default, started with word "Cenário:", for case of
+			story is in portuguese language.
+			This word can be changed
+			modifying key value
+			"behave.parser.identification.scenario.pattern.&lt;idioma&gt;" in
+			file behave.properties.
+		</para>
+		<programlisting>Scenario: Access system with user demoiselle and password behave
+Given I am on page "Login"
+When I type "demoiselle" into field "Usuário:"
+E I type "behave" into field "Senha:" 
+When click on "Entrar"
+Then will be displayed "Seja bem vindo"</programlisting>
+	</section>
+
+	<section>
+		<title>Parameterizing scenarios</title>
+		<para>
+			Parameters must be used in scenarios when data
+			used by tests are not constants. Syntax of a
+			parameter
+			is "{nome_do_parametro}".			
+		</para>
+		<programlisting>Scenario: Access system with user "{usuario}" and password "{senha}"
+Given I am on "Login"
+When I type "{usuario}" into field "Usuário:"
+And I type "{senha}" into field "Senha:" 
+When I click on "Entrar"
+Then will be displayed "Seja bem vindo"</programlisting>
+	</section>
+
+	<section>
+		<title>Reusing scenarios</title>
+		<para>
+			For reuse occurs is necessary, firstly, to use
+			parameters in scenario name. This will prevent that scenario
+			be
+			"runned" by framework, but, so, it can
+			be
+			referenced by other scenarios, reducing amount
+			of written
+			lines in all test project.
+		</para>
+		<programlisting>Scenario: Access system with user "{usuario}" and password "{senha}"
+Given I am on "Login"
+When I type "{usuario}" into field "Usuário:"
+And I type "{senha}" into field "Senha:" 
+When I click on "Entrar"
+Then will be displayed "Seja bem vindo"
+
+Scenario: Exit from system
+Given I go to page "Tela Principal"
+When I click on "Sair"
+Then will be displayed "Usuário:"
+E will be displayed "Senha:"
+
+Scenario: Test with data "{usuario}" and password "{senha}"
+Access system with user "{usuario}" and password "{senha}"
+Exit from system</programlisting>
+	</section>
+	
+	<section>
+		<title>Reusing scenarios in other stories</title>
+		<para>
+			For scenario reuse occurs in other stories is necessary, firstly,
+			that story be added to test context where it will be runned.
+		</para>
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Add stories that will be runned
+eng.addStories("/stories/acesso.story");
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
+
+// Run added story
+eng.run();
+  		</programlisting>
+		<para>
+			So call to scenario happens by use of intended scenario title.
+		</para>
+		<programlisting>
+In /stories/acesso.story:
+
+Scenario: Access to "{sistema}"
+
+Given I go to screen "Tela de Busca"
+Then will be displayed "{sistema}"
+
+
+In /stories/estou-com-sorte.story:
+
+Scenario: Use of feature I am lucky
+
+<emphasis>Access to "Google"</emphasis>
+When I click on "Estou com sorte"
+Then will be displayed "Google"
+  		</programlisting>
+		<para>
+			Another possibilty would be to add a story only for reuse. 
+		</para>  		
+		<programlisting>
+BehaveContext eng = BehaveContext.getInstance();
+		
+// Add story only for scenario reuse
+// Not reused scenarios won't be runned
+eng.addStoriesReuse("/stories/acesso.story");
+
+// Add stories that will be runned
+eng.addStories("/stories/estou-com-sorte.story");
+eng.addStories("/stories/pesquisa-simples.story");
+
+// Run added story
+eng.run();
+  		</programlisting> 
+		<para>
+			So not parameterized scenarios into stories
+			passed by method "addStoriesReuse" won't be runned.
+			This doesn't happen when method "addStories" is used, because 
+			it runs all not paremeterized scenarios.
+		</para>   		 		
+	</section>
+	
+	<section>
+		<title>JBehave Plugin for Eclipse</title>
+		<para>
+			<citetitle>Features:</citetitle>
+			<itemizedlist>
+				<listitem>
+					Syntax highlighting for steps
+				</listitem>
+				<listitem>
+					Link between steps written into stories and method inside Jave code					
+				</listitem>
+				<listitem>
+					Autocomplete for steps created in Java code, includind common steps
+				</listitem>
+				<listitem>
+					Step validation, dectecting it there are not mapped steps, for example
+				</listitem>
+			</itemizedlist>
+
+			<citetitle>Requirements:</citetitle>
+
+			<para>
+				Plugin already was tested for versions Indigo (3.7) and Juno (4.2)
+				of Eclipse.
+			</para>
+
+			<citetitle>Installation using Eclipse:</citetitle>
+
+			<itemizedlist>
+				<listitem>
+					1. Click on Help > Install New Software...
+				</listitem>
+				<listitem>
+					2. Add a new site location:
+					http://jbehave.org/reference/eclipse/updates/
+				</listitem>
+				<listitem>
+					3. Afeter add location search for plugin JBehave Eclipse and
+					follow default procedure for plugin installation
+				</listitem>
+			</itemizedlist>
+
+			<citetitle>Configuration:</citetitle>
+			<itemizedlist>
+				<listitem>
+					After installation access menu of Eclipse, Window > Preferences >
+					JBehave -> Project Settings and select Story Language as pt.
+				</listitem>
+				<listitem>
+					With this configuration is is possible to see stories written in
+					portuguese with syntax highlighting and autocomplete will work normally.
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+
+</chapter>

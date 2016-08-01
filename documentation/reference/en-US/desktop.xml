@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="desktop">
+
+	<title>Testing Dektop applications</title>
+	<para>
+		Demoiselle Behave Framework has a specific Runner for
+		Desktop application (Swing) tests. 
+		This chapter talks about
+		this subject.
+	</para>
+	<section>
+		<title>Starting a project using Archetype (Project Model)
+		</title>
+		<para>
+			When you create a project it is possible to select archetype
+			<emphasis>jbehave-fest-archetype</emphasis>
+			for having a fast beginning of a Desktop (Swing)
+			test automation project.
+		</para>
+	</section>
+	<section>
+		<title>Starting a project using an existing project (Project
+			WebDriver)</title>
+		<para>
+			For changing an existing project into a functional Desktop test project
+			it is enough to change runner and change appropriated
+			settings.
+
+			Change runner dependency.
+
+			<programlisting><![CDATA[<dependency>
+	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+	<artifactId>demoiselle-behave-runner-fest</artifactId>
+	<version>1.x.x</version>
+	<scope>test</scope>
+</dependency>]]></programlisting>
+		</para>
+	</section>
+
+	<section>
+		<title>Desktop Configurations</title>
+		<para>
+			All already quoted settings that are related to
+			Desktop can be used too. Below are specific
+			settings for Desktop:
+
+			<itemizedlist>
+				<listitem>
+					Add project into
+					<emphasis>classpath</emphasis>
+					of tests project;
+				</listitem>
+				<listitem>
+					Add setting
+					<emphasis>behave.runner.app.mainClass</emphasis>
+					into properties with name of class that starts Desktop
+					project.
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+
+	<section>
+		<title>Mappings</title>
+		<para>
+			Desktop runner uses 3 types of locators, according list below:
+						
+			<itemizedlist>
+				<listitem>
+					<citetitle>Label:</citetitle> Select screen object that has visible text;
+				</listitem>
+				<listitem>
+					<citetitle>Name:</citetitle> Select screen object that has user selected identifier;
+				</listitem>
+				<listitem>
+					<citetitle>ClassName:</citetitle> Select screen object that has defined class (JPanel, JButton...).  
+				</listitem>
+			</itemizedlist>
+			
+			Additionally to these locators it is possible to select the index that object is using, such as annotation @ElementIndex, in following sample:
+			
+			<programlisting>@ElementMap(name = "Nome do Elemento na História", locatorType = ElementLocatorType.ClassName, locator = "JTextField")
+<citetitle>@ElementIndex(index = 1)</citetitle>
+private TextField atributo;</programlisting>
+
+			By default object index is 0 (Zero).
+		</para>
+	</section>
+
+</chapter>

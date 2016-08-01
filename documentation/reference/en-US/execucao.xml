@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="behave-execucao">
+
+	<title>Tests Running</title>
+	<para>
+		This chapter presents advanced resources for tests
+		running using Demoiselle Behave, that
+		can help to build an
+		environment to run functional tests.
+	</para>
+	
+	<section>
+		<title>Running with Ghost Driver (Experimental Feature)</title>
+		<para>Ghost Driver is a remote WebDriver that uses PhantomJS as back-end. It is a JavaScript implementation of WebDriver Protocol for PhantomJS
+		aimed to run headless tests in Selenium.</para>
+		<para>For enabling it set driver <citetitle>GhostDriver</citetitle> in dbehave properties (behave.properties):</para>
+		<programlisting>behave.runner.screen.type=GhostDriver</programlisting>
+		<para>Also it is needed to set <citetitle>PhantmJS</citetitle> binary location in property behave.runner.screen.driverPath:</para>
+		<programlisting>behave.runner.screen.driverPath=/usr/lib/node_modules/phantomjs/lib/phantom/bin/phantomjs</programlisting>
+		<para>Other possible way is:</para>
+		<programlisting>behave.runner.screen.driverPath=/usr/local/bin/phantomjs</programlisting>		
+		<tip>
+			<para>Phantomjs can be installed by command <citetitle>sudo npm install -g phantomjs.</citetitle></para>
+		</tip>
+	</section>
+	
+	<section>
+		<title>Parallel Running</title>
+		<para>
+			Parallel tests running can be an alternative
+			to reduce
+			batteries running time. For this case observe that
+			this approach
+			rises up
+			need for processing in tests starting 
+			machine. Moreover it is need
+			to ensure independence among
+			tests for avoiding false positives.
+		</para>
+		<para>
+			Demoiselle Behave suggests use of maven-surefire-plugin that
+			manages test running according to following parameters:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<citetitle>forkCount</citetitle>
+				: Determine maximum number of threads that must be
+				parallelized;
+			</listitem>
+			<listitem>
+				<citetitle>threadCount</citetitle>
+				: Maximum number of threads by jvm;
+			</listitem>
+			<listitem>
+				<citetitle>reuseForks=false</citetitle>
+				: Ensure threads running in isolated JVMs.
+				This configuration
+				avoids that data used by other thread be 
+				affected by third threads.
+			</listitem>
+			<listitem>
+				<citetitle>parallel=classes</citetitle>
+				: Define parallelization strategy. For this case,
+				each JUnit test class
+				is instanced by a thread until 
+				reaching maximum number
+				of threads (forkCount).
+				It is recommended to use
+				class level,
+				because if there is need for
+				dependency among
+				tests,
+				this can be realized inside JUnit class.
+			</listitem>
+		</itemizedlist>
+		<para>
+			Below is a sample for plugin configuration in project file
+			pom.xml:
+		</para>
+		<programlisting>&lt;build&gt;
+	&lt;plugins&gt;
+		&lt;plugin&gt;
+			&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+			&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+			&lt;version&gt;2.16&lt;/version&gt;
+			&lt;configuration&gt;
+				&lt;forkCount&gt;3&lt;/forkCount&gt;
+				&lt;threadCount&gt;1&lt;/threadCount&gt;
+				&lt;reuseForks&gt;false&lt;/reuseForks&gt;
+				&lt;parallel&gt;classes&lt;/parallel&gt;
+			&lt;/configuration&gt;
+		&lt;/plugin&gt;
+	&lt;/plugins&gt;
+&lt;/build&gt; </programlisting>
+		<para>
+			For running your test in parallel way click on menu “Run as →
+			Maven
+			Test”
+			of Eclipse or type “mvn test” in console.
+		</para>
+	</section>
+
+	<section>
+		<title>Background Mode</title>
+		<para>
+			Running test in background mode is a important resource
+			when you want to create an environment
+			dedicated to test running.
+			Commonly these environments don't have
+			graphical interface that
+			prevent
+			to call browsers.
+		</para>
+		<para>
+			Other common situation occurs when tester runs 
+			tests in his workstation and
+			need to use other
+			programs that compete for his screen, because of 
+			browsers
+			use.
+		</para>
+		<para>
+			For Linux environments, that have tools for screen emulating,
+			Demoiselle Behave suggests
+			to use tool Xvfb.
+		</para>
+		<para>
+			Installation:
+		</para>
+
+		<programlisting>apt-get install xvfb</programlisting>
+
+		<para>
+			Running Xvfb:
+		</para>
+
+		<programlisting>Xvfb :2 -screen 0 1024x768x24</programlisting>
+
+		<para>
+			It is possible to instance several processes Xvfb using
+			different identifiers.
+			Sample above defined a
+			identifier “2”.
+		</para>
+
+		<para>
+			For running an app that uses graphical interface
+			execute command DISPLAY:
+		</para>
+
+		<programlisting>DISPLAY=:2 firefox</programlisting>
+
+		<para>
+			For running a test in Xvfb, it is enough to run:
+		</para>
+
+		<programlisting>DISPLAY=:2 mvn test</programlisting>
+
+		<para>
+			For viewing processes running in Xvfb use x11vnc (apt-get
+			install x11vnc)
+			that instance service vnc for a specific Xvfb
+			identifier:
+		</para>
+		<programlisting>x11vnc -display :2</programlisting>
+	</section>
+
+	<section>
+		<title>Continuous Integration</title>
+		<para>
+			For running functional tests in background mode, under a
+			continuous integration environment is necessary to install plugins that
+			allow to manage
+			Xvfb. Jenkins has
+			plugin:
+			<ulink url="https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin">https://wiki.jenkins-ci.org/display/JENKINS/Xvfb+Plugin
+			</ulink>
+			that allows to realize this control.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-01.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-01.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Xvfb Plugin</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			After installing plugin configure it by menu “Manage
+			Jenkins → Configure system” in section
+			Xvfb installation, provide a
+			“default” name and folder where Xvfb executable was installed
+			“/usr/bin”.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-02.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-02.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>System Configuration</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			For each Jenkins project configure in section “Build
+			Environment” 
+			installation, timeout, screen dimensions and
+			display:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-03.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-03.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Project Configuration</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			When you run your project, Jenkins starts Xvfb before
+			build
+			and ends process when build is finished:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/ic-04.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata fileref="images/ic-04.png" align="center"
+						format="PNG" scalefit="1" width="75%" />
+				</imageobject>
+				<caption>
+					<para>Console</para>
+				</caption>
+			</mediaobject>
+		</para>
+	</section>
+	
+	
+	<section>
+		<title>Remote Tests</title>
+		<para>
+			Remote tests running, when a browser runs in a workstation that is not 
+			the source of tests, is done by Selenium Server. This script 
+			helps to create quickly this environment.
+		</para>
+
+		<para>
+			<citetitle>Selenium Server Installation</citetitle>
+			<itemizedlist>
+				<listitem>
+					<citetitle>Download</citetitle>: Get Selenium Server from <ulink url="http://code.google.com/p/selenium/">
+					http://code.google.com/p/selenium/
+					</ulink> or direct from DBehave download area <ulink url="https://www.dropbox.com/s/o1bo9gb8b6dqv1e/selenium-server-standalone-2.37.0.jar">selenium-server-standalone-2.37.0.jar</ulink>.
+					We suggests version 2.37.0 or higher.
+				</listitem>
+				<listitem>
+					<citetitle>Start Service</citetitle>: Run Selenium Server in workstation where browser will run:
+					<programlisting>java -jar selenium-server-standalone-2.37.0.jar</programlisting> 
+				</listitem>				
+			</itemizedlist>						
+		</para>
+		<para>
+			<citetitle>Project Configuration</citetitle>
+			<itemizedlist>
+				<listitem>
+					<citetitle>demoiselle.properties</citetitle>: Open file demoiselle.properties in your project
+					and configure following properties:					
+<programlisting>
+//Change driver to remove mode
+behave.runner.screen.type=RemoteWeb
+
+//Define browser. Available options: firefox, chrome, internetExplorer, safari, htmlUnit
+behave.runner.screen.remote.name=firefox
+
+//Define url where is Selenium Server
+behave.runner.screen.remote.url=http://127.0.0.1:4444/wd/hub
+</programlisting>
+				</listitem>	
+				<listitem>
+					<citetitle>Browsers</citetitle>: Case is necessary to run your test in browser that is not Firefox, after
+					configure property “behave.runner.screen.remote.name”, start Selenium Server
+					passing way of your browser specific driver:					
+					<programlisting>java -jar selenium-server-standalone-2.37.0.jar -Dwebdriver.chrome.driver=/path/chromedriver</programlisting> 
+				</listitem>								
+			</itemizedlist>						
+		</para>
+	</section>
+
+	<section>
+		<title>JBehave Reports</title>
+		<para>
+			At end of automated tests running reports are
+			generated into folder <citetitle>target/jbehave/view</citetitle>. 
+			Main file is index.html, that can be open with any
+			browser. When you open file, you must click on "Story Reports" for accessing
+			running report.
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-1.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>General Running Report</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			For acessing details of each story there is a link
+			in last column (view), at right of table, as image below shows:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-2.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Story details link</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+			After click on link "html" of general view screen, following screen will be displayed:
+		</para>
+		<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-3.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Story detailing</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		 	Screen above shows detailing of scenarios of story.
+		</para>
+				<para>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata fileref="images/relatorio-4.png" align="center"
+						format="PNG" scalefit="1" width="80%" />
+				</imageobject>
+				<caption>
+					<para>Scenario with Error (Desktop)</para>
+				</caption>
+			</mediaobject>
+		</para>
+		<para>
+		 	Case some error occurs, this will be displayed with a print screen (Desktop and Web).
+		</para>
+	</section>
+
+</chapter>
