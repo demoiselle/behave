@@ -79,8 +79,31 @@ public enum WebBrowser {
 				if (BehaveConfig.getRunner_RemoteUrl().equals("")) {
 					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
 				}
-				DesiredCapabilities capability = new DesiredCapabilities();
+				DesiredCapabilities capability = new DesiredCapabilities();				 
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
+				if (BehaveConfig.getRunner_ProfileEnabled()){					
+					switch (BehaveConfig.getRunner_RemoteName()) {
+					case "firefox":
+						FirefoxProfile profile = new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath()));
+						profile.setEnableNativeEvents(true);					
+						capability.setCapability(FirefoxDriver.PROFILE, profile);
+						break;
+					case "chrome":
+						//TODO
+						break;
+					case "internetExplorer":
+						//TODO
+						break;
+					case "safari":
+						//TODO
+						break;
+					case "htmlUnit":
+						//TODO
+						break;
+					default:
+						break;
+					}						
+				}
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
 			} catch (MalformedURLException e) {
 				throw new BehaveException(message.getString("exception-error-url", BehaveConfig.getRunner_RemoteUrl()), e);
@@ -101,7 +124,7 @@ public enum WebBrowser {
 			caps.setJavascriptEnabled(true);
 			caps.setCapability("takesScreenshot", true);
 			caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, BehaveConfig.getRunner_ScreenDriverPath());
-			
+
 			return new PhantomJSDriver(caps);
 		}
 	},
@@ -148,7 +171,7 @@ public enum WebBrowser {
 			System.setProperty("webdriver.safari.driver", BehaveConfig.getRunner_ScreenDriverPath());
 			return new SafariDriver();
 		}
-		
+
 	},
 	InternetExplorer {
 
@@ -195,13 +218,13 @@ public enum WebBrowser {
 			} else {
 				chromeOptions.addArguments("--disable-extensions");
 			}
-			
+
 			//Nova configuração necessária para definir o caminho do browser a ser executado. 
 			//Podemos dessa forma executar o Chrome ou o Chromium instalados na mesma máquina.
 			if (!BehaveConfig.getRunner_BinaryPath().equals("")){
 				chromeOptions.setBinary(BehaveConfig.getRunner_BinaryPath());
 			}
-						
+
 			return new ChromeDriver(chromeOptions);
 		}
 	},
