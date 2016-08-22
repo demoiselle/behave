@@ -132,6 +132,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 		}
 
 		if (component instanceof JComboBox) {
+			@SuppressWarnings("rawtypes")
 			JComboBox combo = (JComboBox) component;
 			switch (locatorType) {
 			case Name:
