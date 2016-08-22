@@ -110,6 +110,27 @@
 		</repository>
 	</repositories>
 	
+	<!-- Profile para funcionar a build no Java 7 e 8 (no Java 8 o doclin precisa ser desabilitado) -->
+	<profiles>
+	  <profile>
+	    <id>doclint-java8-disable</id>
+	    <activation>
+	      <jdk>[1.8,)</jdk>
+	    </activation>	
+	    <build>
+	      <plugins>
+	        <plugin>
+	          <groupId>org.apache.maven.plugins</groupId>
+	          <artifactId>maven-javadoc-plugin</artifactId>
+	          <configuration>
+	            <additionalparam>-Xdoclint:none</additionalparam>
+	          </configuration>
+	        </plugin>
+	      </plugins>
+	    </build>
+	  </profile>
+	</profiles>
+	
 	<pluginRepositories>
 		<pluginRepository>
 			<id>demoiselle.sourceforge.net-release</id>
@@ -320,10 +341,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>				
-				</configuration>
+				<artifactId>maven-javadoc-plugin</artifactId>				
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -341,8 +359,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<target>1.6</target>
-					<source>1.6</source>
+					<target>1.7</target>
+					<source>1.7</source>
 				</configuration>
 			</plugin>
 			<plugin>

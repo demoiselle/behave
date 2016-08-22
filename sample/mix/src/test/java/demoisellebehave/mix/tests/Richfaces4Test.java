@@ -2,6 +2,7 @@ package demoisellebehave.mix.tests;
 
 import org.junit.Test;
 
+import demoisellebehave.mix.steps.MySteps;
 import br.gov.frameworkdemoiselle.behave.controller.BehaveContext;
 
 public class Richfaces4Test {
@@ -14,6 +15,7 @@ public class Richfaces4Test {
 
 	@Test
 	public void testTree() throws Throwable {
+		eng.addSteps(new MySteps());
 		eng.run("/stories/richfaces4/");
 	}
 }

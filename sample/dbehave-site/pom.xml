@@ -22,6 +22,11 @@
 			<artifactId>demoiselle-behave-parser-jbehave</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+			<artifactId>demoiselle-behave-runner-webdriver</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<repositories>
