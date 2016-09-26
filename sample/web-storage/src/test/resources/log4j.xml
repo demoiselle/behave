@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="LOG-FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${java.io.tmpdir}/demoiselle-behave.log" />
+		<param name="Append" value="true" />
+		<param name="Threshold" value="INFO" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p (%t) [%c{1}]: %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="LOG-CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Threshold" value="DEBUG" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p (%t) [%c{1}]: %m%n" />
+		</layout>
+	</appender>
+
+	<category name="br.gov.frameworkdemoiselle.behave">
+		<priority value="info" />
+		<appender-ref ref="LOG-FILE" />
+		<appender-ref ref="LOG-CONSOLE" />
+	</category>
+
+</log4j:configuration>
