@@ -38,7 +38,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.gov.component.demoiselle.archetypes</groupId>
+	<groupId>br.gov.frameworkdemoiselle.component.archetypes</groupId>
 	<artifactId>jbehave-junit-archetype</artifactId>
 	<packaging>jar</packaging>
 	

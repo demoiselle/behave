@@ -1,40 +1,26 @@
-<!--
- Demoiselle Framework
- Copyright (C) 2010 SERPRO
- ============================================================================
- This file is part of Demoiselle Framework.
- 
- Demoiselle Framework is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License version 3
- as published by the Free Software Foundation.
- 
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public License version 3
- along with this program; if not,  see <http://www.gnu.org/licenses />
- or write to the Free Software Foundation, Inc., 51 Franklin Street,
- Fifth Floor, Boston, MA  02110-1301, USA.
- ============================================================================
- Este arquivo é parte do Framework Demoiselle.
- 
- O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
- modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
- do Software Livre (FSF).
- 
- Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
- GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
- para maiores detalhes.
- 
- Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
- "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses />
- ou escreva para a Fundação do Software Livre (FSF) Inc.,
- 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
+	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
+	you can redistribute it and/or modify it under the terms of the GNU Lesser 
+	General Public License version 3 as published by the Free Software Foundation. 
+	This program is distributed in the hope that it will be useful, but WITHOUT 
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+	You should have received a copy of the GNU Lesser General Public License 
+	version 3 along with this program; if not, see <http://www.gnu.org/licenses 
+	/> or write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth 
+	Floor, Boston, MA 02110-1301, USA. ============================================================================ 
+	Este arquivo é parte do Framework Demoiselle. O Framework Demoiselle é um 
+	software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos 
+	da GNU LGPL versão 3 como publicada pela Fundação do Software Livre (FSF). 
+	Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA 
+	GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO 
+	EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português para maiores 
+	detalhes. Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título 
+	"LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses 
+	/> ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, 
+	Fifth Floor, Boston, MA 02111-1301, USA. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -55,37 +41,61 @@
 		A liberação de versões deste componente deve ser feita a partir deste build, que fará automaticamente o build
 		de todos os artefatos com versionamento sincronizado. Jamais gere uma versão deste componente sem utilizar este build.
 	</description>
-	
+
 
 	<modules>
 		<module>parent/behave</module>
 		<module>archetype/jbehave-junit</module>
 		<module>archetype/jbehave-selenium</module>
-        <module>archetype/jbehave-fest</module>
+		<module>archetype/jbehave-fest</module>
 		<module>impl/core</module>
 		<module>impl/parser/jbehave</module>
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
 		<module>impl/integration/alm</module>
-		
+
 		<module>impl/extension/regression/report</module>
 		<module>impl/extension/regression/repository</module>
 		<module>impl/extension/regression/step</module>
-		
+
 		<module>documentation/reference</module>
 	</modules>
 
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<configuration>
+					<serverId>demoiselle.sourceforge.net</serverId>
+					<url>${upload.url}</url>
+					<fromDir>${project.build.directory}/assembly</fromDir>
+					<toDir>${project.context}/${project.version}</toDir>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<preparationGoals>clean install</preparationGoals>
-					<goals>${release.goals}</goals>					
+					<goals>${release.goals}</goals>
 				</configuration>
-			</plugin>		
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -100,22 +110,7 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>demoiselle.sourceforge.net</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/snapshot</url>
-		</snapshotRepository>
-		<repository>
-			<id>demoiselle.sourceforge.net</id>
-			<name>Nexus Release Repository</name>
-			<url>sftp://web.sourceforge.net/home/groups/d/de/demoiselle/htdocs/repository/release</url>
-		</repository>
-		<site>
-			<id>demoiselle.sourceforge.net</id>
-			<url>${site.url}</url>
-		</site>
-	</distributionManagement>
+	
 
 	<scm>
 		<connection>scm:git:git@github.com:demoiselle/${project.alias}.git</connection>
