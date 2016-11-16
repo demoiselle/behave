@@ -38,6 +38,6 @@ package br.gov.serpro.dbehavesite.config;
 
 public class Config {
 
-	public final static String URLBASE = "treino.url";
+	public final static String URLBASE = "dbehave.url";
 	
 }

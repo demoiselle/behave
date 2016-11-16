@@ -45,7 +45,7 @@ import br.gov.serpro.dbehavesite.config.Config;
 @ScreenMap(name = "Tela de Início", base = Config.URLBASE, location = "/")
 public class InicioPage {
 
-	@ElementMap(name = "Documentação", locatorType = ElementLocatorType.XPath, locator = "(//button[contains(@id, 'formLogin')][contains(@type, 'submit')])[1]")
+	@ElementMap(name = "Documentação", locatorType = ElementLocatorType.XPath, locator = "//ul[contains(@class, 'navbar')]/li[2]/a")
 	private Button botaoEnviar;
 
 }

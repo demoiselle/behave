@@ -2,13 +2,10 @@ Funcionalidade: Acessar o site do dbehave
 
 Cenário: Acesso a página inicial
 
-Quando inicio a Calculadora
-Então seu valor será "0"
+Dado que vou para a tela "Tela de Início"
+Então será exibido "Testes Funcionais Automatizados"
 
-Cenário: Acesso a documentação
+Cenário: Acesos a documentação do projeto
 
-Quando inicio a Calculadora
-E adiciono "5"
-Então seu valor será "5"
-Quando limpo
-Então seu valor será "0"
+Dado que estou na tela "Tela de Início"
+Quando clico em "Documentação"
