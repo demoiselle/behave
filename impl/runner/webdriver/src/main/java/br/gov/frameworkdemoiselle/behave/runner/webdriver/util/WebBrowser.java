@@ -82,27 +82,13 @@ public enum WebBrowser {
 				DesiredCapabilities capability = new DesiredCapabilities();				 
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
 				if (BehaveConfig.getRunner_ProfileEnabled()){					
-					switch (BehaveConfig.getRunner_RemoteName()) {
-					case "firefox":
+					// Profile para Firefox
+					if (BehaveConfig.getRunner_RemoteName().equals("firefox")) {
 						FirefoxProfile profile = new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath()));
 						profile.setEnableNativeEvents(true);					
 						capability.setCapability(FirefoxDriver.PROFILE, profile);
-						break;
-					case "chrome":
-						//TODO
-						break;
-					case "internetExplorer":
-						//TODO
-						break;
-					case "safari":
-						//TODO
-						break;
-					case "htmlUnit":
-						//TODO
-						break;
-					default:
-						break;
-					}						
+					}		
+					// TODO: Outros navegadores				
 				}
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
 			} catch (MalformedURLException e) {
