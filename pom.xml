@@ -81,7 +81,7 @@
 					<url>${upload.url}</url>
 					<fromDir>${project.build.directory}/assembly</fromDir>
 					<toDir>${project.context}/${project.version}</toDir>
-					<skip>false</skip>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -142,7 +142,7 @@
 	</repositories>
 
 	<properties>
-		<release.goals>deploy wagon:upload site site:deploy</release.goals>
+		<release.goals>deploy</release.goals>
 		<project.alias>behave</project.alias>
 	</properties>
 </project>

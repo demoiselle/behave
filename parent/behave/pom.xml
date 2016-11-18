@@ -68,7 +68,7 @@
 
 	<properties>
 		<behave.release.version>1.5.2-SNAPSHOT</behave.release.version>
-		<release.goals>deploy wagon:upload site site:deploy</release.goals>
+		<release.goals>deploy</release.goals>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
