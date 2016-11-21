@@ -8,13 +8,23 @@ Então informo "PS4" no campo "Select"
 Quando clico em "Submit"
 Então será exibido na "Valor Basic" o valor "PS4"
 
-
 Cenário: Preenchendo o select checkbox menu
 
 Dado que vou para a tela "Primefaces Select Checkbox Menu"
 Quando seleciono a opção de valor "Paris,London" no campo "Select"
-E clico em "Fechar"
-Quando seleciono a opção de valor "Berlin," no campo "Select"
-E clico em "Fechar"
+Quando clico em "Fechar"
 Quando clico em "Submit"
+Quando "Select Panel" não está visível
 Então será exibido na "Lista de Países" o valor "Paris"
+Então será exibido na "Lista de Países" o valor "London"
+Quando seleciono a opção de valor "Berlin," no campo "Select"
+Quando clico em "Fechar"
+Quando clico em "Submit"
+Quando "Select Panel" não está visível
+Então será exibido na "Lista de Países" o valor "Berlin"
+Quando seleciono a opção de valor "Paris,London" no campo "Select"
+Quando clico em "Fechar"
+Quando clico em "Submit"
+Quando "Select Panel" não está visível
+Então não será exibido no "Lista de Países" o valor "Paris"
+Então não será exibido no "Lista de Países" o valor "London"

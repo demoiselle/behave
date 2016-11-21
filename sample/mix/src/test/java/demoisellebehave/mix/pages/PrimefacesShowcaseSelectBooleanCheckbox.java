@@ -45,8 +45,8 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces.PrimeFac
 public class PrimefacesShowcaseSelectBooleanCheckbox {
 
 	@ElementMap(name = "Primefaces Checkbox Basic", locatorType = ElementLocatorType.XPath, locator = {
-			"//div[@id='CONTENTSIDEindent']/div/form/table/tbody/tr[td[contains(text(),'Basic')]]/td/div",
-			"//div[@id='CONTENTSIDEindent']/div/form/table/tbody/tr[td[contains(text(),'Basic')]]/td/div/div/input[@type='checkbox']"
+			"//form/table/tbody/tr[td[contains(text(),'Basic')]]/td/div/div[2]",
+			"//form/table/tbody/tr[td[contains(text(),'Basic')]]/td/div/div/input[@type='checkbox']"
 	})
 	private PrimeFacesCheckBox primefacesCheckBox;
 
