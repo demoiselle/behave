@@ -144,7 +144,7 @@ public class Tree extends WebBase {
 	public boolean isTree() {
 		// Deve ser uma ui-tree e não ui-tree-horizontal
 		String jsCodeCheckComponent = "return (function(id) { " + JSTREECODE + " var w = getPrimefacesWidgetById( id ); return (typeof(w) == \"object\" && w.jq.hasClass('ui-tree') && !w.jq.hasClass('ui-tree-horizontal'));})('" + getId() + "');";
-		System.out.println(jsCodeCheckComponent);
+		// System.out.println(jsCodeCheckComponent);
 		return (Boolean) getJavascriptExecutor().executeScript(jsCodeCheckComponent);
 	}
 
