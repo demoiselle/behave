@@ -48,8 +48,6 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -74,11 +72,14 @@ public class WebBase extends MappedElement implements BaseUI {
 	private List<String> locatorParameters;
 	private static BehaveMessage message = new BehaveMessage(WebDriverRunner.MESSAGEBUNDLE);
 	private SwitchDriver frame;
-	private WebDriver driver;
 	Logger log = Logger.getLogger(WebBase.class);
 
 	public static ElementMap loadingMap = null;
 	public static boolean alreadySearchLoadingMap = false;
+
+	public WebDriver getDriver() {
+		return (WebDriver) getRunner().getDriver();
+	}
 
 	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
@@ -89,8 +90,6 @@ public class WebBase extends MappedElement implements BaseUI {
 	public List<WebElement> getElements() {
 		try {
 
-			driver = (WebDriver) runner.getDriver();
-
 			List<WebElement> elements = new ArrayList<WebElement>();
 			for (String locator : getElementMap().locator()) {
 
@@ -100,24 +99,25 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				// Todas as buscas por elemento tem seu timeout controlado pelo
 				// Demoiselle Behave
-				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
 
 				try {
 
 					// Primeiro tenta encontrar na página sem frame sem Timeout
-					List<WebElement> elementsFound = driver.findElements(by);
+					List<WebElement> elementsFound = getDriver().findElements(by);
+
 					if (elementsFound.size() > 0) {
 						elements.addAll(elementsFound);
 					} else {
 						// Se não encontrar nada sem frames busca nos frames
-						elements = getElementsWithFrames(driver, by);
+						elements = getElementsWithFrames(getDriver(), by);
 					}
 
 				} catch (Throwable t) {
 					// Se não encontrar nada sem frames busca nos frames
-					elements = getElementsWithFrames(driver, by);
+					elements = getElementsWithFrames(getDriver(), by);
 				} finally {
-					driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+					getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				}
 
 			}
@@ -130,6 +130,17 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
+	/**
+	 * Retorna lista de elementos filtrados pelo By dentro dos frames do
+	 * navegador, sendo que o primeiro elemento encontrado dentro de um frame
+	 * será retornado.
+	 * 
+	 * @param driver
+	 *            WebDriver a ser utilizado
+	 * @param by
+	 *            Locator by
+	 * @return Lista de elementos que foram encontrados no frame
+	 */
 	private List<WebElement> getElementsWithFrames(WebDriver driver, By by) {
 		List<WebElement> elements = new ArrayList<WebElement>();
 		boolean found = false;
@@ -142,7 +153,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			for (int i = 0; i < frame.countFrames(); i++) {
 				frame.switchNextFrame();
+
 				List<WebElement> elementsFound = driver.findElements(by);
+
 				if (elementsFound.size() > 0) {
 					elements.addAll(elementsFound);
 					found = true;
@@ -153,7 +166,10 @@ public class WebBase extends MappedElement implements BaseUI {
 			if (found) {
 				break;
 			}
+
 			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+
+			// Controle do timeout manualmente
 			if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 			}
@@ -162,6 +178,13 @@ public class WebBase extends MappedElement implements BaseUI {
 		return elements;
 	}
 
+	/**
+	 * Método que faz a substituição dos parâmetros no locator (param1, param2)
+	 * 
+	 * @param locator
+	 *            texto do locator com parâmetros
+	 * @return o locator atualizado com os parâmetros
+	 */
 	private String getLocatorWithParameters(String locator) {
 
 		if (getLocatorParameter() != null && !getLocatorParameter().isEmpty() && locator.matches(".*%param[0-9]+%.*")) {
@@ -177,11 +200,72 @@ public class WebBase extends MappedElement implements BaseUI {
 		return locator;
 	}
 
+	/**
+	 * Retorna o texto do elemento corrente utilizando o método de várias
+	 * tentativas até dar o timeout selecionado pelo usuário. Este getText é
+	 * difeirente do getTexto puro do WebDriver pois possui o mecanismo de
+	 * várias tentativas.
+	 * 
+	 * @return o texto de dentro (innerText) do elemento
+	 */
 	public String getText() {
+
 		waitElement(0);
-		return getElements().get(0).getText();
+
+		String s = null;
+		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		Exception lastEx = null;
+
+		while (true) {
+			try {
+
+				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+				// A implementação final do GET TEXT do WebDriver faz
+				// verificações a mais que o nosso Wait Element que pode fazer
+				// com que de problema em algumas situações não mapeadas, por
+				// isso ficamos tentando até conseguir
+				s = getElements().get(0).getText();
+
+				log.debug("Conteúdo do elemento: " + s);
+
+				break;
+
+			} catch (Exception e) {
+
+				log.warn("Erro no getText do Webdriver");
+				log.warn(e);
+
+				lastEx = e;
+
+			} finally {
+
+				// Volta o tempo padrão de timeout
+				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+				// Controle do timeout manualmente
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					if (lastEx != null) {
+						throw new BehaveException(lastEx);
+					} else {
+						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+					}
+				}
+
+			}
+		}
+
+		return s;
 	}
 
+	/**
+	 * Método de thread wait. Apesar de não ser recomandada a utilização deste
+	 * método ele se faz necessário em muitos casos, principalmente em casos que
+	 * dependam de renderização dos objetos no navegador.
+	 * 
+	 * @param delay
+	 *            tempo de espera
+	 */
 	protected static void waitThreadSleep(Long delay) {
 		try {
 			Thread.sleep(delay);
@@ -190,29 +274,90 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
+	/**
+	 * 
+	 * @param index
+	 *            Posição no Array de locators do elemento
+	 */
 	public void waitElement(Integer index) {
 		// Locators
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
-		// Aguarda o loading
-		waitLoading();
+		// Executa o controle de verificação de tempo manualmente
+		while (true) {
 
-		// Espera ser visível e clicável
-		waitClickable(by);
+			try {
+				// É necessário um minimo período de tempo para renderização de
+				// objetos
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
-		// Esta verificação é necessária mesmo que dentro do clickable ele já
-		// faça
-		waitVisibility(by);
+				// WARN: É necessário setar o TIMEOUT desta maneira para que o
+				// WebDriverWait tenha um timeout correto
+				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+				// Aguarda o loading
+				waitLoading();
+
+				// Garante o tempo minimo para verificação
+				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+				// Espera ser visível e clicável
+				waitClickable(by);
+
+				// Garante o tempo minimo para verificação
+				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+				// Esta verificação é necessária mesmo que dentro do clickable
+				// ele já faça
+				waitVisibility(by);
+
+				// Passou por todas as verificações
+				break;
+
+			} catch (Exception e) {
+				log.warn("Erro no Wait Element");
+				log.warn(e);
+			} finally {
+				// Volta o tempo padrão de timeout
+				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+				// Controle do timeout manualmente
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
+				}
+			}
+
+		}
+
 	}
 
+	/**
+	 * Aguarda o elemento ficar visível na tela.
+	 * 
+	 * @param index
+	 *            Posição no Array de locators do elemento
+	 */
 	public void waitElementOnlyVisible(Integer index) {
-		waitLoading();
 
-		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
-		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		try {
 
-		waitVisibility(by);
+			// WARN: É necessário setar o TIMEOUT desta maneira para que o
+			// WebDriverWait tenha um timeout correto
+			getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+			final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
+			final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+			waitLoading();
+
+			waitVisibility(by);
+
+		} finally {
+			// Volta o tempo padrão de timeout
+			getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+		}
 	}
 
 	/**
@@ -222,10 +367,6 @@ public class WebBase extends MappedElement implements BaseUI {
 	 */
 	@SuppressWarnings("unchecked")
 	public void waitLoading() {
-
-		driver = (WebDriver) runner.getDriver();
-
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		if (!alreadySearchLoadingMap) {
 
@@ -252,9 +393,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			try {
 				// Verifica se existe o LOADING
-				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(driver);
+				ExpectedConditions.presenceOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])).apply(getDriver());
 				existeLoading = true;
-				
+
 				log.debug(message.getString("message-loading-visible"));
 			} catch (Exception e) {
 				existeLoading = false;
@@ -266,26 +407,31 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (getElementMap() != null && getElementMap().forceWaitLoading()) {
 					WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 					wait.until(ExpectedConditions.visibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
-					
+
 					log.debug(message.getString("message-force-loading"));
 				}
 
 				// Aguardo o LOADING desaparecer!
 				WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(ByConverter.convert(loadingMap.locatorType(), loadingMap.locator()[0])));
-				
+
 				log.debug(message.getString("message-loading-invisible"));
 			}
 
 		}
 
-		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
+	/**
+	 * Procura por um elemento dentro do TODOS os FRAMES/IFRAMES da página, e
+	 * assim que encontrar ele deixa o frame selecionado para ser utilizado.
+	 * 
+	 * @param by
+	 *            Locator para lolizar o elemento
+	 */
 	private void findFrameContainingElement(By by) {
 		// Primeiro encontra o frame que o elemento esta, para depois esperar
 		// ele
-		getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 		frame = getSwitchDriver(getDriver());
 		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 		boolean found = false;
@@ -308,13 +454,17 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 
+			// Controle do timeout manualmente
 			if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 			}
 		}
-		getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
+	/**
+	 * Método que verifica se um elemento está VISÍVEL e DESABILITADO levando em
+	 * consideração atributos como readonly e disabled.
+	 */
 	public void isVisibleDisabled() {
 		List<WebElement> elementsFound = getElements();
 
@@ -348,37 +498,73 @@ public class WebBase extends MappedElement implements BaseUI {
 		}
 	}
 
+	/**
+	 * Aguarda um elemento estar visível, clicável e habilitado.
+	 */
 	public void waitVisibleClickableEnabled() {
-		// Locators
-		final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
-		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+		try {
 
-		// Wait
-		waitClickable(by);
+			// WARN: É necessário setar o TIMEOUT desta maneira para que o
+			// WebDriverWait tenha um timeout correto
+			getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+
+			// Locators
+			final String locator = getLocatorWithParameters(getElementMap().locator()[0].toString());
+			final By by = ByConverter.convert(getElementMap().locatorType(), locator);
+
+			// Wait
+			waitClickable(by);
+
+		} finally {
+			// Volta o tempo padrão de timeout
+			getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+		}
 	}
 
-	// condition 'clickable' is equivalent to 'visible and enabled'
-	// https://code.google.com/p/selenium/issues/detail?id=6804
+	/**
+	 * Aguarda o elemento ser clicável.
+	 * 
+	 * ATENÇÃO: condition 'clickable' is equivalent to 'visible and enabled'
+	 * https://code.google.com/p/selenium/issues/detail?id=6804
+	 * 
+	 * @param by
+	 */
 	private void waitClickable(By by) {
 		findFrameContainingElement(by);
 
 		// Faz a verificação no FRAME selecionado
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
+	/**
+	 * Método que retorna um tempo fixo para que o Implicitly Wait do WebDriver
+	 * tente encontrar um elemento na tela
+	 * 
+	 * @return tempo de timeout para Implicitly Wait
+	 */
+	public Long getImplicitlyWaitTimeoutInMilliseconds() {
+		return 1000L;
+	}
+
+	/**
+	 * Aguardda o elemento estar visível.
+	 * 
+	 * @param by
+	 *            Locator do elemento.
+	 */
 	private void waitVisibility(By by) {
 		findFrameContainingElement(by);
 
-		WebDriverWait wait = new WebDriverWait(getDriver(), (BehaveConfig.getRunner_ScreenMaxWait() / 1000));
+		// Faz a verificação no FRAME selecionado
+		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
-	public WebDriver getDriver() {
-		WebDriver driver = (WebDriver) getRunner().getDriver();
-		return driver;
-	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getLocatorParameter() {
 		return locatorParameters;
 	}
@@ -403,7 +589,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	/**
 	 * Retorna o ID do primeiro elemento de tela mapeado.
 	 * 
-	 * @return
+	 * @return ID do primeiro elemento do locator
 	 */
 	public String getId() {
 		String id = getElements().get(0).getAttribute("id");
@@ -413,183 +599,218 @@ public class WebBase extends MappedElement implements BaseUI {
 		return id;
 	}
 
-	public void waitText(String text) {
-		waitVisibleText(text);
-	}
-	
+	/**
+	 * Retorna o SwitchDriver do Driver atual. O Switch Driver é responsável
+	 * pela manipulação de frames de um navegador.
+	 * 
+	 * @param driver
+	 * @return Instância de SwitchDriver
+	 */
 	private SwitchDriver getSwitchDriver(WebDriver driver) {
 		frame = new SwitchDriver(driver);
 		return frame;
 	}
 
+	/**
+	 * Aguarda um texto ficar visível na página. É importante saber que textos
+	 * que não estão visíveis mas estão no HTML não são considerados. Também não
+	 * são considerados textos que estiverem dentro das tags SCRIPT e STYLE.
+	 * 
+	 * @param text
+	 *            Texto a ser encontrado.
+	 */
 	public void waitVisibleText(String text) {
-		
-		// Flag utilizada para o segundo laço
-		boolean found = false;
-		driver = (WebDriver) runner.getDriver();
+
+		WebDriver driver = (WebDriver) runner.getDriver();
 		frame = getSwitchDriver(driver);
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		
-		try {
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-			
-			if (elementsFound.size() == 0) {
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));	
-			
+		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+
+		while (true) {
+			try {
+				getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				List<WebElement> elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
+
 				if (elementsFound.size() == 0) {
-					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-					elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-					if (elementsFound.size() == 0) {
-						
-						// Se não encontrar nada sem frames busca nos frames
-										
-						frame.bind();
-	
-						for (int i = 0; i < frame.countFrames(); i++) {
-							frame.switchNextFrame();
-	
-							 elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-							 if (elementsFound.size() > 0) {
-								 found=true;
-								 break;
-								
-							 }
+
+					// Se não encontrar nada sem frames busca nos frames
+					frame.bind();
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+
+						elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
+						if (elementsFound.size() > 0) {
+							break;
 						}
-						if (!found)
-							Assert.fail(message.getString("message-text-not-found", text));
 					}
+				} else {
+					break;
 				}
-			}	
+			} catch (BehaveException be) {
+				log.warn("waitVisibleText BehaveException");
+				log.warn(be);
+			} catch (Exception e) {
+				log.warn("waitVisibleText Exception");
+				log.warn(e);
+			} finally {
+				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
-		} catch (BehaveException be) {
-			throw be;
-		} catch (StaleElementReferenceException ex) {
-			// Ignore this exception
-		} catch (NoSuchFrameException ex) {
-			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
-		}finally {
-			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				// Controle do timeout manualmente
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-not-found", text));
+				}
+			}
 		}
-
-		
-	}
-	
-	
-	public void waitNotVisibleText(String text) {
-		
-		driver = (WebDriver) runner.getDriver();
-		frame = getSwitchDriver(driver);
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-		
-		try {
-			List<WebElement> elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-			
-			if (elementsFound.size() == 0) {
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-				elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));	
-			
-				if (elementsFound.size() == 0) {
-					waitThreadSleep(BehaveConfig.getRunner_ScreenMaxWait());
-					elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-					if (elementsFound.size() == 0) {
-						
-						// Se não encontrar nada sem frames busca nos frames
-						
-						frame.bind();
-	
-						for (int i = 0; i < frame.countFrames(); i++) {
-							frame.switchNextFrame();
-	
-							 elementsFound = driver.findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'"+text+"')]]"));
-							 if (elementsFound.size() > 0) {
-								
-								Assert.fail(message.getString("message-text-found", text));
-								
-							 }
-							 
-						}
-						
-					}
-					
-				}else
-					Assert.fail(message.getString("message-text-found", text));
-			}else
-				Assert.fail(message.getString("message-text-found", text));
-			
-
-		} catch (BehaveException be) {
-			throw be;
-		} catch (StaleElementReferenceException ex) {
-			// Ignore this exception
-		} catch (NoSuchFrameException ex) {
-			throw new BehaveException(message.getString("exception-no-such-frame", frame.currentFrame(), ex));
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
-		}finally {
-			driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-		}
-
-		
 	}
 
 	/**
-	 * Método que busca o texto dentro de um elemento.
+	 * Aguarda um texto NÃO ficar visível na página. É importante saber que
+	 * textos que não estão visíveis mas estão no HTML não são considerados.
+	 * Também não são considerados textos que estiverem dentro das tags SCRIPT e
+	 * STYLE.
+	 * 
+	 * @param text
+	 *            Texto a ser encontrado.
 	 */
-	public void waitTextInElement(String text) {
-		try {
-			driver = (WebDriver) runner.getDriver();
-			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+	public void waitNotVisibleText(String text) {
 
-			while (true) {
+		frame = getSwitchDriver(getDriver());
+		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
-				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+		// Verifica 2 vezes
+		int countTries = 1;
+		int maxCountTries = 2;
+
+		while (true) {
+			try {
+
+				getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+				List<WebElement> elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
+
+				frame.bind();
+
+				// Verifica quantos frames tem
+				if (frame.countFrames() == 1) {
+					if (elementsFound.size() == 0 && countTries >= maxCountTries) {
+						break;
+					}
+				} else {
+					for (int i = 0; i < frame.countFrames(); i++) {
+						frame.switchNextFrame();
+						elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
+						if (elementsFound.size() == 0 && countTries >= maxCountTries) {
+							break;
+						}
+					}
+				}
+
+				countTries += 1;
+			} catch (BehaveException be) {
+				log.warn("waitNotVisibleText BehaveException");
+				log.warn(be);
+			} catch (Exception e) {
+				log.warn("waitNotVisibleText Exception");
+				log.warn(e);
+			} finally {
+				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+
+				// Controle do timeout manualmente
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					Assert.fail(message.getString("message-text-found", text));
+				}
+			}
+		}
+	}
+
+	/**
+	 * Método que busca o texto dentro de um elemento utilizando os métodos de
+	 * tentativa e controle manual de timeout.
+	 * 
+	 * @param text
+	 *            Texto a ser encontrado no elemento.
+	 * @param visible
+	 *            Verifica se o texto está visível (true) ou não (false)
+	 */
+	public void waitVisibleOrNotTextInElement(String text, boolean visible) {
+
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		boolean ok = false;
+
+		while (true) {
+			try {
 
 				/*
 				 * Busca o texto dentro do elemento, atentar para o método
 				 * getText, ele não é o getText do WebDriver e sim do Element do
 				 * framework (WebTextField, WebSelect...)
 				 */
-				if (getText().contains(text)) {
-					break;
+				String elementText = getText();
+				if (visible) {
+					log.debug("Existe o texto [" + text + "] no texto do compoenente [" + elementText + "]?");
+
+					if (elementText.contains(text)) {
+						log.debug("SIM!");
+						ok = true;
+						break;
+					} else {
+						log.debug("NÃO!");
+					}
+				} else {
+					log.debug("NÃO existe o texto [" + text + "] no texto do compoenente [" + elementText + "]?");
+
+					if (!elementText.contains(text)) {
+						log.debug("SIM!");
+						ok = true;
+						break;
+					} else {
+						log.debug("NÃO!");
+					}
 				}
 
-				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
+				log.debug("Vai TENTAR novamente encontrar o texto");
 
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			} catch (BehaveException be) {
+				log.warn("Text in element BehaveException");
+				log.warn(be);
+			} catch (Exception e) {
+				log.warn("Text in element Exception");
+				log.warn(e);
+			} finally {
 
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+				// Controle do timeout manualmente
+				if (!ok && GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					Assert.fail(message.getString("message-text-not-found", text));
 				}
-
 			}
-		} catch (BehaveException be) {
-			throw be;
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
 	}
 
+	/**
+	 * Método chamado pelas frases que aguardam o primeiro elemento do locator
+	 * não está visível.
+	 */
 	public void waitInvisible() {
 		waitInvisible(0);
 	}
 
+	/**
+	 * Aguarda que um elemento selecionado pela sua posição no locator não
+	 * esteja visível.
+	 * 
+	 * @param index
+	 *            Posição no locator do element.
+	 */
 	public void waitInvisible(int index) {
 		final String locator = getLocatorWithParameters(getElementMap().locator()[index].toString());
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 		boolean testInvisibility = true;
-		driver = (WebDriver) runner.getDriver();
-
-		// Zera o tempo do driver, se não o implicity wait não funciona com o
-		// tempo correto
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
 		try {
 			// Aguarda o elemento ficar visivel (MinWait)
 			Long waitTimeVis = (BehaveConfig.getRunner_ScreenMinWait() / 1000);
-			WebDriverWait waitVis = new WebDriverWait(driver, waitTimeVis);
+			WebDriverWait waitVis = new WebDriverWait(getDriver(), waitTimeVis);
 			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
 
 			testInvisibility = true;
@@ -600,12 +821,10 @@ public class WebBase extends MappedElement implements BaseUI {
 		if (testInvisibility) {
 			// Aguarda ele sumir
 			Long waitTime = (BehaveConfig.getRunner_ScreenMaxWait() / 1000);
-			WebDriverWait wait = new WebDriverWait(driver, waitTime);
+			WebDriverWait wait = new WebDriverWait(getDriver(), waitTime);
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 		}
 
-		// Volta o tempo padrão (maxWait) no driver
-		driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 	}
 
 	/**
@@ -613,46 +832,49 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * <body>
 	 */
 	public void blur() {
-		driver = (WebDriver) runner.getDriver();
-		driver.findElement(By.tagName("body")).click();
+		getDriver().findElement(By.tagName("body")).click();
 	}
 
-	@Override
+	/**
+	 * Aguarda um texto na página inteira (exceto as tags script e style). Na
+	 * verdade chama o método waitVisibleText
+	 * 
+	 * @param text
+	 *            Texto a ser encontrato na página.
+	 */
+	public void waitText(String text) {
+		waitVisibleText(text);
+	}
+
+	/**
+	 * Aguarda que o texto não esteja na página inteira (exceto as tags script e
+	 * style). Na verdade chama o método waitNotVisibleText
+	 * 
+	 * @param text
+	 *            Texto a não ser encontrado na página.
+	 */
 	public void waitNotText(String text) {
 		waitNotVisibleText(text);
 	}
 
-	@Override
+	/**
+	 * Aguarda que o elemento atual não contenha o texto.
+	 * 
+	 * @param text
+	 *            Texto a não ser encontrato no elemento.
+	 */
 	public void waitTextNotInElement(String text) {
-		try {
-			driver = (WebDriver) runner.getDriver();
-			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
-
-			while (true) {
-
-				driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
-
-				/*
-				 * Busca o texto dentro do elemento, atentar para o método
-				 * getText, ele não é o getText do WebDriver e sim do Element do
-				 * framework (WebTextField, WebSelect...)
-				 */
-				if (!getText().contains(text)) {
-					break;
-				}
-
-				driver.manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
-
-				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-					Assert.fail(message.getString("message-text-found", text));
-				}
-			}
-		} catch (BehaveException be) {
-			throw be;
-		} catch (Exception e) {
-			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
-		}
+		waitVisibleOrNotTextInElement(text, false);
 	}
+
+	/**
+	 * Aguarda que o elemento atual contenha o texto.
+	 * 
+	 * @param text
+	 *            Texto a ser encontrato no elemento.
+	 */
+	public void waitTextInElement(String text) {
+		waitVisibleOrNotTextInElement(text, true);
+	}
+	
 }
