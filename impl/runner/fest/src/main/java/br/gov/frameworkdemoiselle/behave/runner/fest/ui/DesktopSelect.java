@@ -60,7 +60,6 @@ public class DesktopSelect extends DesktopBase implements Select {
 
 	@Override
 	public String getText() {
-		@SuppressWarnings("rawtypes")
 		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
 		if (comboFixture.component() != null && comboFixture.component().getSelectedItem() != null)
 			return comboFixture.component().getSelectedItem().toString();
@@ -74,14 +73,12 @@ public class DesktopSelect extends DesktopBase implements Select {
 
 	@Override
 	public void selectByIndex(int index) {
-		@SuppressWarnings("rawtypes")
 		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
 		comboFixture.selectItem(index);
 	}
 
 	@Override
 	public void selectByValue(String value) {
-		@SuppressWarnings("rawtypes")
 		JComboBoxFixture comboFixture = new JComboBoxFixture(runner.robot, (JComboBox) getElement());
 		comboFixture.selectItem(value);
 	}

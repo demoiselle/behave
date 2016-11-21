@@ -93,7 +93,6 @@ public class AutenticatorClient {
 	 */
 	private String sendMessage(String host, int port, String _message) {
 		try {
-			@SuppressWarnings("resource")
 			Socket socket = new Socket(host, port);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(_message);
