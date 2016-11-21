@@ -130,6 +130,11 @@
 					o valor padrão é <emphasis>vazio</emphasis>.
 				</listitem>
 				<listitem>
+					<citetitle>behave.runner.screen.commandLineOptions</citetitle>
+					: permite passar os parâmetros de inicialização do navegador, substituindo todos os fornecidos pelo framework. Por enquanto somente existe implementação para o Google Chrome.
+					O valor padrão é <emphasis>vazio</emphasis>.
+				</listitem>
+				<listitem>
 					<citetitle>behave.runner.screen.driverPath</citetitle>
 					: Localização do driver que faz ligação
 					entre o navegador e o

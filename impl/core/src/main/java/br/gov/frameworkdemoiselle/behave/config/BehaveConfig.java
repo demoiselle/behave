@@ -240,6 +240,11 @@ public class BehaveConfig {
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
+	
+	// Passagem de comandos na inicialização do navegador
+	public static String getRunner_ScreenCommandLineOptions() {
+		return getProperty("behave.runner.screen.commandLineOptions", "");
+	}
 
 	// Para execução remota
 	public static String getRunner_RemoteUrl() {

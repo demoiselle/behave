@@ -79,16 +79,16 @@ public enum WebBrowser {
 				if (BehaveConfig.getRunner_RemoteUrl().equals("")) {
 					throw new BehaveException(message.getString("exception-property-not-found", "behave.runner.screen.remote.url"));
 				}
-				DesiredCapabilities capability = new DesiredCapabilities();				 
+				DesiredCapabilities capability = new DesiredCapabilities();
 				capability.setBrowserName(BehaveConfig.getRunner_RemoteName());
-				if (BehaveConfig.getRunner_ProfileEnabled()){					
-					// Profile para Firefox
+				if (BehaveConfig.getRunner_ProfileEnabled()) {
+					// Profile para Firefox REMOTE
 					if (BehaveConfig.getRunner_RemoteName().equals("firefox")) {
 						FirefoxProfile profile = new FirefoxProfile(new File(BehaveConfig.getRunner_ProfilePath()));
-						profile.setEnableNativeEvents(true);					
+						profile.setEnableNativeEvents(true);
 						capability.setCapability(FirefoxDriver.PROFILE, profile);
-					}		
-					// TODO: Outros navegadores				
+					}
+					// TODO: Outros navegadores
 				}
 				return new RemoteWebDriver(new URL(BehaveConfig.getRunner_RemoteUrl()), capability);
 			} catch (MalformedURLException e) {
@@ -196,18 +196,24 @@ public enum WebBrowser {
 			String driver = BehaveConfig.getRunner_ScreenDriverPath();
 			System.setProperty("webdriver.chrome.driver", driver);
 
-			//Nova configuração necessária para funcionar o Profile no Chromium
+			// Nova configuração necessária para funcionar o Profile no Chromium
 			ChromeOptions chromeOptions = new ChromeOptions();
-			if (BehaveConfig.getRunner_ProfileEnabled()){
-				String profile = "user-data-dir=".concat(BehaveConfig.getRunner_ProfilePath());
-				chromeOptions.addArguments(profile);
+			if (BehaveConfig.getRunner_ScreenCommandLineOptions().equals("")) {
+				if (BehaveConfig.getRunner_ProfileEnabled()) {
+					String profile = "user-data-dir=".concat(BehaveConfig.getRunner_ProfilePath());
+					chromeOptions.addArguments(profile);
+				} else {
+					chromeOptions.addArguments("--disable-extensions");
+				}
 			} else {
-				chromeOptions.addArguments("--disable-extensions");
+				// Adiciona os parâmtros enviados pelo usuário
+				chromeOptions.addArguments(BehaveConfig.getRunner_ScreenCommandLineOptions());
 			}
 
-			//Nova configuração necessária para definir o caminho do browser a ser executado. 
-			//Podemos dessa forma executar o Chrome ou o Chromium instalados na mesma máquina.
-			if (!BehaveConfig.getRunner_BinaryPath().equals("")){
+			// Nova configuração necessária para definir o caminho do browser a
+			// ser executado. Podemos dessa forma executar o Chrome ou o
+			// Chromium instalados na mesma máquina.
+			if (!BehaveConfig.getRunner_BinaryPath().equals("")) {
 				chromeOptions.setBinary(BehaveConfig.getRunner_BinaryPath());
 			}
 
