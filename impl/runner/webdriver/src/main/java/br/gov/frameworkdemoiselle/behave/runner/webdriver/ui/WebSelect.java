@@ -202,7 +202,15 @@ public class WebSelect extends WebBase implements Select {
 	private void itemListClick(WebElement item) {
 		try {
 			waitElement(1);
-			item.click();
+			
+			// Solução de contorno para o novo select do PRIMEFACES
+			if (item.getAttribute("class").contains("ui-selectcheckboxmenu-item")) {
+				WebElement e = item.findElement(By.className("ui-chkbox-box"));
+				e.click();
+			} else {
+				item.click();	
+			}
+			
 		} catch (Throwable t) {
 			waitElement(1);
 			item.click();
