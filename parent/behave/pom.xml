@@ -68,7 +68,7 @@
 
 	<properties>
 		<behave.release.version>1.5.2-SNAPSHOT</behave.release.version>
-		<release.goals>deploy wagon:upload site site:deploy</release.goals>
+		<release.goals>deploy</release.goals>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -359,8 +359,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<target>1.7</target>
-					<source>1.7</source>
+					<target>1.6</target>
+					<source>1.6</source>
 				</configuration>
 			</plugin>
 			<plugin>
