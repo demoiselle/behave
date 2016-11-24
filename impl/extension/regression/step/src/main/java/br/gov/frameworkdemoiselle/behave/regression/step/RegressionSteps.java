@@ -37,6 +37,7 @@
 package br.gov.frameworkdemoiselle.behave.regression.step;
 
 import org.apache.log4j.Logger;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
 import br.gov.frameworkdemoiselle.behave.parser.jbehave.CommonSteps;
@@ -55,6 +56,7 @@ public class RegressionSteps extends CommonSteps {
 	private Integer countImage = 1;
 
 	@When("tiro um print screen")
+	@Then("tiro um print screen")
 	public void print() {
 
 		// Delay de renderização da página, se não tiver esse delay ele tira um
@@ -72,6 +74,7 @@ public class RegressionSteps extends CommonSteps {
 	}
 	
 	@When("tiro um print screen com o nome \"$name\"")
+	@Then("tiro um print screen com o nome \"$name\"")
 	public void print(String name) {
 
 		// Delay de renderização da página, se não tiver esse delay ele tira um
