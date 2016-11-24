@@ -14,6 +14,148 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.5.2</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/435">
+					<emphasis>[Melhoria]</emphasis>
+					Mais melhorias gerais nos métodos de espera e busca de elementos e textos na tela
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/428">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir passagem de argumentos de linha de comando para o binário
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/415">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionada personalização de profile para RemoteWeb
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/410">
+					<emphasis>[Melhoria]</emphasis>
+					Permite desabilitar os screenshots com a propriedade behave.parser.screenshot.enabled
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/409">
+					<emphasis>[Melhoria]</emphasis>
+					Agora quando um passo esta pendente o teste falha 
+				</ulink>
+			</listitem>			
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/407">
+					<emphasis>[Melhoria]</emphasis>
+					Por padrão agora também é gerado o formato XML do JBehave
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/404">
+					<emphasis>[Melhoria]</emphasis>
+					Diversas melhorias para o funcionamento do Fest para Java Desktop
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/403">
+					<emphasis>[Erro]</emphasis>
+					Ajustes para o funcionamento do GhostDriver 
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/399">
+					<emphasis>[Erro]</emphasis>
+					Ajustes para funcionar o Google Chrome 34
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/397">
+					<emphasis>[Melhoria]</emphasis>
+					Nova funcionalidade de escopo de Passos e Histórias (Verificar documentação)
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/394">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria em algumas frases pré definidas adicionando a possibilidade de @When para os passos de TableSteps
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/387">
+					<emphasis>[Melhoria]</emphasis>
+					Adição de frase para enviar texto e acionar um evento no campo texto
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/385">
+					<emphasis>[Melhoria]</emphasis>
+					Melhorias para testes Desktop com componente DesktopSelect e JTextField
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/382">
+					<emphasis>[Melhoria]</emphasis>
+					Melhorias gerais nos métodos de espera e busca de elementos e textos na tela
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/380">
+					<emphasis>[Melhoria]</emphasis>
+					Permitir que algumas das frases pré definidas sejam utilizadas com @When
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/379">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na utilização de telas em projetos Desktop
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/376">
+					<emphasis>[Melhoria]</emphasis>
+					Pequena correção de texto ao dar erro de texto não encontrado
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/376">
+					<emphasis>[Erro]</emphasis>
+					Correção na leitura de histórias com internacionalização
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/375">
+					<emphasis>[Melhoria]</emphasis>
+					Implementação de profile para Chrome
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/374">
+					<emphasis>[Melhoria]</emphasis>
+					Agora o Chrome levanta com todas as extensões desabilitadas por padrão
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/373">
+					<emphasis>[Erro]</emphasis>
+					Correção de erros com internacionalização
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/367">
+					<emphasis>[Melhoria]</emphasis>
+					Não é mais permitida a adicionar a mesma história 2 vezes no mesmo teste
+				</ulink>
+			</listitem>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/366">
+					<emphasis>[Melhoria]</emphasis>
+					Ajuste para imprimir em debug no console sempre que algo é consultado ou inserido no DataProvider
+				</ulink>
+			</listitem>
+		</itemizedlist>
+	
 		<citetitle>Versão 1.5.1</citetitle>
 		<itemizedlist>			
 			<listitem>
