@@ -7,7 +7,7 @@ Desejo ter acesso a documentação, fórum e demais informações sobre o projet
 
 Cenário: Site do DBehave
 Dado que vou para a tela "dbehave"
-Então será exibido "dbehave - projeto mantido pelo SERPRO"
+Então será exibido "projeto mantido pelo"
 
 Cenário: Lendo dúvidas
 Dado que vou para a tela "Github"
