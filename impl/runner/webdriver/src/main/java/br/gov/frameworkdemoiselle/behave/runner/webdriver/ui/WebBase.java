@@ -610,6 +610,8 @@ public class WebBase extends MappedElement implements BaseUI {
 		frame = new SwitchDriver(driver);
 		return frame;
 	}
+	
+	
 
 	/**
 	 * Aguarda um texto ficar visível na página. É importante saber que textos
@@ -637,7 +639,12 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Quando tem somente 1 frame
 				if (frame.countFrames() == 1) {
 					List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
-					if (elementsFound.get(0).getText().contains(text)) {
+					
+					String textHtml = elementsFound.get(0).getText();
+					
+					log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
+					
+					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
 						// "] na página");
 						found = true;
@@ -652,7 +659,12 @@ public class WebBase extends MappedElement implements BaseUI {
 						List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
 						if (elementsFound.size() == 1) {
 							WebElement element = elementsFound.get(0);
-							if (element.getText().contains(text)) {
+							
+							String textHtml = element.getText();
+							
+							log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
+							
+							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +
 								// "] na página utilizando os frames");
 								found = true;
@@ -674,7 +686,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
 				// Controle do timeout manualmente
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+				if (!found && (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait())) {
 					Assert.fail(message.getString("message-text-not-found", text));
 				}
 			}
@@ -747,7 +759,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
 				// Controle do timeout manualmente
-				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+				if (found && (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait())) {
 					Assert.fail(message.getString("message-text-found", text));
 				}
 			}
