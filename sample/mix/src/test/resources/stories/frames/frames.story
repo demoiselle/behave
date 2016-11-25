@@ -8,6 +8,7 @@ Desejo acessar a documentacao do hibernate
 Cenário: Acesso a Frames
 
 Dado que vou para a tela "Teste de Frame"
+Então não será exibido "Texto que não existe"
 Então será exibido "Topo"
 Então será exibido "Menu"
 Então será exibido "Rodape"

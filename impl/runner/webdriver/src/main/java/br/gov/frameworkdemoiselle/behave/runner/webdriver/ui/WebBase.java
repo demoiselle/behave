@@ -624,27 +624,44 @@ public class WebBase extends MappedElement implements BaseUI {
 		WebDriver driver = (WebDriver) runner.getDriver();
 		frame = getSwitchDriver(driver);
 		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		boolean found = false;
 
 		while (true) {
 			try {
+
 				getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-				List<WebElement> elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
+				// Mesmo que não tenha frame ele pega o "primeiro"
+				frame.bind();
 
-				if (elementsFound.size() == 0) {
-
-					// Se não encontrar nada sem frames busca nos frames
-					frame.bind();
-
-					for (int i = 0; i < frame.countFrames(); i++) {
-						frame.switchNextFrame();
-
-						elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
-						if (elementsFound.size() > 0) {
-							break;
-						}
+				// Quando tem somente 1 frame
+				if (frame.countFrames() == 1) {
+					List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
+					if (elementsFound.get(0).getText().contains(text)) {
+						// log.debug("Encontrou o texto [" + text +
+						// "] na página");
+						found = true;
+						break;
 					}
 				} else {
+
+					for (int i = 0; i < frame.countFrames(); i++) {
+
+						frame.switchNextFrame();
+
+						List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
+						if (elementsFound.size() == 1) {
+							WebElement element = elementsFound.get(0);
+							if (element.getText().contains(text)) {
+								// log.debug("Encontrou o texto [" + text +
+								// "] na página utilizando os frames");
+								found = true;
+								break;
+							}
+						}
+					}
+				}
+				if (found) {
 					break;
 				}
 			} catch (BehaveException be) {
@@ -677,33 +694,46 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		frame = getSwitchDriver(getDriver());
 		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		boolean found = true;
 
-		// Verifica 2 vezes
+		// Verifica 3 vezes se existe antes de continuar
 		int countTries = 1;
-		int maxCountTries = 2;
+		int maxCountTries = 3;
 
 		while (true) {
 			try {
 
 				getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
 
-				List<WebElement> elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
-
+				// Mesmo que não tenha frame ele pega o "primeiro"
 				frame.bind();
 
-				// Verifica quantos frames tem
+				// Quando tem somente 1 frame
 				if (frame.countFrames() == 1) {
-					if (elementsFound.size() == 0 && countTries >= maxCountTries) {
+					List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
+					if (!elementsFound.get(0).getText().contains(text) && countTries >= maxCountTries) {
+						found = false;
 						break;
 					}
 				} else {
+
 					for (int i = 0; i < frame.countFrames(); i++) {
+
 						frame.switchNextFrame();
-						elementsFound = getDriver().findElements(By.xpath("//*[not(self::script or self::style)][text()[contains(.,'" + text + "')]]"));
-						if (elementsFound.size() == 0 && countTries >= maxCountTries) {
-							break;
+
+						List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
+						if (elementsFound.size() == 1) {
+							WebElement element = elementsFound.get(0);
+							if (!element.getText().contains(text) && countTries >= maxCountTries) {
+								found = false;
+								break;
+							}
 						}
 					}
+				}
+
+				if (!found) {
+					break;
 				}
 
 				countTries += 1;
@@ -876,5 +906,5 @@ public class WebBase extends MappedElement implements BaseUI {
 	public void waitTextInElement(String text) {
 		waitVisibleOrNotTextInElement(text, true);
 	}
-	
+
 }
