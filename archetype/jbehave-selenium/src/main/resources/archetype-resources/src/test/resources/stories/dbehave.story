@@ -21,7 +21,7 @@ Então será exibido "New issue"
 Cenário: Procurando documentação
 Dado que vou para a tela "Documentação"
 Quando clico em "Roteiro Rápido"
-Então será exibido "um roteiro rápido para criação e configuração de um projeto com uso do framework Demoiselle Behave"
+Então será exibido "projeto com uso do framework Demoiselle Behave"
 Quando clico em "Link Principal"
 E clico em "Testes de Regressão"
 Então será exibido "a funcionalidade que permite a comparação de layout entre navegadores diferentes"
