@@ -15,6 +15,6 @@ for ((i=1;i<=$1;i++)); do
 	echo ""
 	#mvn test -Dtest=PrimefacesTest
 	#mvn test -Dtest=FramesTest
-	#mvn test
-	./run_test_in_background.sh
+	mvn test
+	#./run_test_in_background.sh
 done || exit 1
