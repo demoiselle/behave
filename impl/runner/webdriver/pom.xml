@@ -44,7 +44,7 @@
 	<parent>
 		<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 		<artifactId>demoiselle-behave-parent</artifactId>
-		<version>1.5.2-BETA3</version>
+		<version>1.5.2-SNAPSHOT</version>
 	</parent>
 
 	<name>Demoiselle Behave Runner Webdriver</name>
