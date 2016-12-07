@@ -39,10 +39,12 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.AutoComplete;
@@ -158,13 +160,17 @@ public class WebAutoComplete extends WebBase implements AutoComplete {
 	 */
 	protected void selectOnList(WebElement element, String value) {
 
+		getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
+		
 		List<WebElement> elementValue = element.findElements(By.tagName("li"));
 		if (elementValue.size() == 0) {
 			elementValue = element.findElements(By.tagName("td"));
 		}
+		
+		getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
 		for (WebElement item : elementValue) {
-			if (item.getText().equals(value)) {
+			if (item.getText().contains(value)) {
 				// Aguarda o segundo elemento ser clicável
 				try {
 					waitElement(1);

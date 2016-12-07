@@ -47,6 +47,7 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.model.ExamplesTable;
 
+import br.gov.frameworkdemoiselle.behave.internal.util.DataProviderUtil;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
 
 public class DataProviderSteps extends CommonSteps {
@@ -78,6 +79,7 @@ public class DataProviderSteps extends CommonSteps {
 	@Given("selecionei \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	@When("seleciono \"$recordId\" do conjunto de dados \"$dataSetType\"")
 	public void putRecordIntoDataProvider(String recordId, String dataSetType) {
+		recordId = DataProviderUtil.replaceValue(recordId);
 		datasetProvider.setDataProviderCurrentRecord(dataSetType, recordId);
 	}
 
