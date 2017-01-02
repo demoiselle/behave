@@ -81,7 +81,23 @@
 					<citetitle>behave.parser.delayBetweenSteps:</citetitle>
 					propriedade que coloca uma espera entre a execução dos passos. Se for 0 (Zero) ele estará desabilitado.
 					O padrão é <emphasis>0 (Zero)</emphasis>.
-				</listitem>				
+				</listitem>	
+				<listitem>
+					<citetitle>behave.parser.screenshot.enabled</citetitle>
+					propriedade que faz habilita ou desabilita a captura de tela quando ocorre um erro.
+					O padrão é <emphasis>true</emphasis>.
+				</listitem>	
+				<listitem>
+					<citetitle>behave.parser.coloredconsole.enabled</citetitle>
+					propriedade para habilitar a saída colorida no console. 
+					O padrão é <emphasis>false</emphasis>.
+				</listitem>	
+										
+				<listitem>
+					<citetitle>behave.parser.erroDuplicateScenarios</citetitle>
+					propriedade que faz com que o parser verifique se existem cenários duplicados na execução.
+					O padrão é <emphasis>true</emphasis>.
+				</listitem>	
 			</itemizedlist>
 		</para>
 	</section>
