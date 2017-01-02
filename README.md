@@ -5,10 +5,6 @@
 
 [Visite o Site do Projeto](http://demoiselle.github.io/behave/)
 
-## Kanban da Release 1.5.2
-
-* https://github.com/demoiselle/behave/projects/1
-
 ## Repositório Maven
 
 	<repositories>
