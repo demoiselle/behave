@@ -138,12 +138,13 @@ public class StoryConverter {
 		// Faz a reutilização dos cenários
 		reuseScenario(scenarios);
 
-		// Evita que os cenários reutilizáveis sejam executados, mesmo que nenhum cenário concreto tenha sido encontrado.
-		for(String key : scenarios.keySet()){
+		// Evita que os cenários reutilizáveis sejam executados, mesmo que
+		// nenhum cenário concreto tenha sido encontrado.
+		for (String key : scenarios.keySet()) {
 			List<Scenario> actual = scenarios.get(key);
 			List<Scenario> toRemove = new ArrayList<Scenario>();
-			for(Scenario cenario : actual){
-				if(cenario.getReusable()){
+			for (Scenario cenario : actual) {
+				if (cenario.getReusable()) {
 					toRemove.add(cenario);
 				}
 			}
@@ -175,14 +176,16 @@ public class StoryConverter {
 	 * @param scenariosMap
 	 */
 	private static void verifyDuplicateScenarios(Map<String, List<Scenario>> scenariosMap) {
-		ArrayList<String> scenariosSignature = new ArrayList<String>();
-		for (String story : scenariosMap.keySet()) {
-			List<Scenario> scenarios = scenariosMap.get(story);
-			for (Scenario scenario : scenarios) {
-				if (!scenariosSignature.contains(scenario.getIdentificationWithoutParametersName())) {
-					scenariosSignature.add(scenario.getIdentificationWithoutParametersName());
-				} else {
-					throw new BehaveException(bm.getString("exception-scenario-duplicated", scenario.getIdentification()));
+		if (BehaveConfig.getParser_ErroDuplicateScenarios()) {
+			ArrayList<String> scenariosSignature = new ArrayList<String>();
+			for (String story : scenariosMap.keySet()) {
+				List<Scenario> scenarios = scenariosMap.get(story);
+				for (Scenario scenario : scenarios) {
+					if (!scenariosSignature.contains(scenario.getIdentificationWithoutParametersName())) {
+						scenariosSignature.add(scenario.getIdentificationWithoutParametersName());
+					} else {
+						throw new BehaveException(bm.getString("exception-scenario-duplicated", scenario.getIdentification()));
+					}
 				}
 			}
 		}
@@ -216,10 +219,10 @@ public class StoryConverter {
 			if (RegularExpressionUtil.matches(BehaveConfig.getParser_IdentificationScenarioPattern(), scenarioToken.trim())) {
 				return storyDefinition;
 			}
-			
+
 			// Remove os comentários da história
 			String st = removeComment(scenarioToken);
-						
+
 			storyDefinition += st.equals("") ? "" : st + LINE_BREAK_TOKEN;
 		}
 		return storyDefinition;
@@ -228,7 +231,7 @@ public class StoryConverter {
 	/**
 	 * Método que retira os comentários da história
 	 * 
-	 * @param scenarioToken 
+	 * @param scenarioToken
 	 * @return
 	 */
 	private static String removeComment(String scenarioToken) {
@@ -280,8 +283,10 @@ public class StoryConverter {
 	 * Verifica se o nome do cenário ou história é válido segundo a expressão
 	 * regular informada no Filter (ScenarioFilter ou StoryFilter)
 	 * 
-	 * @param value nome do cenário ou história
-	 * @return true ou false, se é valido ou não segundo a expressão regular do filtro
+	 * @param value
+	 *            nome do cenário ou história
+	 * @return true ou false, se é valido ou não segundo a expressão regular do
+	 *         filtro
 	 */
 	private static boolean matchesStoryOrScenario(String value) {
 		String filter = BehaveContext.getInstance().getStoryOrScenarioFilter().getValue();
