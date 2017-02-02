@@ -82,8 +82,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
-	 * ele busca o elemento em todos os frames
+	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora ele busca o elemento em todos os frames
 	 * 
 	 * @return Lista de elementos encontrados
 	 */
@@ -108,32 +107,35 @@ public class WebBase extends MappedElement implements BaseUI {
 
 					if (elementsFound.size() > 0) {
 						elements.addAll(elementsFound);
-					} else {
+					}
+					else {
 						// Se não encontrar nada sem frames busca nos frames
 						elements = getElementsWithFrames(getDriver(), by);
 					}
 
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 					// Se não encontrar nada sem frames busca nos frames
 					elements = getElementsWithFrames(getDriver(), by);
-				} finally {
+				}
+				finally {
 					getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 				}
 
 			}
 
 			return elements;
-		} catch (BehaveException be) {
+		}
+		catch (BehaveException be) {
 			throw be;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
 		}
 	}
 
 	/**
-	 * Retorna lista de elementos filtrados pelo By dentro dos frames do
-	 * navegador, sendo que o primeiro elemento encontrado dentro de um frame
-	 * será retornado.
+	 * Retorna lista de elementos filtrados pelo By dentro dos frames do navegador, sendo que o primeiro elemento encontrado dentro de um frame será retornado.
 	 * 
 	 * @param driver
 	 *            WebDriver a ser utilizado
@@ -201,10 +203,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna o texto do elemento corrente utilizando o método de várias
-	 * tentativas até dar o timeout selecionado pelo usuário. Este getText é
-	 * difeirente do getTexto puro do WebDriver pois possui o mecanismo de
-	 * várias tentativas.
+	 * Retorna o texto do elemento corrente utilizando o método de várias tentativas até dar o timeout selecionado pelo usuário. Este getText é difeirente do getTexto puro do WebDriver pois possui o mecanismo de várias tentativas.
 	 * 
 	 * @return o texto de dentro (innerText) do elemento
 	 */
@@ -231,14 +230,16 @@ public class WebBase extends MappedElement implements BaseUI {
 
 				break;
 
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 
 				log.warn("Erro no getText do Webdriver");
 				log.warn(e);
 
 				lastEx = e;
 
-			} finally {
+			}
+			finally {
 
 				// Volta o tempo padrão de timeout
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
@@ -247,9 +248,9 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
 					if (lastEx != null) {
 						throw new BehaveException(lastEx);
-					} else {
-						throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 					}
+
+					throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 				}
 
 			}
@@ -259,9 +260,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método de thread wait. Apesar de não ser recomandada a utilização deste
-	 * método ele se faz necessário em muitos casos, principalmente em casos que
-	 * dependam de renderização dos objetos no navegador.
+	 * Método de thread wait. Apesar de não ser recomandada a utilização deste método ele se faz necessário em muitos casos, principalmente em casos que dependam de renderização dos objetos no navegador.
 	 * 
 	 * @param delay
 	 *            tempo de espera
@@ -269,7 +268,8 @@ public class WebBase extends MappedElement implements BaseUI {
 	protected static void waitThreadSleep(Long delay) {
 		try {
 			Thread.sleep(delay);
-		} catch (InterruptedException ex) {
+		}
+		catch (InterruptedException ex) {
 			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
 	}
@@ -316,10 +316,12 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Passou por todas as verificações
 				break;
 
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.warn("Erro no Wait Element");
 				log.warn(e);
-			} finally {
+			}
+			finally {
 				// Volta o tempo padrão de timeout
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
@@ -354,16 +356,15 @@ public class WebBase extends MappedElement implements BaseUI {
 
 			waitVisibility(by);
 
-		} finally {
+		}
+		finally {
 			// Volta o tempo padrão de timeout
 			getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 		}
 	}
 
 	/**
-	 * Método que verifica em todas as classes se existe um componente Loading,
-	 * e se existir, ele sempre espera que este elemento desapareça antes de
-	 * continuar.
+	 * Método que verifica em todas as classes se existe um componente Loading, e se existir, ele sempre espera que este elemento desapareça antes de continuar.
 	 */
 	@SuppressWarnings("unchecked")
 	public void waitLoading() {
@@ -397,7 +398,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				existeLoading = true;
 
 				log.debug(message.getString("message-loading-visible"));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				existeLoading = false;
 			}
 
@@ -423,8 +425,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Procura por um elemento dentro do TODOS os FRAMES/IFRAMES da página, e
-	 * assim que encontrar ele deixa o frame selecionado para ser utilizado.
+	 * Procura por um elemento dentro do TODOS os FRAMES/IFRAMES da página, e assim que encontrar ele deixa o frame selecionado para ser utilizado.
 	 * 
 	 * @param by
 	 *            Locator para lolizar o elemento
@@ -462,8 +463,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método que verifica se um elemento está VISÍVEL e DESABILITADO levando em
-	 * consideração atributos como readonly e disabled.
+	 * Método que verifica se um elemento está VISÍVEL e DESABILITADO levando em consideração atributos como readonly e disabled.
 	 */
 	public void isVisibleDisabled() {
 		List<WebElement> elementsFound = getElements();
@@ -484,7 +484,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (!e.isDisplayed() || (disabledAttribute == null && readonlyAttribute == null)) {
 					throw new BehaveException(message.getString("exception-element-not-displayed-or-enabled", getElementMap().name()));
 				}
-			} else {
+			}
+			else {
 				// Faz a verificação se esta desabilitado por meio das classes
 				// de css para os casos de combo estilo Primefaces e Richfaces
 				String classes = e.getAttribute("class");
@@ -493,7 +494,8 @@ public class WebBase extends MappedElement implements BaseUI {
 				}
 			}
 
-		} else {
+		}
+		else {
 			throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 		}
 	}
@@ -515,7 +517,8 @@ public class WebBase extends MappedElement implements BaseUI {
 			// Wait
 			waitClickable(by);
 
-		} finally {
+		}
+		finally {
 			// Volta o tempo padrão de timeout
 			getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 		}
@@ -524,8 +527,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	/**
 	 * Aguarda o elemento ser clicável.
 	 * 
-	 * ATENÇÃO: condition 'clickable' is equivalent to 'visible and enabled'
-	 * https://code.google.com/p/selenium/issues/detail?id=6804
+	 * ATENÇÃO: condition 'clickable' is equivalent to 'visible and enabled' https://code.google.com/p/selenium/issues/detail?id=6804
 	 * 
 	 * @param by
 	 */
@@ -533,13 +535,12 @@ public class WebBase extends MappedElement implements BaseUI {
 		findFrameContainingElement(by);
 
 		// Faz a verificação no FRAME selecionado
-		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
+		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds() / 1000);
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 	}
 
 	/**
-	 * Método que retorna um tempo fixo para que o Implicitly Wait do WebDriver
-	 * tente encontrar um elemento na tela
+	 * Método que retorna um tempo fixo para que o Implicitly Wait do WebDriver tente encontrar um elemento na tela
 	 * 
 	 * @return tempo de timeout para Implicitly Wait
 	 */
@@ -557,7 +558,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		findFrameContainingElement(by);
 
 		// Faz a verificação no FRAME selecionado
-		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
+		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds() / 1000);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
@@ -574,8 +575,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em
-	 * uso possui a capacidade de executar códigos Javascript.
+	 * Retorna um Driver executor de códigos Javascript. Verifica se o driver em uso possui a capacidade de executar códigos Javascript.
 	 * 
 	 * @return {@link JavascriptExecutor}
 	 */
@@ -600,8 +600,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retorna o SwitchDriver do Driver atual. O Switch Driver é responsável
-	 * pela manipulação de frames de um navegador.
+	 * Retorna o SwitchDriver do Driver atual. O Switch Driver é responsável pela manipulação de frames de um navegador.
 	 * 
 	 * @param driver
 	 * @return Instância de SwitchDriver
@@ -610,13 +609,9 @@ public class WebBase extends MappedElement implements BaseUI {
 		frame = new SwitchDriver(driver);
 		return frame;
 	}
-	
-	
 
 	/**
-	 * Aguarda um texto ficar visível na página. É importante saber que textos
-	 * que não estão visíveis mas estão no HTML não são considerados. Também não
-	 * são considerados textos que estiverem dentro das tags SCRIPT e STYLE.
+	 * Aguarda um texto ficar visível na página. É importante saber que textos que não estão visíveis mas estão no HTML não são considerados. Também não são considerados textos que estiverem dentro das tags SCRIPT e STYLE.
 	 * 
 	 * @param text
 	 *            Texto a ser encontrado.
@@ -639,18 +634,19 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Quando tem somente 1 frame
 				if (frame.countFrames() == 1) {
 					List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
-					
+
 					String textHtml = elementsFound.get(0).getText();
-					
+
 					log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
-					
+
 					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
 						// "] na página");
 						found = true;
 						break;
 					}
-				} else {
+				}
+				else {
 
 					for (int i = 0; i < frame.countFrames(); i++) {
 
@@ -659,11 +655,11 @@ public class WebBase extends MappedElement implements BaseUI {
 						List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
 						if (elementsFound.size() == 1) {
 							WebElement element = elementsFound.get(0);
-							
+
 							String textHtml = element.getText();
-							
+
 							log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
-							
+
 							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +
 								// "] na página utilizando os frames");
@@ -676,13 +672,16 @@ public class WebBase extends MappedElement implements BaseUI {
 				if (found) {
 					break;
 				}
-			} catch (BehaveException be) {
+			}
+			catch (BehaveException be) {
 				log.warn("waitVisibleText BehaveException");
 				log.warn(be);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.warn("waitVisibleText Exception");
 				log.warn(e);
-			} finally {
+			}
+			finally {
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
 				// Controle do timeout manualmente
@@ -694,10 +693,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Aguarda um texto NÃO ficar visível na página. É importante saber que
-	 * textos que não estão visíveis mas estão no HTML não são considerados.
-	 * Também não são considerados textos que estiverem dentro das tags SCRIPT e
-	 * STYLE.
+	 * Aguarda um texto NÃO ficar visível na página. É importante saber que textos que não estão visíveis mas estão no HTML não são considerados. Também não são considerados textos que estiverem dentro das tags SCRIPT e STYLE.
 	 * 
 	 * @param text
 	 *            Texto a ser encontrado.
@@ -727,7 +723,8 @@ public class WebBase extends MappedElement implements BaseUI {
 						found = false;
 						break;
 					}
-				} else {
+				}
+				else {
 
 					for (int i = 0; i < frame.countFrames(); i++) {
 
@@ -749,13 +746,16 @@ public class WebBase extends MappedElement implements BaseUI {
 				}
 
 				countTries += 1;
-			} catch (BehaveException be) {
+			}
+			catch (BehaveException be) {
 				log.warn("waitNotVisibleText BehaveException");
 				log.warn(be);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.warn("waitNotVisibleText Exception");
 				log.warn(e);
-			} finally {
+			}
+			finally {
 				getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 
 				// Controle do timeout manualmente
@@ -767,8 +767,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método que busca o texto dentro de um elemento utilizando os métodos de
-	 * tentativa e controle manual de timeout.
+	 * Método que busca o texto dentro de um elemento utilizando os métodos de tentativa e controle manual de timeout.
 	 * 
 	 * @param text
 	 *            Texto a ser encontrado no elemento.
@@ -784,9 +783,7 @@ public class WebBase extends MappedElement implements BaseUI {
 			try {
 
 				/*
-				 * Busca o texto dentro do elemento, atentar para o método
-				 * getText, ele não é o getText do WebDriver e sim do Element do
-				 * framework (WebTextField, WebSelect...)
+				 * Busca o texto dentro do elemento, atentar para o método getText, ele não é o getText do WebDriver e sim do Element do framework (WebTextField, WebSelect...)
 				 */
 				String elementText = getText();
 				if (visible) {
@@ -796,30 +793,32 @@ public class WebBase extends MappedElement implements BaseUI {
 						log.debug("SIM!");
 						ok = true;
 						break;
-					} else {
-						log.debug("NÃO!");
 					}
-				} else {
+					log.debug("NÃO!");
+				}
+				else {
 					log.debug("NÃO existe o texto [" + text + "] no texto do compoenente [" + elementText + "]?");
 
 					if (!elementText.contains(text)) {
 						log.debug("SIM!");
 						ok = true;
 						break;
-					} else {
-						log.debug("NÃO!");
 					}
+					log.debug("NÃO!");
 				}
 
 				log.debug("Vai TENTAR novamente encontrar o texto");
 
-			} catch (BehaveException be) {
+			}
+			catch (BehaveException be) {
 				log.warn("Text in element BehaveException");
 				log.warn(be);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.warn("Text in element Exception");
 				log.warn(e);
-			} finally {
+			}
+			finally {
 
 				// Controle do timeout manualmente
 				if (!ok && GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
@@ -830,16 +829,14 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Método chamado pelas frases que aguardam o primeiro elemento do locator
-	 * não está visível.
+	 * Método chamado pelas frases que aguardam o primeiro elemento do locator não está visível.
 	 */
 	public void waitInvisible() {
 		waitInvisible(0);
 	}
 
 	/**
-	 * Aguarda que um elemento selecionado pela sua posição no locator não
-	 * esteja visível.
+	 * Aguarda que um elemento selecionado pela sua posição no locator não esteja visível.
 	 * 
 	 * @param index
 	 *            Posição no locator do element.
@@ -856,7 +853,8 @@ public class WebBase extends MappedElement implements BaseUI {
 			waitVis.until(ExpectedConditions.visibilityOfElementLocated(by));
 
 			testInvisibility = true;
-		} catch (org.openqa.selenium.TimeoutException e) {
+		}
+		catch (org.openqa.selenium.TimeoutException e) {
 			testInvisibility = false;
 		}
 
@@ -870,16 +868,14 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Retira o foco do campo. O comportamento padrão para isso é selecionar o
-	 * <body>
+	 * Retira o foco do campo. O comportamento padrão para isso é selecionar o <body>
 	 */
 	public void blur() {
 		getDriver().findElement(By.tagName("body")).click();
 	}
 
 	/**
-	 * Aguarda um texto na página inteira (exceto as tags script e style). Na
-	 * verdade chama o método waitVisibleText
+	 * Aguarda um texto na página inteira (exceto as tags script e style). Na verdade chama o método waitVisibleText
 	 * 
 	 * @param text
 	 *            Texto a ser encontrato na página.
@@ -889,8 +885,7 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
-	 * Aguarda que o texto não esteja na página inteira (exceto as tags script e
-	 * style). Na verdade chama o método waitNotVisibleText
+	 * Aguarda que o texto não esteja na página inteira (exceto as tags script e style). Na verdade chama o método waitNotVisibleText
 	 * 
 	 * @param text
 	 *            Texto a não ser encontrado na página.
