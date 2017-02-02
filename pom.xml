@@ -23,7 +23,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component</groupId>
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.5.2-SNAPSHOT</version>
+	<version>1.5.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>

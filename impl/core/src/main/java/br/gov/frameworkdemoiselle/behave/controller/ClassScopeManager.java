@@ -15,7 +15,7 @@ public class ClassScopeManager {
 	@AfterClass
 	public static void clearClassLists() {
 		BehaveMessage bm = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
-		if (!BehaveConfig.getRunner_legacyRunner()){
+		if (!BehaveConfig.getRunner_LegacyRunner()){
 			behaveContext.getStepsClass().clear();
 			behaveContext.getStoriesClass().clear();
 			behaveContext.getStoriesReuseClass().clear();

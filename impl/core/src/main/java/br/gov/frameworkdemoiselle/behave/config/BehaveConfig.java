@@ -162,6 +162,10 @@ public class BehaveConfig {
 		return Boolean.parseBoolean(getProperty("behave.parser.coloredconsole.enabled", "false"));
 	}
 
+	public static boolean getParser_ErroDuplicateScenarios() {
+		return Boolean.parseBoolean(getProperty("behave.parser.erroDuplicateScenarios", "true"));
+	}
+
 	/** INTEGRATION PROPERTIES **/
 
 	// habilita a integracao
@@ -279,12 +283,13 @@ public class BehaveConfig {
 	}
 
 	// Níves de zoom out que o framework realizará antes de capturar a tela
-	public static int getRunner_screenShotZoomout() {
+	public static int getRunner_ScreenShotZoomout() {
 		return Integer.parseInt(getProperty("behave.runner.screen.screenshot.zoomout", "0"));
 	}
 
-	// Ativa o uso da nova implementação que separa os .story por escopos ou mantém a maneira original sem escopos
-	public static boolean getRunner_legacyRunner() {
+	// Ativa o uso da nova implementação que separa os .story por escopos ou
+	// mantém a maneira original sem escopos
+	public static boolean getRunner_LegacyRunner() {
 		return Boolean.parseBoolean(getProperty("behave.runner.legacyRunner", "true"));
 	}
 

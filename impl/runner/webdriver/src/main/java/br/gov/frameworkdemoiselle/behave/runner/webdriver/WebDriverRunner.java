@@ -198,10 +198,10 @@ public class WebDriverRunner implements Runner {
 
 		File screenshot = null;
 
-		if (BehaveConfig.getRunner_screenShotZoomout() != 0) {
+		if (BehaveConfig.getRunner_ScreenShotZoomout() != 0) {
 			WebElement html = driver.findElement(By.tagName("html"));
 
-			for (int x = 0; x < BehaveConfig.getRunner_screenShotZoomout(); x++) {
+			for (int x = 0; x < BehaveConfig.getRunner_ScreenShotZoomout(); x++) {
 				html.sendKeys(Keys.chord(Keys.CONTROL, Keys.SUBTRACT));
 			}
 
