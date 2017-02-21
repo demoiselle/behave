@@ -17,6 +17,12 @@
 		<citetitle>Versão 1.5.2</citetitle>
 		<itemizedlist>
 			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/442">
+					<emphasis>[Melhoria]</emphasis>
+					Melhorias nas classes DataProviderSteps e WebAutoComplete
+				</ulink>
+			</listitem>
+			<listitem>
 				<ulink url="https://github.com/demoiselle/behave/issues/435">
 					<emphasis>[Melhoria]</emphasis>
 					Mais melhorias gerais nos métodos de espera e busca de elementos e textos na tela

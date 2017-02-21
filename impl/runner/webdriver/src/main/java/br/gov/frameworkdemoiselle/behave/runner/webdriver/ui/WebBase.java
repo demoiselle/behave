@@ -637,8 +637,8 @@ public class WebBase extends MappedElement implements BaseUI {
 
 					String textHtml = elementsFound.get(0).getText();
 
-					log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
-
+					log.debug("O tamanho do texto analisado é de [" + textHtml.length() + "]");
+					
 					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
 						// "] na página");
@@ -657,8 +657,8 @@ public class WebBase extends MappedElement implements BaseUI {
 							WebElement element = elementsFound.get(0);
 
 							String textHtml = element.getText();
-
-							log.debug("O tamanho do texto analizado é de [" + textHtml.length() + "]");
+							
+							log.debug("O tamanho do texto analisado é de [" + textHtml.length() + "]");
 
 							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +

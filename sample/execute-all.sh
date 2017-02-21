@@ -8,22 +8,36 @@ then
 fi
 
 for ((i=1;i<=$1;i++)); do
-	for d in */ ; do
-		cd $d
-		mvn clean test
+        echo ""
+        echo ""
+        echo "EXECUÇÃO N $i"
+        echo ""
+        echo ""
 
-		# Trata o status de retorno do Maven
-		STATUS=$?
-		echo "==========================================="
-		if [ $STATUS -eq 0 ]; then
-			echo "Successful"
+	for dir in */ ; do		
+		if [ "$dir" != "treino-desktop/" ]; then
+			cd $dir
+			mvn clean test
+	
+			# Trata o status de retorno do Maven
+			STATUS=$?
+			echo "==========================================="
+			if [ $STATUS -eq 0 ]; then
+				echo "Successful"
+			else
+				echo "Failed - Testes abortados"
+				exit
+			fi
+			echo "==========================================="
+	
+			cd ..
 		else
-			echo "Failed - Testes abortados"
-			exit
+			echo ""
+			echo ""
+			echo "Pulou o teste de desktop"
+			echo ""
+			echo ""
 		fi
-		echo "==========================================="
-
-		cd ..
 	done
 done
 
