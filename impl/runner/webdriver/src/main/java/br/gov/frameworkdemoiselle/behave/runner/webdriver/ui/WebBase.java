@@ -286,6 +286,9 @@ public class WebBase extends MappedElement implements BaseUI {
 		final By by = ByConverter.convert(getElementMap().locatorType(), locator);
 		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
+		// Variável para calcular o tempo gasto para encontrar o texto
+		Date startWaitTotal = GregorianCalendar.getInstance().getTime();
+
 		// Executa o controle de verificação de tempo manualmente
 		while (true) {
 
@@ -301,11 +304,22 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Aguarda o loading
 				waitLoading();
 
+				// --------------- Cálculo do tempo gasto ---------------
+				Date endLoading = GregorianCalendar.getInstance().getTime();
+				Long diffLoading = endLoading.getTime() - startWaitTotal.getTime();
+				log.debug("O tempo para esperar o LOADING foi de [" + diffLoading + "ms]");
+
 				// Garante o tempo minimo para verificação
 				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
 
 				// Espera ser visível e clicável
 				waitClickable(by);
+
+				// --------------- Cálculo do tempo gasto ---------------
+				Date endClickable = GregorianCalendar.getInstance().getTime();
+				Long diffClickable = endClickable.getTime() - endLoading.getTime();
+				Long diffTotal = endClickable.getTime() - startWaitTotal.getTime();
+				log.debug("O tempo para esperar o CLICKABLE foi de [" + diffClickable + "ms] e total foi de [" + diffTotal + "]");
 
 				// Garante o tempo minimo para verificação
 				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
@@ -313,6 +327,12 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Esta verificação é necessária mesmo que dentro do clickable
 				// ele já faça
 				waitVisibility(by);
+
+				// --------------- Cálculo do tempo gasto ---------------
+				Date endVisibility = GregorianCalendar.getInstance().getTime();
+				Long diffVisibility = endVisibility.getTime() - endClickable.getTime();
+				diffTotal = endVisibility.getTime() - startWaitTotal.getTime();
+				log.debug("O tempo para esperar o VISIBILITY foi de [" + diffVisibility + "ms] e total foi de [" + diffTotal + "]");
 
 				// Passou por todas as verificações
 				break;
@@ -611,8 +631,6 @@ public class WebBase extends MappedElement implements BaseUI {
 		frame = new SwitchDriver(driver);
 		return frame;
 	}
-	
-	
 
 	/**
 	 * Aguarda um texto ficar visível na página. É importante saber que textos
@@ -631,7 +649,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 		// Variável para calcular o tempo gasto para encontrar o texto
 		Date startSearch = GregorianCalendar.getInstance().getTime();
-		
+
 		while (true) {
 			try {
 
@@ -643,15 +661,15 @@ public class WebBase extends MappedElement implements BaseUI {
 				// Quando tem somente 1 frame
 				if (frame.countFrames() == 1) {
 					List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
-					
+
 					String textHtml = elementsFound.get(0).getText();
-					
+
 					log.debug("O tamanho do texto analisado é de [" + textHtml.length() + "]");
-					
+
 					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
 						// "] na página");
-						found = true;						
+						found = true;
 						break;
 					}
 				} else {
@@ -663,11 +681,11 @@ public class WebBase extends MappedElement implements BaseUI {
 						List<WebElement> elementsFound = getDriver().findElements(By.xpath("/html"));
 						if (elementsFound.size() == 1) {
 							WebElement element = elementsFound.get(0);
-							
+
 							String textHtml = element.getText();
-							
+
 							log.debug("[FRAME] O tamanho do texto analisado é de [" + textHtml.length() + "]");
-							
+
 							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +
 								// "] na página utilizando os frames");
@@ -677,14 +695,14 @@ public class WebBase extends MappedElement implements BaseUI {
 						}
 					}
 				}
-				
+
 				// Quando encontra o texto
-				if (found) {	
-					
+				if (found) {
+
 					// Cálculo do tempo gasto para encontrar o texto
-					Long diffSearch = GregorianCalendar.getInstance().getTime().getTime() - startSearch.getTime();						
-					log.debug("O tempo para encontrar o texto foi de [" + diffSearch + "ms]");	
-					
+					Long diffSearch = GregorianCalendar.getInstance().getTime().getTime() - startSearch.getTime();
+					log.debug("O tempo para encontrar o texto foi de [" + diffSearch + "ms]");
+
 					break;
 				}
 			} catch (BehaveException be) {
