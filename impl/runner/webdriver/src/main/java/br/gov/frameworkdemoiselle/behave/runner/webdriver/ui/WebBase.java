@@ -635,7 +635,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		logStatistics("[waitClickable] O tempo para esperar a busca por FRAME foi de [" + diffFrame + "ms]");
 
 		// Faz a verificação no FRAME selecionado
-		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds() / 1000);
+		WebDriverWait wait = new WebDriverWait(getDriver(), BehaveConfig.getRunner_ScreenMaxWait() / 1000);
 		wait.until(ExpectedConditions.elementToBeClickable(by));
 
 		// --------------- Cálculo do tempo gasto ---------------
@@ -665,7 +665,7 @@ public class WebBase extends MappedElement implements BaseUI {
 		findFrameContainingElement(by);
 
 		// Faz a verificação no FRAME selecionado
-		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds() / 1000);
+		WebDriverWait wait = new WebDriverWait(getDriver(), BehaveConfig.getRunner_ScreenMaxWait() / 1000);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 
