@@ -83,6 +83,18 @@ public class WebBase extends MappedElement implements BaseUI {
 	}
 
 	/**
+	 * Mostra no log (DEBUG) as informações estatísticas da execução do teste.
+	 * 
+	 * @param msg
+	 *            mensagem a ser mostrada no log
+	 */
+	public void logStatistics(String msg) {
+		if (BehaveConfig.getRunner_ShowExecutionStatistics()) {
+			log.debug(msg);
+		}
+	}
+
+	/**
 	 * Função principal que pega o elemento da tela. Nova Funcionalidade: Agora
 	 * ele busca o elemento em todos os frames
 	 * 
@@ -307,7 +319,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				// --------------- Cálculo do tempo gasto ---------------
 				Date endLoading = GregorianCalendar.getInstance().getTime();
 				Long diffLoading = endLoading.getTime() - startWaitTotal.getTime();
-				log.debug("O tempo para esperar o LOADING foi de [" + diffLoading + "ms]");
+				logStatistics("O tempo para esperar o LOADING foi de [" + diffLoading + "ms]");
 
 				// Garante o tempo minimo para verificação
 				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
@@ -319,7 +331,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				Date endClickable = GregorianCalendar.getInstance().getTime();
 				Long diffClickable = endClickable.getTime() - endLoading.getTime();
 				Long diffTotal = endClickable.getTime() - startWaitTotal.getTime();
-				log.debug("O tempo para esperar o CLICKABLE foi de [" + diffClickable + "ms] e total foi de [" + diffTotal + "]");
+				logStatistics("O tempo para esperar o CLICKABLE foi de [" + diffClickable + "ms] e total foi de [" + diffTotal + "ms]");
 
 				// Garante o tempo minimo para verificação
 				getDriver().manage().timeouts().implicitlyWait(getImplicitlyWaitTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
@@ -332,7 +344,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				Date endVisibility = GregorianCalendar.getInstance().getTime();
 				Long diffVisibility = endVisibility.getTime() - endClickable.getTime();
 				diffTotal = endVisibility.getTime() - startWaitTotal.getTime();
-				log.debug("O tempo para esperar o VISIBILITY foi de [" + diffVisibility + "ms] e total foi de [" + diffTotal + "]");
+				logStatistics("O tempo para esperar o VISIBILITY foi de [" + diffVisibility + "ms] e total foi de [" + diffTotal + "ms]");
 
 				// Passou por todas as verificações
 				break;
@@ -451,35 +463,88 @@ public class WebBase extends MappedElement implements BaseUI {
 	 *            Locator para lolizar o elemento
 	 */
 	private void findFrameContainingElement(By by) {
-		// Primeiro encontra o frame que o elemento esta, para depois esperar
-		// ele
-		frame = getSwitchDriver(getDriver());
-		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
-		boolean found = false;
 
-		while (true) {
-			frame.bind();
+		try {
 
-			for (int i = 0; i < frame.countFrames(); i++) {
-				frame.switchNextFrame();
-				List<WebElement> elementsFound = getDriver().findElements(by);
-				if (elementsFound.size() > 0) {
-					found = true;
+			getDriver().manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+
+			// Variável para calcular o tempo gasto
+			Date startWaitTotal = GregorianCalendar.getInstance().getTime();
+
+			// Primeiro encontra o frame que o elemento esta, para depois
+			// esperar
+			// ele
+			frame = getSwitchDriver(getDriver());
+			long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+			boolean found = false;
+
+			// --------------- Cálculo do tempo gasto ---------------
+			Date endGetSwitcher = GregorianCalendar.getInstance().getTime();
+			Long diffFrame = endGetSwitcher.getTime() - startWaitTotal.getTime();
+			logStatistics("[findFrameContainingElement] O tempo para esperar o getSwitchDriver foi de [" + diffFrame + "ms]");
+
+			while (true) {
+				frame.bind();
+
+				// --------------- Cálculo do tempo gasto ---------------
+				Date endBind = GregorianCalendar.getInstance().getTime();
+				Long diffBind = endBind.getTime() - endGetSwitcher.getTime();
+				Long diffTotal = endBind.getTime() - startWaitTotal.getTime();
+				logStatistics("[findFrameContainingElement] O tempo para esperar o BIND foi de [" + diffBind + "ms] e total foi de [" + diffTotal + "ms]");
+
+				for (int i = 0; i < frame.countFrames(); i++) {
+
+					// --- SWITCH FRAME ---
+					Date startSwitchFrame = GregorianCalendar.getInstance().getTime();
+
+					frame.switchNextFrame();
+
+					// --------------- Cálculo do tempo gasto ---------------
+					Date endSwitchFrame = GregorianCalendar.getInstance().getTime();
+					Long diffSwitchFrame = endSwitchFrame.getTime() - startSwitchFrame.getTime();
+					diffTotal = endSwitchFrame.getTime() - startWaitTotal.getTime();
+					logStatistics("[findFrameContainingElement] O tempo para esperar o SWITCH FRAME foi de [" + diffSwitchFrame + "ms] e total foi de [" + diffTotal + "ms]");
+
+					// --- FIND ELEMENT ---
+					Date startFindElement = GregorianCalendar.getInstance().getTime();
+
+					List<WebElement> elementsFound = getDriver().findElements(by);
+
+					// --------------- Cálculo do tempo gasto ---------------
+					Date endFindElement = GregorianCalendar.getInstance().getTime();
+					Long diffFindElement = endFindElement.getTime() - startFindElement.getTime();
+					diffTotal = endFindElement.getTime() - startWaitTotal.getTime();
+					logStatistics("[findFrameContainingElement] O tempo para esperar o FIND ELEMENTS foi de [" + diffFindElement + "ms] e total foi de [" + diffTotal + "ms]");
+
+					if (elementsFound.size() > 0) {
+						found = true;
+						break;
+					}
+				}
+
+				if (found) {
+
+					// --------------- Cálculo do tempo gasto ---------------
+					Date end = GregorianCalendar.getInstance().getTime();
+					diffTotal = end.getTime() - startWaitTotal.getTime();
+					logStatistics("[findFrameContainingElement] O tempo para total do processo foi de [" + diffTotal + "ms]");
+
 					break;
+				}
+
+				waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+
+				// Controle do timeout manualmente
+				if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
+					throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
 				}
 			}
 
-			if (found) {
-				break;
-			}
-
-			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-
-			// Controle do timeout manualmente
-			if (GregorianCalendar.getInstance().getTimeInMillis() - startedTime > BehaveConfig.getRunner_ScreenMaxWait()) {
-				throw new BehaveException(message.getString("exception-element-not-found", getElementMap().name()));
-			}
+		} finally {
+			// Volta o tempo padrão de timeout
+			getDriver().manage().timeouts().implicitlyWait(BehaveConfig.getRunner_ScreenMaxWait(), TimeUnit.MILLISECONDS);
 		}
+
 	}
 
 	/**
@@ -560,17 +625,17 @@ public class WebBase extends MappedElement implements BaseUI {
 		// --------------- Cálculo do tempo gasto ---------------
 		Date endFrame = GregorianCalendar.getInstance().getTime();
 		Long diffFrame = endFrame.getTime() - startWaitTotal.getTime();
-		log.debug("O tempo para esperar a busca por FRAME foi de [" + diffFrame + "ms]");
+		logStatistics("[waitClickable] O tempo para esperar a busca por FRAME foi de [" + diffFrame + "ms]");
 
 		// Faz a verificação no FRAME selecionado
 		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
 		wait.until(ExpectedConditions.elementToBeClickable(by));
-		
+
 		// --------------- Cálculo do tempo gasto ---------------
 		Date endWaitExplicit = GregorianCalendar.getInstance().getTime();
 		Long diffWaitExcplicit = endWaitExplicit.getTime() - endFrame.getTime();
 		Long diffTotal = endWaitExplicit.getTime() - startWaitTotal.getTime();
-		log.debug("O tempo para esperar o WAIT EXPLICITO foi de [" + diffWaitExcplicit + "ms] e total foi de [" + diffTotal + "]");
+		logStatistics("[waitClickable] O tempo para esperar o WAIT EXPLICITO foi de [" + diffWaitExcplicit + "ms] e total foi de [" + diffTotal + "ms]");
 
 	}
 
@@ -680,7 +745,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 					String textHtml = elementsFound.get(0).getText();
 
-					log.debug("O tamanho do texto analisado é de [" + textHtml.length() + "]");
+					logStatistics("O tamanho do texto analisado é de [" + textHtml.length() + "]");
 
 					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
@@ -700,7 +765,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 							String textHtml = element.getText();
 
-							log.debug("[FRAME] O tamanho do texto analisado é de [" + textHtml.length() + "]");
+							logStatistics("[FRAME] O tamanho do texto analisado é de [" + textHtml.length() + "]");
 
 							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +
@@ -717,7 +782,7 @@ public class WebBase extends MappedElement implements BaseUI {
 
 					// Cálculo do tempo gasto para encontrar o texto
 					Long diffSearch = GregorianCalendar.getInstance().getTime().getTime() - startSearch.getTime();
-					log.debug("O tempo para encontrar o texto foi de [" + diffSearch + "ms]");
+					logStatistics("O tempo para encontrar o texto foi de [" + diffSearch + "ms]");
 
 					break;
 				}
@@ -835,7 +900,7 @@ public class WebBase extends MappedElement implements BaseUI {
 				 */
 				String elementText = getText();
 				if (visible) {
-					log.debug("Existe o texto [" + text + "] no texto do compoenente [" + elementText + "]?");
+					log.debug("Existe o texto [" + text + "] no texto do elemento [" + elementText + "]?");
 
 					if (elementText.contains(text)) {
 						log.debug("SIM!");
@@ -845,7 +910,7 @@ public class WebBase extends MappedElement implements BaseUI {
 						log.debug("NÃO!");
 					}
 				} else {
-					log.debug("NÃO existe o texto [" + text + "] no texto do compoenente [" + elementText + "]?");
+					log.debug("NÃO existe o texto [" + text + "] no texto do elemento [" + elementText + "]?");
 
 					if (!elementText.contains(text)) {
 						log.debug("SIM!");
