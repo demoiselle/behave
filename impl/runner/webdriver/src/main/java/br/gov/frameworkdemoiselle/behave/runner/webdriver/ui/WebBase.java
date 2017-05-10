@@ -436,6 +436,8 @@ public class WebBase extends MappedElement implements BaseUI {
 			}
 			catch (Exception e) {
 				existeLoading = false;
+				
+				log.debug(message.getString("message-loading-not-found"));
 			}
 
 			if (existeLoading) {
