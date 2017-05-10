@@ -36,10 +36,12 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 
 public class WebButton extends WebBase implements Button {
@@ -50,8 +52,13 @@ public class WebButton extends WebBase implements Button {
 			// Tenta utilizar o click normal
 			waitElement(0);
 			getElements().get(0).click();
-		} catch (WebDriverException ex) {
-			// Tenta método alternativo de click
+		}
+		catch (TimeoutException tex) {
+			// Para os casos em que o elemento foi encontrado e clicado, porém o tempo de carga da página excedeu o "behave.runner.screen.maxWait"
+			throw new BehaveException(tex);
+		}
+		catch (WebDriverException ex) {
+			// Tenta método alternativo de click caso o elemento não seja encontrado
 			WebElement el = getElements().get(0);
 			getJavascriptExecutor().executeScript("arguments[0].click();", el);
 		}
