@@ -551,11 +551,27 @@ public class WebBase extends MappedElement implements BaseUI {
 	 * @param by
 	 */
 	private void waitClickable(By by) {
+
+		// Variável para calcular o tempo gasto
+		Date startWaitTotal = GregorianCalendar.getInstance().getTime();
+
 		findFrameContainingElement(by);
+
+		// --------------- Cálculo do tempo gasto ---------------
+		Date endFrame = GregorianCalendar.getInstance().getTime();
+		Long diffFrame = endFrame.getTime() - startWaitTotal.getTime();
+		log.debug("O tempo para esperar a busca por FRAME foi de [" + diffFrame + "ms]");
 
 		// Faz a verificação no FRAME selecionado
 		WebDriverWait wait = new WebDriverWait(getDriver(), getImplicitlyWaitTimeoutInMilliseconds());
 		wait.until(ExpectedConditions.elementToBeClickable(by));
+		
+		// --------------- Cálculo do tempo gasto ---------------
+		Date endWaitExplicit = GregorianCalendar.getInstance().getTime();
+		Long diffWaitExcplicit = endWaitExplicit.getTime() - endFrame.getTime();
+		Long diffTotal = endWaitExplicit.getTime() - startWaitTotal.getTime();
+		log.debug("O tempo para esperar o WAIT EXPLICITO foi de [" + diffWaitExcplicit + "ms] e total foi de [" + diffTotal + "]");
+
 	}
 
 	/**
