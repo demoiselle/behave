@@ -13,7 +13,7 @@ public class TextVisibleTest {
 	}
 
 	@Test
-	public void testTree() throws Throwable {
+	public void test() throws Throwable {
 		eng.run("/stories/text/");
 	}
 }

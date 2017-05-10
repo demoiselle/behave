@@ -15,7 +15,7 @@ public class PrimefacesTest {
 	}
 
 	@Test
-	public void testTree() throws Throwable {
+	public void test() throws Throwable {
 		eng.run("/stories/primefaces/");
 	}
 }

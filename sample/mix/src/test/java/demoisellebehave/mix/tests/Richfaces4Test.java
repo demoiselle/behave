@@ -14,7 +14,7 @@ public class Richfaces4Test {
 	}
 
 	@Test
-	public void testTree() throws Throwable {
+	public void test() throws Throwable {
 		eng.addSteps(new MySteps());
 		eng.run("/stories/richfaces4/");
 	}

@@ -47,7 +47,9 @@ import br.gov.frameworkdemoiselle.behave.internal.util.PropertiesLoaderUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 
 /**
- * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo behave.properties com a recurso de sobrescrita no qual o arquivo do usuário sobrescreve qualquer outra propriedade.
+ * Gerecia das configurações do Demoiselle Behave. Utiliza o arquivo
+ * behave.properties com a recurso de sobrescrita no qual o arquivo do usuário
+ * sobrescreve qualquer outra propriedade.
  * 
  * Caso a propriedade seja informada na JVM está sobrescreverá as demais.
  * 
@@ -70,9 +72,11 @@ public class BehaveConfig {
 	}
 
 	/**
-	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar uma nova proprieade em seu projeto
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
+	 * uma nova proprieade em seu projeto
 	 * 
-	 * Verifica se a propriedade foi setada antes no System.properties. Nesta caso o System sobrescreve todas as outras
+	 * Verifica se a propriedade foi setada antes no System.properties. Nesta
+	 * caso o System sobrescreve todas as outras
 	 * 
 	 * @param key
 	 *            Chave
@@ -103,7 +107,8 @@ public class BehaveConfig {
 	}
 
 	/**
-	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar uma nova proprieade em seu projeto
+	 * Retorna uma propriedade qualquer. Util quando o usuário deseja adicionar
+	 * uma nova proprieade em seu projeto
 	 * 
 	 * @param key
 	 * @return
@@ -244,7 +249,7 @@ public class BehaveConfig {
 	public static boolean getRunner_ProfileEnabled() {
 		return Boolean.parseBoolean(getProperty("behave.runner.profile.enabled", "false"));
 	}
-	
+
 	// Passagem de comandos na inicialização do navegador
 	public static String getRunner_ScreenCommandLineOptions() {
 		return getProperty("behave.runner.screen.commandLineOptions", "");
@@ -291,6 +296,11 @@ public class BehaveConfig {
 	// mantém a maneira original sem escopos
 	public static boolean getRunner_LegacyRunner() {
 		return Boolean.parseBoolean(getProperty("behave.runner.legacyRunner", "true"));
+	}
+
+	// Ativa o o log (DEBUG) de mensagems de estatísticas de execição
+	public static boolean getRunner_ShowExecutionStatistics() {
+		return Boolean.parseBoolean(getProperty("behave.runner.showExecutionStatistics", "false"));
 	}
 
 	/*

@@ -203,6 +203,10 @@
 				<listitem>
 					<citetitle>behave.runner.legacyRunner</citetitle>
 					: Habilita ou desabilita o modo de execução legado para retrocompatibilidade. O valor padrão é <emphasis>true</emphasis>.
+				</listitem>	
+				<listitem>
+					<citetitle>behave.runner.legacyRunner</citetitle>
+					: Ativa o o log (DEBUG) de mensagems de estatísticas de execução. O valor padrão é <emphasis>false</emphasis>.
 				</listitem>		
 			</itemizedlist>
 		</para>
