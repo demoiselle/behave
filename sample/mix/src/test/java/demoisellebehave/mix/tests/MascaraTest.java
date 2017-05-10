@@ -13,7 +13,7 @@ public class MascaraTest {
 	}
 
 	@Test
-	public void testTree() throws Throwable {
+	public void test() throws Throwable {
 		eng.run("/stories/mascara/");
 	}
 }
