@@ -38,6 +38,7 @@ package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
@@ -628,6 +629,9 @@ public class WebBase extends MappedElement implements BaseUI {
 		final long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 		boolean found = false;
 
+		// Variável para calcular o tempo gasto para encontrar o texto
+		Date startSearch = GregorianCalendar.getInstance().getTime();
+		
 		while (true) {
 			try {
 
@@ -647,7 +651,7 @@ public class WebBase extends MappedElement implements BaseUI {
 					if (textHtml.contains(text)) {
 						// log.debug("Encontrou o texto [" + text +
 						// "] na página");
-						found = true;
+						found = true;						
 						break;
 					}
 				} else {
@@ -662,7 +666,7 @@ public class WebBase extends MappedElement implements BaseUI {
 							
 							String textHtml = element.getText();
 							
-							log.debug("O tamanho do texto analisado é de [" + textHtml.length() + "]");
+							log.debug("[FRAME] O tamanho do texto analisado é de [" + textHtml.length() + "]");
 							
 							if (textHtml.contains(text)) {
 								// log.debug("Encontrou o texto [" + text +
@@ -673,7 +677,14 @@ public class WebBase extends MappedElement implements BaseUI {
 						}
 					}
 				}
-				if (found) {
+				
+				// Quando encontra o texto
+				if (found) {	
+					
+					// Cálculo do tempo gasto para encontrar o texto
+					Long diffSearch = GregorianCalendar.getInstance().getTime().getTime() - startSearch.getTime();						
+					log.debug("O tempo para encontrar o texto foi de [" + diffSearch + "ms]");	
+					
 					break;
 				}
 			} catch (BehaveException be) {
