@@ -745,11 +745,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 					String textHtml = elementsFound.get(0).getText();
 
-					logStatistics("O tamanho do texto analisado é de [" + textHtml.length() + "]");
+					logStatistics("O tamanho do texto analisado é de [" + textHtml.getBytes().length + " bytes]");
 
 					if (textHtml.contains(text)) {
-						// log.debug("Encontrou o texto [" + text +
-						// "] na página");
 						found = true;
 						break;
 					}
@@ -765,11 +763,9 @@ public class WebBase extends MappedElement implements BaseUI {
 
 							String textHtml = element.getText();
 
-							logStatistics("[FRAME] O tamanho do texto analisado é de [" + textHtml.length() + "]");
+							logStatistics("[FRAME] O tamanho do texto analisado é de [" + textHtml.getBytes().length + " bytes] no frame [" + frame.currentFrame() + "]");
 
 							if (textHtml.contains(text)) {
-								// log.debug("Encontrou o texto [" + text +
-								// "] na página utilizando os frames");
 								found = true;
 								break;
 							}
