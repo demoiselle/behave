@@ -487,11 +487,14 @@ public class WebBase extends MappedElement implements BaseUI {
 			logStatistics("[findFrameContainingElement] O tempo para esperar o getSwitchDriver foi de [" + diffFrame + "ms]");
 
 			while (true) {
+				
+				Date startBind = GregorianCalendar.getInstance().getTime();
+				
 				frame.bind();
 
 				// --------------- Cálculo do tempo gasto ---------------
 				Date endBind = GregorianCalendar.getInstance().getTime();
-				Long diffBind = endBind.getTime() - endGetSwitcher.getTime();
+				Long diffBind = endBind.getTime() - startBind.getTime();
 				Long diffTotal = endBind.getTime() - startWaitTotal.getTime();
 				logStatistics("[findFrameContainingElement] O tempo para esperar o BIND foi de [" + diffBind + "ms] e total foi de [" + diffTotal + "ms]");
 
