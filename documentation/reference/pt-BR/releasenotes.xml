@@ -14,6 +14,46 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.5.3</citetitle>
+		<itemizedlist>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/465">
+					<emphasis>[Melhoria]</emphasis>
+					Nova configuração para ativar e desativar logs estatísticos de execução
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/457">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na implementação da interface Select para Desktop
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/454">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria no tratamento de elementos visiveis e clicáveis
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/447">
+					<emphasis>[Melhoria]</emphasis>
+					Melhoria na velocidade de execução de testes
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/446">
+					<emphasis>[Erro]</emphasis>
+					Cenários não eram de presentes em histórias de reuso
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/443">
+					<emphasis>[Erro]</emphasis>
+					Correção do modo legado das funcionalidades de adição de histórias
+				</ulink>
+			</listitem>
+		</itemizedlist>
+			
 		<citetitle>Versão 1.5.2</citetitle>
 		<itemizedlist>
 			<listitem>
