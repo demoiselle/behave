@@ -21,3 +21,9 @@
 ## Contribua!
  
 * Faça um clone do projeto: ('git clone https://github.com/demoiselle/behave.git')
+
+## Geração de Build
+
+Para gerar a build são necessárias as seguintes versões:
+* Maven 2 (2.2.1)
+* Java 6 
