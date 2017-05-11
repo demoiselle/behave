@@ -26,4 +26,6 @@
 
 Para gerar a build são necessárias as seguintes versões:
 * Maven 2 (2.2.1)
-* Java 6 
+* Java 6
+
+> A documentação deve ser gerada a parte com outras versões. A Documentação impede a geração da build com Java 6 e Maven 2. 
