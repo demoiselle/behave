@@ -55,7 +55,8 @@
 		<module>impl/extension/regression/repository</module>
 		<module>impl/extension/regression/step</module>
 
-		<module>documentation/reference</module>
+		<!-- Gerar a documentação a parte, pois não funciona com JAVA 6 e Maven 2 -->
+		<!-- <module>documentation/reference</module> -->
 	</modules>
 
 	<distributionManagement>
