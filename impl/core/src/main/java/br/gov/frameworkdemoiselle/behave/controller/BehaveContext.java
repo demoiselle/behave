@@ -199,14 +199,14 @@ public class BehaveContext {
 				steps.addAll(stepsGlobal);
 				steps.addAll(stepsClass);
 				steps.addAll(stepsMethod);
-				
+			
 				storiesFiles.addAll(storiesPathGlobal);
 				storiesFiles.addAll(storiesPathClass);
 				storiesFiles.addAll(storiesPathMethod);
 				
-				storiesFiles.addAll(storiesReusePathGlobal);
-				storiesFiles.addAll(storiesReusePathClass);
-				storiesFiles.addAll(storiesReusePathMethod);
+				storiesReusePath.addAll(storiesReusePathGlobal);
+				storiesReusePath.addAll(storiesReusePathClass);
+				storiesReusePath.addAll(storiesReusePathMethod);
 			}
 			
 			if (storiesFiles == null || storiesFiles.isEmpty()) {
