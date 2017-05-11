@@ -139,6 +139,9 @@ public class WebTextField extends WebBase implements TextField {
 	public void clear() {
 		waitElement(0);
 		
+		// Aguarda um pouco antes de limpar
+		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+		
 		// Limpa o campo enviando BACKSPACE
 		getElements().get(0).sendKeys(getValueToSend(Keys.chord(Keys.BACK_SPACE)));
 	}
