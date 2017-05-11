@@ -17,13 +17,14 @@ for ((i=1;i<=$1;i++)); do
 	for dir in */ ; do		
 		if [ "$dir" != "treino-desktop/" ]; then
 			cd $dir
-			mvn clean test
+			# mvn clean test
+			mvn test
 	
 			# Trata o status de retorno do Maven
 			STATUS=$?
 			echo "==========================================="
 			if [ $STATUS -eq 0 ]; then
-				echo "Successful"
+				echo ">>>>>>>>>>>>>>>>>>>>>>>>>> Successful"
 			else
 				echo "Failed - Testes abortados"
 				exit
@@ -40,6 +41,10 @@ for ((i=1;i<=$1;i++)); do
 		fi
 	done
 done
+
+echo "==========================================="
+echo "PROCCESS FINISHED"
+echo "==========================================="
 
 exit()
 

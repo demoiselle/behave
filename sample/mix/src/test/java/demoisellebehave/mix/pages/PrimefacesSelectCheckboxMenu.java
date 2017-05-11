@@ -16,10 +16,10 @@ public class PrimefacesSelectCheckboxMenu {
 	@ElementMap(name = "Select Panel", locatorType = ElementLocatorType.XPath, locator = { "//*[@id='j_idt87:menu_panel']/div/ul" })
 	private Select selectPanel;
 	
-	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt87:j_idt91']")
+	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt87:j_idt93']")
 	private Button btnSubmit;
 
-	@ElementMap(name = "Lista de Países", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, ':display')]/div/div)[1]")
+	@ElementMap(name = "Lista de Países", locatorType = ElementLocatorType.XPath, locator = "(//*[contains(@id, ':display')]/div/div)[2]")
 	private Label listaPaises;
 
 	@ElementMap(name = "Fechar", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt87:menu_panel']/div[1]/a")
