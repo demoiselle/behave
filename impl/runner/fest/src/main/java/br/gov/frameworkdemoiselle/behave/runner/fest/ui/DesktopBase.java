@@ -37,6 +37,9 @@
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
@@ -48,6 +51,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -78,8 +82,11 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
-		// Finder
-		Collection<Component> findedComponents = cf.findAll(runner.currentContainer, new ComponentMatcher() {
+		// Active window finder
+		Container activeWindow = getActiveWindow(cf);
+
+		// Component finder. Search initiates from 'activeWindow'.
+		Collection<Component> findedComponents = cf.findAll(activeWindow, new ComponentMatcher() {
 			@Override
 			public boolean matches(Component c) {
 				return matcher(c);
@@ -97,6 +104,48 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 			return (Component) findedComponents.toArray()[getElementIndex().index()];
 		else
 			return (Component) findedComponents.toArray()[0];
+	}
+	
+	/**
+	 * Find the active window among all {@link Frame Frames} and {@link Dialog Dialogs}.
+	 * 
+	 * @param cf Component finder to search over all AWT hierarchy.
+	 * @return the active window
+	 */
+	private Container getActiveWindow(ComponentFinder cf) {
+
+		Collection<Component> activeScreens = cf.findAll(runner.currentContainer, new ComponentMatcher() {
+			@Override
+			public boolean matches(Component c) {
+				boolean match = ((c instanceof Frame) && ((Frame)c).isActive()) 
+						|| ((c instanceof Dialog) && ((Dialog)c).isActive())
+						|| ((c instanceof JOptionPane) && (((Dialog)((JOptionPane)c).getRootPane().getParent()).isActive()));
+								
+				return match;
+			}
+		});
+		
+		if (activeScreens.size() == 1) {
+			return (Container) activeScreens.toArray()[0];
+		} else {
+			
+			if (activeScreens.size() > 1) {
+				
+				for (Component screen : activeScreens) {
+					
+					if (screen instanceof JOptionPane) {
+						return (Container) screen;
+					}
+					
+				}
+				
+				throw new BehaveException(message.getString("exception-active-window-not-found", activeScreens.size(), runner.currentContainer.toString(), runner.getHierarchy()));				
+			} else {
+				throw new BehaveException(message.getString("exception-active-window-not-found", activeScreens.size(), runner.currentContainer.toString(), runner.getHierarchy()));
+			}
+			
+		}
+		
 	}
 
 	/**
