@@ -36,10 +36,14 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
 
-import junit.framework.Assert;
+import java.util.GregorianCalendar;
+
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
+import junit.framework.Assert;
 
 public class DesktopScreen extends DesktopBase implements Screen {
 
@@ -49,7 +53,30 @@ public class DesktopScreen extends DesktopBase implements Screen {
 		waitText(text, 0L);
 	}
 
-	public void waitText(String text, Long timeout) {
-		Assert.assertTrue(message.getString("exception-text-not-found", text), super.runner.getHierarchy().contains("text='" + text + "'"));
+	public void waitText(String text, Long timeout) {		
+		boolean found = false;
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+
+		while (true) {
+
+			try {				
+				found = super.runner.getHierarchy().contains("text='" + text + "'");				
+			} catch (BehaveException be) {
+				throw be;
+			} catch (Exception e) {
+				throw new BehaveException(message.getString("exception-unexpected", e.getMessage()), e);
+			}
+
+			if (found) {
+				break;
+			}
+
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
+			if ((GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > BehaveConfig.getRunner_ScreenMaxWait()) {
+				Assert.fail(message.getString("message-text-not-found", text));
+			}
+
+		}
+				
 	}
 }
