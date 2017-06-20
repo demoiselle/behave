@@ -45,4 +45,9 @@ public interface FileUpload extends BaseUI {
 
 	public void sendKeys(CharSequence... keysToSend);
 	
+	public void cancel();
+	
+	public void setCurrentDirectory(String dirPath);
+	
+	public void openFile(String fileName);
 }

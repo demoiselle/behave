@@ -58,6 +58,7 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Button;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Calendar;
 import br.gov.frameworkdemoiselle.behave.runner.ui.CheckBox;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.FileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Grid;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Link;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Menu;
@@ -460,6 +461,27 @@ public class CommonSteps implements Step {
 			((Tree) element).clickTreeRow(Integer.parseInt(row));
 		else
 			throw new BehaveException(message.getString("exception-invalid-type", element.getClass().getName()));
+	}
+	
+	@When(value = "cancelo a sele\u00E7\u00E3o de arquivo", priority = 1)
+	@Then(value = "cancelo a sele\u00E7\u00E3o de arquivo", priority = 1)
+	public void cancelFileSelection() {
+		FileUpload fileUpload = (FileUpload) runner.getElement(FileUpload.class);
+		fileUpload.cancel();
+	}
+	
+	@When(value = "altero o diret\u00F3rio de abertura de arquivo para \"$dir\"", priority = 1)
+	@Then(value = "altero o diret\u00F3rio de abertura de arquivo para \"$dir\"", priority = 1)
+	public void setFileSelectionCurrentDirectory(String dirPath) {
+		FileUpload fileUpload = (FileUpload) runner.getElement(FileUpload.class);
+		fileUpload.setCurrentDirectory(dirPath);
+	}
+	
+	@When(value = "peço para abrir o arquivo \"$file\"", priority = 1)
+	@Then(value = "peço para abrir o arquivo \"$file\"", priority = 1)
+	public void openFile(String fileName) {
+		FileUpload fileUpload = (FileUpload) runner.getElement(FileUpload.class);
+		fileUpload.openFile(fileName);
 	}
 
 }

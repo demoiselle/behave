@@ -59,6 +59,8 @@ public interface Runner {
 	public String getTitle();
 
 	public Element getElement(String currentPageName, String elementName);
+	
+	public Element getElement(Class<?> elementClass);
 
 	public String getPageSource();
 
