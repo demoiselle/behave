@@ -143,6 +143,12 @@ Então será exibida a página de boas vindas</programlisting>
 				<listitem><para>[Dado que | Quando | Então] aguardo o elemento "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;" estar visível, clicável e habilitado</para></listitem>
 				
 				<listitem><para>[Dado que | Quando | Então] o elemento "&lt;elemento&gt;" referente a "&lt;lista de parâmetros&gt;" está visível e desabilitado</para></listitem>
+				
+				<listitem><para>[Quando | Então] cancelo a seleção de arquivo</para></listitem>
+				
+				<listitem><para>[Quando | Então] altero o diretório de abertura de arquivo para "&lt;diretório&gt;"</para></listitem>
+				
+				<listitem><para>[Quando | Então] peço para abrir o arquivo "&lt;arquivo&gt;"</para></listitem>
 															
 			</itemizedlist>
 		</para>
