@@ -67,9 +67,11 @@ import br.gov.frameworkdemoiselle.behave.internal.util.ReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.Runner;
 import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
+import br.gov.frameworkdemoiselle.behave.runner.fest.ui.DesktopFileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopElement;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopReflectionUtil;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Element;
+import br.gov.frameworkdemoiselle.behave.runner.ui.FileUpload;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Screen;
 
 public class FestRunner implements Runner {
@@ -244,6 +246,19 @@ public class FestRunner implements Runner {
 		element.setElementIndex(index);
 
 		return element;
+	}
+
+	@Override
+	public Element getElement(Class<?> elementClass) {
+		
+		if (elementClass.equals(FileUpload.class)) {
+			return new DesktopFileUpload();
+		} else {
+			BehaveMessage coreMessage = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
+			throw new BehaveException(coreMessage.getString("exception-method-not-implemented-for-type"
+					, "FestRunner.getElement(Class<?> elementClass)", elementClass.getSimpleName()));
+		}
+		
 	}
 
 	@Override

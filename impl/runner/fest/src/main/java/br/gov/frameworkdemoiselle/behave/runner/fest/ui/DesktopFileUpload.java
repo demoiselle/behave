@@ -34,20 +34,53 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.behave.runner.ui;
+package br.gov.frameworkdemoiselle.behave.runner.fest.ui;
+
+import java.io.File;
+
+import org.fest.swing.finder.JFileChooserFinder;
+import org.fest.swing.fixture.JFileChooserFixture;
+
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
+import br.gov.frameworkdemoiselle.behave.runner.ui.FileUpload;
 
 /**
  * 
  * @author SERPRO
  *
  */
-public interface FileUpload extends BaseUI {
+public class DesktopFileUpload extends DesktopBase implements FileUpload {
+	
+	protected BehaveMessage coreMessage = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
-	public void sendKeys(CharSequence... keysToSend);
-	
-	public void cancel();
-	
-	public void setCurrentDirectory(String dirPath);
-	
-	public void openFile(String fileName);
+	@Override
+	public void sendKeys(CharSequence... keysToSend) {
+		// TODO Implement for desktop applications
+		throw new BehaveException(coreMessage.getString("exception-method-not-implemented", "DesktopFileUpload.sendKeys(CharSequence... keysToSend)"));
+	}
+
+	@Override
+	public void cancel() {
+		JFileChooserFixture fileChooser = JFileChooserFinder.findFileChooser().using(((FestRunner) runner).robot);
+		fileChooser.cancel();
+	}
+
+	@Override
+	public void setCurrentDirectory(String dirPath) {
+		File dir = new File(dirPath);
+		JFileChooserFixture fileChooser = JFileChooserFinder.findFileChooser().using(((FestRunner) runner).robot);
+		fileChooser.setCurrentDirectory(dir);
+	}
+
+	@Override
+	public void openFile(String fileName) {
+		File file = new File(fileName);
+		JFileChooserFixture fileChooser = JFileChooserFinder.findFileChooser().using(((FestRunner) runner).robot);
+		fileChooser.selectFile(file);
+		fileChooser.approve();
+	}
+
 }

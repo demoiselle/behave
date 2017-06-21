@@ -161,6 +161,12 @@ public class WebDriverRunner implements Runner {
 		return element;
 	}
 
+	@Override
+	public Element getElement(Class<?> elementClass) {
+		// TODO Implement for web applications
+		throw new BehaveException(message.getString("exception-method-not-implemented", "WebDriverRunner.getElement(Class<?> elementClass)"));		
+	}
+
 	public String getPageSource() {
 		return driver.getPageSource();
 	}

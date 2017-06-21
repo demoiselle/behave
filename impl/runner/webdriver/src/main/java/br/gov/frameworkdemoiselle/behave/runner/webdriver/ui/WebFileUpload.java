@@ -36,8 +36,11 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.WebElement;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.FileUpload;
 
 /**
@@ -46,10 +49,31 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.FileUpload;
  *
  */
 public class WebFileUpload extends WebBase implements FileUpload {
+	
+	protected BehaveMessage coreMessage = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
+	@Override
 	public void sendKeys(CharSequence... keysToSend) {
 		WebElement input = this.getElements().get(0);
 		input.sendKeys(keysToSend);
+	}
+
+	@Override
+	public void cancel() {
+		// TODO Implement for web applications
+		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebFileUpload.cancel()"));
+	}
+
+	@Override
+	public void setCurrentDirectory(String dirPath) {
+		// TODO Implement for web applications
+		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebFileUpload.setCurrentDirectory()"));
+	}
+
+	@Override
+	public void openFile(String fileName) {
+		// TODO Implement for web applications
+		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebFileUpload.openFile()"));
 	}
 
 }
