@@ -36,12 +36,17 @@
  */
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.ui.Dialog;
 
 public class WebDialog extends WebBase implements Dialog {
+	
+	protected BehaveMessage coreMessage = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
 
 	public void accept() {
 		WebDriver driver = (WebDriver) runner.getDriver();
@@ -64,6 +69,12 @@ public class WebDialog extends WebBase implements Dialog {
 		WebDriver driver = (WebDriver) runner.getDriver();
 		Alert dialog = driver.switchTo().alert();
 		return dialog.getText();
+	}
+
+	@Override
+	public void accept(String buttonText, String dialogTitle) {
+		// TODO Implement for web applications
+		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebDialog.accept(String dialogName)"));
 	}
 
 }

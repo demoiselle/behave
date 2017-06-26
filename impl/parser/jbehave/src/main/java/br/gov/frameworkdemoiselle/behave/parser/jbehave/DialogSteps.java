@@ -57,6 +57,14 @@ public class DialogSteps extends CommonSteps {
 		dialog.accept();
 	}
 
+	@When("clico no bot\u00E3o \"$buttonText\" da caixa de di\u00E1logo de t\u00EDtulo \"$dialogTitle\"")
+	@Given("clico no bot\u00E3o \"$buttonText\" da caixa de di\u00E1logo de t\u00EDtulo \"$dialogTitle\"")
+	@Then("clico no bot\u00E3o \"$buttonText\" da caixa de di\u00E1logo de t\u00EDtulo \"$dialogTitle\"")
+	public void acceptDialog(String buttonText, String dialogTitle) {
+		Dialog dialog = (Dialog) InjectionManager.getInstance().getInstanceDependecy(Dialog.class);
+		dialog.accept(buttonText, dialogTitle);
+	}
+
 	@When("cancelo a caixa de di\u00E1logo")
 	@Given("cancelo a caixa de di\u00E1logo")
 	@Then("cancelo a caixa de di\u00E1logo")

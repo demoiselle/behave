@@ -53,14 +53,20 @@ public class DesktopScreen extends DesktopBase implements Screen {
 		waitText(text, 0L);
 	}
 
-	public void waitText(String text, Long timeout) {		
+	public void waitText(String text, Long timeout) {
 		boolean found = false;
 		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
 
 		while (true) {
 
-			try {				
-				found = super.runner.getHierarchy().contains("text='" + text + "'");				
+			try {
+				String hierarchy = super.runner.getHierarchy();
+				hierarchy = hierarchy.replaceAll("\n", "");
+				
+				boolean foundText = hierarchy.matches(makePattern("text", text));
+				boolean foundMessage = hierarchy.matches(makePattern("message", text));
+				
+				found = foundText || foundMessage;
 			} catch (BehaveException be) {
 				throw be;
 			} catch (Exception e) {
@@ -79,4 +85,11 @@ public class DesktopScreen extends DesktopBase implements Screen {
 		}
 				
 	}
+	
+	private String makePattern(String field, String text) {
+		String pattern = "(.*?)(" + field + "=')(.*?)(" + text + ")(.*?)";
+		
+		return pattern;
+	}
+	
 }

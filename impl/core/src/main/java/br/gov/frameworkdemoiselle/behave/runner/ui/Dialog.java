@@ -45,6 +45,8 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 public interface Dialog extends BaseUI {
 
 	public void accept();
+
+	public void accept(String buttonText, String dialogTitle);
 	
 	public void cancel();
 	
