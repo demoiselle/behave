@@ -74,7 +74,7 @@ public class WebDialog extends WebBase implements Dialog {
 	@Override
 	public void accept(String buttonText, String dialogTitle) {
 		// TODO Implement for web applications
-		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebDialog.accept(String dialogName)"));
+		throw new NotImplementedException(coreMessage.getString("exception-method-not-implemented", "WebDialog.accept(String buttonText, String dialogTitle)"));
 	}
 
 }
