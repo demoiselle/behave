@@ -44,5 +44,7 @@ package br.gov.frameworkdemoiselle.behave.runner.ui;
 public interface Screen extends BaseUI {
 
 	public void waitText(String text);
+	
+	public void waitNotText(String text);
 
 }
