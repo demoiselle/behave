@@ -82,10 +82,15 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 
 		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
 
-		// Active window finder
+		// Active window finder.
 		Container activeWindow = getActiveWindow(cf);
+		
+		// If no active window were found, searches from root.
+		if (activeWindow == null) {
+			activeWindow = runner.currentContainer;
+		}
 
-		// Component finder. Search initiates from 'activeWindow'.
+		// Component finder.
 		Collection<Component> findedComponents = cf.findAll(activeWindow, new ComponentMatcher() {
 			@Override
 			public boolean matches(Component c) {
@@ -141,7 +146,7 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 				
 				throw new BehaveException(message.getString("exception-active-window-not-found", activeScreens.size(), runner.currentContainer.toString(), runner.getHierarchy()));				
 			} else {
-				throw new BehaveException(message.getString("exception-active-window-not-found", activeScreens.size(), runner.currentContainer.toString(), runner.getHierarchy()));
+				return null;
 			}
 			
 		}
@@ -338,8 +343,8 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 			}
 		} else if (component instanceof JTabbedPane) {
 			JTabbedPane tabbedPane = (JTabbedPane) component;
-
-			for (int i = 0; i < tabbedPane.getComponentCount(); i++) {
+			
+			for (int i = 0; i < tabbedPane.getTabCount(); i++) {				
 				// Busca no título, mas o locator esta como LABEL!
 				if (tabbedPane.getTitleAt(i) != null && locatorType == ElementLocatorType.Label && tabbedPane.getTitleAt(i).equalsIgnoreCase(locator))
 					return true;
