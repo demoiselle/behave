@@ -1,6 +1,9 @@
 package br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.primefaces;
 
+import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
+import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
+import br.gov.frameworkdemoiselle.behave.runner.ui.Tree;
 import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
 
 /**
@@ -15,8 +18,10 @@ import br.gov.frameworkdemoiselle.behave.runner.webdriver.ui.WebBase;
  * 
  */
 
-public class Tree extends WebBase {
+public class PrimeFacesTree extends WebBase implements Tree {
 
+	protected BehaveMessage coreMessage = new BehaveMessage(BehaveConfig.MESSAGEBUNDLE);
+	
 	/*
 	 * Lista de funções Javascript para manipulação do compoente PrimeFaces Tree
 	 * 
@@ -155,6 +160,11 @@ public class Tree extends WebBase {
 		if (!isTree())
 			throw new BehaveException("O elemento [" + this.getElementMap().name() + "] selecionado possui ID [" + getId() + "] mas não é um componente PrimeFaces do tipo Tree.");
 
+	}
+
+	@Override
+	public void clickTreeRow(int row) {
+		throw new BehaveException(coreMessage.getString("exception-method-not-implemented", "PrimeFacesTree.clickTreeRow(int row)"));
 	}
 
 }
