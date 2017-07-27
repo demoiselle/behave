@@ -63,9 +63,11 @@ public class StoryFileConverter {
 				List<String> newFiles = FileUtil.getFilesInFolderByExtension(originalFolder, originalExtension, includeSubFolder);
 				
 				// Verifica se o arquivo de história será incluido somente 1 vez
-				for (String string : newFiles) {
-					if (originalBaseFilesName.indexOf(string) != -1) {
-						throw new BehaveException(bm.getString("exception-duplicate-history-file", string));
+				if (BehaveConfig.getParser_ErroDuplicateScenarios()) {
+					for (String string : newFiles) {
+						if (originalBaseFilesName.indexOf(string) != -1) {
+							throw new BehaveException(bm.getString("exception-duplicate-history-file", string));
+						}
 					}
 				}
 
