@@ -153,39 +153,56 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void navigateTo(String title) {
-		// Procura por Dialogs
-		for (Window w : JDialog.getWindows()) {
-			if (w instanceof JDialog && w.isVisible()) {
-				if (title.trim().equalsIgnoreCase(((JDialog) w).getTitle().trim())) {
-					currentContainer = ((JDialog) w).getRootPane().getContentPane();
-					currentContainer.setFocusTraversalKeysEnabled(true);
-					currentContainer.setVisible(true);
-					currentContainer.setEnabled(true);
-					currentTitle = title;
-					logger.debug(message.getString("message-navigate-dialod", title));
-					return;
+		boolean isTimeOver = false;
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		Long timeout = BehaveConfig.getRunner_ScreenMaxWait();
+		
+		while (!isTimeOver) {
+		
+			// Procura por Dialogs
+			for (Window w : JDialog.getWindows()) {
+	
+				if (w instanceof JDialog && w.isVisible()) {
+					
+					if (title.trim().equalsIgnoreCase(((JDialog) w).getTitle().trim())) {
+						currentContainer = ((JDialog) w).getRootPane().getContentPane();
+						currentContainer.setFocusTraversalKeysEnabled(true);
+						currentContainer.setVisible(true);
+						currentContainer.setEnabled(true);
+						currentTitle = title;
+						logger.debug(message.getString("message-navigate-dialod", title));
+						
+						return;
+					}
 				}
 			}
-		}
-
-		// Procura por Frames
-		for (Window w : JFrame.getWindows()) {
-			if (w instanceof JFrame && w.isVisible()) {
-				JFrame frame = (JFrame) w;
-				if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
-					currentContainer = frame;
-					currentContainer.setFocusTraversalKeysEnabled(true);
-					currentContainer.setVisible(true);
-					currentContainer.setEnabled(true);
-					currentTitle = title;
-					logger.debug(message.getString("message-navigate-dialod", title));
-					return;
+	
+			// Procura por Frames
+			for (Window w : JFrame.getWindows()) {
+				
+				if (w instanceof JFrame && w.isVisible()) {
+					JFrame frame = (JFrame) w;
+					
+					if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
+						currentContainer = frame;
+						currentContainer.setFocusTraversalKeysEnabled(true);
+						currentContainer.setVisible(true);
+						currentContainer.setEnabled(true);
+						currentTitle = title;
+						logger.debug(message.getString("message-navigate-dialod", title));
+						
+						return;
+					}
 				}
 			}
+			
+			isTimeOver = (GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > timeout;			
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 		}
 
-		if (currentContainer == null)
+		if (currentContainer == null) {
 			throw new BehaveException(message.getString("exception-app-not-loaded"));
+		}
 
 		throw new BehaveException(message.getString("exception-screen-not-found", currentContainer.toString(), getHierarchy()));
 	}
@@ -196,6 +213,7 @@ public class FestRunner implements Runner {
 		PrintStream printStream = new PrintStream(out, true);
 		printer.printComponents(printStream, currentContainer);
 		printStream.flush();
+		
 		return new String(out.toByteArray());
 	}
 
@@ -334,6 +352,17 @@ public class FestRunner implements Runner {
 	}
 
 	public void setScreen(String screenName) {
+		navigateTo(screenName);
+	}
+
+	private void waitThreadSleep(Long delay) {
+		
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException ex) {
+			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
+		}
+		
 	}
 
 }
