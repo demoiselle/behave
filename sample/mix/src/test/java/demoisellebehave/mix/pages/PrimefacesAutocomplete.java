@@ -10,13 +10,13 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.TextField;
 @ScreenMap(name = "ShowCase Autocomplete", location = "http://www.primefaces.org/showcase/ui/input/autoComplete.xhtml")
 public class PrimefacesAutocomplete {
 
-	@ElementMap(name = "Simple", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt88:acSimple_input']")
+	@ElementMap(name = "Simple", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt86:acSimple_input']")
 	private TextField txtSimple;
 
-	@ElementMap(name = "DropDown", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt88:dd_input']")
+	@ElementMap(name = "DropDown", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt86:dd_input']")
 	private TextField txtDropDown;
 
-	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt88:j_idt117']")
+	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt86:j_idt115']")
 	private Button btnSubmit;
 	
 	@ElementMap(name = "Label Simple", locatorType = ElementLocatorType.XPath, locator = "//div[@class='ui-dialog-content ui-widget-content']/table/tbody/tr[1]/td[2]")

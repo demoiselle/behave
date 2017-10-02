@@ -10,13 +10,13 @@ import br.gov.frameworkdemoiselle.behave.runner.ui.Label;
 @ScreenMap(name = "ShowCase Autocomplete Component", location = "http://www.primefaces.org/showcase/ui/input/autoComplete.xhtml")
 public class PrimefacesAutocompleteComponent {
 
-	@ElementMap(name = "Simple", locatorType = ElementLocatorType.XPath, locator = {"//*[@id='j_idt88:acSimple_input']","//*[@id='j_idt88:acSimple_panel']"})
+	@ElementMap(name = "Simple", locatorType = ElementLocatorType.XPath, locator = {"//*[@id='j_idt86:acSimple_input']","//*[@id='j_idt86:acSimple_panel']"})
 	private AutoComplete completeSimple;
 	
-	@ElementMap(name = "DropDown", locatorType = ElementLocatorType.XPath, locator = {"//*[@id='j_idt88:dd_input']","//*[@id='j_idt88:dd_panel']"})
+	@ElementMap(name = "DropDown", locatorType = ElementLocatorType.XPath, locator = {"//*[@id='j_idt86:dd_input']","//*[@id='j_idt86:dd_panel']"})
 	private AutoComplete completeDropdown;
 
-	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt88:j_idt117']")
+	@ElementMap(name = "Submit", locatorType = ElementLocatorType.XPath, locator = "//*[@id='j_idt86:j_idt115']")
 	private Button btnSubmit;
 	
 	@ElementMap(name = "Label Simple", locatorType = ElementLocatorType.XPath, locator = "//div[@class='ui-dialog-content ui-widget-content']/table/tbody/tr[1]/td[2]")
