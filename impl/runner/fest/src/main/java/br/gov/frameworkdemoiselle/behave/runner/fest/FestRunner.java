@@ -153,9 +153,12 @@ public class FestRunner implements Runner {
 
 	@Override
 	public void navigateTo(String title) {
+		
 		// Procura por Dialogs
 		for (Window w : JDialog.getWindows()) {
+
 			if (w instanceof JDialog && w.isVisible()) {
+				
 				if (title.trim().equalsIgnoreCase(((JDialog) w).getTitle().trim())) {
 					currentContainer = ((JDialog) w).getRootPane().getContentPane();
 					currentContainer.setFocusTraversalKeysEnabled(true);
@@ -170,8 +173,10 @@ public class FestRunner implements Runner {
 
 		// Procura por Frames
 		for (Window w : JFrame.getWindows()) {
+			
 			if (w instanceof JFrame && w.isVisible()) {
 				JFrame frame = (JFrame) w;
+				
 				if (title.trim().equalsIgnoreCase(frame.getTitle().trim())) {
 					currentContainer = frame;
 					currentContainer.setFocusTraversalKeysEnabled(true);
@@ -196,6 +201,7 @@ public class FestRunner implements Runner {
 		PrintStream printStream = new PrintStream(out, true);
 		printer.printComponents(printStream, currentContainer);
 		printStream.flush();
+		
 		return new String(out.toByteArray());
 	}
 
@@ -334,6 +340,7 @@ public class FestRunner implements Runner {
 	}
 
 	public void setScreen(String screenName) {
+		navigateTo(screenName);
 	}
 
 }
