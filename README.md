@@ -8,9 +8,8 @@
 
 O DBehave não precisa mais de ser adicionado ao `pom.ml` pois agora esta no repositório global da Sonatype.
 
-> [Acesso a Sonatype] https://oss.sonatype.org
-
-> [Acesso ao Demoiselle Behave na Sonatype](https://oss.sonatype.org/#nexus-search;quick~demoiselle behave)
+* [Acesso a Sonatype](https://oss.sonatype.org)
+* [Acesso ao Demoiselle Behave na Sonatype](https://oss.sonatype.org/#nexus-search;quick~demoiselle-behave)
 
 ## Contribua!
  
