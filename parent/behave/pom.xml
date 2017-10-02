@@ -72,15 +72,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>demoiselle.sourceforge.net-release</id>
-			<url>http://demoiselle.sourceforge.net/repository/release</url>
-		</repository>
-		<repository>
-			<id>demoiselle.sourceforge.net-snapshot</id>
-			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
-		</repository>	
+	<repositories>			
 		<repository>
 			<id>repo1.maven</id>
 			<name>Repo1 Maven</name>
