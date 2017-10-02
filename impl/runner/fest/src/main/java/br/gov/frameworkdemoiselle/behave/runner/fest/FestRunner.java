@@ -362,7 +362,7 @@ public class FestRunner implements Runner {
 		} catch (InterruptedException ex) {
 			throw new BehaveException(message.getString("exception-thread-sleep"), ex);
 		}
-		
+
 	}
 
 }
