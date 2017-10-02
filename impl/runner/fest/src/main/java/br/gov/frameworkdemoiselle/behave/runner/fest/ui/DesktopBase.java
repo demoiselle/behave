@@ -42,6 +42,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -68,6 +69,7 @@ import br.gov.frameworkdemoiselle.behave.config.BehaveConfig;
 import br.gov.frameworkdemoiselle.behave.exception.BehaveException;
 import br.gov.frameworkdemoiselle.behave.message.BehaveMessage;
 import br.gov.frameworkdemoiselle.behave.runner.fest.FestRunner;
+import br.gov.frameworkdemoiselle.behave.runner.fest.annotation.ElementIndex;
 import br.gov.frameworkdemoiselle.behave.runner.fest.util.DesktopMappedElement;
 import br.gov.frameworkdemoiselle.behave.runner.ui.BaseUI;
 
@@ -78,37 +80,49 @@ public class DesktopBase extends DesktopMappedElement implements BaseUI {
 	protected FestRunner runner = (FestRunner) getRunner();
 
 	public Component getElement() {
-		waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
-
-		ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
-
-		// Active window finder.
-		Container activeWindow = getActiveWindow(cf);
+		boolean isTimeOver = false;
+		long startedTime = GregorianCalendar.getInstance().getTimeInMillis();
+		Long timeout = BehaveConfig.getRunner_ScreenMaxWait();
 		
-		// If no active window were found, searches from root.
-		if (activeWindow == null) {
-			activeWindow = runner.currentContainer;
+		while (!isTimeOver) {
+			ComponentFinder cf = BasicComponentFinder.finderWithCurrentAwtHierarchy();
+	
+			// Active window finder.
+			Container activeWindow = getActiveWindow(cf);
+			
+			// If no active window were found, searches from root.
+			if (activeWindow == null) {
+				activeWindow = runner.currentContainer;
+			}
+	
+			// Component finder.
+			Collection<Component> findedComponents = cf.findAll(activeWindow, new ComponentMatcher() {
+				@Override
+				public boolean matches(Component c) {
+					return matcher(c);
+				}
+			});
+
+			log.debug(message.getString("message-elements-found", findedComponents.size(), runner.getTitle(), getElementMap().locator()[0]));
+	
+			if (findedComponents.size() > 0) {
+								
+				if (findedComponents.size() > 1) {
+					// Se encontrar mais de um elemento com o finder utiliza a anotação do índice
+					ElementIndex elementIndex = getElementIndex();
+					
+					return (Component) findedComponents.toArray()[elementIndex.index()];
+				} else {
+					return (Component) findedComponents.toArray()[0];
+				}
+				
+			}
+				
+			isTimeOver = (GregorianCalendar.getInstance().getTimeInMillis() - startedTime) > timeout;			
+			waitThreadSleep(BehaveConfig.getRunner_ScreenMinWait());
 		}
 
-		// Component finder.
-		Collection<Component> findedComponents = cf.findAll(activeWindow, new ComponentMatcher() {
-			@Override
-			public boolean matches(Component c) {
-				return matcher(c);
-			}
-		});
-
-		// Se encontrar mais de um elemento com o finder utiliza a anotação do
-		// índice
-		log.debug(message.getString("message-elements-found", findedComponents.size(), runner.getTitle(), getElementMap().locator()[0]));
-
-		if (findedComponents.size() == 0)
-			throw new BehaveException(message.getString("exception-elements-not-found", runner.currentContainer.toString(), runner.getHierarchy()));
-		else if (findedComponents.size() > 1)
-			// Pega pelo indice
-			return (Component) findedComponents.toArray()[getElementIndex().index()];
-		else
-			return (Component) findedComponents.toArray()[0];
+		throw new BehaveException(message.getString("exception-elements-not-found", runner.currentContainer.toString(), runner.getHierarchy()));
 	}
 	
 	/**
