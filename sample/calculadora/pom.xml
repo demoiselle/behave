@@ -65,21 +65,4 @@
 		</repository>
 	</repositories>
 	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-				<artifactId>demoiselle-behave-regression-report</artifactId>
-				<version>1.5.4-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>regression</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

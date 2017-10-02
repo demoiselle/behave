@@ -1,40 +1,26 @@
-<!--
- Demoiselle Framework
- Copyright (C) 2010 SERPRO
- ============================================================================
- This file is part of Demoiselle Framework.
- 
- Demoiselle Framework is free software; you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License version 3
- as published by the Free Software Foundation.
- 
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU Lesser General Public License version 3
- along with this program; if not,  see <http://www.gnu.org/licenses />
- or write to the Free Software Foundation, Inc., 51 Franklin Street,
- Fifth Floor, Boston, MA  02110-1301, USA.
- ============================================================================
- Este arquivo é parte do Framework Demoiselle.
- 
- O Framework Demoiselle é um software livre; você pode redistribuí-lo e/ou
- modificá-lo dentro dos termos da GNU LGPL versão 3 como publicada pela Fundação
- do Software Livre (FSF).
- 
- Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA
- GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou
- APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português
- para maiores detalhes.
- 
- Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título
- "LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses />
- ou escreva para a Fundação do Software Livre (FSF) Inc.,
- 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- Demoiselle Framework Copyright (C) 2010 SERPRO ============================================================================ 
+	This file is part of Demoiselle Framework. Demoiselle Framework is free software; 
+	you can redistribute it and/or modify it under the terms of the GNU Lesser 
+	General Public License version 3 as published by the Free Software Foundation. 
+	This program is distributed in the hope that it will be useful, but WITHOUT 
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+	You should have received a copy of the GNU Lesser General Public License 
+	version 3 along with this program; if not, see <http://www.gnu.org/licenses 
+	/> or write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth 
+	Floor, Boston, MA 02110-1301, USA. ============================================================================ 
+	Este arquivo é parte do Framework Demoiselle. O Framework Demoiselle é um 
+	software livre; você pode redistribuí-lo e/ou modificá-lo dentro dos termos 
+	da GNU LGPL versão 3 como publicada pela Fundação do Software Livre (FSF). 
+	Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA 
+	GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO 
+	EM PARTICULAR. Veja a Licença Pública Geral GNU/LGPL em português para maiores 
+	detalhes. Você deve ter recebido uma cópia da GNU LGPL versão 3, sob o título 
+	"LICENCA.txt", junto com esse programa. Se não, acesse <http://www.gnu.org/licenses 
+	/> ou escreva para a Fundação do Software Livre (FSF) Inc., 51 Franklin St, 
+	Fifth Floor, Boston, MA 02111-1301, USA. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -43,12 +29,12 @@
 	<version>1.5.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-    <parent>
-        <groupId>br.gov.frameworkdemoiselle</groupId>
-        <artifactId>demoiselle-build-parent</artifactId>
-        <version>9</version>
-        <relativePath>../internal/parent/build/demoiselle</relativePath>
-    </parent>
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-build-parent</artifactId>
+		<version>9</version>
+		<relativePath>../internal/parent/build/demoiselle</relativePath>
+	</parent>
 
 	<name>Demoiselle Behave Parent</name>
 	<description> Contém as informações de build comum a todos os projetos do Demoiselle Behave. Se você é usuário do behave, certamente este POM não servirá para você.</description>
@@ -72,7 +58,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<repositories>			
+	<repositories>
+		<repository>
+			<id>demoiselle.sourceforge.net-release</id>
+			<url>http://demoiselle.sourceforge.net/repository/release</url>
+		</repository>
+		<repository>
+			<id>demoiselle.sourceforge.net-snapshot</id>
+			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
+		</repository>
 		<repository>
 			<id>repo1.maven</id>
 			<name>Repo1 Maven</name>
@@ -101,28 +95,29 @@
 			</releases>
 		</repository>
 	</repositories>
-	
-	<!-- Profile para funcionar a build no Java 7 e 8 (no Java 8 o doclin precisa ser desabilitado) -->
+
+	<!-- Profile para funcionar a build no Java 7 e 8 (no Java 8 o doclin precisa 
+		ser desabilitado) -->
 	<profiles>
-	  <profile>
-	    <id>doclint-java8-disable</id>
-	    <activation>
-	      <jdk>[1.8,)</jdk>
-	    </activation>	
-	    <build>
-	      <plugins>
-	        <plugin>
-	          <groupId>org.apache.maven.plugins</groupId>
-	          <artifactId>maven-javadoc-plugin</artifactId>
-	          <configuration>
-	            <additionalparam>-Xdoclint:none</additionalparam>
-	          </configuration>
-	        </plugin>
-	      </plugins>
-	    </build>
-	  </profile>
+		<profile>
+			<id>doclint-java8-disable</id>
+			<activation>
+				<jdk>[1.8,)</jdk>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>demoiselle.sourceforge.net-release</id>
@@ -132,7 +127,7 @@
 			<id>demoiselle.sourceforge.net-snapshot</id>
 			<url>http://demoiselle.sourceforge.net/repository/snapshot</url>
 		</pluginRepository>
-	</pluginRepositories>	
+	</pluginRepositories>
 
 	<distributionManagement>
 		<repository>
@@ -226,7 +221,7 @@
 				<groupId>org.jbehave</groupId>
 				<artifactId>jbehave-core</artifactId>
 				<version>4.0.1</version>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>org.jbehave.web</groupId>
 				<artifactId>jbehave-web-selenium</artifactId>
@@ -263,7 +258,7 @@
 				<artifactId>httpclient</artifactId>
 				<version>4.3.5</version>
 			</dependency>
-			
+
 			<!-- selenium/webdriver -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
@@ -315,13 +310,13 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>		
+		<plugins>
 			<plugin>
-          		<artifactId>maven-resources-plugin</artifactId>          		
-          		<configuration>
-          			<encoding>${project.build.sourceEncoding}</encoding>
-          		</configuration>
-        	</plugin>        
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -333,7 +328,7 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>				
+				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -362,7 +357,7 @@
 				<configuration>
 					<argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
 				</configuration>
-			</plugin>		
+			</plugin>
 			<!-- JBehave Report -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

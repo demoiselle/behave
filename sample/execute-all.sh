@@ -1,5 +1,9 @@
 #!/bin/bash
 
+HOME_SCRIPT=../../../..
+MAVEN=$HOME_SCRIPT/maven-java6/apache-maven-2.2.1/bin/mvn
+
+echo $MAVEN
 
 if [ -z $1 ]; 
 then
@@ -18,7 +22,7 @@ for ((i=1;i<=$1;i++)); do
 		if [ "$dir" != "treino-desktop/" ]; then
 			cd $dir
 			# mvn clean test
-			mvn test
+			$MAVEN test
 	
 			# Trata o status de retorno do Maven
 			STATUS=$?
