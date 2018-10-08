@@ -6,16 +6,20 @@
 	<title>Testing Dektop applications</title>
 	<para>
 		Demoiselle Behave Framework has a specific Runner for
-		Desktop application (Swing) tests. 
-		This chapter talks about
-		this subject.
+		Desktop application (Swing) tests. This chapter talks about this
+		subject. It should be noted that from version 1.6.0 the
+		Demoiselle Behave starts using the AssertJ framework in
+		substitution of Fest, which had the project discontinued in the
+		community. The Fest runner is in the process of discontinuing
+		and, in existing projects, it is recommended the replacement of
+		it by the AssertJ runner.
 	</para>
 	<section>
 		<title>Starting a project using Archetype (Project Model)
 		</title>
 		<para>
 			When you create a project it is possible to select archetype
-			<emphasis>jbehave-fest-archetype</emphasis>
+			<emphasis>jbehave-assertj-archetype</emphasis>
 			for having a fast beginning of a Desktop (Swing)
 			test automation project.
 		</para>
@@ -30,12 +34,14 @@
 
 			Change runner dependency.
 
-			<programlisting><![CDATA[<dependency>
-	<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
-	<artifactId>demoiselle-behave-runner-fest</artifactId>
-	<version>1.x.x</version>
-	<scope>test</scope>
-</dependency>]]></programlisting>
+			<programlisting>
+				<![CDATA[<dependency>
+				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+				<artifactId>demoiselle-behave-runner-assertj</artifactId>
+				<version>1.x.x</version>
+				<scope>test</scope>
+				</dependency>]]>
+			</programlisting>
 		</para>
 	</section>
 
