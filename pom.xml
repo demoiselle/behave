@@ -45,10 +45,12 @@
 		<module>archetype/jbehave-junit</module>
 		<module>archetype/jbehave-selenium</module>
 		<module>archetype/jbehave-fest</module>
+		<module>archetype/jbehave-assertj</module>
 		<module>impl/core</module>
 		<module>impl/parser/jbehave</module>
 		<module>impl/runner/webdriver</module>
 		<module>impl/runner/fest</module>
+		<module>impl/runner/assertj</module>
 		<module>impl/integration/alm</module>
 
 		<module>impl/extension/regression/report</module>

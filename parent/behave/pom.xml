@@ -195,6 +195,12 @@
 
 			<dependency>
 				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
+				<artifactId>demoiselle-behave-runner-assertj</artifactId>
+				<version>${behave.release.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.gov.frameworkdemoiselle.component.behave</groupId>
 				<artifactId>demoiselle-behave-runner-webdriver</artifactId>
 				<version>${behave.release.version}</version>
 			</dependency>
