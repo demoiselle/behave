@@ -2,7 +2,7 @@
 
 É o subprojeto do Framework Demoiselle para realização de testes BDD [Behavior Driven Development] (http://pt.wikipedia.org/wiki/Behavior_Driven_Development)
 
-[Visite o Site do Projeto](http://demoiselle.github.io/behave/)
+[Visite o Site do Projeto](https://www.frameworkdemoiselle.gov.br/dbehave)
 
 ## Repositório Maven (Sonatype)
 
