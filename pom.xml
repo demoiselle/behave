@@ -23,7 +23,7 @@
 
 	<groupId>br.gov.frameworkdemoiselle.component</groupId>
 	<artifactId>demoiselle-behave-build</artifactId>
-	<version>1.6.0-BETA2</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<!-- <parent>
@@ -140,7 +140,7 @@
 		<connection>scm:git:https://github.com/demoiselle//${project.alias}.git</connection>
 		<developerConnection>scm:git:https://github.com/demoiselle/${project.alias}.git</developerConnection>
 		<url>http://github.com/demoiselle/${project.alias}</url>
-		<tag>1.6.0-BETA2</tag>
+		<tag>1.5.1-SNAPSHOT</tag>
 	</scm>
 
 	<repositories>
