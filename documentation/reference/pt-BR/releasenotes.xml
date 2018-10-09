@@ -14,6 +14,81 @@
 	</para>
 
 	<para>
+		<citetitle>Versão 1.6.0</citetitle>
+		<itemizedlist>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/488">
+					<emphasis>[Melhoria]</emphasis>
+					Upgrade da versão do Java para a 8
+				</ulink>
+			</listitem> 
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/487">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado runner Desktop AssertJ
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/482">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado processo para aguardar por tempo mínimo no runner Desktop FEST
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/481">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado processo para atualizar a tela ativa no runner Desktop FEST
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/479">
+					<emphasis>[Erro]</emphasis>
+					A configuração de verificação de cenários duplicados não esta funcionando corretamente
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/477">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado mapeamento do componente DesktopTree ao runner Desktop FEST
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/476">
+					<emphasis>[Melhoria]</emphasis>
+					Correção do processo para encontrar um elemento no runner Desktop FEST
+				</ulink>
+			</listitem>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/474">
+					<emphasis>[Melhoria]</emphasis>
+					Adicionado método waitNotText no runner Desktop Fest
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/473">
+					<emphasis>[Melhoria]</emphasis>
+					Padronizar o nome do componente Tree do PrimeFaces
+				</ulink>
+			</listitem>	
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/472">
+					<emphasis>[Melhoria]</emphasis>
+					Novos tratamentos para caixas de diálogo no runner Desktop FEST
+				</ulink>
+			</listitem>		
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/469">
+					<emphasis>[Melhoria]</emphasis>
+					Novos passos no runner Desktop FEST
+				</ulink>
+			</listitem>
+			<listitem>
+				<ulink url="https://github.com/demoiselle/behave/issues/468">
+					<emphasis>[Melhoria]</emphasis>
+					Melhorias no runner Desktop FEST
+				</ulink>
+			</listitem>
+		</itemizedlist>
 		<citetitle>Versão 1.5.3</citetitle>
 		<itemizedlist>
 			<listitem>

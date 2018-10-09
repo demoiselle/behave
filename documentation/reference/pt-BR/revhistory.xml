@@ -3,6 +3,12 @@
    "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <revhistory>
 	<revision>
+		<revnumber>1.6.0</revnumber>
+		<date>09/10/2018</date>
+		<authorinitials>Vanderson, Julian</authorinitials>
+		<revremark>Melhorias e correções no framework.</revremark>
+	</revision>
+	<revision>
 		<revnumber>1.5.3</revnumber>
 		<date>11/05/2016</date>
 		<authorinitials>Vanderson, Julian</authorinitials>
