@@ -26,11 +26,16 @@
 	<version>1.5.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<parent>
+	<!-- <parent>
 		<groupId>br.gov.frameworkdemoiselle</groupId>
 		<artifactId>demoiselle-component-build-parent</artifactId>
 		<version>9</version>
 		<relativePath>../internal/parent/build/component</relativePath>
+	</parent>-->
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>8</version>
 	</parent>
 
 	<name>Demoiselle Behave</name>
